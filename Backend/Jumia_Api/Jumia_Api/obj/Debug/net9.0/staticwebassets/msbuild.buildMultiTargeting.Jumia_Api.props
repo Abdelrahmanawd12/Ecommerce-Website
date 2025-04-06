@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Jumia_Api.props" />
+</Project>
