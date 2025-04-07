@@ -20,11 +20,7 @@ namespace Jumia_Api.Controllers.CustomerControllers
         [HttpGet]
         public IActionResult GetAllProducts()
         {
-            var products = _context.Products
-                .Include(p => p.Category)
-                .Include(p => p.ProductImages)  
-                .Include(p => p.ProductTags)     
-                .ToList();
+            var products = _context.Products.ToList();
 
             List<ProductsDTO> productsDTO = new List<ProductsDTO>();
 
@@ -55,11 +51,7 @@ namespace Jumia_Api.Controllers.CustomerControllers
   
         public IActionResult GetProductById(int id)
         {
-            var product = _context.Products
-                .Include(p => p.Category)
-                .Include(p => p.ProductImages)
-                .Include(p => p.ProductTags)
-                .FirstOrDefault(p => p.ProductId == id);
+            var product = _context.Products.FirstOrDefault(p => p.ProductId == id);
 
             if (product == null)
             {
