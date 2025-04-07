@@ -12,7 +12,7 @@ namespace Jumia.Models
 
         // Foreign key for Customer (One-to-One relationship)
         [ForeignKey("Customer")]
-        public int CustomerId { get; set; }
+        public string CustomerId { get; set; }
 
         // Navigation property
         public virtual Customer Customer { get; set; }

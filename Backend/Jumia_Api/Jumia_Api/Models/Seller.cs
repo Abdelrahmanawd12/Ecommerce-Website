@@ -2,7 +2,7 @@
 
 namespace Jumia.Models
 {
-    public class Seller : User
+    public class Seller : ApplicationUser
     {
         public string StoreName { get; set; }
         public string ShippingZone { get; set; }

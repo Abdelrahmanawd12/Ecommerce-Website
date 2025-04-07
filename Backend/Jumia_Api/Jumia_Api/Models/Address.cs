@@ -16,9 +16,7 @@ namespace Jumia.Models
         public string Country { get; set; }
 
         //[ForeignKey("User")]  // Foreign key attribute for the User
-        public int UserId { get; set; }  // Foreign key for the User (Many to One relationship)
+        public string UserId { get; set; }  // Foreign key for the User (Many to One relationship)
 
-        // Navigation property for user (Many to One relationship)
-        public virtual User User { get; set; }  // Address belongs to a User
     }
 }
