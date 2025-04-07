@@ -10,7 +10,7 @@ namespace Jumia.Models
         public int WishlistId { get; set; }
 
         [ForeignKey("Customer")]
-        public int CustomerId { get; set; }
+        public string CustomerId { get; set; }
 
         // Navigation property to Customer (Many to One)
         public virtual Customer Customer { get; set; }

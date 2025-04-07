@@ -21,7 +21,7 @@ namespace Jumia.Models
         public decimal Weight { get; set; }
 
         [ForeignKey("Seller")]
-        public int SellerId { get; set; }
+        public string SellerId { get; set; }
 
         // Navigation property for ProductImages (One to Many relationship)
         public virtual ICollection<ProductImage> ProductImages { get; set; }

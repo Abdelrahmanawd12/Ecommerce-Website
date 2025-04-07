@@ -2,7 +2,7 @@
 
 namespace Jumia.Models
 {
-    public class Customer : User
+    public class Customer : ApplicationUser
     {
         
         // Navigation property for cart (One to One relationship)
