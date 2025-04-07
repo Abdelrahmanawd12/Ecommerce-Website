@@ -256,10 +256,6 @@ namespace Jumia_Api.Migrations
                     b.Property<decimal>("Discount")
                         .HasColumnType("decimal(18, 2)");
 
-                    b.PrimitiveCollection<string>("ImageUrls")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -272,10 +268,6 @@ namespace Jumia_Api.Migrations
 
                     b.Property<int>("SellerId")
                         .HasColumnType("int");
-
-                    b.PrimitiveCollection<string>("Tags")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Weight")
                         .HasColumnType("decimal(18, 2)");
@@ -508,6 +500,50 @@ namespace Jumia_Api.Migrations
                     b.ToTable("WishlistItem");
                 });
 
+            modelBuilder.Entity("Jumia_Api.Models.ProductImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductImage");
+                });
+
+            modelBuilder.Entity("Jumia_Api.Models.ProductTag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Tag")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductTag");
+                });
+
             modelBuilder.Entity("Jumia.Models.Admin", b =>
                 {
                     b.HasBaseType("Jumia.Models.User");
@@ -735,6 +771,28 @@ namespace Jumia_Api.Migrations
                     b.Navigation("Wishlist");
                 });
 
+            modelBuilder.Entity("Jumia_Api.Models.ProductImage", b =>
+                {
+                    b.HasOne("Jumia.Models.Product", "Product")
+                        .WithMany("ProductImages")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Jumia_Api.Models.ProductTag", b =>
+                {
+                    b.HasOne("Jumia.Models.Product", "Product")
+                        .WithMany("ProductTags")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Jumia.Models.Cart", b =>
                 {
                     b.Navigation("CartItems");
@@ -765,6 +823,10 @@ namespace Jumia_Api.Migrations
                     b.Navigation("CartItems");
 
                     b.Navigation("OrderItems");
+
+                    b.Navigation("ProductImages");
+
+                    b.Navigation("ProductTags");
 
                     b.Navigation("Ratings");
                 });
