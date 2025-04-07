@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Jumia_Api.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Jumia.Models
@@ -16,13 +17,17 @@ namespace Jumia.Models
         public int CategoryId { get; set; }
         public int Quantity { get; set; }
         public string Brand { get; set; }
-        public List<string> ImageUrls { get; set; }
-        public List<string> Tags { get; set; }
         public decimal Discount { get; set; }
         public decimal Weight { get; set; }
 
         [ForeignKey("Seller")]
         public int SellerId { get; set; }
+
+        // Navigation property for ProductImages (One to Many relationship)
+        public virtual ICollection<ProductImage> ProductImages { get; set; }
+
+        // Navigation property for ProductTags (One to Many relationship)
+        public virtual ICollection<ProductTag> ProductTags { get; set; }
 
         // Navigation property for ratings (One to Many relationship)
         public virtual ICollection<Rating> Ratings { get; set; }

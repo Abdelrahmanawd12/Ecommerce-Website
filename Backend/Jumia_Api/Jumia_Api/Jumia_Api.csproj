@@ -24,11 +24,9 @@
   <ItemGroup>
     <Folder Include="Controllers\AdminControllers\" />
     <Folder Include="Controllers\AuthenticationControllers\" />
-    <Folder Include="Controllers\CustomerControllers\" />
     <Folder Include="Controllers\SellerControllers\" />
     <Folder Include="DTOs\AdminDTOs\" />
     <Folder Include="DTOs\AuthenticationDTOs\" />
-    <Folder Include="DTOs\CustomerDTOs\" />
     <Folder Include="DTOs\SellerDTOs\" />
     <Folder Include="Helpers\" />
   </ItemGroup>
