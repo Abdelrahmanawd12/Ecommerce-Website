@@ -1,6 +1,6 @@
 ﻿namespace Jumia.Models
 {
-    public class Admin : User
+    public class Admin : ApplicationUser
     {
         
     }

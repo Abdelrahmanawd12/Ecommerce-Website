@@ -19,7 +19,7 @@ namespace Jumia.Models
 
         // Foreign keys
         [ForeignKey("User")]
-        public int CustomerId { get; set; }
+        public string CustomerId { get; set; }
 
         // Navigation property for order items (One to Many relationship)
         public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();

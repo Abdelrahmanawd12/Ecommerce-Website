@@ -1,9 +1,10 @@
 ﻿using Jumia.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Jumia.Data
 {
-    public class JumiaDbContext:DbContext
+    public class JumiaDbContext : IdentityDbContext<ApplicationUser>
     {
         public JumiaDbContext(DbContextOptions<JumiaDbContext> options)
            : base(options)
@@ -11,7 +12,6 @@ namespace Jumia.Data
         }
 
         // DbSets
-        public DbSet<User> Users { get; set; }
         public DbSet<SubCategory> SubCategories { get; set; }
         public DbSet<Shipping> Shippings { get; set; }
         public DbSet<Rating> Ratings { get; set; }
@@ -26,25 +26,23 @@ namespace Jumia.Data
         public DbSet<Wishlist> Wishlist { get; set; }
         public DbSet<WishlistItem> WishlistItems { get; set; }
 
-        // Configurations for relationships
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>()
-                .HasIndex(u => u.Email)
-                .IsUnique();
+            base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<User>()
+            // TPH (Table Per Hierarchy) for ApplicationUser and derived types
+            modelBuilder.Entity<ApplicationUser>()
                 .HasDiscriminator<string>("Role")
                 .HasValue<Customer>("Customer")
                 .HasValue<Seller>("Seller")
                 .HasValue<Admin>("Admin");
 
-            // User - Address (One to Many)
-            modelBuilder.Entity<Address>()
-               .HasOne(u => u.User)
-               .WithMany(a => a.Addresses)
-               .HasForeignKey(a => a.UserId)
-               .OnDelete(DeleteBehavior.Cascade);
+            //// Customer - Address (One to Many)
+            //modelBuilder.Entity<Address>()
+            //   .HasOne(a => a.User)
+            //   .WithMany(u => u.Addresses)
+            //   .HasForeignKey(a => a.UserId)
+            //   .OnDelete(DeleteBehavior.Cascade);
 
             // Seller - Product (One to Many)
             modelBuilder.Entity<Seller>()
@@ -60,7 +58,7 @@ namespace Jumia.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             // User - Rating (One to Many)
-            modelBuilder.Entity<User>()
+            modelBuilder.Entity<ApplicationUser>()
                 .HasMany(u => u.Ratings)
                 .WithOne(r => r.User)
                 .HasForeignKey(r => r.UserId)
@@ -78,7 +76,6 @@ namespace Jumia.Data
                 .WithOne(oi => oi.Product)
                 .HasForeignKey(oi => oi.ProductId)
                 .OnDelete(DeleteBehavior.Restrict);
-
 
             // Order - Shipping (One to One)
             modelBuilder.Entity<Order>()
@@ -151,8 +148,6 @@ namespace Jumia.Data
             modelBuilder.Entity<Rating>()
                 .Property(r => r.Stars)
                 .HasColumnType("decimal(18, 2)");
-
         }
     }
 }
-

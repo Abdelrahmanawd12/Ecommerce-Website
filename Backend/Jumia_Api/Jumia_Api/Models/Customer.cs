@@ -2,7 +2,7 @@
 
 namespace Jumia.Models
 {
-    public class Customer : User
+    public class Customer : ApplicationUser
     {
         
         // Navigation property for cart (One to One relationship)
@@ -10,5 +10,7 @@ namespace Jumia.Models
 
         // Navigation property for orders (One to Many relationship)
         public virtual ICollection<Order> Orders { get; set; }
+
+        // Navigation property for addresses (One to Many relationship)
     }
 }

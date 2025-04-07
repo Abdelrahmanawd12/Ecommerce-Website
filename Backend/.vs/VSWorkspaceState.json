@@ -1,6 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Jumia_Api",
+    "\\Jumia_Api\\Jumia_Api",
+    "\\Jumia_Api\\Jumia_Api\\Migrations"
   ],
+  "SelectedNode": "\\Jumia_Api\\Jumia_Api\\Models",
   "PreviewInSolutionExplorer": false
 }

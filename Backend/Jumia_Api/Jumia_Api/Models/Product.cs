@@ -22,7 +22,7 @@ namespace Jumia.Models
         public decimal Weight { get; set; }
 
         [ForeignKey("Seller")]
-        public int SellerId { get; set; }
+        public string SellerId { get; set; }
 
         // Navigation property for ratings (One to Many relationship)
         public virtual ICollection<Rating> Ratings { get; set; }
