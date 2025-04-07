@@ -12,6 +12,6 @@ namespace Jumia_Api.Models
         public int ProductId { get; set; }
 
         // Navigation property
-        public Product Product { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

@@ -39,12 +39,12 @@ namespace Jumia.Models
         public DateTime CreatedAt { get; set; }
 
         // Navigation property for addresses (One to Many relationship)
-        public ICollection<Address> Addresses { get; set; }
+        public virtual ICollection<Address> Addresses { get; set; }
 
         // Navigation property for orders (One to Many relationship)
-        public ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
 
         // Navigation property for ratings (One to Many relationship)
-        public ICollection<Rating> Ratings { get; set; }
+        public virtual ICollection<Rating> Ratings { get; set; }
     }
 }
