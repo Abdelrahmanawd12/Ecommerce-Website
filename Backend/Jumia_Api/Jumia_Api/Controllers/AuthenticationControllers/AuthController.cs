@@ -32,7 +32,7 @@ namespace Jumia_Api.Controllers.AuthenticationControllers
         }
 
         //create new Account "Registeration" =>Customer
-        [HttpPost("registeration")]
+        [HttpPost("registeration")] //api/auth/registeration
         public async Task<IActionResult> Registeration([FromBody] CustomerRegisterDTO cstDto)
         {
             if (ModelState.IsValid)
@@ -51,6 +51,8 @@ namespace Jumia_Api.Controllers.AuthenticationControllers
                     DateOfBirth = cstDto.DateOfBirth,
                     Gender = cstDto.Gender,
                     UserName = cstDto.Email,
+                    CreatedAt = DateTime.Now,
+                    Role = "Customer",
                     Addresses = new List<Address>() // Initialize Addresses to avoid null reference
                 };
 
@@ -97,7 +99,62 @@ namespace Jumia_Api.Controllers.AuthenticationControllers
         }
 
         //------------------------------------------------------
-        //Check existing User login 
+
+        //create new Account "Registeration" =>Seller
+        [HttpPost("sellerRegisteration")] //api/auth/sellerRegisteration
+        public async Task<IActionResult> SellerRegisteration([FromBody] SellerRegisterDTO selDto)
+        {
+            if (ModelState.IsValid)
+            {
+                var existingUser = await userManager.FindByEmailAsync(selDto.Email);
+                if (existingUser != null)
+                {
+                    return BadRequest("Username is already taken.");
+                }
+                Seller user = new Seller()
+                {
+                    FirstName = selDto.FirstName,
+                    LastName = selDto.LastName,
+                    Email = selDto.Email,
+                    PhoneNumber = selDto.PhoneNumber,
+                    DateOfBirth = selDto.DateOfBirth,
+                    Gender = selDto.Gender,
+                    UserName = selDto.Email,
+                    StoreName = selDto.StoreName,
+                    ShippingZone = selDto.ShippingZone,
+                    StoreAddress = selDto.StoreAddress,
+                    CreatedAt = DateTime.Now,
+                    Role = "Seller",
+                };
+
+                IdentityResult result = await userManager.CreateAsync(user, selDto.Password);
+                if (result.Succeeded)
+                {
+                    try
+                    {
+
+                        return Ok("Account Added Successfully");
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError($"Error while saving user: {ex.Message}");
+                        return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while saving the user");
+                    }
+
+                }
+                else
+                {
+                    var errors = result.Errors.Select(e => e.Description).ToList();
+                    return BadRequest(errors);
+                }
+
+            }
+            return BadRequest(ModelState);
+        }
+
+        //------------------------------------------------------
+
+        //Check existing User login
         [HttpPost("login")] //api/auth/login
         public async Task<IActionResult> Login(LoginDTO login)
         {
@@ -121,24 +178,6 @@ namespace Jumia_Api.Controllers.AuthenticationControllers
                         {
                             claims.Add(new Claim(ClaimTypes.Role, role));
                         }
-
-                      // Get User Roles
-                        //var roles = await userManager.GetRolesAsync(user);
-
-                        //// إضافة التحقق من دور المستخدم هنا
-                        //if (roles.Contains("Admin")) // مثال للتحقق إذا كان المستخدم Admin
-                        //{
-                        //    claims.Add(new Claim(ClaimTypes.Role, "Admin"));
-                        //}
-                        //else if (roles.Contains("Customer")) // مثال للتحقق إذا كان المستخدم Customer
-                        //{
-                        //    claims.Add(new Claim(ClaimTypes.Role, "Customer"));
-                        //}
-                        //else if (roles.Contains("Seller")) // مثال للتحقق إذا كان المستخدم Seller
-                        //{
-                        //    claims.Add(new Claim(ClaimTypes.Role, "Seller"));
-                        //}
-
 
                         SecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JWT:SecretKey"]));
                         SigningCredentials signinCred = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
