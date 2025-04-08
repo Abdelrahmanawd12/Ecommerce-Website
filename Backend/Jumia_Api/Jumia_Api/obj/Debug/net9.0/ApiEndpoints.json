@@ -32,6 +32,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Jumia_Api.Controllers.AuthenticationControllers.AuthController",
+    "Method": "SellerRegisteration",
+    "RelativePath": "api/Auth/sellerRegisteration",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "selDto",
+        "Type": "Jumia_Api.DTOs.AuthenticationDTOs.RegisterDTOs.SellerRegisterDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Jumia_Api.Controllers.CustomerControllers.CategoryController",
     "Method": "GetAllCategories",
     "RelativePath": "api/Category",
