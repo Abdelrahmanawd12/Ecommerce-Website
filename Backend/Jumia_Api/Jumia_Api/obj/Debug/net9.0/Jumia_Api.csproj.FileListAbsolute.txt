@@ -547,6 +547,14 @@ D:\ITI\Jumia_Ecommerce\Ecommerce-Website\Backend\Jumia_Api\Jumia_Api\obj\Debug\n
 D:\ITI\Jumia_Ecommerce\Ecommerce-Website\Backend\Jumia_Api\Jumia_Api\obj\Debug\net9.0\Jumia_Api.csproj.Up2Date
 D:\ITI\Jumia_Ecommerce\Ecommerce-Website\Backend\Jumia_Api\Jumia_Api\obj\Debug\net9.0\Jumia_Api.genruntimeconfig.cache
 D:\ITI\Jumia_Ecommerce\Ecommerce-Website\Backend\Jumia_Api\Jumia_Api\obj\Debug\net9.0\ref\Jumia_Api.dll
+<<<<<<< HEAD
+C:\iti\Final-Project\Ecommerce-Website\Backend\Jumia_Api\Jumia_Api\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\iti\Final-Project\Ecommerce-Website\Backend\Jumia_Api\Jumia_Api\bin\Debug\net9.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\iti\Final-Project\Ecommerce-Website\Backend\Jumia_Api\Jumia_Api\bin\Debug\net9.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\iti\Final-Project\Ecommerce-Website\Backend\Jumia_Api\Jumia_Api\bin\Debug\net9.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\iti\Final-Project\Ecommerce-Website\Backend\Jumia_Api\Jumia_Api\bin\Debug\net9.0\Microsoft.Extensions.Identity.Core.dll
+C:\iti\Final-Project\Ecommerce-Website\Backend\Jumia_Api\Jumia_Api\bin\Debug\net9.0\Microsoft.Extensions.Identity.Stores.dll
+=======
 D:\ITI\Jumia_Website\Ecommerce-Website\Backend\Jumia_Api\Jumia_Api\bin\Debug\net9.0\appsettings.Development.json
 D:\ITI\Jumia_Website\Ecommerce-Website\Backend\Jumia_Api\Jumia_Api\bin\Debug\net9.0\appsettings.json
 D:\ITI\Jumia_Website\Ecommerce-Website\Backend\Jumia_Api\Jumia_Api\bin\Debug\net9.0\Jumia_Api.staticwebassets.endpoints.json
@@ -734,3 +742,4 @@ D:\ITI\Jumia_Website\Ecommerce-Website\Backend\Jumia_Api\Jumia_Api\obj\Debug\net
 D:\ITI\Jumia_Website\Ecommerce-Website\Backend\Jumia_Api\Jumia_Api\obj\Debug\net9.0\Jumia_Api.pdb
 D:\ITI\Jumia_Website\Ecommerce-Website\Backend\Jumia_Api\Jumia_Api\obj\Debug\net9.0\Jumia_Api.genruntimeconfig.cache
 D:\ITI\Jumia_Website\Ecommerce-Website\Backend\Jumia_Api\Jumia_Api\obj\Debug\net9.0\ref\Jumia_Api.dll
+>>>>>>> a29f8e34fe723a06e034688dc0d03a2cda8c6fbd
