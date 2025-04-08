@@ -1,5 +1,8 @@
-.vs/
 bin/
 obj/
-*.db
-*.vsidx
+.vs/
+*.user
+*.suo
+*.cache
+*.pdb
+*.dll

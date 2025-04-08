@@ -1,11 +1,7 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Jumia_Api",
-    "\\Jumia_Api\\Jumia_Api\\Controllers",
-    "\\Jumia_Api\\Jumia_Api\\Controllers\\AuthenticationControllers",
-    "\\Jumia_Api\\Jumia_Api\\Migrations",
-    "\\Jumia_Api\\Jumia_Api\\Models"
+    "\\Jumia_Api"
   ],
   "SelectedNode": "\\Jumia_Api\\Jumia_Api.sln",
   "PreviewInSolutionExplorer": false

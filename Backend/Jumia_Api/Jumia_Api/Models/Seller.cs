@@ -7,8 +7,7 @@ namespace Jumia.Models
         public string StoreName { get; set; }
         public string ShippingZone { get; set; }
         public string StoreAddress { get; set; }
-        public decimal SellerNetIncome { get; set; }
-
+        
         // Navigation property for products (One to Many relationship)
         public virtual ICollection<Product> Products { get; set; }
     }
