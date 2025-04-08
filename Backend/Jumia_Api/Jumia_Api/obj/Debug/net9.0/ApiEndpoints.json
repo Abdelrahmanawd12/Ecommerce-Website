@@ -48,6 +48,117 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Jumia_Api.Controllers.CustomerControllers.CartController",
+    "Method": "GetCart",
+    "RelativePath": "api/Cart/{customerId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "customerId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Jumia_Api.Controllers.CustomerControllers.CartController",
+    "Method": "AddItemToCart",
+    "RelativePath": "api/Cart/AddItem",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Jumia_Api.DTOs.CustomerDTOs.AddToCartDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Jumia_Api.Controllers.CustomerControllers.CartController",
+    "Method": "ClearCart",
+    "RelativePath": "api/Cart/clear/{customerId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "customerId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Jumia_Api.Controllers.CustomerControllers.CartController",
+    "Method": "RemoveItemFromCart",
+    "RelativePath": "api/Cart/remove/{customerId}/{productId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "customerId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "productId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Jumia_Api.Controllers.CustomerControllers.CartController",
+    "Method": "GetCartSummary",
+    "RelativePath": "api/Cart/summary/{customerId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "customerId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Jumia_Api.Controllers.CustomerControllers.CartController",
+    "Method": "UpdateCartItemQuantity",
+    "RelativePath": "api/Cart/update/{customerId}/{productId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "customerId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "productId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "quantityChange",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Jumia_Api.Controllers.CustomerControllers.CategoryController",
     "Method": "GetAllCategories",
     "RelativePath": "api/Category",
@@ -74,6 +185,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Jumia_Api.Controllers.CustomerControllers.CategoryController",
+    "Method": "GetCategoryByName",
+    "RelativePath": "api/Category/{name}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "name",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Jumia_Api.Controllers.CustomerControllers.ProductsController",
     "Method": "GetAllProducts",
     "RelativePath": "api/Products",
@@ -94,6 +221,22 @@
       {
         "Name": "id",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Jumia_Api.Controllers.CustomerControllers.ProductsController",
+    "Method": "GetProductByName",
+    "RelativePath": "api/Products/{name}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "name",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],

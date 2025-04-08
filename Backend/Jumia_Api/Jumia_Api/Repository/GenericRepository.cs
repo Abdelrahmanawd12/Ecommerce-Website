@@ -30,9 +30,6 @@ namespace Jumia_Api.Repository
             TEntity entity = GetById(id);
             db.Remove(entity);
         }
-        public void Save()
-        {
-            db.SaveChanges();
-        }
+       
     }
 }

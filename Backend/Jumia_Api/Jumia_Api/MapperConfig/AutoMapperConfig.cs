@@ -21,9 +21,18 @@ namespace Jumia_Api.MapperConfig
                 des.Id = src.CatId;
                 des.ProductsName = src.Products.Select(p => p.Name).ToList();
                 des.Subcategory = src.SubCategories.Select(s => s.SubCatName).ToList();
-
             }
             );
+            CreateMap<Cart,CartDTO>().AfterMap((src, dest) =>
+            {
+                dest.CartId = src.CartId;
+                dest.CustomerName = src.Customer.FirstName+" "+src.Customer.LastName;
+                dest.Items = src.CartItems.Select(c => new CartItemDTO
+                {
+                    ProductName = c.Product.Name,
+                    Quantity = c.Quantity
+                }).ToList();
+            });
         }
     }
 }
