@@ -67,8 +67,7 @@
               "ViewState": "AgIAAA8AAAAAAAAAAAAuwCUAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-08T04:00:20.905Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -81,41 +80,37 @@
               "ViewState": "AgIAACoAAAAAAAAAAAAAADAAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-08T02:08:31.505Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "dbo.Product [Data]",
+              "Title": "dbo.Product.sql",
               "DocumentMoniker": "ViewDataWindow_MSSQL__/./Jumia_DB/True/SqlTable/dbo.Product.sql",
-              "ToolTip": "dbo.Product [Data]",
+              "ToolTip": "ViewDataWindow_MSSQL__/./Jumia_DB/True/SqlTable/dbo.Product.sql",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
               "WhenOpened": "2025-04-08T05:23:00.504Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "dbo.CartItem [Data]",
+              "Title": "dbo.CartItem.sql",
               "DocumentMoniker": "ViewDataWindow_MSSQL__/./Jumia_DB/True/SqlTable/dbo.CartItem.sql",
-              "ToolTip": "dbo.CartItem [Data]",
+              "ToolTip": "ViewDataWindow_MSSQL__/./Jumia_DB/True/SqlTable/dbo.CartItem.sql",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
               "WhenOpened": "2025-04-08T04:24:47.893Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "dbo.Cart [Data]",
+              "Title": "dbo.Cart.sql",
               "DocumentMoniker": "ViewDataWindow_MSSQL__/./Jumia_DB/True/SqlTable/dbo.Cart.sql",
-              "ToolTip": "dbo.Cart [Data]",
+              "ToolTip": "ViewDataWindow_MSSQL__/./Jumia_DB/True/SqlTable/dbo.Cart.sql",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
               "WhenOpened": "2025-04-08T04:24:42.256Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -131,8 +126,7 @@
               "RelativeToolTip": "Jumia_Api\\DTOs\\CustomerDTOs\\AddToCartDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T04:50:37.709Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-08T04:50:37.709Z"
             },
             {
               "$type": "Document",
@@ -144,18 +138,16 @@
               "RelativeToolTip": "Jumia_Api\\DTOs\\CustomerDTOs\\CartItemDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T04:33:36.209Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-08T04:33:36.209Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
-              "Title": "dbo.AspNetUsers [Data]",
+              "Title": "dbo.AspNetUsers.sql",
               "DocumentMoniker": "ViewDataWindow_MSSQL__/./Jumia_DB/True/SqlTable/dbo.AspNetUsers.sql",
-              "ToolTip": "dbo.AspNetUsers [Data]",
+              "ToolTip": "ViewDataWindow_MSSQL__/./Jumia_DB/True/SqlTable/dbo.AspNetUsers.sql",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2025-04-08T04:26:14.868Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-08T04:26:14.868Z"
             },
             {
               "$type": "Document",
@@ -165,7 +157,7 @@
               "RelativeDocumentMoniker": "Jumia_Api\\Controllers\\CustomerControllers\\CartController.cs",
               "ToolTip": "C:\\iti\\Final-Project\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Controllers\\CustomerControllers\\CartController.cs",
               "RelativeToolTip": "Jumia_Api\\Controllers\\CustomerControllers\\CartController.cs",
-              "ViewState": "AgIAAHYAAAAAAAAAAAAuwKwAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAEkAAAAAAAAAAAAqwCEAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-08T04:16:48.732Z",
               "EditorCaption": ""
@@ -180,8 +172,7 @@
               "RelativeToolTip": "Jumia_Api\\Models\\CartItem.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAIwBIAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T04:05:32.319Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-08T04:05:32.319Z"
             },
             {
               "$type": "Document",
@@ -193,8 +184,7 @@
               "RelativeToolTip": "Jumia_Api\\Models\\Cart.cs",
               "ViewState": "AgIAAAEAAAAAAAAAAAAQwBYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T04:02:06.578Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-08T04:02:06.578Z"
             },
             {
               "$type": "Document",
@@ -206,8 +196,7 @@
               "RelativeToolTip": "Jumia_Api\\DTOs\\CustomerDTOs\\CartDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T04:01:06.547Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-08T04:01:06.547Z"
             }
           ]
         }
