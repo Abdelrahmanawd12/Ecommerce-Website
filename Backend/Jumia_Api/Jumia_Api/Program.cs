@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Jumia_Api.MapperConfig;
 using Jumia_Api.Repository;
+using Jumia_Api.UnitOFWorks;
 
 
 namespace Jumia_Api
@@ -26,10 +27,8 @@ namespace Jumia_Api
             builder.Services.AddDbContext<JumiaDbContext>(options =>
                 options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("con1")));
             builder.Services.AddAutoMapper(typeof(AutoMapperConfig));
-            //builder.Services.AddScoped<GenericRepository<Product>>();
-            builder.Services.AddScoped<GenericRepository<Category>>();
+            builder.Services.AddScoped<UnitOFWork>();
 
-            builder.Services.AddScoped<ProductsRepository>();
 
 
 
