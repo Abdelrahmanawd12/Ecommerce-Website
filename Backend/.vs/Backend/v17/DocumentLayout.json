@@ -1,20 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Jumia_Api\\Jumia_Api\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Models\\CartItem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Jumia_Api\\Jumia_Api\\Models\\CartItem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Models\\Seller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Jumia_Api\\Jumia_Api\\Models\\Seller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -22,7 +9,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -47,43 +34,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Program.cs",
-              "RelativeDocumentMoniker": "Jumia_Api\\Jumia_Api\\Program.cs",
-              "ToolTip": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Program.cs",
-              "RelativeToolTip": "Jumia_Api\\Jumia_Api\\Program.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-06T20:16:10.14Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "CartItem.cs",
-              "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Models\\CartItem.cs",
-              "RelativeDocumentMoniker": "Jumia_Api\\Jumia_Api\\Models\\CartItem.cs",
-              "ToolTip": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Models\\CartItem.cs",
-              "RelativeToolTip": "Jumia_Api\\Jumia_Api\\Models\\CartItem.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-06T20:15:31.544Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Seller.cs",
-              "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Models\\Seller.cs",
-              "RelativeDocumentMoniker": "Jumia_Api\\Jumia_Api\\Models\\Seller.cs",
-              "ToolTip": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Models\\Seller.cs",
-              "RelativeToolTip": "Jumia_Api\\Jumia_Api\\Models\\Seller.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-06T20:15:13.673Z"
             }
           ]
         },
