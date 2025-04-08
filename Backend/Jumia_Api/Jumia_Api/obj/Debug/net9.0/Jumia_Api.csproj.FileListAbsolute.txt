@@ -547,3 +547,9 @@ D:\ITI\Jumia_Ecommerce\Ecommerce-Website\Backend\Jumia_Api\Jumia_Api\obj\Debug\n
 D:\ITI\Jumia_Ecommerce\Ecommerce-Website\Backend\Jumia_Api\Jumia_Api\obj\Debug\net9.0\Jumia_Api.csproj.Up2Date
 D:\ITI\Jumia_Ecommerce\Ecommerce-Website\Backend\Jumia_Api\Jumia_Api\obj\Debug\net9.0\Jumia_Api.genruntimeconfig.cache
 D:\ITI\Jumia_Ecommerce\Ecommerce-Website\Backend\Jumia_Api\Jumia_Api\obj\Debug\net9.0\ref\Jumia_Api.dll
+C:\iti\Final-Project\Ecommerce-Website\Backend\Jumia_Api\Jumia_Api\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\iti\Final-Project\Ecommerce-Website\Backend\Jumia_Api\Jumia_Api\bin\Debug\net9.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\iti\Final-Project\Ecommerce-Website\Backend\Jumia_Api\Jumia_Api\bin\Debug\net9.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\iti\Final-Project\Ecommerce-Website\Backend\Jumia_Api\Jumia_Api\bin\Debug\net9.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\iti\Final-Project\Ecommerce-Website\Backend\Jumia_Api\Jumia_Api\bin\Debug\net9.0\Microsoft.Extensions.Identity.Core.dll
+C:\iti\Final-Project\Ecommerce-Website\Backend\Jumia_Api\Jumia_Api\bin\Debug\net9.0\Microsoft.Extensions.Identity.Stores.dll
