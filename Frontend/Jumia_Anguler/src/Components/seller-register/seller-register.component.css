@@ -1,0 +1,29 @@
+.card {
+    border-radius: 1rem;
+}
+
+button {
+    height: 45px;
+    font-weight: 500;
+}
+
+.btn {
+    color: black;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}
+
+.btn:hover {
+    background-color: lightgray;
+    border: 2px solid transparent;
+}
+
+
+.custom-btn {
+    background-color: white;
+    color: orange;
+
+    border: 2px solid orange;
+}

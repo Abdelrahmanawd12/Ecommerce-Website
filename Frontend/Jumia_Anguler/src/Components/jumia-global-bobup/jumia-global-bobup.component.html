@@ -1,0 +1,41 @@
+<!-- jumia-global-popup.component.html -->
+<div *ngIf="showPopup" class="popup-overlay">
+    <div class="popup-container">
+      <h1>Sell on Jumia Global!</h1>
+      <p>Please read the following before proceeding:</p>
+      
+      <ol>
+        <li>Payoneer is Jumia's official payment partner. To ensure a secure funds remittance process, please create a Payoneer account first.</li>
+        <li>You must have a valid phone number and email address which will be used to accept the verification code.</li>
+        <li>You should have a valid business registered in any country.</li>
+      </ol>
+      
+      <hr>
+      
+      <div class="form-group">
+        <label for="country">Country *</label>
+        <select id="country" [(ngModel)]="selectedCountry" class="form-control">
+          <option value="">Select country</option>
+          <option value="us">United States</option>
+          <option value="uk">United Kingdom</option>
+          <option value="ng">Nigeria</option>
+          <option value="ke">Kenya</option>
+          <!-- Add more countries as needed -->
+        </select>
+      </div>
+      
+      <div class="button-group">
+        <button (click)="proceed()" class="btn-next">NEXT</button>
+        <button (click)="closePopup()" class="btn-cancel">Cancel</button>
+      </div>
+      
+      <div class="divider">
+        <span>OR</span>
+      </div>
+      
+      <div class="footer">
+        <p>Register as a Jumia Global seller and sell your new product.</p>
+        <p>Know more about Jumia Global at - <a href="https://www.jumiaglobal.com/" target="_blank">https://www.jumiaglobal.com/</a></p>
+      </div>
+    </div>
+  </div>

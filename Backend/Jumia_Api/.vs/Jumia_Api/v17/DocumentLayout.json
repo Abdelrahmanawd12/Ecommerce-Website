@@ -3,8 +3,16 @@
   "WorkspaceRootPath": "D:\\ITI\\Jumia_Ecommerce\\Ecommerce-Website\\Backend\\Jumia_Api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\ITI\\Jumia_Ecommerce\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Migrations\\20250408193644_addSellerNetIncomeCol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Jumia_Api\\Migrations\\20250408193644_addSellerNetIncomeCol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|d:\\iti\\jumia_ecommerce\\ecommerce-website\\backend\\jumia_api\\jumia_api\\controllers\\authenticationcontrollers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|solutionrelative:jumia_api\\controllers\\authenticationcontrollers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|d:\\iti\\jumia_ecommerce\\ecommerce-website\\backend\\jumia_api\\jumia_api\\dtos\\authenticationdtos\\registerdtos\\sellerregisterdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|solutionrelative:jumia_api\\dtos\\authenticationdtos\\registerdtos\\sellerregisterdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|d:\\iti\\jumia_ecommerce\\ecommerce-website\\backend\\jumia_api\\jumia_api\\migrations\\20250408193644_addsellernetincomecol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|solutionrelative:jumia_api\\migrations\\20250408193644_addsellernetincomecol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -43,6 +51,31 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "D:\\ITI\\Jumia_Ecommerce\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Controllers\\AuthenticationControllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "Jumia_Api\\Controllers\\AuthenticationControllers\\AuthController.cs",
+              "ToolTip": "D:\\ITI\\Jumia_Ecommerce\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Controllers\\AuthenticationControllers\\AuthController.cs",
+              "RelativeToolTip": "Jumia_Api\\Controllers\\AuthenticationControllers\\AuthController.cs",
+              "ViewState": "AgIAAKYAAAAAAAAAAAAuwLsAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-09T18:36:02.57Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SellerRegisterDTO.cs",
+              "DocumentMoniker": "D:\\ITI\\Jumia_Ecommerce\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\DTOs\\AuthenticationDTOs\\RegisterDTOs\\SellerRegisterDTO.cs",
+              "RelativeDocumentMoniker": "Jumia_Api\\DTOs\\AuthenticationDTOs\\RegisterDTOs\\SellerRegisterDTO.cs",
+              "ToolTip": "D:\\ITI\\Jumia_Ecommerce\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\DTOs\\AuthenticationDTOs\\RegisterDTOs\\SellerRegisterDTO.cs",
+              "RelativeToolTip": "Jumia_Api\\DTOs\\AuthenticationDTOs\\RegisterDTOs\\SellerRegisterDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-09T08:44:26.497Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "20250408193644_addSellerNetIncomeCol.cs",
               "DocumentMoniker": "D:\\ITI\\Jumia_Ecommerce\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Migrations\\20250408193644_addSellerNetIncomeCol.cs",
               "RelativeDocumentMoniker": "Jumia_Api\\Migrations\\20250408193644_addSellerNetIncomeCol.cs",
@@ -50,8 +83,7 @@
               "RelativeToolTip": "Jumia_Api\\Migrations\\20250408193644_addSellerNetIncomeCol.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T19:36:45.088Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-08T19:36:45.088Z"
             }
           ]
         },
