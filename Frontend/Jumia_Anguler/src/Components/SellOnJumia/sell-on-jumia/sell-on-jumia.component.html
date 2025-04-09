@@ -1,0 +1,255 @@
+<!-- Main Content (hidden when loading) -->
+<div *ngIf="!isLoading">
+    <div class="container-fluid vh-100 d-flex align-items-center justify-content-center bg-light">
+        <div class="container-fluid vh-100 d-flex align-items-center justify-content-center bg-light">
+            <div class="row w-100 justify-content-center align-items-center">
+                <!-- Left Image -->
+                <div class="col-md-6 d-none d-md-block text-center">
+                    <img src="Assets/Images/store_logo.png" alt="Shop" class="img-fluid" />
+                    <!-- Stepper -->
+                    <div class="d-flex justify-content-center mt-4">
+                        <span *ngFor="let step of steps; let i = index" [class.active]="i === currentStep"
+                            class="step-circle mx-2">
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Form Content -->
+                <div class="col-md-4">
+                    <div class="text-center mb-4">
+                        <h4>{{ stepHeaders[currentStep]?.title }}</h4>
+                        <p class="text-muted">{{ stepHeaders[currentStep]?.subtitle }}</p>
+                    </div>
+
+                    <div class="card p-4 shadow-sm rounded">
+                        <ng-container [ngSwitch]="currentStep">
+                            <!-- Step 1 -->
+                            <div *ngSwitchCase="0">
+                                <div class="form-group mb-3">
+                                    <label for="countrySelect" class="form-label fw-bold">Select your country *</label>
+                                    <div class="dropdown">
+                                        <button class="btn btn-light dropdown-toggle w-100" type="button"
+                                            id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                            {{ country || 'Choose country' }}
+                                        </button>
+                                        <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                                            <li *ngFor="let c of countries" (click)="selectCountry(c)">
+                                                <a class="dropdown-item" [ngClass]="{'hover-item': c === country}">{{ c
+                                                    }}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div *ngIf="countryError" class="text-danger small">Please select a country.</div>
+                                </div>
+                                <button class="btn w-100 fw-bold mb-2 text-light" style="background-color: orange;"
+                                    (click)="nextStep()">NEXT</button>
+                                <p class="text-center text-muted small">
+                                    Only for sellers registered & selling in their own country
+                                </p>
+                            </div>
+
+                            <!-- Step 2 -->
+                            <div *ngSwitchCase="1">
+                                <div class="form-group mb-3">
+                                    <label for="emailInput" class="form-label fw-bold">Enter your email *</label>
+                                    <input id="emailInput" type="email" placeholder="Email address" class="form-control"
+                                        [(ngModel)]="email" required (blur)="checkEmailAvailability()" />
+                                        <div *ngIf="emailError" class="text-danger small">{{ emailError }}</div>
+                                        <div *ngIf="emailerr && !emailError" class="text-danger small">Please Enter A valid Email!</div>                                    </div>
+                                <button class="btn  w-100 text-light fw-bold mb-2" style="background-color: orange;"
+                                    (click)="nextStep()">NEXT</button>
+                            </div>
+
+                            <!-- Step 3 -->
+                            <div *ngSwitchCase="2">
+                                <div class="form-group mb-3">
+                                    <label for="phoneInput" class="form-label fw-bold">Enter your phone number *</label>
+                                    <input id="phoneInput" type="tel" placeholder="Phone number" class="form-control"
+                                        [(ngModel)]="phone" required />
+                                    <div *ngIf="phoneError" class="text-danger small">Please enter a valid phone number.
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group mb-3 position-relative">
+                                    <label for="passwordInput" class="form-label fw-bold">Enter your password *</label>
+                                    <div class="input-group">
+                                        <input id="passwordInput" [type]="showPassword ? 'text' : 'password'"
+                                            placeholder="Password" class="form-control" [(ngModel)]="password"
+                                            name="password" required />
+                                        <span class="input-group-text" (click)="togglePassword()"
+                                            style="cursor: pointer;">
+                                            <img [src]="showPassword ? 'Assets/Images/eye_closed.png' : 'Assets/Images/eye_opened.png'"
+                                                alt="Toggle Password Visibility"
+                                                style="width: 20px; cursor: pointer;" />
+                                        </span>
+                                    </div>
+                                    <div *ngIf="passwordError" class="text-danger small">Password must be at least 6 characters,Must have small and capital letters and special characters.</div>
+                                </div>
+
+                                <div class="form-group mb-3 position-relative">
+                                    <label for="confirmPasswordInput" class="form-label fw-bold">Confirm your password
+                                        *</label>
+                                    <div class="input-group">
+                                        <input id="confirmPasswordInput"
+                                            [type]="showConfirmPassword ? 'text' : 'password'"
+                                            placeholder="Confirm Password" class="form-control"
+                                            [(ngModel)]="confirmPassword" name="confirmPassword" required />
+                                        <span class="input-group-text" (click)="toggleConfirmPassword()"
+                                            style="cursor: pointer;">
+                                            <img [src]="showConfirmPassword ? 'Assets/Images/eye_closed.png' : 'Assets/Images/eye_opened.png'"
+                                                alt="Toggle Password Visibility"
+                                                style="width: 20px; cursor: pointer;" />
+                                        </span>
+                                    </div>
+                                    <div *ngIf="confirmPasswordError" class="text-danger small">Passwords do not match.
+                                    </div>
+                                </div>
+
+                                <button class="btn  w-100 text-light fw-bold mb-2" style="background-color: orange;"
+                                    (click)="nextStep()">NEXT</button>
+                            </div>
+
+
+                            <!-- Step 4-->
+                            <div *ngSwitchCase="3">
+                                <div class="form-group mb-3">
+                                    <label for="firstNameInput" class="form-label fw-bold">First Name *</label>
+                                    <input id="firstNameInput" type="text" placeholder="First Name" class="form-control"
+                                        [(ngModel)]="firstName" required />
+                                    <div *ngIf="firstNameError" class="text-danger small">Please enter your first name.
+                                    </div>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="lastNameInput" class="form-label fw-bold">Last Name *</label>
+                                    <input id="lastNameInput" type="text" placeholder="Last Name" class="form-control"
+                                        [(ngModel)]="lastName" required />
+                                    <div *ngIf="lastNameError" class="text-danger small">Please enter your last name.
+                                    </div>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="birthDateInput" class="form-label fw-bold">Birth Date *</label>
+                                    <input id="birthDateInput" type="date" placeholder="Birth Date" class="form-control" name="birthDate"
+                                        [(ngModel)]="dateOfBirth" required />
+                                    <div *ngIf="dateOfBirthError" class="text-danger small">Please enter a valid birth
+                                        date.</div>
+
+                                    <div class="form-group mb-3">
+                                        <label for="genderSelect" class="form-label fw-bold">Gender *</label>
+                                        <div class="dropdown">
+                                            <button class="btn btn-light dropdown-toggle w-100" type="button"
+                                                id="dropdownGenderButton" data-bs-toggle="dropdown"
+                                                aria-expanded="false">
+                                                {{ gender || 'Select Gender' }}
+                                            </button>
+                                            <ul class="dropdown-menu w-100" aria-labelledby="dropdownGenderButton">
+                                                <li *ngFor="let g of genderOptions" (click)="selectGender(g)">
+                                                    <a class="dropdown-item" [ngClass]="{'hover-item': g === gender}">{{
+                                                        g
+                                                        }}</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div *ngIf="genderError" class="text-danger small">Please select your gender.
+                                        </div>
+                                    </div>
+
+                                    <button class="btn w-100 fw-bold mb-2 text-light" style="background-color: orange;"
+                                        (click)="nextStep()">NEXT</button>
+                                </div>
+                            </div>
+                            <!-- Step 5 -->
+                            <div *ngSwitchCase="4">
+                                <div class="form-group mb-3">
+                                    <label for="storeNameInput" class="form-label fw-bold">Enter your Store Name
+                                        *</label>
+                                    <input id="storeNameInput" type="text" placeholder="Store Name" class="form-control"
+                                        [(ngModel)]="storeName" required />
+                                    <div *ngIf="storeNameError" class="text-danger small">Please enter a valid shop
+                                        name.</div>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="shippingZoneInput" class="form-label fw-bold">Shipping Zone
+                                        *</label>
+                                    <input id="shippingZoneInput" type="text" placeholder="Shipping Zone"
+                                        class="form-control" [(ngModel)]="shippingZone" required />
+                                    <div *ngIf="shippingZoneError" class="text-danger small">Please enter a valid
+                                        Shipping Zone.</div>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="storeAddressInput" class="form-label fw-bold">Store Address
+                                        *</label>
+                                    <input id="storeAddressInput" type="text" placeholder="Store Address"
+                                        class="form-control" [(ngModel)]="storeAddress" required />
+                                    <div *ngIf="storeAddressError" class="text-danger small">Please enter a valid
+                                        Store
+                                        Address.</div>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="aboutJumiaSelect" class="form-label fw-bold">How did you hear about
+                                        Jumia? *</label>
+                                    <div class="dropdown">
+                                        <button class="btn btn-light dropdown-toggle w-100" type="button"
+                                            id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                            {{ abutJumia || 'How did you know about Jumia?' }}
+                                        </button>
+                                        <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                                            <li *ngFor="let a of aboutJumiaArr" (click)="selectAboutJumia(a)">
+                                                <a class="dropdown-item" [ngClass]="{'hover-item': a === abutJumia}">{{
+                                                    a }}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <button class="btn text-light w-100 fw-bold text-light"
+                                    style="background-color: orange;" (click)="finishRegistration()">Submit</button>
+                            </div>
+                        </ng-container>
+                    </div>
+
+                    <div class="text-center my-3">
+                        <span class="d-inline-block bg-light px-2">OR</span>
+                    </div>
+
+                    <app-jumia-global-popup #jumiaPopup></app-jumia-global-popup>
+                    <button class="btn global-btn w-100 d-flex align-items-center justify-content-center py-2"
+                        (click)="goToJumiaGlobal()">
+                        <img src="Assets/Images/airplane.png" alt="Global" style="width: 20px;" class="me-2" />
+                        <span>Sell Globally on Jumia</span>
+                    </button>
+
+
+                    <p class="mt-3 text-center text-muted small">
+                        Register as a Jumia Global seller and sell your products across Africa.<br />
+                        Know more about Jumia Global at –
+                        <a href="https://www.jumia-global.com/" target="_blank"
+                            class="text-decoration-none">https://www.jumia-global.com/</a>
+                    </p>
+
+                    <p class="text-center mt-2">
+                        Already have an account?
+                        <a href="#" style="color: orange;" class=" text-decoration-none fw-bold">Sign in</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Loading Overlay (shown alone when loading) -->
+<div *ngIf="isLoading" class="loading-fullscreen d-flex justify-content-center align-items-center vh-100 ">
+    <div class="loading-container text-center">
+        <div class="m-4">
+            <img src="Assets/Images/vendorControl.png" style="width: 200px; height: 150px;" alt="...">
+        </div>
+        <div class="spinner-border text-warning" style="width: 3rem; height: 3rem;" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <h4 class="mt-3">Hold on while we create your account</h4>
+    </div>
+</div>
