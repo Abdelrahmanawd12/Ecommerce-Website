@@ -4,6 +4,9 @@ using Jumia.Data;
 using Jumia.Models;
 using Jumia_Api.DTOs.CustomerDTOs;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using Jumia_Api.Repository;
+using Jumia_Api.UnitOFWorks;
 
 
 namespace Jumia_Api.Controllers.CustomerControllers
@@ -12,70 +15,46 @@ namespace Jumia_Api.Controllers.CustomerControllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        JumiaDbContext _context;
-        public ProductsController(JumiaDbContext context)
+        //ProductsRepository repo;
+        UnitOFWork unit;
+        IMapper mapper;
+        public ProductsController(UnitOFWork _unit, IMapper _mapper)
         {
-            _context = context;
+            //repo = context;
+            unit = _unit;
+            mapper = _mapper;
         }
         [HttpGet]
         public IActionResult GetAllProducts()
         {
-            var products = _context.Products.ToList();
-
-            List<ProductsDTO> productsDTO = new List<ProductsDTO>();
-
-            foreach (var item in products)
-            {
-                var productDTO = new ProductsDTO
-                {
-                    ProductId = item.ProductId,
-                    Name = item.Name,
-                    Description = item.Description,
-                    Price = item.Price,
-                    Brand = item.Brand,
-                    Quantity = item.Quantity,
-                    Weight = item.Weight,
-                    Discount = item.Discount,
-                    CategoryName = item.Category != null ? item.Category.CatName : "Unknown",
-                    ImageUrls = item.ProductImages.Select(pi => pi.Url).ToList(),
-                    Tags = item.ProductTags.Select(pt => pt.Tag).ToList()
-                };
-
-                productsDTO.Add(productDTO);
-            }
-
-            return Ok(productsDTO);
+            var products = unit.ProductsRepository.GetAll(); 
+            var product = mapper.Map<List<ProductsDTO>>(products);
+            return Ok(product);
         }
 
         [HttpGet("{id}")]
-  
+
         public IActionResult GetProductById(int id)
         {
-            var product = _context.Products.FirstOrDefault(p => p.ProductId == id);
-
+            var product = unit.ProductsRepository.GetById(id);
             if (product == null)
             {
                 return NotFound();
             }
-
-            var productDTO = new ProductsDTO
-            {
-                ProductId = product.ProductId,
-                Name = product.Name,
-                Description = product.Description,
-                Price = product.Price,
-                Brand = product.Brand,
-                Quantity = product.Quantity,
-                Weight = product.Weight,
-                Discount = product.Discount,
-                CategoryName = product.Category?.CatName ?? "Unknown",
-                ImageUrls = product.ProductImages?.Select(pi => pi.Url).ToList() ?? new List<string>(),
-                Tags = product.ProductTags?.Select(pt => pt.Tag).ToList() ?? new List<string>()
-            };
-
-            return Ok(productDTO);
+            var products = mapper.Map<ProductsDTO>(product);
+            return Ok(products);
         }
-
+        [HttpGet("{name:alpha}")]
+        public IActionResult GetProductByName(string name)
+        {
+            var product = unit.ProductsRepository.getByName(name);
+            if (product == null)
+            {
+                return NotFound();
+            }
+          var products = mapper.Map<ProductsDTO>(product);
+            return Ok(products);
+        }
 
 
     }

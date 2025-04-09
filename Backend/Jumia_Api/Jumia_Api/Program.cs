@@ -1,4 +1,3 @@
-
 using System.Text;
 using Jumia.Data;
 using Jumia.Models;
@@ -7,6 +6,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Jumia_Api.MapperConfig;
+using Jumia_Api.Repository;
+using Jumia_Api.UnitOFWorks;
+
 
 namespace Jumia_Api
 {
@@ -24,6 +27,10 @@ namespace Jumia_Api
             builder.Services.AddOpenApi();
             builder.Services.AddDbContext<JumiaDbContext>(options =>
                 options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("con1")));
+            builder.Services.AddAutoMapper(typeof(AutoMapperConfig));
+            builder.Services.AddScoped<UnitOFWork>();
+
+
 
 
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -55,7 +62,9 @@ namespace Jumia_Api
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:SecretKey"]))
                 };
             });
+
             builder.Services.AddScoped<IAdminService, AdminService>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

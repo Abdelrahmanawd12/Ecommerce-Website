@@ -1,5 +1,9 @@
-﻿using Jumia.Data;
+﻿using AutoMapper;
+using Jumia.Data;
+using Jumia.Models;
 using Jumia_Api.DTOs.CustomerDTOs;
+using Jumia_Api.Repository;
+using Jumia_Api.UnitOFWorks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,45 +13,42 @@ namespace Jumia_Api.Controllers.CustomerControllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-         JumiaDbContext _context;
+         UnitOFWork unit;
+        IMapper _mapper;
 
-        public CategoryController(JumiaDbContext context)
+        public CategoryController(UnitOFWork _unit,IMapper mapper)
         {
-            _context = context;
+            _mapper = mapper;
+            unit = _unit;
         }
         [HttpGet]
         public IActionResult GetAllCategories()
         {
-            var categories = _context.Categories.ToList();
-            List<CategoryDTO> categoriesDTO = new List<CategoryDTO>();
-            foreach (var item in categories)
-            {
-                var categoryDTO = new CategoryDTO
-                {
-                    Id = item.CatId,
-                    Name = item.CatName,
-                    ProductsName = item.Products.Select(p => p.Name).ToList()
-
-                };
-                categoriesDTO.Add(categoryDTO);
-            }
-            return Ok(categoriesDTO);
+            var categories = unit.CategoryRepository.GetAll();
+            var cat= _mapper.Map<List<CategoryDTO>>(categories);
+            return Ok(cat);
         }
         [HttpGet("{id}")]
         public IActionResult GetCategoryById(int id)
         {
-            var category = _context.Categories.FirstOrDefault(c => c.CatId == id);
+            var category = unit.CategoryRepository.GetById(id);
             if (category == null)
             {
                 return NotFound();
             }
-            var categoryDTO = new CategoryDTO
+            var categoryies=_mapper.Map<CategoryDTO>(category);
+            return Ok(categoryies);
+        }
+        [HttpGet("{name:alpha}")]
+        public IActionResult GetCategoryByName(string name)
+        {
+            var category = unit.CategoryRepository.GetByName(name); 
+            if (category == null)
             {
-                Id = category.CatId,
-                Name = category.CatName,
-                ProductsName = category.Products.Select(p => p.Name).ToList()
-            };
-            return Ok(categoryDTO);
+                return NotFound();
+            }
+            var categoryies = _mapper.Map<CategoryDTO>(category);
+            return Ok(categoryies);
         }
     }
 }
