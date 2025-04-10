@@ -2,6 +2,7 @@
 {
     public class Admin : ApplicationUser
     {
+
         
     }
 }

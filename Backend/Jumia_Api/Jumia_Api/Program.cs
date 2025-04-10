@@ -1,6 +1,7 @@
 using System.Text;
 using Jumia.Data;
 using Jumia.Models;
+using Jumia_Api.Services.Admin_Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -63,6 +64,9 @@ namespace Jumia_Api
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:SecretKey"]))
                 };
             });
+
+            builder.Services.AddScoped<IAdminService, AdminService>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

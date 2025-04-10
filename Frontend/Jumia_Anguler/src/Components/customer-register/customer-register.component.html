@@ -12,20 +12,34 @@
                 </div>
                 <div class="mb-4">
                     <label for="email" class="form-label small-text">Email*</label>
-                    <input type="text" class="form-control" id="email" formControlName="email" placeholder="">
-                    <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
-                        class="text-danger mt-2 small-text">
-                        Please enter a valid email or phone number
+                    <input type="email" class="form-control" id="email" formControlName="email"
+                        placeholder="Enter your email" (input)="registerForm.get('email')?.markAsTouched()">
+
+                    <!-- Real-time validation messages -->
+                    <div *ngIf="registerForm.get('email')?.dirty" class="text-danger mt-2 small-text">
+                        <div *ngIf="registerForm.get('email')?.hasError('required')">
+                            Email is required
+                        </div>
+                        <div *ngIf="registerForm.get('email')?.hasError('pattern')">
+                            Please enter a valid email address
+                        </div>
+                        <div *ngIf="registerForm.get('email')?.hasError('emailExists')">
+                            This email is already registered
+                        </div>
+                        <div *ngIf="registerForm.get('email')?.hasError('apiError')">
+                            {{ registerForm.get('email')?.errors?.['apiError'] }}
+                        </div>
                     </div>
                 </div>
 
-                <button (click)="nextStep()" class="btn btn-warning w-100 mb-3"
-                    [disabled]="!registerForm.get('email')?.valid">
+                <button class="btn btn-warning w-100 mb-3"
+                    [disabled]="registerForm.get('email')?.invalid || registerForm.get('email')?.pending"
+                    (click)="nextStep()">
                     Continue
                 </button>
 
                 <div class="text-center mb-4 small-text">
-                    You already have an account? <a href="#">Login</a>
+                    You already have an account? <a routerLink="/login">Login</a>
                 </div>
 
                 <div class="divider">

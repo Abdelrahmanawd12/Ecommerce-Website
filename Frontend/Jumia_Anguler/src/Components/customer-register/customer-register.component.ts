@@ -1,22 +1,24 @@
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { CommonModule, NgIf } from '@angular/common';
+import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
-import { RecaptchaModule } from 'ng-recaptcha';
 import { CustomerRegisterService } from '../../Services/Auth/RegiserServ/CustomerRegister/customer-register.service';
-import { Router } from '@angular/router';
-import { passwordMatched, passwordStrength } from '../../Validation/PasswordMatched';
+import { Router, RouterLink} from '@angular/router';
+import { passwordStrength } from '../../Validation/PasswordMatched';
+import { CheckEmailUniquenessService } from '../../Services/Auth/RegiserServ/EmailValidationUnique/check-email-uniqueness.service';
+import { catchError, debounceTime, distinctUntilChanged, filter, firstValueFrom, map, Observable, of, take, tap } from 'rxjs';
 
 @Component({
   selector: 'app-customer-register',
-  imports: [CommonModule, HttpClientModule, ReactiveFormsModule, RecaptchaModule],
+  imports: [CommonModule, HttpClientModule, ReactiveFormsModule, RouterLink],
+  standalone: true,
   providers: [CustomerRegisterService],
   templateUrl: './customer-register.component.html',
   styleUrl: './customer-register.component.css'
 })
 export class CustomerRegisterComponent{
 
-  currentView: 'email' | 'verification' | 'createPassword' | 'personalDetails' | 'additionalDetails' | 'captchaVerification'| 'phoneVerification' | 'accountCreated' = 'email';
+  currentView: 'email' | 'createPassword' | 'personalDetails' | 'additionalDetails' |  'accountCreated' = 'email';
   
  
   registerForm: FormGroup;
@@ -34,19 +36,19 @@ export class CustomerRegisterComponent{
   showPassword = false;
   showConfirmPassword = false; 
 
-  userName = 'Yasmin';
+  userName = 'Yasmine';
   redirectSeconds = 2;
   redirectInterval: any;
-
   
   @ViewChildren('digitInput') digitInputs!: QueryList<ElementRef>;
+  emailError: string | null = null;
 
-  constructor(private fb: FormBuilder, private customerRegisterService: CustomerRegisterService, private router: Router) {
+  constructor(private fb: FormBuilder, private customerRegisterService: CustomerRegisterService, private router: Router, private emailService: CheckEmailUniquenessService) {
     this.registerForm = this.fb.group({
-      email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$|^\+?[0-9 ]{10,15}$/)]],      
+      email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$|^\+?[0-9 ]{10,15}$/)] , [this.emailExistsValidator.bind(this)]],      
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
-      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]], // Basic validation for phone number
+      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
       prefix: ['+20', Validators.required],
       password: ['', [Validators.required, Validators.minLength(8),passwordStrength()]],
       BirthofDate: ['', [Validators.required, this.validateAge.bind(this)]],
@@ -61,14 +63,35 @@ export class CustomerRegisterComponent{
   get lastName() {return this.registerForm.get('lastName')};
   get phoneNumber() {return this.registerForm.get('phoneNumber')};
   get password() {return this.registerForm.get('password')};
-  // get confirmPassword() {return this.registerForm.get('confirmPassword')};
   get birthDate() {return this.registerForm.get('BirthofDate')};
   get gender() {return this.registerForm.get('gender')};
 
-  nextStep() {
+  async nextStep() {
     switch (this.currentView) {
       case 'email':
-        this.currentView = 'createPassword';
+        if (this.currentView === 'email') {
+          const emailControl = this.registerForm.get('email');
+          
+          // Force validation check
+          emailControl?.markAsTouched();
+          emailControl?.updateValueAndValidity();
+      
+          // Wait for pending validation
+          if (emailControl?.pending) {
+            await firstValueFrom(emailControl.statusChanges.pipe(
+              filter(status => status !== 'PENDING'),
+              take(1)
+            ));
+          }
+      
+          // Final check before proceeding
+          if (emailControl?.invalid || emailControl?.hasError('emailExists')) {
+            console.log('Cannot proceed - email issues:', emailControl?.errors);
+            return;
+          }
+      
+          this.currentView = 'createPassword';
+        }
         break;
       case 'createPassword':
         this.currentView = 'personalDetails';
@@ -83,6 +106,7 @@ export class CustomerRegisterComponent{
         break;
     }
   }
+
   onSubmit() {
     if (this.registerForm.valid) {
       const formData = { 
@@ -157,6 +181,32 @@ export class CustomerRegisterComponent{
     console.log('Redirecting to home page...');
   }
 
+  emailExistsValidator(control: AbstractControl): Observable<ValidationErrors | null> {
+    if (!control.value) {
+      return of(null);
+    }
+  
+    return this.emailService.checkEmailUniquebool(control.value).pipe(
+      map(response => {
+        if (response.exists) {
+          return { emailExists: true };
+        }
+        return null;
+      }),
+      catchError((error: HttpErrorResponse) => {
+        // For 400 errors, return both apiError and emailExists
+        if (error.status === 400) {
+          return of({ 
+            apiError: 'Invalid email format or already exists',
+            emailExists: true 
+          });
+        }
+        return of(null);
+      }),
+      take(1)
+    );
+  }
+
   loginWithFacebook() {
     console.log('Login with Facebook');
   }
@@ -184,5 +234,14 @@ export class CustomerRegisterComponent{
       this.registerForm.get('confirmPassword')?.valueChanges.subscribe(() => {
         this.registerForm.get('confirmPassword')?.updateValueAndValidity();
       });
-    }
+
+      this.registerForm.get('email')?.valueChanges.pipe(
+        debounceTime(500), 
+        distinctUntilChanged(), 
+        tap(() => {
+          this.registerForm.get('email')?.markAsDirty();
+          this.registerForm.get('email')?.updateValueAndValidity();
+        })
+      ).subscribe();
+  }
 }
