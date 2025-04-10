@@ -5,6 +5,7 @@ using Jumia.Data;
 using Jumia.Models;
 using Jumia_Api.DTOs.AuthenticationDTOs;
 using Jumia_Api.DTOs.AuthenticationDTOs.RegisterDTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Jumia_Api.Controllers.AuthenticationControllers
 {
+  
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
@@ -53,25 +55,9 @@ namespace Jumia_Api.Controllers.AuthenticationControllers
                     UserName = cstDto.Email,
                     CreatedAt = DateTime.Now,
                     Role = "Customer",
-                    Addresses = new List<Address>() // Initialize Addresses to avoid null reference
+                    PhoneNumberConfirmed = true,
+                    EmailConfirmed = true,
                 };
-
-                if (cstDto.Addresses != null) // Check if Addresses is not null
-                {
-                    foreach (var addressDto in cstDto.Addresses)
-                    {
-                        var address = new Address
-                        {
-                            Street = addressDto.Street,
-                            City = addressDto.City,
-                            Country = addressDto.Country,
-                            UserId = user.Id
-                        };
-                        user.Addresses.Add(address);
-                        await db.SaveChangesAsync(); // Save changes asynchronously
-
-                    }
-                }
 
                 IdentityResult result = await userManager.CreateAsync(user, cstDto.Password);
                 if (result.Succeeded)

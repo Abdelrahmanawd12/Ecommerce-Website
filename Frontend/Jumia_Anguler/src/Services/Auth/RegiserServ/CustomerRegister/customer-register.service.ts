@@ -1,63 +1,36 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../Environment/Environment.prod';
-import { HttpClient } from '@angular/common/http';
-import { catchError, tap, throwError } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ICustomer } from '../../../../Models/icustomer';
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class CustomerRegisterService {
 
-  private baseUrl = `${environment.apiUrl}/auth/registeration`;
+  private baseUrl = `${environment.apiUrl}/Auth/registeration`;
 
   constructor(
     private http: HttpClient,
-    private router: Router, // Inject Router
-    private toastr: ToastrService // Inject ToastrService
+    private router: Router // Inject Router
   ) { }
 
-  register(
-    email: string,
-    password: string,
-    firstName: string,
-    lastName: string,
-    phoneNumber: string,
-    dateOfBirth: Date,
-    gender: string,
-    street: string,
-    country: string,
-    city: string
-  ): any {
-    const addresses = [{
-      Street: street,
-      City: city,
-      Country: country
-    }];
-
-    const payload = {
-      Email: email,
-      Password: password,
-      FirstName: firstName,
-      LastName: lastName,
-      PhoneNumber: phoneNumber,
-      DateOfBirth: dateOfBirth,
-      Gender: gender,
-      Addresses: addresses
-    };
-
-    return this.http.post(this.baseUrl, payload).pipe(
+  register(user: ICustomer): Observable<any> {
+    const token = localStorage.getItem('token'); 
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+  
+    return this.http.post(this.baseUrl, user, { headers, responseType: 'text' }).pipe(
       tap(response => {
-        // Success handling: Show toast & navigate to login page
-        this.toastr.success('Account created successfully!', 'Success');
-        this.router.navigateByUrl('/login'); // Redirect to login page after successful registration
+        console.log('Registration successful', response);
       }),
       catchError(error => {
-        // Error handling: Show error toast
-        this.toastr.error('Registration failed. Please try again.', 'Error');
-        return throwError(error); // Re-throw error to propagate it
+        console.error('Error during registration', error);
+        return throwError(() => error);
       })
     );
   }

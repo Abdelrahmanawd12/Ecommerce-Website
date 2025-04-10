@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Jumia_Api.Migrations
 {
     [DbContext(typeof(JumiaDbContext))]
-    [Migration("20250408183411_SellerNetTotal")]
-    partial class SellerNetTotal
+    [Migration("20250409080727_update address")]
+    partial class updateaddress
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,9 +36,6 @@ namespace Jumia_Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AddressId"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -56,8 +53,6 @@ namespace Jumia_Api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AddressId");
-
-                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Address");
                 });
@@ -759,13 +754,6 @@ namespace Jumia_Api.Migrations
                     b.HasDiscriminator().HasValue("Seller");
                 });
 
-            modelBuilder.Entity("Jumia.Models.Address", b =>
-                {
-                    b.HasOne("Jumia.Models.ApplicationUser", null)
-                        .WithMany("Addresses")
-                        .HasForeignKey("ApplicationUserId");
-                });
-
             modelBuilder.Entity("Jumia.Models.Cart", b =>
                 {
                     b.HasOne("Jumia.Models.Customer", "Customer")
@@ -1018,8 +1006,6 @@ namespace Jumia_Api.Migrations
 
             modelBuilder.Entity("Jumia.Models.ApplicationUser", b =>
                 {
-                    b.Navigation("Addresses");
-
                     b.Navigation("Ratings");
                 });
 
