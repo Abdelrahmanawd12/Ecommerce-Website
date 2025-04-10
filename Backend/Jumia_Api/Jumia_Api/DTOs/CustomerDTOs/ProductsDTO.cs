@@ -9,7 +9,7 @@ namespace Jumia_Api.DTOs.CustomerDTOs
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
-        public string CategoryName { get; set; }
+        public string SubCategoryName { get; set; }
         public int Quantity { get; set; }
         public string Brand { get; set; }
         public List<decimal> RatingStars { get; set; } // List of Ratings

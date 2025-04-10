@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Jumia_Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b4528308aedbd429c01de81e1d096cc51d031a7a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ef1666e8ee8990ae9e1597dcaff737ce3c3f2d68")]
 [assembly: System.Reflection.AssemblyProductAttribute("Jumia_Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Jumia_Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -15,6 +15,8 @@ namespace Jumia.Models
         public int CatId { get; set; }
 
         // Navigation property for the Category (Many to One relationship)
+         public virtual ICollection<Product> Products { get; set; }
+
         public virtual Category Category { get; set; }
 
     }

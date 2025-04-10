@@ -241,5 +241,47 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Jumia_Api.Controllers.CustomerControllers.SubCategoryController",
+    "Method": "GetAllSubCategories",
+    "RelativePath": "api/SubCategory",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Jumia_Api.Controllers.CustomerControllers.SubCategoryController",
+    "Method": "GetSubCategoryById",
+    "RelativePath": "api/SubCategory/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Jumia_Api.Controllers.CustomerControllers.SubCategoryController",
+    "Method": "GetSubCategoryByName",
+    "RelativePath": "api/SubCategory/{name}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "name",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]
