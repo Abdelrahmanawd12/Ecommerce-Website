@@ -16,14 +16,10 @@ namespace Jumia_Api.DTOs.AuthenticationDTOs.RegisterDTOs
         public string Password { get; set; }
 
         [Required]
-        [Compare("Password")]
-        public string ConfirmPassword { get; set; }
-        [Required]
         public string PhoneNumber { get; set; }
         [Required]
         public string Gender { get; set; }
         [Required]
         public DateTime DateOfBirth { get; set; }
-        public ICollection<Address>? Addresses { get; set; }
     }
 }
