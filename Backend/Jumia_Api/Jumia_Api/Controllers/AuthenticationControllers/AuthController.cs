@@ -104,12 +104,29 @@ namespace Jumia_Api.Controllers.AuthenticationControllers
         [HttpPost("sellerRegisteration")] //api/auth/sellerRegisteration
         public async Task<IActionResult> SellerRegisteration([FromBody] SellerRegisterDTO selDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = "Validation failed",
+                    errors = ModelState.Values
+                        .SelectMany(v => v.Errors)
+                        .Select(e => e.ErrorMessage)
+                        .ToList()
+                });
+            }
             if (ModelState.IsValid)
             {
                 var existingUser = await userManager.FindByEmailAsync(selDto.Email);
                 if (existingUser != null)
                 {
-                    return BadRequest("Username is already taken.");
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Registration failed",
+                        errors = new List<string> { "Email is already taken." }
+                    });
                 }
                 Seller user = new Seller()
                 {
@@ -125,6 +142,8 @@ namespace Jumia_Api.Controllers.AuthenticationControllers
                     StoreAddress = selDto.StoreAddress,
                     CreatedAt = DateTime.Now,
                     Role = "Seller",
+                    PhoneNumberConfirmed=true,
+                    EmailConfirmed=true,
                 };
 
                 IdentityResult result = await userManager.CreateAsync(user, selDto.Password);
@@ -132,25 +151,57 @@ namespace Jumia_Api.Controllers.AuthenticationControllers
                 {
                     try
                     {
-
-                        return Ok("Account Added Successfully");
+                        return Ok(new
+                        {
+                            success = true,
+                            message = "Account created successfully",
+                            userId = user.Id
+                        });
                     }
                     catch (Exception ex)
                     {
                         _logger.LogError($"Error while saving user: {ex.Message}");
-                        return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while saving the user");
+                        return StatusCode(StatusCodes.Status500InternalServerError, new
+                        {
+                            success = false,
+                            message = "An error occurred while saving the user",
+                            error = ex.Message
+                        });
                     }
 
                 }
                 else
                 {
                     var errors = result.Errors.Select(e => e.Description).ToList();
-                    return BadRequest(errors);
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Registration failed",
+                        errors = result.Errors.Select(e => e.Description).ToList()
+                    });
                 }
 
             }
             return BadRequest(ModelState);
         }
+
+        [HttpGet("check-email")] // api/auth/check-email
+        public async Task<IActionResult> CheckEmailUnique([FromQuery] string email)
+        {
+            if (string.IsNullOrEmpty(email))
+            {
+                return BadRequest(new { success = false, message = "Email is required" });
+            }
+
+            var existingUser = await userManager.FindByEmailAsync(email);
+            if (existingUser != null)
+            {
+                return BadRequest(new { success = false, message = "Email is already taken" });
+            }
+
+            return Ok(new { success = true, message = "Email is available" });
+        }
+
 
         //------------------------------------------------------
 

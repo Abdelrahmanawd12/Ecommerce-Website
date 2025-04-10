@@ -738,6 +738,9 @@ namespace Jumia_Api.Migrations
                 {
                     b.HasBaseType("Jumia.Models.ApplicationUser");
 
+                    b.Property<decimal>("SellerNetIncome")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("ShippingZone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

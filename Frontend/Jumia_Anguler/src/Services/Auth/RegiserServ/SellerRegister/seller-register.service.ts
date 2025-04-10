@@ -1,9 +1,14 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../Environment/Environment.prod';
-import { HttpClient } from '@angular/common/http';
-import { catchError, tap, throwError } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { catchError, tap, throwError, Observable } from 'rxjs';
 import { Router } from '@angular/router';
+
+export interface RegisterResponse {
+  message: string;
+  success: boolean;
+  token: string;  
+}
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +19,7 @@ export class SellerRegisterService {
 
   constructor(
     private http: HttpClient,
-    private router: Router, // Inject Router
-    private toastr: ToastrService // Inject ToastrService
+    private router: Router,
   ) { }
 
   register(
@@ -29,7 +33,7 @@ export class SellerRegisterService {
     storeName: string,
     shippingZone: string,
     storeAddress: string
-  ): any {
+  ): Observable<RegisterResponse> {
 
     const payload = {
       Email: email,
@@ -44,18 +48,38 @@ export class SellerRegisterService {
       StoreAddress: storeAddress
     };
 
-    return this.http.post(this.baseUrl, payload).pipe(
+    return this.http.post<RegisterResponse>(this.baseUrl, payload, { headers: { 'Content-Type': 'application/json' } }).pipe(
       tap(response => {
-        // Success handling: Show toast & navigate to login page
-        this.toastr.success('Account created successfully!', 'Success');
-        this.router.navigateByUrl('/login'); // Redirect to login page after successful registration
+        if (response.success) {
+          // Save token to localStorage
+          localStorage.setItem('authToken', response.token);  
+
+          console.log(response.message);
+          this.router.navigate(['/seller/dashboard']);
+        } else {
+          console.error(response.message);
+        }
       }),
-      catchError(error => {
-        // Error handling: Show error toast
-        this.toastr.error('Registration failed. Please try again.', 'Error');
-        return throwError(error); // Re-throw error to propagate it
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = error.error?.message || 'An unknown error occurred.';
+      
+        if (error instanceof HttpErrorResponse) {
+          if (error.status === 400) {
+            try {
+              errorMessage = error?.error?.message || 'Invalid input data.';
+            } catch (e) {
+              errorMessage = 'Unexpected response format from server.';
+            }
+          } else if (error.status === 500) {
+            errorMessage = 'Server error. Please try again later.';
+          }
+        }
+      
+        if (error.error instanceof ProgressEvent) {
+          return throwError(() => 'Server error occurred');
+        }
+        return throwError(() => errorMessage);
       })
     );
   }
-  
 }

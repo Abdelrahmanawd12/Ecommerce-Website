@@ -1,11 +1,16 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+
 import { HeaderComponent } from '../Components/header/header.component';
 import { ShopComponent } from '../Components/Cstomer/shop/shop.component';
+import { RouterOutlet } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet,HeaderComponent],
+  providers: [],
+  standalone: true,
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
