@@ -1,14 +1,10 @@
-﻿using Jumia.Models;
-using Jumia_Api.Models;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Jumia_Api.DTOs.SellerDTOs
 {
-    public class ProductsSellerDTO
+    public class AddProduct
     {
-        [Required]
-        public int ProductId { get; set; }
+
         [Required]
         public string Name { get; set; }
         [Required]
@@ -32,10 +28,8 @@ namespace Jumia_Api.DTOs.SellerDTOs
         [Required]
         public List<decimal> RatingStars { get; set; } // List of Ratings
         [Required]
-        public List<string> ImageUrls { get; set; }  // List of Image URLs
+        public List<IFormFile> ImageUrls { get; set; }  // List of Image URLs
         [Required]
         public List<string> Tags { get; set; }
-
-
     }
 }

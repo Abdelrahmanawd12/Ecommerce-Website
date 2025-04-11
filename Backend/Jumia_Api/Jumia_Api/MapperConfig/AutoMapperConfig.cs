@@ -75,10 +75,12 @@ namespace Jumia_Api.MapperConfig
             CreateMap<Product, ProductsSellerDTO>().AfterMap((src, dest) =>
             {
                 dest.SubCategoryName = src.SubCategory.SubCatName.ToString();
-                dest.ImageUrls = src.ProductImages.Select(img => img.Url).ToList();
+                dest.ImageUrls= src.ProductImages.Select(img => img.Url).ToList();
                 dest.RatingStars = src.Ratings.Select(s => s.Stars).ToList();
                 dest.Tags = src.ProductTags.Select(t => t.Tag).ToList();
             });
+
+         
 
         }
     }
