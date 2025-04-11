@@ -1,4 +1,4 @@
-﻿using Jumia.Data;
+using Jumia.Data;
 using Jumia.Models;
 using Jumia_Api.DTOs.AdminDTOs;
 using Jumia_Api.DTOs.CustomerDTOs;

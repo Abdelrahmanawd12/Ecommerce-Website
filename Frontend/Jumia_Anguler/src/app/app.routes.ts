@@ -5,6 +5,8 @@ import { ProductDetailsComponent } from '../Components/product-details/product-d
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
+    { path: 'dashboard', loadComponent: () => import('../Components/admin-dashboard/admin-dashboard.component').then((m) => m.AdminDashboardComponent) },
+
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
 
