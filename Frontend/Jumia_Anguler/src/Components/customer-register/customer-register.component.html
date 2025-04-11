@@ -167,7 +167,7 @@
                 <div class="mb-3">
                     <label for="firstName" class="form-label">First Name*</label>
                     <input type="text" class="form-control" id="firstName" formControlName="firstName"
-                        placeholder="Yasmin">
+                        placeholder="Enter Your First Name">
                     <div *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched"
                         class="text-danger mt-1">
                         First name is required
@@ -177,7 +177,7 @@
                 <div class="mb-3">
                     <label for="lastName" class="form-label">Last Name*</label>
                     <input type="text" class="form-control" id="lastName" formControlName="lastName"
-                        placeholder="Rabea">
+                        placeholder="Enter Your Last Name">
                     <div *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched"
                         class="text-danger mt-1">
                         Last name is required
@@ -190,7 +190,7 @@
                         <select class="form-select" style="max-width: 100px;" formControlName="prefix">
                             <option *ngFor="let prefix of prefixes" [value]="prefix">{{prefix}}</option>
                         </select>
-                        <input type="text" class="form-control" formControlName="phoneNumber" placeholder="01141985758">
+                        <input type="text" class="form-control" formControlName="phoneNumber" placeholder="Enter Your Phone Number">
                     </div>
                     <div *ngIf="registerForm.get('phoneNumber')?.invalid && registerForm.get('phoneNumber')?.touched"
                         class="text-danger mt-1">

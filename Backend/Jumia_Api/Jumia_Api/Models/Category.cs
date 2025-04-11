@@ -16,6 +16,6 @@ namespace Jumia.Models
         public virtual ICollection<SubCategory> SubCategories { get; set; }
 
         // Navigation property for Products (One to Many relationship)
-        public virtual ICollection<Product> Products { get; set; }
+        //public virtual ICollection<Product> Products { get; set; }
     }
 }

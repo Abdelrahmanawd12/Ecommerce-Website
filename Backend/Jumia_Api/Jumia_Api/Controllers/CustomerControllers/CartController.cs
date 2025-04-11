@@ -48,7 +48,20 @@ namespace Jumia_Api.Controllers.CustomerControllers
                 unit.CartRepository.Add(cart);
             }
 
+            var product = unit.ProductsRepository.GetById(dto.ProductId);
+            if (product == null)
+                return NotFound("Product not found");
+
             var existingItem = cart.CartItems.FirstOrDefault(i => i.ProductId == dto.ProductId);
+
+            int totalRequestedQuantity = dto.Quantity;
+            if (existingItem != null)
+            {
+                totalRequestedQuantity += existingItem.Quantity;
+            }
+
+            if (totalRequestedQuantity > product.Quantity)
+                return BadRequest($"Not enough stock. Only {product.Quantity} item(s) available.");
 
             if (existingItem != null)
             {
@@ -62,10 +75,13 @@ namespace Jumia_Api.Controllers.CustomerControllers
                     Quantity = dto.Quantity
                 });
             }
+            //product.Quantity -= dto.Quantity;
 
             unit.Save();
-            return Ok("Item added successfully");
+            return Ok(new { message = "Item added successfully", status = "success" });
+
         }
+
 
         [HttpPut("update/{customerId}/{productId}")]
         public IActionResult UpdateCartItemQuantity(string customerId, int productId, [FromBody] int quantityChange)
@@ -96,7 +112,7 @@ namespace Jumia_Api.Controllers.CustomerControllers
             }
 
             unit.Save();
-            return Ok("Item quantity updated successfully");
+            return Ok(new { message = "Item updated successfully", status = "success" });
         }
         [HttpDelete("remove/{customerId}/{productId}")]
         public IActionResult RemoveItemFromCart(string customerId, int productId)
@@ -120,7 +136,7 @@ namespace Jumia_Api.Controllers.CustomerControllers
 
             unit.Save();
 
-            return Ok("Item removed from cart successfully");
+            return Ok(new { message = "Item deleted successfully", status = "success" });
         }
         [HttpGet("summary/{customerId}")]
         public IActionResult GetCartSummary(string customerId)
@@ -132,6 +148,9 @@ namespace Jumia_Api.Controllers.CustomerControllers
             {
                 return NotFound("Cart not found");
             }
+
+            if (cart.Customer == null)
+                return NotFound("Customer not found");
 
             int totalItems = cart.CartItems.Sum(i => i.Quantity);
 
@@ -164,7 +183,7 @@ namespace Jumia_Api.Controllers.CustomerControllers
 
             unit.Save();
 
-            return Ok("Cart cleared successfully");
+            return Ok(new { message = "Cart clear successfully", status = "success" });
         }
 
 

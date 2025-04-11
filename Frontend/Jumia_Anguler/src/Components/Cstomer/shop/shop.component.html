@@ -1,0 +1,6 @@
+<div>{{category.id}}</div>
+<div>{{category.name}}</div>
+<h1>subcategories : </h1>
+@for(subcategories of category.subcategory;track category.id){
+  <div>{{subcategories}}</div>
+  }
