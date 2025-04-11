@@ -9,7 +9,7 @@ import { LoginResponse } from '../../../Models/login-response';
 })
 export class LoginService {
 
-  private baseUrl = environment.apiUrl + '/auth/login';
+  private baseUrl = environment.apiUrl;
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
 
   isLoggedIn$ = this.isLoggedInSubject.asObservable();
@@ -24,14 +24,32 @@ export class LoginService {
    * @returns An observable of the login response containing the token and user info.
    */
   login(email: string, password: string): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(this.baseUrl, { email, password }).pipe(
+    return this.http.post<LoginResponse>(this.baseUrl + '/auth/login', { email, password }).pipe(
       tap(response => {
-        this.setToken(response.token);
-        this.setUserInfo(response.userId, response.roles);
+        this.setToken(response.token);  
         this.isLoggedInSubject.next(true);
       }),
       catchError(error => {
         console.error('Login error', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  GetuserbyEmail(email: string): Observable<LoginResponse> {
+    return this.http.get<LoginResponse>(`${this.baseUrl}/auth/userByEmail?email=${email}`).pipe(
+      tap(response => {
+        if (response && response.role) {
+          if (response.token) {
+            this.setToken(response.token);
+          }
+          this.isLoggedInSubject.next(true);
+        } else {
+          console.error('No role found in user data', response);
+        }
+      }),
+      catchError(error => {
+        console.error('Error fetching user by email', error);
         return throwError(() => error);
       })
     );
@@ -51,10 +69,12 @@ export class LoginService {
     sessionStorage.setItem('token', token); // Optional: Store in sessionStorage as well
   }
 
-  private setUserInfo(userId: string, roles: string[]): void {
+  public setUserInfo(userId: string, role: string): void {
+  if (userId && role) {
     localStorage.setItem('userId', userId);
-    localStorage.setItem('roles', JSON.stringify(roles));
+    localStorage.setItem('role', role);
   }
+}
 
   private clearToken(): void {
     localStorage.removeItem('token');

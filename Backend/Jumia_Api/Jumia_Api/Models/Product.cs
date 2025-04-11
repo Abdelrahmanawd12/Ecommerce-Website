@@ -13,12 +13,14 @@ namespace Jumia.Models
         public string Description { get; set; }
         public decimal Price { get; set; }
 
-        [ForeignKey("Category")]
-        public int CategoryId { get; set; }
+        //[ForeignKey("Category")]
+        //public int CategoryId { get; set; }
         public int Quantity { get; set; }
         public string Brand { get; set; }
         public decimal Discount { get; set; }
         public decimal Weight { get; set; }
+        [ForeignKey("SubCategory")]
+        public int SubCategoryId { get; set; }
 
         [ForeignKey("Seller")]
         public string SellerId { get; set; }
@@ -36,8 +38,8 @@ namespace Jumia.Models
         public virtual ICollection<OrderItem> OrderItems { get; set; }
 
         // Navigation property for category (Many to One relationship)
-        public virtual Category Category { get; set; }
-
+        //public virtual Category Category { get; set; }
+        public virtual SubCategory SubCategory { get; set; }
         // Navigation property for seller (Many to One relationship)
         public virtual Seller Seller { get; set; }
 
