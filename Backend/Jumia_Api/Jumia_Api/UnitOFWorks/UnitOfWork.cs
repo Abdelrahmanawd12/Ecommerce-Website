@@ -9,6 +9,7 @@ namespace Jumia_Api.UnitOFWorks
         ProductsRepository productsRepository;
         CategoryRepository categoryRepository;
         GenericRepository<Cart> cartRepository;
+        SubCategoryRepository subCategoryRepository;
         public UnitOFWork(JumiaDbContext context)
         {
             db = context;
@@ -44,6 +45,17 @@ namespace Jumia_Api.UnitOFWorks
                     cartRepository = new GenericRepository<Cart>(db);
                 }
                 return cartRepository;
+            }
+        }
+        public SubCategoryRepository SubCategoryRepository
+        {
+            get
+            {
+                if (subCategoryRepository == null)
+                {
+                    subCategoryRepository = new SubCategoryRepository(db);
+                }
+                return subCategoryRepository;
             }
         }
         public void Save()

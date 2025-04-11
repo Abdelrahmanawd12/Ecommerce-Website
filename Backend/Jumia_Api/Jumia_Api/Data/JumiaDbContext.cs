@@ -23,6 +23,8 @@ namespace Jumia.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Cart> Carts { get; set; }
+        
+
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Wishlist> Wishlist { get; set; }
         public DbSet<WishlistItem> WishlistItems { get; set; }
@@ -94,9 +96,16 @@ namespace Jumia.Data
 
             // Category - Product (One to Many)
             modelBuilder.Entity<Category>()
-                .HasMany(c => c.Products)
-                .WithOne(p => p.Category)
-                .HasForeignKey(p => p.CategoryId);
+           .HasMany(c => c.SubCategories)
+           .WithOne(s => s.Category)
+           .HasForeignKey(s => s.CatId)
+           .OnDelete(DeleteBehavior.Cascade);
+            // SubCategory - Product (One to Many)
+            modelBuilder.Entity<SubCategory>()
+                .HasMany(s => s.Products)
+                .WithOne(p => p.SubCategory)
+                .HasForeignKey(p => p.SubCategoryId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // Cart - CartItem (One to Many)
             modelBuilder.Entity<Cart>()

@@ -27,22 +27,13 @@
               }
             ],
             "styles": [
-<<<<<<< HEAD
-              "src/styles.css",
-              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/ngx-toastr/toastr.css"
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+                            "src/styles.css",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": [
               "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ],
-=======
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/styles.css"
-            ],
-            "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
-            ],
->>>>>>> adfdb4917d3665bb03ec61627c08f1b9fc155993
             "server": "src/main.server.ts",
             "outputMode": "server",
             "ssr": {
