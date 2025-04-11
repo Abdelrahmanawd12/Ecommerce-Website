@@ -5,7 +5,7 @@
             <div class="row w-100 justify-content-center align-items-center">
                 <!-- Left Image -->
                 <div class="col-md-6 d-none d-md-block text-center">
-                    <img src="Assets/Images/store_logo.png" alt="Shop" class="img-fluid" />
+                    <img src="Assets/store_logo.png" alt="Shop" class="img-fluid" />
                     <!-- Stepper -->
                     <div class="d-flex justify-content-center mt-4">
                         <span *ngFor="let step of steps; let i = index" [class.active]="i === currentStep"
@@ -79,7 +79,7 @@
                                             name="password" required />
                                         <span class="input-group-text" (click)="togglePassword()"
                                             style="cursor: pointer;">
-                                            <img [src]="showPassword ? 'Assets/Images/eye_closed.png' : 'Assets/Images/eye_opened.png'"
+                                            <img [src]="showPassword ? 'Assets/eye_closed.png' : 'Assets/eye_opened.png'"
                                                 alt="Toggle Password Visibility"
                                                 style="width: 20px; cursor: pointer;" />
                                         </span>
@@ -97,7 +97,7 @@
                                             [(ngModel)]="confirmPassword" name="confirmPassword" required />
                                         <span class="input-group-text" (click)="toggleConfirmPassword()"
                                             style="cursor: pointer;">
-                                            <img [src]="showConfirmPassword ? 'Assets/Images/eye_closed.png' : 'Assets/Images/eye_opened.png'"
+                                            <img [src]="showConfirmPassword ? 'Assets/eye_closed.png' : 'Assets/eye_opened.png'"
                                                 alt="Toggle Password Visibility"
                                                 style="width: 20px; cursor: pointer;" />
                                         </span>
@@ -219,7 +219,7 @@
                     <app-jumia-global-popup #jumiaPopup></app-jumia-global-popup>
                     <button class="btn global-btn w-100 d-flex align-items-center justify-content-center py-2"
                         (click)="goToJumiaGlobal()">
-                        <img src="Assets/Images/airplane.png" alt="Global" style="width: 20px;" class="me-2" />
+                        <img src="Assets/airplane.png" alt="Global" style="width: 20px;" class="me-2" />
                         <span>Sell Globally on Jumia</span>
                     </button>
 
@@ -233,7 +233,7 @@
 
                     <p class="text-center mt-2">
                         Already have an account?
-                        <a href="#" style="color: orange;" class=" text-decoration-none fw-bold">Sign in</a>
+                        <a href="#" style="color: orange;" class=" text-decoration-none fw-bold" routerLink="/login" >Sign in</a>
                     </p>
                 </div>
             </div>
@@ -245,7 +245,7 @@
 <div *ngIf="isLoading" class="loading-fullscreen d-flex justify-content-center align-items-center vh-100 ">
     <div class="loading-container text-center">
         <div class="m-4">
-            <img src="Assets/Images/vendorControl.png" style="width: 200px; height: 150px;" alt="...">
+            <img src="Assets/vendorControl.png" style="width: 200px; height: 150px;" alt="...">
         </div>
         <div class="spinner-border text-warning" style="width: 3rem; height: 3rem;" role="status">
             <span class="visually-hidden">Loading...</span>

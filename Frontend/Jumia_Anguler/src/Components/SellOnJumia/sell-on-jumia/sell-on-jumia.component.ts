@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { JumiaGlobalPopupComponent } from '../../jumia-global-bobup/jumia-global-bobup.component';
 import { SellerRegisterService } from '../../../Services/Auth/RegiserServ/SellerRegister/seller-register.service';
 import { CheckEmailUniquenessService } from '../../../Services/Auth/RegiserServ/EmailValidationUnique/check-email-uniqueness.service';
 
 @Component({
   selector: 'app-sell-on-jumia',
-  imports: [CommonModule, FormsModule, JumiaGlobalPopupComponent],
+  imports: [CommonModule, FormsModule, JumiaGlobalPopupComponent,RouterModule],
   templateUrl: './sell-on-jumia.component.html',
   styleUrls: ['./sell-on-jumia.component.css'],
   standalone: true,

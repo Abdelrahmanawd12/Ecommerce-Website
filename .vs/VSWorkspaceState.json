@@ -1,0 +1,18 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Backend",
+<<<<<<< HEAD
+    "\\Backend\\Jumia_Api"
+  ],
+  "SelectedNode": "\\Backend\\Jumia_Api\\Jumia_Api.sln",
+=======
+    "\\Backend\\Jumia_Api",
+    "\\Backend\\Jumia_Api\\Jumia_Api",
+    "\\Backend\\Jumia_Api\\Jumia_Api\\Controllers",
+    "\\Backend\\Jumia_Api\\Jumia_Api\\Controllers\\AuthenticationControllers"
+  ],
+  "SelectedNode": "\\Backend\\Jumia_Api\\Jumia_Api\\Controllers\\AuthenticationControllers\\AuthController.cs",
+>>>>>>> 2c3569297c10d4e6aba3c824fbc1e7f74ee31c64
+  "PreviewInSolutionExplorer": false
+}

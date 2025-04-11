@@ -1,0 +1,72 @@
+<!-- seller-login.component.html -->
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="welcome-message">
+        <h1 class="login-title">We've Missed You!</h1>
+        <p class="login-subtitle">Sign in to access your account and continue where you left off.</p>
+      </div>
+    </div>
+    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+      <i class="bi bi-exclamation-triangle-fill"></i> Invalid email or password.
+    </div>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <!-- Email Field -->
+      <div class="form-group">
+        <input type="email" formControlName="email" id="email" class="form-input"
+          [class.filled]="loginForm.get('email')?.value" required>
+        <label for="email" class="form-label">Email</label>
+        <div class="underline"></div>
+        <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="error-message">
+          Valid email is required
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group password-group">
+        <input [type]="showPassword ? 'text' : 'password'" formControlName="password" id="password" class="form-input"
+          [class.filled]="loginForm.get('password')?.value" required>
+        <label for="password" class="form-label">Password</label>
+        <div class="underline"></div>
+        <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
+          <i class="bi" [ngClass]="{'bi-eye-slash': showPassword, 'bi-eye': !showPassword}"></i>
+        </button>
+        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error-message">
+          Password is required
+        </div>
+      </div>
+
+      <!-- Remember Me & Forgot Password -->
+      <div class="form-options">
+        <div class="checkbox-group">
+          <input type="checkbox" formControlName="rememberMe" id="rememberMe" class="checkbox-input">
+          <label for="rememberMe" class="checkbox-label">Remember me</label>
+        </div>
+        <div class="forgot-password-link" (click)="forgotPassword()">
+          Forgot password?
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="submit-btn" [disabled]="!loginForm.valid || isLoading">
+        <span *ngIf="!isLoading">LOG IN</span>
+        <span *ngIf="isLoading" class="spinner"></span>
+      </button>
+
+      <div class="registration-prompt">
+        <span class="prompt-text">New to Jumia?</span>
+        <a routerLink="/register" class="register-link">Create account</a>
+      </div>
+
+      <div class="seller-center-link">
+        <img src="assets/jumiaStar.svg" alt="Jumia Star" width="16" height="16">
+        <span><a routerLink="/intro" class="seller-link">JOINING US FROM SELLER CENTER? CLICK HERE</a></span>
+      </div>
+    </form>
+
+    <div class="brand">
+      <img src="assets/jumia-seeklogo.svg" alt="Jumia Logo" width="120" height="40">
+      <p class="brand-tagline">Empowering African E-commerce</p>
+    </div>
+  </div>
+</div>

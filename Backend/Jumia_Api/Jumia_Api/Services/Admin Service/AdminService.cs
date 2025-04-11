@@ -181,7 +181,7 @@ namespace Jumia_Api.Services.Admin_Service
                 Name = p.Name,
                 Description = p.Description,
                 Price = p.Price,
-               SubCategoryName = p.SubCategory?.SubCatName,
+                SubCategoryName = p.SubCategory?.SubCatName,
                 Quantity = p.Quantity,
                 Brand = p.Brand,
                 ImageUrls = p.ProductImages?.Select(img => img.Url).ToList() ?? new List<string>(),
@@ -209,7 +209,7 @@ namespace Jumia_Api.Services.Admin_Service
                 Name = product.Name,
                 Description = product.Description,
                 Price = product.Price,
-              SubCategoryName = product.SubCategory?.SubCatName,
+                SubCategoryName = product.SubCategory?.SubCatName,
                 Quantity = product.Quantity,
                 Brand = product.Brand,
                 ImageUrls = product.ProductImages?.Select(img => img.Url).ToList() ?? new List<string>(),
@@ -222,22 +222,22 @@ namespace Jumia_Api.Services.Admin_Service
         {
             if (productDto == null) return false;
 
-      var product = new Product
-      {
-        Name = productDto.Name,
-        Description = productDto.Description,
-        Price = productDto.Price,
-        SubCategoryId = _context.SubCategories
-                      .FirstOrDefault(sc => sc.SubCatName == productDto.SubCategoryName)?.SubCatId ?? 0,
-        Quantity = productDto.Quantity,
-        Brand = productDto.Brand,
-        Discount = productDto.Discount,
-        Weight = productDto.Weight,
-        ProductImages = productDto.ImageUrls?.Select(url => new ProductImage { Url = url }).ToList(),
-        ProductTags = productDto.Tags?.Select(t => new ProductTag { Tag = t }).ToList()
-      };
+            var product = new Product
+            {
+                Name = productDto.Name,
+                Description = productDto.Description,
+                Price = productDto.Price,
+                SubCategoryId = _context.SubCategories
+                            .FirstOrDefault(sc => sc.SubCatName == productDto.SubCategoryName)?.SubCatId ?? 0,
+                Quantity = productDto.Quantity,
+                Brand = productDto.Brand,
+                Discount = productDto.Discount,
+                Weight = productDto.Weight,
+                ProductImages = productDto.ImageUrls?.Select(url => new ProductImage { Url = url }).ToList(),
+                ProductTags = productDto.Tags?.Select(t => new ProductTag { Tag = t }).ToList()
+            };
 
-      _context.Products.Add(product);
+            _context.Products.Add(product);
             await _context.SaveChangesAsync();
             return true;
         }
@@ -258,18 +258,18 @@ namespace Jumia_Api.Services.Admin_Service
             product.Brand = updatedProduct.Brand;
             product.Discount = updatedProduct.Discount;
             product.Weight = updatedProduct.Weight;
-      var subCategory = await _context.SubCategories
-     .FirstOrDefaultAsync(sc => sc.SubCatName == updatedProduct.SubCategoryName);
+            var subCategory = await _context.SubCategories
+           .FirstOrDefaultAsync(sc => sc.SubCatName == updatedProduct.SubCategoryName);
 
-      if (subCategory != null)
-      {
-        product.SubCategoryId = subCategory.SubCatId;
-      }
+            if (subCategory != null)
+            {
+                product.SubCategoryId = subCategory.SubCatId;
+            }
 
 
 
-     
-      product.ProductImages.Clear();
+
+            product.ProductImages.Clear();
             product.ProductImages = updatedProduct.ImageUrls?.Select(url => new ProductImage { Url = url }).ToList();
 
             product.ProductTags.Clear();
@@ -304,7 +304,7 @@ namespace Jumia_Api.Services.Admin_Service
 
             if (product == null) return false;
 
-         
+
             product.Name = productDto.Name;
             product.Description = productDto.Description;
             product.Price = productDto.Price;
@@ -313,17 +313,17 @@ namespace Jumia_Api.Services.Admin_Service
             product.Discount = productDto.Discount;
             product.Weight = productDto.Weight;
 
-    
-      var subCategory = await _context.SubCategories
-    .FirstOrDefaultAsync(sc => sc.SubCatName == productDto.SubCategoryName);
 
-      if (subCategory != null)
-      {
-        product.SubCategoryId = subCategory.SubCatId;
-      }
+            var subCategory = await _context.SubCategories
+          .FirstOrDefaultAsync(sc => sc.SubCatName == productDto.SubCategoryName);
 
-   
-      _context.ProductImages.RemoveRange(product.ProductImages);
+            if (subCategory != null)
+            {
+                product.SubCategoryId = subCategory.SubCatId;
+            }
+
+
+            _context.ProductImages.RemoveRange(product.ProductImages);
             product.ProductImages = productDto.ImageUrls?
                 .Select(url => new ProductImage { Url = url, ProductId = product.ProductId })
                 .ToList();
