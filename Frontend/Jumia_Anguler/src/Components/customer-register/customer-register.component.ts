@@ -118,7 +118,7 @@ export class CustomerRegisterComponent{
       this.customerRegisterService.register(formData).subscribe({
         next: () => {
           setTimeout(() => { 
-            this.router.navigate(['/home']); 
+            this.router.navigate(['/login']); 
           }, 1500);
         },
         error: () => {

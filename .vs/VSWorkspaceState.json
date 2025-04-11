@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Backend",
+    "\\Backend\\Jumia_Api",
+    "\\Backend\\Jumia_Api\\Jumia_Api",
+    "\\Backend\\Jumia_Api\\Jumia_Api\\Controllers",
+    "\\Backend\\Jumia_Api\\Jumia_Api\\Controllers\\AuthenticationControllers"
+  ],
+  "SelectedNode": "\\Backend\\Jumia_Api\\Jumia_Api\\Controllers\\AuthenticationControllers\\AuthController.cs",
+  "PreviewInSolutionExplorer": false
+}
