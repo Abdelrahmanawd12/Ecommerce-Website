@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Jumia.Models;
 using Jumia_Api.DTOs.CustomerDTOs;
+using Jumia_Api.DTOs.SellerDTOs;
 namespace Jumia_Api.MapperConfig
 {
     public class AutoMapperConfig : Profile
@@ -70,6 +71,15 @@ namespace Jumia_Api.MapperConfig
                 dest.ProductStock = src.Product.Quantity;
                 dest.ImageUrl = src.Product.ProductImages.FirstOrDefault()?.Url;
             });
+
+            CreateMap<Product, ProductsSellerDTO>().AfterMap((src, dest) =>
+            {
+                dest.SubCategoryName = src.SubCategory.SubCatName.ToString();
+                dest.ImageUrls = src.ProductImages.Select(img => img.Url).ToList();
+                dest.RatingStars = src.Ratings.Select(s => s.Stars).ToList();
+                dest.Tags = src.ProductTags.Select(t => t.Tag).ToList();
+            });
+
         }
     }
 }
