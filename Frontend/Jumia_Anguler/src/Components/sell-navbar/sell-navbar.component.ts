@@ -1,9 +1,10 @@
 import { ViewportScroller } from '@angular/common';
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-sell-navbar',
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './sell-navbar.component.html',
   styleUrl: './sell-navbar.component.css'
 })

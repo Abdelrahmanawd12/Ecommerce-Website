@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SellNavbarComponent } from '../sell-navbar/sell-navbar.component';
 import { SellFooterComponent } from '../sell-footer/sell-footer.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-intro-seller-register',
-  imports: [ReactiveFormsModule,SellNavbarComponent,SellFooterComponent],
+  imports: [ReactiveFormsModule,SellNavbarComponent,SellFooterComponent,RouterModule],
   templateUrl: './intro-seller-register.component.html',
   styleUrl: './intro-seller-register.component.css'
 })

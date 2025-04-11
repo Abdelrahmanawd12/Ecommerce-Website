@@ -68,6 +68,7 @@ namespace Jumia_Api
             builder.Services.AddScoped<IAdminService, AdminService>();
 
             var app = builder.Build();
+            app.UseStaticFiles();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
