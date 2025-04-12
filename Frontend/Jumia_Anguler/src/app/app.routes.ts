@@ -19,7 +19,7 @@ export const routes: Routes = [
     {path: 'sellerRegisteration', loadComponent: () => import('../Components/seller-register/seller-register.component').then((m) => m.SellerRegisterComponent)},
     {path: 'sellOnJumia', loadComponent: () => import('../Components/SellOnJumia/sell-on-jumia/sell-on-jumia.component').then((m) => m.SellOnJumiaComponent)},
     {path: 'intro', loadComponent: () => import('../Components/intro-seller-register/intro-seller-register.component').then((m) => m.IntroSellerRegisterComponent)},
-    {path: 'sellerDashboard', loadComponent: () => import('../Components/seller-dashboard/seller-dashboard.component').then((m) => m.SellerDashboardComponent)},
+    {path: 'sellerDashboard', loadComponent: () => import('../Components/Seller_Dashboard_components/seller-dashboard/seller-dashboard.component').then((m) => m.SellerDashboardComponent)},
 
 
     { path: 'login', loadComponent: () => import('../Components/login/login.component').then((m) => m.LoginComponent)},
