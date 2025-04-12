@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Icategory } from '../../Models/Icategory';
-import { CategoryService } from '../../Services/Auth/Customer/category.service';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { ProductsService } from '../../Services/Auth/Customer/products.service';
 import { IProduct } from '../../Models/Iproduct';
-import { CartService } from '../../Services/Auth/Customer/cart.service';
+import { CategoryService } from '../../Services/Customer/category.service';
+import { ProductsService } from '../../Services/Customer/products.service';
+import { CartService } from '../../Services/Customer/cart.service';
 
 @Component({
   selector: 'app-home',

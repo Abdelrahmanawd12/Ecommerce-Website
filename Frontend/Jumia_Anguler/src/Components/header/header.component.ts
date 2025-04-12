@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { AddToCartService } from '../../Services/Auth/Customer/add-to-cart.service';
-import { CartService } from '../../Services/Auth/Customer/cart.service';
 import { IProduct } from '../../Models/Iproduct';
+import { CartService } from '../../Services/Customer/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +12,7 @@ import { IProduct } from '../../Models/Iproduct';
 export class HeaderComponent implements OnInit{
   user="user1"
   public totalItem: number = 0;
-  product!: IProduct; // تأكد من تحديد المنتج الذي تود إضافته.
+  product!: IProduct; 
 
   constructor(private router: Router, private _CartService: CartService) { }
 
@@ -22,7 +21,6 @@ export class HeaderComponent implements OnInit{
       this.totalItem = count;
     });
 
-    // لأول مرة فقط نجيب العدد
     this._CartService.getCart("user1").subscribe(cart => {
       this._CartService.updateCartCount(cart.items.length);
     });

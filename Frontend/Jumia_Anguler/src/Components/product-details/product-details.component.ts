@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoryService } from '../../Services/Auth/Customer/category.service';
 import { ActivatedRoute } from '@angular/router';
 import { IProduct } from '../../Models/Iproduct';
-import { ProductsService } from '../../Services/Auth/Customer/products.service';
 import { FormsModule } from '@angular/forms';
+import { ProductsService } from '../../Services/Customer/products.service';
 
 @Component({
   selector: 'app-product-details',

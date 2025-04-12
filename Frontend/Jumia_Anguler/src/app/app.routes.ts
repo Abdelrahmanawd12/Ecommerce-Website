@@ -8,23 +8,30 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
     { path: 'dashboard', loadComponent: () => import('../Components/admin-dashboard/admin-dashboard.component').then((m) => m.AdminDashboardComponent) },
+{path:'navbar', loadComponent: () => import('../Components/navbar/navbar.component').then((m) => m.NavbarComponent)},
+  {path:'footer' , loadComponent: () => import('../Components/footer/footer.component').then((m) => m.FooterComponent)},
+
+  //Abdelrahman
 
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
+  { path: 'shop', component: ShopComponent },
+  { path: 'shop/:id', component: ShopComponent },
+  { path: 'details/:id', component: ProductDetailsComponent },
+  { path: 'cart', component: CartComponent },
 
-    { path: 'shop', component: ShopComponent },
-    { path: 'shop/:id', component: ShopComponent },
-    { path: 'details/:id', component: ProductDetailsComponent },
-    { path: 'cart', component: CartComponent },
     { path: 'order/:id', component: OrderComponent  },
 
+  //Alaa
+  { path: 'dashboard', loadComponent: () => import('../Components/admin-dashboard/admin-dashboard.component').then((m) => m.AdminDashboardComponent) },
 
+  //Rania
     {path: 'sellerRegisteration', loadComponent: () => import('../Components/seller-register/seller-register.component').then((m) => m.SellerRegisterComponent)},
     {path: 'sellOnJumia', loadComponent: () => import('../Components/SellOnJumia/sell-on-jumia/sell-on-jumia.component').then((m) => m.SellOnJumiaComponent)},
     {path: 'intro', loadComponent: () => import('../Components/intro-seller-register/intro-seller-register.component').then((m) => m.IntroSellerRegisterComponent)},
-    {path: 'sellerDashboard', loadComponent: () => import('../Components/seller-dashboard/seller-dashboard.component').then((m) => m.SellerDashboardComponent)},
+    {path: 'sellerDashboard', loadComponent: () => import('../Components/Seller_Dashboard_components/seller-dashboard/seller-dashboard.component').then((m) => m.SellerDashboardComponent)},
 
-
+  //Yasmine
     { path: 'login', loadComponent: () => import('../Components/login/login.component').then((m) => m.LoginComponent)},
     { path: 'register', loadComponent: () => import('../Components/customer-register/customer-register.component').then(m => m.CustomerRegisterComponent) },
 
