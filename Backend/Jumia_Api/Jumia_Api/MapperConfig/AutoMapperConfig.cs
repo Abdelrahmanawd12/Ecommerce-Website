@@ -2,6 +2,7 @@
 using Jumia.Models;
 using Jumia_Api.DTOs.CustomerDTOs;
 using Jumia_Api.DTOs.SellerDTOs;
+using Jumia_Api.Models;
 namespace Jumia_Api.MapperConfig
 {
     public class AutoMapperConfig : Profile
@@ -81,7 +82,25 @@ namespace Jumia_Api.MapperConfig
                 dest.Tags = src.ProductTags.Select(t => t.Tag).ToList();
             });
 
-         
+            // Shipping
+            CreateMap<Shipping, ShippingDTO>();
+
+            // Payment
+            CreateMap<Payment, PaymentDTO>();
+
+            // Product Image
+            CreateMap<ProductImage, ProductImgDTO>()
+                .ForMember(dest => dest.ImgUrl, opt => opt.MapFrom(src => src.Url));
+
+            // Order Item
+            CreateMap<OrderItem, OrderItemDTO>();
+
+            // Order
+            CreateMap<Order, OrderDTO>()
+                .ForMember(dest => dest.ShippingInfo, opt => opt.MapFrom(src => src.ShippingInfo))
+                .ForMember(dest => dest.Payment, opt => opt.MapFrom(src => src.Payment))
+                .ForMember(dest => dest.OrderTrackingNumber, opt => opt.MapFrom(src => src.OrderTrackingNumber));
+
 
         }
     }

@@ -133,6 +133,16 @@ namespace Jumia.Data
                 .HasForeignKey(wi => wi.WishlistId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            //modelBuilder.Entity<Order>()
+            //    .HasOne(o => o.Seller)
+            //    .WithMany()
+            //    .HasForeignKey(o => o.SellerId)
+            //    .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Seller>()
+                 .Property(s => s.SellerNetIncome)
+                 .HasColumnType("decimal(18, 2)"); 
+
             modelBuilder.Entity<Order>()
                 .Property(o => o.TotalAmount)
                 .HasColumnType("decimal(18, 2)");
