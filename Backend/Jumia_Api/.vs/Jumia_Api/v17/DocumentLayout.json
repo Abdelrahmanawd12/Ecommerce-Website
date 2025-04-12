@@ -107,12 +107,21 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+<<<<<<< HEAD
+              "Title": "AutoMapperConfig.cs",
+              "DocumentMoniker": "C:\\Users\\AFC\\Desktop\\Final Project\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\MapperConfig\\AutoMapperConfig.cs",
+              "RelativeDocumentMoniker": "Jumia_Api\\MapperConfig\\AutoMapperConfig.cs",
+              "ToolTip": "C:\\Users\\AFC\\Desktop\\Final Project\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\MapperConfig\\AutoMapperConfig.cs",
+              "RelativeToolTip": "Jumia_Api\\MapperConfig\\AutoMapperConfig.cs",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAgwFQAAAAAAAAAAAAAAA==",
+=======
               "Title": "SellerController.cs",
               "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Controllers\\SellerControllers\\SellerController.cs",
               "RelativeDocumentMoniker": "Jumia_Api\\Controllers\\SellerControllers\\SellerController.cs",
               "ToolTip": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Controllers\\SellerControllers\\SellerController.cs",
               "RelativeToolTip": "Jumia_Api\\Controllers\\SellerControllers\\SellerController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAMcBAAAjAAAAAAAAAA==",
+>>>>>>> 6b94d1affa611379e02e6c1c9e30d7643a8c0388
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-11T09:08:45.732Z",
               "EditorCaption": ""

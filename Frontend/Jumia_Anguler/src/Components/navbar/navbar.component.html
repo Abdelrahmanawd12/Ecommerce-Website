@@ -1,0 +1,53 @@
+<div class="top-bar">
+    <a href="#">Sell on Jumia</a>
+    <div class="logo">
+        <img src="assets/jumia-logo.png" alt="Jumia" />
+    </div>
+    <div class="lang-switch">
+        <span class="lang">English</span> | <span class="lang">عربي</span>
+        <img src="assets/egypt-flag.png" alt="EG" />
+    </div>
+</div>
+
+<div class="navbar">
+    <div class="logo">
+        <img src="assets/jumia-logo.png" alt="Jumia" />
+    </div>
+    <div class="search-box">
+        <input type="text" placeholder="Search products, brands and categories" />
+        <button>Search</button>
+    </div>
+    <div class="right-section">
+        <div class="user-actions">
+            <div class="dropdown" (click)="toggleDropdown()" [class.open]="dropdownOpen">
+              <button class="account-btn">
+                <i class="fa fa-user"></i> Account <i class="fa fa-caret-down"></i>
+              </button>
+          
+              <div class="dropdown-menu" *ngIf="dropdownOpen">
+                <button class="signin-btn">Sign In</button>
+                <a href="#"><i class="fa fa-user"></i> My Account</a>
+                <a href="#"><i class="fa fa-box"></i> Orders</a>
+                <a href="#"><i class="fa fa-heart"></i> Wishlist</a>
+              </div>
+            </div>
+          
+          
+            <div class="help-dropdown" (click)="toggleHelpDropdown()" [class.open]="helpDropdownOpen">
+                <a href="#"><i class="fa fa-question-circle"></i> Help <i class="fa fa-caret-down"></i></a>
+                <div class="help-menu" *ngIf="helpDropdownOpen">
+                    <a href="#"><i class="fa fa-question-circle"></i> Help Center</a>
+                            <a href="#"><i class="fa fa-cart-plus"></i> Place an Order</a>
+                            <a href="#"><i class="fa fa-credit-card"></i> Pay for Your Order</a>
+                            <a href="#"><i class="fa fa-map-marker-alt"></i> Track Your Order</a>
+                            <a href="#"><i class="fa fa-times-circle"></i> Cancel an Order</a>
+                            <a href="#"><i class="fa fa-undo"></i> Create a Return</a>
+                            <div class="divider"></div>
+                            <button class="signin-btn">Live Chat</button>
+                </div>
+            </div>
+
+            <a href="#"><i class="fa fa-shopping-cart"></i> Cart</a>
+        </div>
+    </div>
+</div>
