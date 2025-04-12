@@ -1,5 +1,6 @@
 ﻿using Jumia.Data;
 using Jumia.Models;
+using Jumia_Api.Models;
 using Jumia_Api.Repository;
 namespace Jumia_Api.UnitOFWorks
 {
@@ -10,6 +11,11 @@ namespace Jumia_Api.UnitOFWorks
         CategoryRepository categoryRepository;
         GenericRepository<Cart> cartRepository;
         SubCategoryRepository subCategoryRepository;
+        GenericRepository<Order> orderRepository;
+        GenericRepository<OrderItem> orderItemRepository;
+        GenericRepository<Payment> paymentRepository;
+        GenericRepository<Shipping> shippingRepository;
+        GenericRepository<ProductImage> productImageRepository;
         public UnitOFWork(JumiaDbContext context)
         {
             db = context;
@@ -58,6 +64,67 @@ namespace Jumia_Api.UnitOFWorks
                 return subCategoryRepository;
             }
         }
+
+        public GenericRepository<Order> OrderRepository
+        {
+            get
+            {
+                if (orderRepository == null)
+                {
+                    orderRepository = new GenericRepository<Order>(db);
+                }
+                return orderRepository;
+            }
+        }
+
+        public GenericRepository<OrderItem> OrderItemRepository
+        {
+            get
+            {
+                if(orderItemRepository == null)
+                {
+                    orderItemRepository = new GenericRepository<OrderItem>(db);
+                }
+                return orderItemRepository;
+            }
+        }
+
+        public GenericRepository<Payment> PaymentRepository
+        {
+            get
+            {
+                if(paymentRepository == null)
+                {
+                    paymentRepository = new GenericRepository<Payment>(db);
+                }
+                return paymentRepository;
+            }
+        }
+
+        public GenericRepository<Shipping> ShippingRepository
+        {
+            get
+            {
+                if(shippingRepository == null)
+                {
+                    shippingRepository = new GenericRepository<Shipping>(db);
+                }
+                return shippingRepository;
+            }
+        }
+
+        public GenericRepository<ProductImage> ProductImgRepository
+        {
+            get
+            {
+                if(productImageRepository == null)
+                {
+                    productImageRepository = new GenericRepository<ProductImage>(db);
+                }
+                return productImageRepository;
+            }
+        }
+
         public void Save()
         {
             db.SaveChanges();
