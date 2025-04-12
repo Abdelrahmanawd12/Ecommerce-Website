@@ -106,6 +106,7 @@ namespace Jumia_Api.Controllers.SellerControllers
 
             return Ok(dto);
         }
+
         //----------------------------------------------------------------------------------------
         //get subcategories by category name 
         [HttpGet("/subcategories")] //[/subcategories]
@@ -156,6 +157,7 @@ namespace Jumia_Api.Controllers.SellerControllers
 
             return Ok(catsDto);
         }
+
         //-----------------------------------------------------------------------------------------
         //Delete Product By Id
         [HttpDelete("/delete/{id}")] //[/delete/{id}]
@@ -189,6 +191,7 @@ namespace Jumia_Api.Controllers.SellerControllers
 
             return Ok("Product deleted successfully.");
         }
+
         //----------------------------------------------------------------------------------
         //Add Product 
         [HttpPost("/addProduct")]  // [/addProduct]
@@ -294,7 +297,6 @@ namespace Jumia_Api.Controllers.SellerControllers
 
             return Ok("Product updated successfully");
         }
-
 
     }
 }
