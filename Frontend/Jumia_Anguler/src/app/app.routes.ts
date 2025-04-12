@@ -2,7 +2,9 @@ import { ShopComponent } from '../Components/Cstomer/shop/shop.component';
 import { HomeComponent } from '../Components/home/home.component';
 import { CartComponent } from '../Components/cart/cart.component';
 import { ProductDetailsComponent } from '../Components/product-details/product-details.component';
+import { OrderComponent } from '../Components/order/order.component'; // Adjust this path as needed     ./components/order/order.component
 import { Routes } from '@angular/router';
+
 
 export const routes: Routes = [
     { path: 'dashboard', loadComponent: () => import('../Components/admin-dashboard/admin-dashboard.component').then((m) => m.AdminDashboardComponent) },
@@ -14,6 +16,7 @@ export const routes: Routes = [
     { path: 'shop/:id', component: ShopComponent },
     { path: 'details/:id', component: ProductDetailsComponent },
     { path: 'cart', component: CartComponent },
+    { path: 'order/:id', component: OrderComponent  },
 
 
     {path: 'sellerRegisteration', loadComponent: () => import('../Components/seller-register/seller-register.component').then((m) => m.SellerRegisterComponent)},
