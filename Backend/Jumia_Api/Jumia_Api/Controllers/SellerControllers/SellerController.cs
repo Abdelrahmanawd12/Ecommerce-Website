@@ -106,6 +106,7 @@ namespace Jumia_Api.Controllers.SellerControllers
 
             return Ok(dto);
         }
+
         //----------------------------------------------------------------------------------------
         //get subcategories by category name 
         [HttpGet("/subcategories")] //[/subcategories]
@@ -156,6 +157,7 @@ namespace Jumia_Api.Controllers.SellerControllers
 
             return Ok(catsDto);
         }
+
         //-----------------------------------------------------------------------------------------
         //Delete Product By Id
         [HttpDelete("/delete/{id}")] //[/delete/{id}]
@@ -189,6 +191,7 @@ namespace Jumia_Api.Controllers.SellerControllers
 
             return Ok("Product deleted successfully.");
         }
+
         //----------------------------------------------------------------------------------
         //Add Product 
         [HttpPost("/addProduct")]  // [/addProduct]
@@ -295,6 +298,178 @@ namespace Jumia_Api.Controllers.SellerControllers
             return Ok("Product updated successfully");
         }
 
+        //-------------------------------------------------------------------------------------
+        //Order
+        //-------------------------------------------------------------------------------------
+        //Get All Orders By Seller Id
+        [HttpGet("/orders/{sellerId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [ProducesErrorResponseType(typeof(void))]
+        [EndpointSummary("Get All Orders")]
+        [EndpointDescription("Get All Orders By Seller Id")]
+        public IActionResult GetAllOrders(string sellerId)
+        {
+            var orders =  unit.OrderRepository.GetAll().Where(s => s.SellerId == sellerId).ToList();
 
+            if (orders == null || !orders.Any())
+            {
+                return NotFound($"No orders found for Seller Id: {sellerId}");
+            }
+
+            var ordersDto = mapper.Map<List<OrderDTO>>(orders);
+
+            foreach (var order in ordersDto)
+            {
+                foreach (var item in order.OrderItems)
+                {
+                    var productImages = unit.ProductImgRepository.GetAll().Where(pi => pi.ProductId == item.ProductId).ToList();
+
+                    item.ProductImages = mapper.Map<List<ProductImgDTO>>(productImages);
+                }
+            }
+
+            return Ok(ordersDto);
+        }
+
+        //-------------------------------------------------------------------------------------
+        //Get All Orders By Seller Id and data
+        [HttpGet("/ordersByDate/{sellerId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [ProducesErrorResponseType(typeof(void))]
+        [EndpointSummary("Get Order By Date")]
+        [EndpointDescription("Get Order By Date And Seller Id")]
+        public IActionResult GetOrdersByDate(string sellerId, DateTime startDate, DateTime endDate)
+        {
+            if (startDate > endDate)
+            {
+                return BadRequest("Start date cannot be greater than end date.");
+            }
+
+            var orders = unit.OrderRepository.GetAll()
+                .Where(s => s.SellerId == sellerId && s.OrderDate >= startDate && s.OrderDate <= endDate)
+                .ToList();
+
+            if (orders == null || !orders.Any())
+            {
+                return NotFound($"No orders found for Seller Id: {sellerId} between {startDate.ToShortDateString()} and {endDate.ToShortDateString()}");
+            }
+
+            var ordersDto = mapper.Map<List<OrderDTO>>(orders);
+            foreach (var order in ordersDto)
+            {
+                foreach (var item in order.OrderItems)
+                {
+                    var productImages = unit.ProductImgRepository.GetAll().Where(pi => pi.ProductId == item.ProductId).ToList();
+
+                    item.ProductImages = mapper.Map<List<ProductImgDTO>>(productImages);
+                }
+            }
+
+            return Ok(ordersDto);
+        }
+
+        //-------------------------------------------------------------------------------------
+        //Get Orders By Seller Id and Status
+        [HttpGet("/ordersByStatus/{sellerId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [ProducesErrorResponseType(typeof(void))]
+        [EndpointSummary("Get Order By Status")]
+        [EndpointDescription("Get Order By Status And Seller Id")]
+        public IActionResult GetOrdersByStatus(string sellerId, string status)
+        {
+            if (string.IsNullOrEmpty(status))
+            {
+                return BadRequest("Status cannot be empty.");
+            }
+
+            var orders = unit.OrderRepository.GetAll()
+                .Where(o => o.SellerId == sellerId && o.OrderStatus.Equals(status, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
+            if (orders == null || !orders.Any())
+            {
+                return NotFound($"No orders found for Seller Id: {sellerId} with status: {status}");
+            }
+
+            var ordersDto = mapper.Map<List<OrderDTO>>(orders);
+            foreach (var order in ordersDto)
+            {
+                foreach (var item in order.OrderItems)
+                {
+                    var productImages = unit.ProductImgRepository.GetAll().Where(pi => pi.ProductId == item.ProductId).ToList();
+
+                    item.ProductImages = mapper.Map<List<ProductImgDTO>>(productImages);
+                }
+            }
+
+            return Ok(ordersDto);
+
+        }
+
+        //-------------------------------------------------------------------------------------
+        //Update Status Only By Order Id And Seller Id
+        [HttpPatch("/updateStatus")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [ProducesErrorResponseType(typeof(void))]
+        [EndpointSummary("Update Order Status")]
+        [EndpointDescription("Update Order Status By Order Id And Seller Id")]
+        public IActionResult UpdateStatus(string sellerId, int orderId, string status)
+        {
+            if (string.IsNullOrEmpty(sellerId) || string.IsNullOrEmpty(status) || orderId <= 0)
+            {
+                return BadRequest("Invalid input data.");
+            }
+
+            var order = unit.OrderRepository.GetAll().FirstOrDefault(o => o.OrderId == orderId && o.SellerId == sellerId);
+
+            if (order == null)
+            {
+                return NotFound($"Order with ID {orderId} and Seller ID {sellerId} not found.");
+            }
+
+            order.OrderStatus = status;
+
+            unit.Save();
+
+            return Ok($"Order status updated to {status} for OrderId {orderId}.");
+        }
+
+        //-------------------------------------------------------------------------------------
+        //Delete Order By Order Id And Seller Id
+        [HttpDelete("/deleteOrder")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [ProducesErrorResponseType(typeof(void))]
+        [EndpointSummary("Delete Order")]
+        [EndpointDescription("Delete Order By Order Id And Seller Id")]
+        public IActionResult DeleteOrderById(int orderId, string sellerId)
+        {
+            if (orderId <= 0 || string.IsNullOrEmpty(sellerId))
+            {
+                return BadRequest("Invalid input data.");
+            }
+
+            var order = unit.OrderRepository.GetById(orderId);
+
+            if (order == null || order.SellerId != sellerId)
+            {
+                return NotFound($"Order with ID {orderId} and Seller ID {sellerId} not found.");
+            }
+
+            unit.OrderRepository.Delete(order.OrderId);
+
+            unit.Save();
+
+            return Ok($"Order with ID {orderId} has been deleted.");
+        }
     }
 }
