@@ -1,24 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, viewChild } from '@angular/core';
 import { CategoryService } from '../../Services/Auth/Customer/category.service';
-import { ActivatedRoute } from '@angular/router';
-import { IProduct } from '../../Models/Iproduct';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IProduct } from '../../Models/Category';
 import { ProductsService } from '../../Services/Auth/Customer/products.service';
 import { FormsModule } from '@angular/forms';
+import { CartService } from '../../Services/Auth/Customer/cart.service';
+import { CartDTO } from '../../Models/cart';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-product-details',
-  imports: [FormsModule],
+  imports: [FormsModule,CommonModule],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css'
 })
 export class ProductDetailsComponent implements OnInit {
   currentId:number=0;
   product!:IProduct;
+  selectedQuantity: number = 1;
+  cartData: CartDTO = {
+    cartId: 0,
+    customerName: '',
+    items: []
+  };
+  user= 'user1';
   constructor(
     private activerouter:ActivatedRoute,
-    private _productservice:ProductsService
+    private _productservice:ProductsService,
+    private _CartServices:CartService,
+    private router:Router
+
   ) {}
   ngOnInit(): void {
+    //get product by id from url
     this.activerouter.paramMap.subscribe((paramMap)=>{
       this.currentId=Number(paramMap.get('id'))
       this._productservice.getProductById(this.currentId).subscribe({
@@ -29,9 +43,82 @@ export class ProductDetailsComponent implements OnInit {
           console.log(err)
         }
       })
+    });
+    this._CartServices.getCart(this.user).subscribe({
+      next: (data) => {
+        this.cartData = data;
+      },
+      error: (err) => {
+        console.log("Error loading cart data", err);
+      }
+    });
 
-    })
 
   }
+  get alreadyInCartQty(): number {
+    const item = this.cartData.items.find(i => i.productId === this.product?.productId);
+    return item ? item.quantity : 0;
+  }
 
+  get maxAvailableQuantity(): number {
+    return this.product.quantity - this.alreadyInCartQty;
+  }
+
+  validateQuantity(): void {
+    if (this.selectedQuantity > this.maxAvailableQuantity) {
+      this.selectedQuantity = this.maxAvailableQuantity;
+    } else if (this.selectedQuantity < 1) {
+      this.selectedQuantity = 1;
+    }
+  }
+
+
+  addToCart(product: IProduct): void {
+    const totalRequestedQty = this.selectedQuantity + this.alreadyInCartQty;
+
+    if (this.selectedQuantity <= 0 || totalRequestedQty > product.quantity) {
+      alert(`Please enter a valid quantity (you already have ${this.alreadyInCartQty} in cart, max allowed is ${product.quantity})`);
+      return;
+    }
+
+    this._CartServices.addItemToCart(product, this.selectedQuantity).subscribe({
+      next: (res) => {
+        console.log("Product added to cart", res);
+        alert("Product added to cart successfully!");
+      },
+      error: (err) => {
+        console.log("error", err);
+        alert(err?.error || "Something went wrong!");
+      }
+    });
+  }
+
+  checkQuantity(): void {
+    if (this.selectedQuantity > this.maxAvailableQuantity) {
+      this.selectedQuantity = this.maxAvailableQuantity; // Limit quantity to available stock
+    }
+  }
+  get averageRating(): number {
+    if (this.product.ratingStars && this.product.ratingStars.length > 0) {
+      let sum = this.product.ratingStars.reduce((acc, rating) => acc + rating, 0);
+      return sum / this.product.ratingStars.length;
+    }
+    return 0;
+  }
+
+  get fullStars(): number {
+    return Math.floor(this.averageRating);
+  }
+
+  get halfStars(): boolean {
+    return (this.averageRating % 1) >= 0.5;
+  }
+
+  get emptyStars(): number {
+    return 5 - Math.ceil(this.averageRating);
+  }
 }
+
+
+
+

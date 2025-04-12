@@ -2,19 +2,19 @@ import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CartService } from '../../Services/Auth/Customer/cart.service';
 import { CartDTO } from '../../Models/cart';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import e from 'express';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, CommonModule , FormsModule],
+  imports: [RouterLink, CommonModule , FormsModule],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
 })
 export class CartComponent implements  OnInit {
-  customerId: string = 'user1';
+  customerId='user1';
   grandTotal: number = 0;
   cartData: CartDTO = {
     cartId: 0,

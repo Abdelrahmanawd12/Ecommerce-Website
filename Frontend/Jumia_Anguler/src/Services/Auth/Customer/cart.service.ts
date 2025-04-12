@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
 import { AddToCartDTO, CartDTO, CartSummaryDTO } from '../../../Models/cart';
-import { IProduct } from '../../../Models/Iproduct';
+import { IProduct } from '../../../Models/Category';
 import { environment } from '../../../Environment/Environment';
 
 
@@ -11,32 +11,33 @@ import { environment } from '../../../Environment/Environment';
 })
 export class CartService {
 
-   user="user1";
+   user= 'user1';
 
    private cartItemCount = new BehaviorSubject<number>(0);
-   public cartItemCount$ = this.cartItemCount.asObservable(); // 🔁 observable للعدد
+   public cartItemCount$ = this.cartItemCount.asObservable();
 
    updateCartCount(count: number) {
-     this.cartItemCount.next(count); // ✅ تحديث العدد
+     this.cartItemCount.next(count);
    }
 
   constructor(private http: HttpClient) { }
 
-  addItemToCart(product: IProduct): Observable<any> {
+  addItemToCart(product: IProduct, quantity: number): Observable<any> {
     const dto: AddToCartDTO = {
       customerId: this.user,
       productId: product.productId,
-      quantity: product.quantity,
+      quantity: quantity,
     };
 
     return this.http.post(`${environment.apiUrl}/Cart/AddItem`, dto).pipe(
       tap(() => {
-        this.getCart("user1").subscribe(cart => {
-          this.updateCartCount(cart.items.length); // ✅ بعد الإضافة نحدث العدد
+        this.getCart(this.user).subscribe(cart => {
+          this.updateCartCount(cart.items.length);
         });
       })
     );
   }
+
 
   getCart(customerId: string): Observable<CartDTO> {
     return this.http.get<CartDTO>(`${environment.apiUrl}/Cart/${customerId}`);
