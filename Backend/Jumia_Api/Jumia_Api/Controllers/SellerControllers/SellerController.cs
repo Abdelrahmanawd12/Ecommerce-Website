@@ -371,6 +371,42 @@ namespace Jumia_Api.Controllers.SellerControllers
 
             return Ok(ordersDto);
         }
+        //-------------------------------------------------------------------------------------
+        //Get Orders By Date 
+        [HttpGet("/ordersByDate")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [ProducesErrorResponseType(typeof(void))]
+        [EndpointSummary("Get Orders By Date")]
+        [EndpointDescription("Get Orders By Date And Seller Id")]
+        public IActionResult GetOrdersBySpecificDate(string sellerId, DateTime date)
+        {
+
+
+            var orders = unit.OrderRepository.GetAll()
+                .Where(s => s.SellerId == sellerId && s.OrderDate == date)
+                .ToList();
+
+            if (orders == null || !orders.Any())
+            {
+                return NotFound($"No orders found for Seller Id: {sellerId} and this date {date.ToShortDateString()} ");
+            }
+
+            var ordersDto = mapper.Map<List<OrderDTO>>(orders);
+            foreach (var order in ordersDto)
+            {
+                foreach (var item in order.OrderItems)
+                {
+                    var productImages = unit.ProductImgRepository.GetAll().Where(pi => pi.ProductId == item.ProductId).ToList();
+
+                    item.ProductImages = mapper.Map<List<ProductImgDTO>>(productImages);
+                }
+            }
+
+            return Ok(ordersDto);
+        }
+
 
         //-------------------------------------------------------------------------------------
         //Get Orders By Seller Id and Status
