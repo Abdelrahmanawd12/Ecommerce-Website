@@ -7,12 +7,16 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
 
   //Abdelrahman
+
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'shop', component: ShopComponent },
   { path: 'shop/:id', component: ShopComponent },
   { path: 'details/:id', component: ProductDetailsComponent },
   { path: 'cart', component: CartComponent },
+
+  //Alaa
+  { path: 'dashboard', loadComponent: () => import('../Components/admin-dashboard/admin-dashboard.component').then((m) => m.AdminDashboardComponent) },
 
   //Rania
   { path: 'sellerRegisteration', loadComponent: () => import('../Components/seller-register/seller-register.component').then((m) => m.SellerRegisterComponent) },

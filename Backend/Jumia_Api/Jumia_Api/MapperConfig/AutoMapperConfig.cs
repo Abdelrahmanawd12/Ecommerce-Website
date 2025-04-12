@@ -72,6 +72,7 @@ namespace Jumia_Api.MapperConfig
                 dest.ImageUrl = src.Product.ProductImages.FirstOrDefault()?.Url;
             });
 
+
             CreateMap<Product, ProductsSellerDTO>().AfterMap((src, dest) =>
             {
                 dest.SubCategoryName = src.SubCategory.SubCatName.ToString();
