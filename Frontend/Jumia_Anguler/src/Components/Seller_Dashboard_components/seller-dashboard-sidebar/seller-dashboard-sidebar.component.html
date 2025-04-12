@@ -8,7 +8,7 @@
 
     <!-- Logo & Title -->
     <a class="d-flex align-items-center mb-3 text-dark text-decoration-none px-3">
-        <img src="Assets/vendorControl.png" style="width: 40px; height: 40px;">
+        <img src="assets/vendorControl.png" style="width: 40px; height: 40px;">
         <span class="fs-5 ms-2 sidebar-text" *ngIf="!isCollapsed">Seller Dashboard</span>
     </a>
 
@@ -82,15 +82,6 @@
             </a>
         </li>
 
-        <!-- Settings -->
-        <li class="nav-item">
-            <a class="nav-link py-3 border-bottom text-dark"
-               [class.active]="isActive('settings')"
-               (click)="setActive('settings')">
-                <i class="bi bi-gear fs-5"></i>
-                <span class="ms-2 sidebar-text" *ngIf="!isCollapsed">Settings</span>
-            </a>
-        </li>
 
         <!-- Profile -->
         <li class="nav-item">
@@ -99,7 +90,7 @@
                data-bs-toggle="collapse" [attr.aria-expanded]="!isCollapsed && isProfileMenuOpen"
                (click)="toggleProfileMenu()" href="#profileMenu" role="button" aria-controls="profileMenu">
                 <div class="d-flex align-items-center">
-                    <img src="Assets/sellerUser.png" alt="profile" width="32" height="32" class="rounded-circle">
+                    <img src="assets/sellerUser.png" alt="profile" width="32" height="32" class="rounded-circle">
                     <span class="ms-2 sidebar-text" *ngIf="!isCollapsed">Profile</span>
                 </div>
                 <i *ngIf="!isCollapsed" class="bi"
@@ -108,9 +99,6 @@
 
             <!-- Submenu -->
             <div class="collapse ps-4" id="profileMenu" [class.show]="!isCollapsed && isProfileMenuOpen">
-                <a class="nav-link text-dark py-2"
-                   [class.active]="isActive('profile-settings')"
-                   (click)="setActive('profile-settings')">Profile Settings</a>
                 <a class="nav-link text-dark py-2"
                    [class.active]="isActive('account-settings')"
                    (click)="setActive('account-settings')">Account Settings</a>
