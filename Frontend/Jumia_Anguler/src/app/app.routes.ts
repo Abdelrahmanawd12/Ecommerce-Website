@@ -19,15 +19,15 @@ export const routes: Routes = [
   { path: 'dashboard', loadComponent: () => import('../Components/admin-dashboard/admin-dashboard.component').then((m) => m.AdminDashboardComponent) },
 
   //Rania
-  { path: 'sellerRegisteration', loadComponent: () => import('../Components/seller-register/seller-register.component').then((m) => m.SellerRegisterComponent) },
-  { path: 'sellOnJumia', loadComponent: () => import('../Components/SellOnJumia/sell-on-jumia/sell-on-jumia.component').then((m) => m.SellOnJumiaComponent) },
-  { path: 'intro', loadComponent: () => import('../Components/intro-seller-register/intro-seller-register.component').then((m) => m.IntroSellerRegisterComponent) },
-  { path: 'sellerDashboard', loadComponent: () => import('../Components/seller-dashboard/seller-dashboard.component').then((m) => m.SellerDashboardComponent) },
+    {path: 'sellerRegisteration', loadComponent: () => import('../Components/seller-register/seller-register.component').then((m) => m.SellerRegisterComponent)},
+    {path: 'sellOnJumia', loadComponent: () => import('../Components/SellOnJumia/sell-on-jumia/sell-on-jumia.component').then((m) => m.SellOnJumiaComponent)},
+    {path: 'intro', loadComponent: () => import('../Components/intro-seller-register/intro-seller-register.component').then((m) => m.IntroSellerRegisterComponent)},
+    {path: 'sellerDashboard', loadComponent: () => import('../Components/Seller_Dashboard_components/seller-dashboard/seller-dashboard.component').then((m) => m.SellerDashboardComponent)},
 
   //Yasmine
-  { path: 'login', loadComponent: () => import('../Components/login/login.component').then((m) => m.LoginComponent) },
-  { path: 'register', loadComponent: () => import('../Components/customer-register/customer-register.component').then(m => m.CustomerRegisterComponent) },
-  
-  //Yasmine Error Route
-  { path: '**', loadComponent: () => import('../Components/error/error.component').then(m => m.ErrorComponent) },
+    { path: 'login', loadComponent: () => import('../Components/login/login.component').then((m) => m.LoginComponent)},
+    { path: 'register', loadComponent: () => import('../Components/customer-register/customer-register.component').then(m => m.CustomerRegisterComponent) },
+
+    //error routes
+    { path: '**', loadComponent: () => import('../Components/error/error.component').then(m => m.ErrorComponent) },
 ];
