@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { IProduct } from '../../../Models/Iproduct';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Icategory } from '../../../Models/Icategory';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CategoryService } from '../../../Services/Customer/category.service';
+import { Icategory, IProduct } from '../../../Models/Category';
 
 
 @Component({
   selector: 'app-shop',
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule,FormsModule,RouterLink],
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.css'
 })
@@ -29,6 +28,7 @@ export class ShopComponent implements OnInit {
       this._CategoryService.getCategoryById(this.currentId).subscribe({
         next:(data)=>{
           this.category=data
+          console.log(this.category)
         },
         error:(err)=>{
           console.log(err)
@@ -37,6 +37,10 @@ export class ShopComponent implements OnInit {
 
     })
 
+  }
+  goToProductDetails(productId: number): void {
+    console.log("hi")
+    this.router.navigate(['/details', productId]);
   }
 
 }

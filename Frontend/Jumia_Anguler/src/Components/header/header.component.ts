@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { IProduct } from '../../Models/Iproduct';
+
+import { IProduct } from '../../Models/Category';
 import { CartService } from '../../Services/Customer/cart.service';
 
 @Component({
@@ -10,9 +11,9 @@ import { CartService } from '../../Services/Customer/cart.service';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent implements OnInit{
-  user="user1"
+  user=  'user1';
   public totalItem: number = 0;
-  product!: IProduct; 
+  product!: IProduct;
 
   constructor(private router: Router, private _CartService: CartService) { }
 
@@ -27,7 +28,6 @@ export class HeaderComponent implements OnInit{
   }
 
 
-  // إضافة عنصر إلى السلة
   // addToCart(product: IProduct) {
   //   this._CartService.addItemToCart(product).subscribe({
   //     next: (res) => {
