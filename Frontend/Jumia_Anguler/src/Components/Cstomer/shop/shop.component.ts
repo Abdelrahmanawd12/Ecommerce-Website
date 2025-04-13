@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { IProduct, Isubcategory } from '../../../Models/Category';
-import { ProductsService } from '../../../Services/Auth/Customer/products.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Icategory } from '../../../Models/Category';
-import { CategoryService } from '../../../Services/Auth/Customer/category.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { CategoryService } from '../../../Services/Customer/category.service';
+import { Icategory, IProduct } from '../../../Models/Category';
 
 
 @Component({

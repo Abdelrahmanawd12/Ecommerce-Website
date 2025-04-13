@@ -1,12 +1,11 @@
-import { Component, ElementRef, OnInit, viewChild } from '@angular/core';
-import { CategoryService } from '../../Services/Auth/Customer/category.service';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IProduct } from '../../Models/Category';
-import { ProductsService } from '../../Services/Auth/Customer/products.service';
 import { FormsModule } from '@angular/forms';
-import { CartService } from '../../Services/Auth/Customer/cart.service';
-import { CartDTO } from '../../Models/cart';
+import { ProductsService } from '../../Services/Customer/products.service';
 import { CommonModule } from '@angular/common';
+import { CartDTO } from '../../Models/cart';
+import { IProduct } from '../../Models/Category';
+import { CartService } from '../../Services/Customer/cart.service';
 
 @Component({
   selector: 'app-product-details',

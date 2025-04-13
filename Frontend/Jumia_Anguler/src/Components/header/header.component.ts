@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { AddToCartService } from '../../Services/Auth/Customer/add-to-cart.service';
-import { CartService } from '../../Services/Auth/Customer/cart.service';
+
 import { IProduct } from '../../Models/Category';
+import { CartService } from '../../Services/Customer/cart.service';
 
 @Component({
   selector: 'app-header',

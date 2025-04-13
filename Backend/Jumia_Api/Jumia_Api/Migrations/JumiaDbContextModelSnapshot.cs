@@ -251,6 +251,7 @@ namespace Jumia_Api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SellerId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ShippingAddress")
@@ -739,7 +740,7 @@ namespace Jumia_Api.Migrations
                     b.HasBaseType("Jumia.Models.ApplicationUser");
 
                     b.Property<decimal>("SellerNetIncome")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<string>("ShippingZone")
                         .IsRequired()
@@ -805,11 +806,15 @@ namespace Jumia_Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Jumia.Models.Seller", null)
+                    b.HasOne("Jumia.Models.Seller", "Seller")
                         .WithMany("Orders")
-                        .HasForeignKey("SellerId");
+                        .HasForeignKey("SellerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Customer");
+
+                    b.Navigation("Seller");
                 });
 
             modelBuilder.Entity("Jumia.Models.OrderItem", b =>

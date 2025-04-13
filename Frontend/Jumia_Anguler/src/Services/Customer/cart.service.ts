@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
-import { AddToCartDTO, CartDTO, CartSummaryDTO } from '../../../Models/cart';
-import { IProduct } from '../../../Models/Category';
-import { environment } from '../../../Environment/Environment';
+import { AddToCartDTO, CartDTO, CartSummaryDTO } from '../../Models/cart';
+import { environment } from '../../Environment/Environment.prod';
+import { IProduct } from '../../Models/Category';
 
 
 @Injectable({
