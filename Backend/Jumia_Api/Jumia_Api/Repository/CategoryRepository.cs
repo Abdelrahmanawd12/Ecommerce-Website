@@ -12,6 +12,7 @@ namespace Jumia_Api.Repository
         {
             return db.Categories.FirstOrDefault(p => p.CatName == name);
         }
+
     }
     
 }

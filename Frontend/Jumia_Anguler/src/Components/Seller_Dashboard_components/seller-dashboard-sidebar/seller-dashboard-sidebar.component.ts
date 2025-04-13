@@ -16,7 +16,6 @@ export class SellerDashboardSidebarComponent implements OnInit {
   @Input() isCollapsed: boolean = false;
   @Output() toggle = new EventEmitter<void>();
   
-  // Removed duplicate toggleSidebar method to resolve the error.
   
   ngOnInit(): void {
     const savedState = localStorage.getItem('sidebarCollapsed');

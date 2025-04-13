@@ -21,8 +21,28 @@ namespace Jumia_Api.MapperConfig
             {
                 des.Name = src.CatName.ToString();
                 des.Id = src.CatId;
-                des.Subcategory = src.SubCategories.Select(s => s.SubCatName).ToList();
-                des.Subcategory = src.SubCategories.Select(s => s.SubCatName).ToList();
+                des.Subcategory = src.SubCategories.Select(s => new SubCategoryDTO
+                {
+                    SubCatId = s.SubCatId,
+                    SubCatName = s.SubCatName,
+                    CategoryName = src.CatName.ToString(),
+
+                    Products = s.Products.Select(p => new ProductsDTO
+                    {
+                        ProductId = p.ProductId,
+                        Name = p.Name,
+                        Description = p.Description,
+                        SubCategoryName = s.SubCatName.ToString(),
+                        Price = p.Price,
+                        Quantity = p.Quantity,
+                        Brand = p.Brand,
+                        Discount = p.Discount,
+                        Weight = p.Weight,
+                        ImageUrls = p.ProductImages.Select(img => img.Url).ToList(),
+                        RatingStars = p.Ratings.Select(r => r.Stars).ToList(),
+                        Tags = p.ProductTags.Select(t => t.Tag).ToList()
+                    }).ToList()
+                }).ToList();
             }
             );
             CreateMap<Cart, CartDTO>().AfterMap((src, dest) =>
@@ -58,7 +78,21 @@ namespace Jumia_Api.MapperConfig
                 dest.SubCatName = src.SubCatName;
                 dest.SubCatId = src.SubCatId;
                 dest.CategoryName = src.Category?.CatName ?? "Unknown";
-                dest.ProductsId = src.Products.Select(p => p.ProductId).ToList();
+                dest.Products = src.Products.Select(p => new ProductsDTO
+                {
+                    ProductId = p.ProductId,
+                    Name = p.Name,
+                    Description = p.Description,
+                    SubCategoryName = src.SubCatName.ToString(),
+                    Price = p.Price,
+                    Quantity = p.Quantity,
+                    Brand = p.Brand,
+                    Discount = p.Discount,
+                    Weight = p.Weight,
+                    ImageUrls = p.ProductImages.Select(img => img.Url).ToList(),
+                    RatingStars = p.Ratings.Select(r => r.Stars).ToList(),
+                    Tags = p.ProductTags.Select(t => t.Tag).ToList()
+                }).ToList();
 
 
             });

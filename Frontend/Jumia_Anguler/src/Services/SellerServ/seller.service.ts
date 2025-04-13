@@ -3,12 +3,10 @@ import { environment } from '../../Environment/Environment.prod';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { catchError, Observable, of } from 'rxjs';
-import { IProduct } from '../../Models/Iproduct';
-import { Isubcategory } from '../../Models/Isubcategory';
-import { Icategory } from '../../Models/Icategory';
 import { IOrder } from '../../Models/iorder';
 import { formatDate } from '@angular/common';
 import { IProductSales } from '../../Models/iproduct-sales';
+import { IProduct, Isubcategory, Icategory } from '../../Models/Category';
 
 @Injectable({
   providedIn: 'root'

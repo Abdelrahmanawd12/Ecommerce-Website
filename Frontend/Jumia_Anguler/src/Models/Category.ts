@@ -3,7 +3,7 @@ export interface IProduct {
   name: string,
   description: string,
   price:number,
-  categoryName: string,
+  subCategoryName: string,
   quantity: number,
   brand: string,
   ratingStars: number[],
@@ -13,4 +13,16 @@ export interface IProduct {
   weight: number,
   status:string
 
+}
+export interface Isubcategory {
+subCatId: number,
+subCatName: string,
+categoryName: string,
+products: IProduct[];
+}
+
+export  interface Icategory {
+    id: number,
+    name: string,
+    subcategory: Isubcategory[]
 }
