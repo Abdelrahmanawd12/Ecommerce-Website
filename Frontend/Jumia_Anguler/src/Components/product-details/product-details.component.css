@@ -1,0 +1,18 @@
+/* Add custom styling for product details */
+.card-body {
+  background-color: #f8f9fa;
+}
+
+.carousel-inner img {
+  max-height: 400px;
+  object-fit: cover;
+}
+
+.btn-primary:disabled {
+  background-color: #ccc;
+  border-color: #ccc;
+}
+
+.text-danger {
+  font-size: 0.9rem;
+}
