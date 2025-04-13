@@ -2,12 +2,11 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../Environment/Environment.prod';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { IProduct } from '../../Models/Iproduct';
-import { Isubcategory } from '../../Models/Isubcategory';
-import { Icategory } from '../../Models/Icategory';
+import { catchError, Observable, of } from 'rxjs';
 import { IOrder } from '../../Models/iorder';
 import { formatDate } from '@angular/common';
+import { IProductSales } from '../../Models/iproduct-sales';
+import { IProduct, Isubcategory, Icategory } from '../../Models/Category';
 
 @Injectable({
   providedIn: 'root'
@@ -20,13 +19,19 @@ export class SellerService {
     private router: Router,
   ) { }
 
-  getAllProducts(): Observable<IProduct[]> {
-    return this.http.get<IProduct[]>(`${this.baseUrl}/products`);
+  getAllProducts(sellerId: string): Observable<IProduct[]> {
+    return this.http.get<IProduct[]>(`${this.baseUrl}/products?sellerId=${sellerId}`).pipe(
+      catchError(this.handleError<IProduct[]>('getAllProducts', []))
+    );
   }
+  
+  
 
   getProductById(id: number): Observable<IProduct> {
     return this.http.get<IProduct>(`${this.baseUrl}/products/${id}`);
   }
+
+
 
   addProduct(product: IProduct): Observable<IProduct> {
     return this.http.post<IProduct>(`${this.baseUrl}/addProduct`, product);
@@ -91,6 +96,38 @@ export class SellerService {
          sellerId
          } 
         });
+  }
+
+
+
+
+
+  // Basic search method
+  getProductByName(name: string): Observable<IProduct> {
+    return this.http.get<IProduct>(`${this.baseUrl}/products?name=${name}`).pipe(
+      catchError(this.handleError<IProduct>('getProductByName'))
+    );
+  }
+
+  // Enhanced search with suggestions
+  searchProducts(term: string): Observable<IProduct[]> {
+    if (term.length < 2) {
+      return of([]); // Don't search for very short terms
+    }
+    return this.http.get<IProduct[]>(`${this.baseUrl}/products/search?q=${term}`).pipe(
+      catchError(this.handleError<IProduct[]>('searchProducts', []))
+    );
+  }
+
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(`${operation} failed: ${error.message}`);
+      return of(result as T);
+    };
+  }
+
+  getProductSales():Observable<IProductSales[]>{
+    return this.http.get<IProductSales[]>(`${this.baseUrl}/productSales`);
   }
 }
 

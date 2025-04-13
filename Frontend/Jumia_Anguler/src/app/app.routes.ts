@@ -12,7 +12,6 @@ export const routes: Routes = [
   {path:'footer' , loadComponent: () => import('../Components/footer/footer.component').then((m) => m.FooterComponent)},
 
   //Abdelrahman
-
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'shop', component: ShopComponent },
@@ -32,15 +31,40 @@ export const routes: Routes = [
   { path: 'dashboard', loadComponent: () => import('../Components/admin-dashboard/admin-dashboard.component').then((m) => m.AdminDashboardComponent) },
 
   //Rania
-    {path: 'sellerRegisteration', loadComponent: () => import('../Components/seller-register/seller-register.component').then((m) => m.SellerRegisterComponent)},
-    {path: 'sellOnJumia', loadComponent: () => import('../Components/SellOnJumia/sell-on-jumia/sell-on-jumia.component').then((m) => m.SellOnJumiaComponent)},
-    {path: 'intro', loadComponent: () => import('../Components/intro-seller-register/intro-seller-register.component').then((m) => m.IntroSellerRegisterComponent)},
-    {path: 'sellerDashboard', loadComponent: () => import('../Components/Seller_Dashboard_components/seller-dashboard/seller-dashboard.component').then((m) => m.SellerDashboardComponent)},
+  { path: 'sellerRegisteration', loadComponent: () => import('../Components/seller-register/seller-register.component').then((m) => m.SellerRegisterComponent)},
+  { path: 'sellOnJumia', loadComponent: () => import('../Components/SellOnJumia/sell-on-jumia/sell-on-jumia.component').then((m) => m.SellOnJumiaComponent)},
+  { path: 'intro', loadComponent: () => import('../Components/intro-seller-register/intro-seller-register.component').then((m) => m.IntroSellerRegisterComponent)},
+  {
+    path: 'sellerDashboard',
+    loadComponent: () =>
+      import('../Components/Seller_Dashboard_components/seller-dashboard/seller-dashboard.component')
+        .then((m) => m.SellerDashboardComponent),
+    children: [
+      {
+        path: 'manageProduct',
+        loadComponent: () =>
+          import('../Components/Seller_Dashboard_components/manage-product/manage-product.component')
+            .then((m) => m.ManageProductComponent)
+      },
+      {
+        path: 'prductSales',
+        loadComponent: () =>
+          import('../Components/Seller_Dashboard_components/seller-sales/seller-sales.component')
+            .then((m) => m.SellerSalesComponent)
+      },
+      {
+        path:'accountprofile',
+        loadComponent:()=>
+          import('../Components/Seller_Dashboard_components/seller-accountprofile/seller-accountprofile.component')
+        .then((m)=>m.SellerAccountprofileComponent)
+      }
+    ]
+  },
 
   //Yasmine
-    { path: 'login', loadComponent: () => import('../Components/login/login.component').then((m) => m.LoginComponent)},
-    { path: 'register', loadComponent: () => import('../Components/customer-register/customer-register.component').then(m => m.CustomerRegisterComponent) },
+  { path: 'login', loadComponent: () => import('../Components/login/login.component').then((m) => m.LoginComponent)},
+  { path: 'register', loadComponent: () => import('../Components/customer-register/customer-register.component').then(m => m.CustomerRegisterComponent) },
 
-    //error routes
-    { path: '**', loadComponent: () => import('../Components/error/error.component').then(m => m.ErrorComponent) },
+  //error routes
+  { path: '**', loadComponent: () => import('../Components/error/error.component').then(m => m.ErrorComponent) },
 ];

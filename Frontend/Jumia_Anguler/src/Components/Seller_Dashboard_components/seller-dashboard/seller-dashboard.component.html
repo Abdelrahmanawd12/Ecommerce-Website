@@ -1,1 +1,9 @@
-<app-seller-dashboard-sidebar></app-seller-dashboard-sidebar>
+<div class="dashboard-wrapper" [class.sidebar-collapsed]="isCollapsed">
+    <!-- Sidebar -->
+     <app-seller-dashboard-sidebar></app-seller-dashboard-sidebar>  
+    <!-- Main Content -->
+    <div class="main-content-wrapper">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  
