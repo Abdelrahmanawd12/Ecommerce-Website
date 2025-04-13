@@ -5,7 +5,7 @@ import { ProductDetailsComponent } from '../Components/product-details/product-d
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-    { path: 'dashboard', loadComponent: () => import('../Components/admin-dashboard/admin-dashboard.component').then((m) => m.AdminDashboardComponent) },
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
 {path:'navbar', loadComponent: () => import('../Components/navbar/navbar.component').then((m) => m.NavbarComponent)},
   { path: '', redirectTo: '/navbar', pathMatch: 'full' },
   {path:'footer' , loadComponent: () => import('../Components/footer/footer.component').then((m) => m.FooterComponent)},

@@ -113,17 +113,29 @@ namespace Jumia_Api.Services.Admin_Service
 
         public async Task<AdminDashboardDTO> GetDashboardStatsAsync()
         {
-            var totalOrders = await _context.Orders.CountAsync();
+            var totalCategories = await _context.Categories.CountAsync();
+            var totalSubCategories = await _context.SubCategories.CountAsync();
             var totalUsers = await _context.Users.CountAsync();
+            var newUsersThisMonth = await _context.Users
+                .CountAsync(u => u.CreatedAt.Month == DateTime.Now.Month && u.CreatedAt.Year == DateTime.Now.Year);
+            var totalProducts = await _context.Products.CountAsync();
+            var outOfStockProducts = await _context.Products.CountAsync(p => p.Quantity == 0);
             var totalSales = await _context.Orders.SumAsync(o => o.TotalAmount);
+            var totalCommission = totalSales * 0.1m; 
 
             return new AdminDashboardDTO
             {
-                TotalOrders = totalOrders,
+                TotalCategories = totalCategories,
+                TotalSubCategories = totalSubCategories,
                 TotalUsers = totalUsers,
-                TotalSales = totalSales
+                NewUsersThisMonth = newUsersThisMonth,
+                TotalProducts = totalProducts,
+                OutOfStockProducts = outOfStockProducts,
+                TotalSales = totalSales,
+                TotalCommission = totalCommission
             };
         }
+
 
 
         public async Task<bool> AddOrderAsync(Order order)
