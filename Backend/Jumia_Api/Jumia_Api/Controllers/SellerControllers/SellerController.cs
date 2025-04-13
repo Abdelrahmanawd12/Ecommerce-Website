@@ -157,6 +157,34 @@ namespace Jumia_Api.Controllers.SellerControllers
 
             return Ok(catsDto);
         }
+        //---------------------------------------------------------------------------------------
+        //Get Product Sales
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesErrorResponseType(typeof(void))]
+        [EndpointSummary("Get Product Sales")]
+        [EndpointDescription("Returns total sales (quantity) per product")]
+        [HttpGet("/productSales")]
+        public IActionResult GetProductSales()
+        {
+            var orderItems = unit.OrderItemRepository.GetAll();
+
+            if (orderItems == null || !orderItems.Any())
+            {
+                return NotFound("No order items found.");
+            }
+
+            var salesData = orderItems
+                .GroupBy(oi => new { oi.ProductId, oi.Product.Name })
+                .Select(g => new productSalesDTO
+                {
+                    ProductName = g.Key.Name,
+                    Sales = g.Sum(oi => oi.Quantity)
+                })
+                .ToList();
+
+            return Ok(salesData);
+        }
 
         //-----------------------------------------------------------------------------------------
         //Delete Product By Id
