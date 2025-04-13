@@ -1,0 +1,134 @@
+<div class="seller-account-container">
+    <!-- Header with Profile -->
+  <!-- Header with Profile Initials -->
+<div class="account-header text-center mb-5">
+    <div class="profile-initials mx-auto mb-3">
+      {{ getInitials(user.name) }}
+    </div>
+    <h2 class="fw-semibold mb-1">{{ user.name }}</h2>
+    <p class="text-muted">{{ user.shopName }}</p>
+  </div>
+  
+    <!-- Main Account Sections -->
+    <div class="account-sections">
+      <!-- Contact Card -->
+      <div class="account-card">
+        <div class="card-header">
+          <i class="bi bi-envelope-fill text-primary"></i>
+          <h5>Contact</h5>
+        </div>
+        <div class="card-body">
+          <div class="info-row">
+            <i class="bi bi-envelope"></i>
+            <div>
+              <small class="text-muted">Email</small>
+              <p>seller&#64;example.com</p>
+            </div>
+            <button class="btn-icon">
+              <i class="bi bi-pencil"></i>
+            </button>
+          </div>
+          
+          <div class="info-row">
+            <i class="bi bi-telephone"></i>
+            <div>
+              <small class="text-muted">Phone</small>
+              <p>+20 123 456 7890</p>
+            </div>
+            <button class="btn-icon">
+              <i class="bi bi-pencil"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Personal Info Card -->
+      <div class="account-card">
+        <div class="card-header">
+          <i class="bi bi-person-fill text-success"></i>
+          <h5>Personal</h5>
+        </div>
+        <div class="card-body">
+          <div class="info-grid">
+            <div class="info-item">
+              <small class="text-muted">Full Name</small>
+              <p>Ahmed Mohamed</p>
+            </div>
+            <div class="info-item">
+              <small class="text-muted">Username</small>
+              <p>ahmed_seller</p>
+            </div>
+            <div class="info-item">
+              <small class="text-muted">Country</small>
+              <p class="d-flex align-items-center">
+                Egypt <span class="flag-icon flag-icon-eg ms-2"></span>
+              </p>
+            </div>
+          </div>
+          <button class="btn-edit-full">
+            <i class="bi bi-pencil me-2"></i> Edit Profile
+          </button>
+        </div>
+      </div>
+  
+      <!-- Shop Info Card -->
+      <div class="account-card">
+        <div class="card-header">
+          <i class="bi bi-shop-window text-warning"></i>
+          <h5>Shop</h5>
+        </div>
+        <div class="card-body">
+          <div class="info-item mb-3">
+            <small class="text-muted">Shop Name</small>
+            <p>Premium Electronics Store</p>
+          </div>
+          
+          <div class="info-item mb-3">
+            <small class="text-muted">Address</small>
+            <p>123 Nile Street, Cairo, Egypt</p>
+          </div>
+          
+          <div class="info-item mb-3">
+            <small class="text-muted">Shipping Zones</small>
+            <div class="tags">
+              <span>Middle East</span>
+              <span>North Africa</span>
+              <span>Europe</span>
+            </div>
+          </div>
+          
+          <button class="btn-edit-full">
+            <i class="bi bi-gear me-2"></i> Shop Settings
+          </button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Security Section -->
+    <div class="security-section">
+      <h6 class="section-title mb-3">
+        <i class="bi bi-shield-lock me-2"></i> Security
+      </h6>
+      
+      <div class="security-item">
+        <div>
+          <i class="bi bi-key"></i>
+          <span>Password</span>
+          <small class="text-muted">Last changed 3 months ago</small>
+        </div>
+        <button class="btn-text">Change</button>
+      </div>
+      
+      <div class="security-item">
+        <div>
+          <i class="bi bi-phone"></i>
+          <span>Two-Factor Authentication</span>
+          <small class="text-muted">Add extra security</small>
+        </div>
+        <label class="switch">
+          <input type="checkbox">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+  </div>
