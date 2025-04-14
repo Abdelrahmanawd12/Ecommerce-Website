@@ -17,7 +17,7 @@
     <!-- Nav Links -->
     <ul class="nav nav-pills nav-flush flex-column text-start">
         <!-- Home -->
-        <li class="nav-item">
+        <li class="nav-item" routerLink="homeseller">
             <a class="nav-link py-3 border-bottom text-dark" 
                [class.active]="isActive('home')"
                (click)="setActive('home')">
@@ -27,7 +27,7 @@
         </li>
 
         <!-- Orders -->
-        <li class="nav-item">
+        <li class="nav-item" routerLink="orderMangement">
             <a class="nav-link py-3 border-bottom text-dark"
                [class.active]="isActive('orders')"
                (click)="setActive('orders')">
