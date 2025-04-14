@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { RouterModule } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import{AdminSideBarComponent} from '../admin-side-bar/admin-side-bar.component';
 import { AdminDashboard } from '../interfaces/dashboard-stats';
 
 
@@ -13,6 +14,7 @@ import { AdminDashboard } from '../interfaces/dashboard-stats';
   imports: [
     CommonModule,
     RouterModule,
+    AdminSideBarComponent
    
   ],
   templateUrl: './admin-dashboard.component.html',

@@ -4,10 +4,11 @@ import { CartComponent } from '../Components/cart/cart.component';
 import { ProductDetailsComponent } from '../Components/product-details/product-details.component';
 import { OrderComponent } from '../Components/order/order.component'; // Adjust this path as needed     ./components/order/order.component
 import { Routes } from '@angular/router';
+import { AdminLayoutComponent } from '../Components/admin-layout/admin-layout.component';
 
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+ 
 {path:'navbar', loadComponent: () => import('../Components/navbar/navbar.component').then((m) => m.NavbarComponent)},
   {path:'footer' , loadComponent: () => import('../Components/footer/footer.component').then((m) => m.FooterComponent)},
 
@@ -29,9 +30,36 @@ export const routes: Routes = [
     { path: 'order/:id', component: OrderComponent  },
 
   //Alaa
-  { path: 'dashboard', loadComponent: () => import('../Components/admin-dashboard/admin-dashboard.component').then((m) => m.AdminDashboardComponent) },
 
-  //Rania
+  {
+    path: 'admin',
+    component: AdminLayoutComponent,
+    children: [
+      {
+        path: 'dashboard',
+        loadComponent: () => import('../Components/admin-dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent)
+      },
+      {
+        path: 'users',
+        loadComponent: () => import('../Components/admin-users/admin-users.component').then(m => m.AdminUsersComponent)
+      },
+      
+    
+      {
+        path: 'products',
+        loadComponent: () => import('../Components/admin-product/admin-product.component').then(m => m.AdminProductComponent)
+      },
+      
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+      }
+    ]
+  },
+ 
+
+
     {path: 'sellerRegisteration', loadComponent: () => import('../Components/seller-register/seller-register.component').then((m) => m.SellerRegisterComponent)},
     {path: 'sellOnJumia', loadComponent: () => import('../Components/SellOnJumia/sell-on-jumia/sell-on-jumia.component').then((m) => m.SellOnJumiaComponent)},
     {path: 'intro', loadComponent: () => import('../Components/intro-seller-register/intro-seller-register.component').then((m) => m.IntroSellerRegisterComponent)},
