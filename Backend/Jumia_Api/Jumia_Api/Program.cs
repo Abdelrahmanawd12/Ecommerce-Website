@@ -85,6 +85,7 @@ namespace Jumia_Api
 
             app.UseCors(txt);
             app.MapControllers();
+            app.UseStaticFiles();
 
             app.Run();
         }
