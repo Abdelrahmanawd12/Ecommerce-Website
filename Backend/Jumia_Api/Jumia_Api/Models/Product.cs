@@ -21,7 +21,6 @@ namespace Jumia.Models
         public decimal Weight { get; set; }
         [ForeignKey("SubCategory")]
         public int SubCategoryId { get; set; }
-        public string Status { get; set; }
 
         [ForeignKey("Seller")]
         public string SellerId { get; set; }

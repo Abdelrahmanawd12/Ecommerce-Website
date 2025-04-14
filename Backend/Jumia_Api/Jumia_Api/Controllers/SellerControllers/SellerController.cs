@@ -188,14 +188,14 @@ namespace Jumia_Api.Controllers.SellerControllers
 
         //-----------------------------------------------------------------------------------------
         //Delete Product By Id
-        [HttpDelete("/delete/{id}")] //[/delete/{id}]
+        [HttpDelete("/delete/{prodId}")] //[/delete/{id}]
         [ProducesResponseType(200, Type = typeof(ProductsSellerDTO))]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
         [ProducesErrorResponseType(typeof(void))]
         [EndpointSummary("Delete Product By Id")]
         [EndpointDescription("Delete Seller Product By Id")]
-        public IActionResult DeleteProductById(string SellerId, int ProdId)
+        public IActionResult DeleteProductById([FromQuery]string SellerId,[FromRoute(Name ="prodId")] int ProdId)
         {
             if (string.IsNullOrWhiteSpace(SellerId))
             {

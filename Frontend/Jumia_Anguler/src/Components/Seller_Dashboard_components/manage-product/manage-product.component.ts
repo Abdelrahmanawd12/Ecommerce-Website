@@ -1,27 +1,33 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { SellerService } from '../../../Services/SellerServ/seller.service';
-import { debounceTime, distinctUntilChanged, of, Subject, switchMap, tap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Subject, tap, of } from 'rxjs';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SellerDashboardSidebarComponent } from '../seller-dashboard-sidebar/seller-dashboard-sidebar.component';
 import { IProduct } from '../../../Models/Category';
+import { environment } from '../../../Environment/Environment.prod';
+import { EditProductPopupComponent } from '../edit-product-popup/edit-product-popup.component';
 
 @Component({
-  imports: [CurrencyPipe, CommonModule, FormsModule, SellerDashboardSidebarComponent],
+  imports: [CurrencyPipe, CommonModule, FormsModule, SellerDashboardSidebarComponent,MatDialogModule],
   templateUrl: './manage-product.component.html',
   styleUrl: './manage-product.component.css'
 })
 export class ManageProductComponent {
   searchTerm: string = '';
+  selectedStatus: string = 'All';
   suggestions: IProduct[] = [];
   showSuggestions: boolean = false;
   isLoading: boolean = false;
-  allProducts: IProduct[] = []; // All products
-  products: IProduct[] = [];    // products filtered
+  allProducts: IProduct[] = [];
+  products: IProduct[] = [];
   private searchTerms = new Subject<string>();
 
   @Output() productSelected = new EventEmitter<IProduct>();
   @Output() searchExecuted = new EventEmitter<string>();
+  @Output() statusChanged = new EventEmitter<string>();
+
   statusOptions = [
     { name: 'All', active: true },
     { name: 'Pending', active: false },
@@ -29,33 +35,30 @@ export class ManageProductComponent {
     { name: 'Rejected', active: false },
   ];
 
-  @Output() statusChanged = new EventEmitter<string>();
-  selectStatus(selectedStatus: any) {
-    this.statusOptions.forEach(status => {
-      status.active = status.name === selectedStatus.name;
-    });
-
-    if (selectedStatus.name === 'All') {
-      this.products = this.allProducts;
-    } else {
-      this.products = this.allProducts.filter(p => p.status === selectedStatus.name);
-    }
-
-    this.statusChanged.emit(selectedStatus.name);
-  }
-
-  constructor(private sellerServ: SellerService) { }
+  constructor(private sellerServ: SellerService, private dialog: MatDialog) { }
 
   readonly sellerId: string = localStorage.getItem('userId') || '';
-  readonly imageBaseUrl = 'https://localhost:7266/'; // عدلي حسب سيرفرك
+  readonly imageBaseUrl = environment.imageBaseUrl;
 
+  ngOnInit(): void {
+    this.getProducts();
+
+    this.searchTerms.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      tap(() => this.isLoading = true),
+      tap(term => this.searchTerm = term),
+      tap(() => this.filterProducts()),
+      tap(() => this.isLoading = false)
+    ).subscribe();
+  }
 
   getProducts(): void {
     this.isLoading = true;
     this.sellerServ.getAllProducts(this.sellerId).subscribe({
       next: (res) => {
         this.allProducts = res;
-        this.products = res; // نعرض الكل مبدئيًا
+        this.products = res;
         this.isLoading = false;
       },
       error: (err) => {
@@ -65,20 +68,27 @@ export class ManageProductComponent {
     });
   }
 
-  ngOnInit(): void {
-    this.getProducts();
+  filterProducts(): void {
+    let filtered = this.allProducts;
 
-    this.searchTerms.pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      tap(() => this.isLoading = true),
-      switchMap(term => term.length >= 2
-        ? this.sellerServ.searchProducts(term)
-        : of([])),
-      tap(() => this.isLoading = false)
-    ).subscribe(products => {
-      this.suggestions = products;
-    });
+    if (this.selectedStatus !== 'All') {
+      filtered = filtered.filter(p => p.status === this.selectedStatus);
+    }
+
+    if (this.searchTerm.trim().length > 0) {
+      filtered = filtered.filter(p =>
+        p.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    }
+
+    this.products = filtered;
+  }
+
+  selectStatus(selectedStatus: any): void {
+    this.statusOptions.forEach(status => status.active = status.name === selectedStatus.name);
+    this.selectedStatus = selectedStatus.name;
+    this.statusChanged.emit(this.selectedStatus);
+    this.filterProducts();
   }
 
   onSearchChange(): void {
@@ -88,18 +98,7 @@ export class ManageProductComponent {
   onSearch(): void {
     if (this.searchTerm.trim()) {
       this.searchExecuted.emit(this.searchTerm);
-      this.showSuggestions = false;
-      this.isLoading = true;
-      this.sellerServ.searchProducts(this.searchTerm).subscribe({
-        next: (products) => {
-          this.products = products;
-          this.isLoading = false;
-        },
-        error: (err) => {
-          console.error(err);
-          this.isLoading = false;
-        }
-      });
+      this.filterProducts();
     }
   }
 
@@ -116,25 +115,51 @@ export class ManageProductComponent {
   }
 
   onProductSelected(product: IProduct): void {
-    // Handle selected product
     console.log('Selected product:', product);
   }
 
   onSearchExecuted(searchTerm: string): void {
-    // Handle search execution
     console.log('Search executed for:', searchTerm);
   }
-  // في المكون الأب
+
   onStatusChange(status: string) {
     console.log('Selected status:', status);
-    // قم بتنفيذ عملية التصفية هنا
   }
+
   getStockStatusClass(quantity: number): string {
     if (quantity <= 5) return 'stock-danger';
     if (quantity <= 20) return 'stock-warning';
     return 'stock-good';
+  }editProduct(product: IProduct) {
+    const dialogRef = this.dialog.open(EditProductPopupComponent, {
+      width: '600px',
+      data: product
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const index = this.products.findIndex(p => p.productId === result.productId);
+        if (index !== -1) {
+          this.products[index] = result;
+        }
+      }
+    });
   }
+  deleteProduct(productId: number) {
+    const sellerId = localStorage.getItem('userId');
+    if (confirm('Are you sure you want to delete this product?')) {
+      this.sellerServ.deleteProduct(productId, sellerId!).subscribe({
+        next: () => {
+          console.log('Product deleted successfully');
+          this.getProducts();
+        },
+        error: (error) => {
+          console.error('Failed to delete product:', error);
+        }
+      });
+    }
+  }
+  
+  
 
 }
-
-
