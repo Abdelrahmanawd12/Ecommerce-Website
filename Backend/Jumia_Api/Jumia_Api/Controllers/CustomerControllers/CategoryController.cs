@@ -25,7 +25,20 @@ namespace Jumia_Api.Controllers.CustomerControllers
         public IActionResult GetAllCategories()
         {
             var categories = unit.CategoryRepository.GetAll();
-            var cat= _mapper.Map<List<CategoryDTO>>(categories);
+            foreach (var category in categories)
+            {
+                foreach (var sub in category.SubCategories)
+                {
+                    var catName = sub.Category?.CatName;
+                    foreach (var prod in sub.Products)
+                    {
+                        var subCatName = prod.SubCategory?.SubCatName;
+                 
+                    }
+                }
+            }
+
+            var cat = _mapper.Map<List<CategoryDTO>>(categories);
             return Ok(cat);
         }
         [HttpGet("{id}")]

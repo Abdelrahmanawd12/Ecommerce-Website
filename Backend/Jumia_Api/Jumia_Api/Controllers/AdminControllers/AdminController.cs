@@ -82,7 +82,7 @@ public class AdminController : ControllerBase
     }
 
 
-    [HttpGet("dashboard")]
+    [HttpGet("dashboard-stats")]
     public async Task<IActionResult> GetDashboardStats()
     {
         var stats = await _adminService.GetDashboardStatsAsync();

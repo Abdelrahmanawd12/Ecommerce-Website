@@ -58,7 +58,8 @@
                    (click)="setActive('add-product')">Add Product</a>
                 <a class="nav-link text-dark py-2"
                    [class.active]="isActive('view-products')"
-                   (click)="setActive('view-products')">View Products</a>
+                   routerLink="manageProduct"
+                   (click)="setActive('view-products')">Manage Products</a>
             </div>
         </li>
 
@@ -66,7 +67,9 @@
         <li class="nav-item">
             <a class="nav-link py-3 border-bottom text-dark"
                [class.active]="isActive('sales')"
-               (click)="setActive('sales')">
+               (click)="setActive('sales')"
+               routerLink="prductSales"
+               >
                 <i class="bi bi-graph-up fs-5"></i>
                 <span class="ms-2 sidebar-text" *ngIf="!isCollapsed">Sales</span>
             </a>
@@ -101,7 +104,9 @@
             <div class="collapse ps-4" id="profileMenu" [class.show]="!isCollapsed && isProfileMenuOpen">
                 <a class="nav-link text-dark py-2"
                    [class.active]="isActive('account-settings')"
-                   (click)="setActive('account-settings')">Account Settings</a>
+                   (click)="setActive('account-settings')"
+                   routerLink="accountprofile"
+                   >Account Settings</a>
                 <hr class="dropdown-divider">
                 <a class="nav-link text-dark py-2"
                    [class.active]="isActive('logout')"

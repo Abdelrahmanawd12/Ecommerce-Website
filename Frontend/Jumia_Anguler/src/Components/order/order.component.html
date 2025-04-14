@@ -1,0 +1,145 @@
+<p>order works!</p>
+
+<!-- <div class="container mt-4">
+    <h3>Your Orders</h3>
+    <div class="row" *ngFor="let order of orders">
+      <div class="col-md-4">
+        <img [src]="order.items[0]?.productImageUrl" class="img-fluid rounded" alt="Product Image">
+      </div>
+      <div class="col-md-8">
+        <h5>{{ order.items[0]?.productName }}</h5>
+        <p>Order Date: {{ order.orderDate }}</p>  
+        <span class="badge bg-info text-dark">{{ order.orderStatus }}</span>
+      </div>
+    </div>
+</div>
+   -->
+
+
+ 
+   
+<!-- src/app/order/order.component.html -->
+<!-- <div class="container mt-4" *ngIf="order">
+    <h3>8989</h3>
+    <h3>Order #{{ order.orderId }}</h3>
+    <p><strong>Status:</strong> {{ order.orderStatus }}</p>
+    <p><strong>Order Date:</strong> {{ order.orderDate}}</p>
+    <p><strong>Payment:</strong> {{ order.paymentMethod }} ({{ order.paymentStatus }})</p>
+    <p><strong>Shipping Address:</strong> {{ order.shippingAddress }}</p>
+    <p><strong>Total:</strong> {{ order.totalAmount }}</p>
+  
+    <div class="mt-4">
+      <h5>Order Items</h5>
+      <div class="row mb-3" *ngFor="let item of order.items">
+        <div class="col-md-3">
+          <img [src]="item.productImageUrl" class="img-fluid rounded" alt="Product Image">
+        </div>
+        <div class="col-md-9">
+          <h6>{{ item.productName }}</h6>
+          <p>Quantity: {{ item.quantity }}</p>
+          <p>Subtotal: {{ item.subTotal  }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="text-center mt-5" *ngIf="!order">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div> -->
+
+
+
+
+
+  
+<div *ngIf="orders.length > 0; else noOrders">
+  <div *ngFor="let order of orders" class="card mb-3 p-3 shadow">
+    <h5>Order #{{ order.orderId }}</h5>
+    <p>Status: {{ order.orderStatus }}</p>
+    <p>Date: {{ order.orderDate | date }}</p>
+
+    <div *ngFor="let item of order.items" class="d-flex align-items-center mb-2">
+      <img [src]="item.productImageUrl" width="60" class="me-2" />
+      <span>{{ item.productName }}</span>
+    </div>
+<!-- 
+    <div *ngFor="let item of order.items" class="d-flex align-items-center mb-2">
+      <img [src]="item.productImageUrl" width="60" class="me-2" />
+      <span>{{ item.productName }}</span>
+    </div> -->
+    <button (click)="showOrderDetails(order.orderId)">See Details</button>
+   <!-- Cancel  -->
+    <div>
+      <!-- Button to Cancel Order -->
+      <button (click)="cancelOrder()">Cancel Order</button>
+    </div>
+  </div>
+</div>
+
+<ng-template #noOrders>
+  <p>No orders found.</p>
+</ng-template>
+
+
+<h1>****************************</h1>
+
+
+  <!-- app/components/order/order.component.html -->
+  <div *ngIf="selectedOrder as o" class="card p-4 mt-4 shadow">
+    <h2>Order #{{ o?.orderId }}</h2>
+    <p>Status: {{ o?.orderStatus }}</p>
+    <p>Date: {{ o?.orderDate}}</p>      <!-- | date -->
+    <p>Total: ${{ o?.totalAmount }}</p>
+    <p>Customer: {{ o?.customerName }}</p>
+    <p>Shipping Address: {{ o?.shippingAddress }}</p>
+    <p>Tracking: {{ o?.shippingInfo?.trackingNumber }}</p>
+    <p>Delivery Estimate: {{ o?.shippingInfo?.estimatedDelivery }}</p>   <!-- | date -->
+  
+    <h4>Items:</h4>
+    <div *ngFor="let item of o?.items" class="card my-2 p-2">
+      <img [src]="item.productImageUrl" alt="{{ item.productName }}" style="width: 100px;">
+      <div>
+        <strong>{{ item.productName }}</strong>
+        <p>Quantity: {{ item.quantity }}</p>
+        <p>Subtotal: ${{ item.subTotal }}</p>
+      </div>
+    </div>
+    
+    <button class="btn btn-danger mt-3" (click)="hideOrderDetails()">Close Details</button>
+  </div>
+  
+  <div *ngIf="!order">
+    <p>Loading order details...</p>
+  </div>
+  
+
+
+
+
+
+
+
+
+
+
+<h1>*************************************************************************</h1>
+<!-- order.component.html -->
+<!---->
+<!-- <div *ngIf="order">
+  <h2>Order #{{ order.orderId }}</h2>
+  <p>Status: {{ order.orderStatus }}</p>
+  <p>Date: {{ order.orderDate }}</p>
+  <p>Total: ${{ order.totalAmount }}</p>
+  <p>Customer: {{ order.customerName }}</p>
+  <p>Shipping Address: {{ order.shippingAddress }}</p>
+
+   Add Cancel Button if the order is Pending 
+  <button *ngIf="order.orderStatus === 'Pending'" (click)="cancelOrder()">Cancel Order</button>
+
+  Show the cancellation message 
+  <p *ngIf="cancellationMessage">{{ cancellationMessage }}</p>
+</div> -->
+
+

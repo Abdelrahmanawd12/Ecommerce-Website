@@ -1,6 +1,22 @@
-<div>{{category.id}}</div>
-<div>{{category.name}}</div>
-<h1>subcategories : </h1>
-@for(subcategories of category.subcategory;track category.id){
-  <div>{{subcategories}}</div>
-  }
+<div *ngIf="category">
+
+  <h1>{{ category.name }}</h1>
+
+  <h1>Subcategories:</h1>
+  <div class="subcategory" *ngFor="let subcategory of category.subcategory">
+    <h2>{{ subcategory.subCatName }}</h2>
+
+    <div class="card product" style="width: 18rem;" *ngFor="let product of subcategory.products">
+      <img [src]="product.imageUrls[0]" class="card-img-top" alt="..." width="200" height="150">
+      <div class="card-body">
+        <h5 class="card-title">{{product.brand}}</h5>
+        <h5 class="card-title">{{product.name}}</h5>
+        <h5 class="card-title">{{product.price}}$</h5>
+        <h5 class="card-title">{{product.productId}}</h5>
+
+        <p class="card-text">{{product.description}}</p>
+        <button [routerLink]="['/details', product.productId]">details</button>
+      </div>
+    </div>
+  </div>
+</div>
