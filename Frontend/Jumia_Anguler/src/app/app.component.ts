@@ -24,6 +24,7 @@ export class AppComponent implements OnInit {
   isIntroPage: boolean = false;
   isSellonJumiaPage: boolean = false;
   isAdminDashboardPage: boolean = false;
+  isManageProductPage: boolean = false;
 
   showHeader: boolean = true; // Flag to control header visibility
   showFooter: boolean = true; // Flag to control footer visibility
@@ -36,14 +37,14 @@ export class AppComponent implements OnInit {
         // Hide header for Seller Dashboard, Admin Dashboard, and Login pages
         const currentRoute = this.router.url;
 
-        if (currentRoute === '/login' || currentRoute === '/error' || currentRoute === '/register' || currentRoute === '/sellerRegisteration' || currentRoute === '/sellerDashboard' || currentRoute === '/intro' || currentRoute === '/sellonjumia' || currentRoute === '/dashboard') {
+        if (currentRoute === '/login' || currentRoute === '/error' || currentRoute === '/register' || currentRoute === '/sellerRegisteration' || currentRoute === '/sellerDashboard' || currentRoute === '/intro' || currentRoute === '/sellonjumia' || currentRoute === '/dashboard' || currentRoute == '/sellerDashboard/homeseller' || currentRoute == '/sellerDashboard/orderMangement') {
           this.showHeader = false;
         } else {
           this.showHeader = true;
         }
 
         // Optionally, you can also hide the footer for certain pages
-        if (currentRoute === '/login' || currentRoute === '/error' || currentRoute === '/register' || currentRoute === '/sellerRegisteration' || currentRoute === '/sellerDashboard' || currentRoute === '/intro' || currentRoute === '/sellonjumia' || currentRoute === '/dashboard') {
+        if (currentRoute === '/login' || currentRoute === '/error' || currentRoute === '/register' || currentRoute === '/sellerRegisteration' || currentRoute === '/sellerDashboard' || currentRoute === '/intro' || currentRoute === '/sellonjumia' || currentRoute === '/dashboard' ||currentRoute == '/sellerDashboard/homeseller' || currentRoute == '/sellerDashboard/orderMangement') {
           this.showFooter = false;
         } else {
           this.showFooter = true;
