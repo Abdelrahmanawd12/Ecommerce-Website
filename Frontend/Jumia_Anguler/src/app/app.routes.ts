@@ -4,6 +4,8 @@ import { CartComponent } from '../Components/cart/cart.component';
 import { ProductDetailsComponent } from '../Components/product-details/product-details.component';
 import { OrderComponent } from '../Components/order/order.component'; // Adjust this path as needed     ./components/order/order.component
 import { Routes } from '@angular/router';
+import { AccountComponent } from '../Components/account/account.component';
+import { WishlistComponent } from '../Components/wishlist/wishlist.component';
 
 
 export const routes: Routes = [
@@ -20,7 +22,11 @@ export const routes: Routes = [
   { path: 'details/:id', component: ProductDetailsComponent },
   { path: 'cart', component: CartComponent },
 
-    { path: 'order/:id', component: OrderComponent  },
+    //Ahmed
+    //{ path: 'order/:id', component: OrderComponent  },
+    { path: 'order', component: OrderComponent  },
+    { path: 'account', component: AccountComponent  },
+    { path: 'wishlist', component: WishlistComponent  },
 
   //Alaa
   { path: 'dashboard', loadComponent: () => import('../Components/admin-dashboard/admin-dashboard.component').then((m) => m.AdminDashboardComponent) },

@@ -170,6 +170,24 @@ namespace Jumia.Data
             modelBuilder.Entity<Rating>()
                 .Property(r => r.Stars)
                 .HasColumnType("decimal(18, 2)");
+
+
+            //Solution Error YASMINE 
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Order>()
+                .HasOne(o => o.Customer)
+                .WithMany()
+                .HasForeignKey(o => o.CustomerId)
+                .OnDelete(DeleteBehavior.Restrict); // 🔒 No cascade
+
+            modelBuilder.Entity<Order>()
+                .HasOne(o => o.Seller)
+                .WithMany()
+                .HasForeignKey(o => o.SellerId)
+                .OnDelete(DeleteBehavior.Restrict); // 🔒 No cascade
+
+            // Optionally configure other navigation properties here
         }
     }
 }

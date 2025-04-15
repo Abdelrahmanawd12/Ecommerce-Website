@@ -232,6 +232,9 @@ namespace Jumia_Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("CustomerId1")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
@@ -254,6 +257,9 @@ namespace Jumia_Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("SellerId1")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("ShippingAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -267,7 +273,11 @@ namespace Jumia_Api.Migrations
 
                     b.HasIndex("CustomerId");
 
+                    b.HasIndex("CustomerId1");
+
                     b.HasIndex("SellerId");
+
+                    b.HasIndex("SellerId1");
 
                     b.ToTable("Order");
                 });
@@ -801,16 +811,24 @@ namespace Jumia_Api.Migrations
                         .HasForeignKey("AdminId");
 
                     b.HasOne("Jumia.Models.Customer", "Customer")
-                        .WithMany("Orders")
+                        .WithMany()
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Jumia.Models.Seller", "Seller")
+                    b.HasOne("Jumia.Models.Customer", null)
                         .WithMany("Orders")
+                        .HasForeignKey("CustomerId1");
+
+                    b.HasOne("Jumia.Models.Seller", "Seller")
+                        .WithMany()
                         .HasForeignKey("SellerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("Jumia.Models.Seller", null)
+                        .WithMany("Orders")
+                        .HasForeignKey("SellerId1");
 
                     b.Navigation("Customer");
 
