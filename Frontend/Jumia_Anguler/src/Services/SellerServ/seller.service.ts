@@ -7,6 +7,7 @@ import { IOrder } from '../../Models/iorder';
 import { formatDate } from '@angular/common';
 import { IProductSales } from '../../Models/iproduct-sales';
 import { IProduct, Isubcategory, Icategory } from '../../Models/Category';
+import { IProductSell } from '../../Models/iproduct-sell';
 
 @Injectable({
   providedIn: 'root'
@@ -37,13 +38,40 @@ export class SellerService {
     return this.http.post<IProduct>(`${this.baseUrl}/addProduct`, product);
   }
 
-  updateProduct(product: IProduct): Observable<IProduct> {
-    return this.http.put<IProduct>(`${this.baseUrl}/updateProduct/${product.productId}`, product);
+  updateProduct(productId: number, product: IProductSell): Observable<any> {
+    const formData = new FormData();
+      formData.append('Name', product.name);
+    formData.append('Description', product.description);
+    formData.append('Price', product.price.toString());
+    formData.append('Quantity', product.quantity.toString());
+    formData.append('Brand', product.brand);
+    formData.append('Discount', product.discount.toString());
+    formData.append('Weight', product.weight.toString());
+    if (product.subCategoryName) {
+      formData.append('SubCategoryName', product.subCategoryName.toString());
+    }
+    formData.append('SellerId', product.sellerId.toString());
+  
+    if (product.imageUrls && product.imageUrls.length > 0) {
+      for (let image of product.imageUrls) {
+        formData.append('ImageUrls', image);
+      }
+    }
+  
+    if (product.tags && product.tags.length > 0) {
+      for (let tag of product.tags) {
+        formData.append('Tags', tag);
+      }
+    }
+  
+    return this.http.put(`${this.baseUrl}/updateProduct/${product.productId}`, formData);
   }
+  
 
-  deleteProduct(id: string): Observable<IProduct> {
-    return this.http.delete<IProduct>(`${this.baseUrl}/delete/${id}`);
+  deleteProduct(productId: number, sellerId: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/delete/${productId}?SellerId=${sellerId}`);
   }
+  
 
   getSubcategoriesByCatName(catName: string): Observable<Isubcategory> {
     return this.http.get<any>(`${this.baseUrl}/subcategories`, { params: { catName } });

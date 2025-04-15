@@ -1,0 +1,84 @@
+<h2 mat-dialog-title>Edit Product</h2>
+<mat-dialog-content>
+    <form>
+        <div class="mb-3">
+            <label>Name</label>
+            <input class="form-control" [(ngModel)]="updatedProduct.name" name="name">
+        </div>
+
+        <div class="mb-3">
+            <label>Description</label>
+            <input type="text" class="form-control" [(ngModel)]="updatedProduct.description" name="description">
+        </div>
+
+        <div class="mb-3">
+            <label>Price</label>
+            <input type="number" class="form-control" [(ngModel)]="updatedProduct.price" name="price">
+        </div>
+
+        <div class="mb-3">
+            <label>Category</label>
+            <input class="form-control" [(ngModel)]="updatedProduct.subCategoryName" name="Category">
+        </div>
+
+        <div class="mb-3">
+            <label>Stock</label>
+            <input type="number" class="form-control" [(ngModel)]="updatedProduct.quantity" name="stock">
+        </div>
+
+        <div class="mb-3">
+            <label>Brand</label>
+            <input class="form-control" [(ngModel)]="updatedProduct.brand" name="brand">
+        </div>
+
+        <div class="mb-3">
+            <label>Discount</label>
+            <input type="number" class="form-control" [(ngModel)]="updatedProduct.discount" name="discount">
+        </div>
+
+        <div class="mb-3">
+            <label>Weight</label>
+            <input type="number" class="form-control" [(ngModel)]="updatedProduct.weight" name="weight">
+        </div>
+        <div class="mb-3">
+            <label>Images</label>
+            <input type="file" class="form-control" (change)="onImageSelected($event)" multiple>
+        </div>
+        <div class="mb-3">
+            <label>Tags (comma separated)</label>
+            <input type="text" class="form-control" [(ngModel)]="tagsInput" name="tags">
+        </div>
+        <div class="mb-3">
+            <label>Rating Stars</label>
+            <input type="number"  class="form-control" [(ngModel)]="updatedProduct.ratingStars" name="ratingStars">
+        </div>
+
+
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button (click)="closeDialog()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="saveChanges()">Save</button>
+</mat-dialog-actions>
+
+<!-- Toasts -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body">
+                Product Updated Successfully ✅
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+
+    <div id="errorToast" class="toast align-items-center text-bg-danger border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body">
+                Product update Failed ❌
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>

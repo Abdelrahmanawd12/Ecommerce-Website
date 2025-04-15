@@ -16,6 +16,7 @@ namespace Jumia_Api.UnitOFWorks
         GenericRepository<Payment> paymentRepository;
         GenericRepository<Shipping> shippingRepository;
         GenericRepository<ProductImage> productImageRepository;
+        SellerRepository sellerRepository;
         public UnitOFWork(JumiaDbContext context)
         {
             db = context;
@@ -124,7 +125,17 @@ namespace Jumia_Api.UnitOFWorks
                 return productImageRepository;
             }
         }
-
+        public SellerRepository SellerRepository
+        {
+            get
+            {
+                if (sellerRepository == null)
+                {
+                    sellerRepository = new SellerRepository(db);
+                }
+                return sellerRepository;
+            }
+        }
         public void Save()
         {
             db.SaveChanges();
