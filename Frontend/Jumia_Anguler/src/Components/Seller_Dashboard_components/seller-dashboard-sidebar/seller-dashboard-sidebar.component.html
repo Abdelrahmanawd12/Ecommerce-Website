@@ -55,7 +55,7 @@
             <div class="collapse ps-4" id="manageProductsMenu" [class.show]="!isCollapsed && isManageProductsOpen">
                 <a class="nav-link text-dark py-2" 
                    [class.active]="isActive('add-product')"
-                   (click)="setActive('add-product')">Add Product</a>
+                   (click)="setActive('add-product')" routerLink="addproduct">Add Product</a>
                 <a class="nav-link text-dark py-2"
                    [class.active]="isActive('view-products')"
                    routerLink="manageProduct"

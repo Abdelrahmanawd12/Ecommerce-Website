@@ -171,7 +171,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr *ngFor="let orderItem of selectedOrder?.orderItems">
-                                                    <td><img [src]="imageBaseUrl+orderItem.productImages"
+                                                    <td><img [src]="imageBaseUrl+orderItem.productImages.imgUrls"
                                                             class="product-img"></td>
                                                     <td>{{orderItem.productName}}</td>
                                                     <td>{{orderItem.brand}}</td>

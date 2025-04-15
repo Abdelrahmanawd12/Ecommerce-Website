@@ -47,7 +47,7 @@ export class ManageProductComponent {
   constructor(private sellerServ: SellerService) { }
 
   readonly sellerId: string = localStorage.getItem('userId') || '';
-  readonly imageBaseUrl = 'https://localhost:7266/'; // عدلي حسب سيرفرك
+  readonly imageBaseUrl = 'https://localhost:7266/'; 
 
 
   getProducts(): void {
@@ -55,7 +55,7 @@ export class ManageProductComponent {
     this.sellerServ.getAllProducts(this.sellerId).subscribe({
       next: (res) => {
         this.allProducts = res;
-        this.products = res; // نعرض الكل مبدئيًا
+        this.products = res; 
         this.isLoading = false;
       },
       error: (err) => {
