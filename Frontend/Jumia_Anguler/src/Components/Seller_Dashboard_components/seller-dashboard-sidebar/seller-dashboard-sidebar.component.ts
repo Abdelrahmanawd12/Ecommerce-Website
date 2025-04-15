@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -9,12 +9,14 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./seller-dashboard-sidebar.component.css']
 })
 export class SellerDashboardSidebarComponent implements OnInit {
-  isCollapsed = false; 
   isManageProductsOpen = false; 
   isProfileMenuOpen = false; 
   activeLink: string = 'home'; 
   constructor() {}
-
+  @Input() isCollapsed: boolean = false;
+  @Output() toggle = new EventEmitter<void>();
+  
+  
   ngOnInit(): void {
     const savedState = localStorage.getItem('sidebarCollapsed');
     this.isCollapsed = savedState === 'true';

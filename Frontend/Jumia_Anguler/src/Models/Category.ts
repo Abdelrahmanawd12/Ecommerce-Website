@@ -10,7 +10,8 @@ export interface IProduct {
   imageUrls: string[],
   tags:string[],
   discount: number,
-  weight: number
+  weight: number,
+  status:string
 
 }
 export interface Isubcategory {

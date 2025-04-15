@@ -12,7 +12,7 @@
     justify-content: start;
     padding-left: 15px;
     transition: background-color 0.3s ease, color 0.3s ease;
-    
+
 }
 
 .nav-link:hover {
@@ -37,6 +37,7 @@
 .dropdown-menu .dropdown-item:hover {
     background-color: orange;
     color: white;
+    cursor: pointer;
 }
 
 /*--------------------------------------------------------------------*/
@@ -46,6 +47,16 @@
     width: 250px;
     transition: all 0.3s ease;
 }
+
+.sidebar {
+    position: fixed;  
+    top: 0;          
+    left: 0;
+    height: 100vh;   
+    z-index: 1000;     
+    overflow-y: auto;
+  }
+  
 
 #sidebar.collapsed {
     width: 80px;
@@ -100,6 +111,7 @@
 #profileMenu .nav-link:hover {
     background-color: white;
     color: white;
+    cursor: pointer;
 }
 
 #profileMenu .dropdown-divider {
@@ -107,16 +119,17 @@
 }
 
 #manageProductsMenu .nav-link {
-    background-color: transparent; 
-    color: #343a40; 
-    transition: color 0.3s ease, background-color 0.3s ease; 
-  }
-  
-  #manageProductsMenu .nav-link:hover {
-    background-color: white; 
-    color: orange; 
-  }
-  
+    background-color: transparent;
+    color: #343a40;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+#manageProductsMenu .nav-link:hover {
+    background-color: white;
+    color: orange;
+    cursor: pointer;
+}
+
 .nav-link:hover {
     background-color: rgba(0, 0, 0, 0.05);
 }

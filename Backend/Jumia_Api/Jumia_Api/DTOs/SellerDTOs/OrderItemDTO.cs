@@ -9,6 +9,8 @@ namespace Jumia_Api.DTOs.SellerDTOs
         public int OrderItemId { get; set; }
         public int OrderId { get; set; }
         public int ProductId { get; set; }
+        public string productName { get; set; }
+        public string Brand { get; set; }
         public int Quantity { get; set; }
         public decimal SubTotal { get; set; }
 
