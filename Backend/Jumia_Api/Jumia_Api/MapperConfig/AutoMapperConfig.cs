@@ -61,13 +61,13 @@ namespace Jumia_Api.MapperConfig
                 dest.Items = src.CartItems.Select(c => new CartItemDTO
                 {
                     ProductName = c.Product.Name,
-                    ProductId=c.ProductId,
+                    ProductId = c.ProductId,
                     ProductStock = c.Product.Quantity,
                     Discount = c.Product.Discount,
                     Quantity = c.Quantity,
-                    Price=c.Product.Price,
+                    Price = c.Product.Price,
                     ImageUrl = c.Product.ProductImages
-                      .OrderBy(img => img.Id)  
+                      .OrderBy(img => img.Id)
                       .FirstOrDefault()?.Url
 
                 }).ToList();
@@ -98,11 +98,11 @@ namespace Jumia_Api.MapperConfig
             });
             CreateMap<CartItem, CartItemDTO>().AfterMap((src, dest) =>
             {
-               dest.ProductId= src.ProductId;
-                dest.ProductName=src.Product.Name;
-                dest.Quantity=src.Quantity;
+                dest.ProductId = src.ProductId;
+                dest.ProductName = src.Product.Name;
+                dest.Quantity = src.Quantity;
                 dest.Discount = src.Product.Discount;
-                dest.Price=src.Product.Price;
+                dest.Price = src.Product.Price;
                 dest.ProductStock = src.Product.Quantity;
                 dest.ImageUrl = src.Product.ProductImages.FirstOrDefault()?.Url;
             });
@@ -111,7 +111,7 @@ namespace Jumia_Api.MapperConfig
             CreateMap<Product, ProductsSellerDTO>().AfterMap((src, dest) =>
             {
                 dest.SubCategoryName = src.SubCategory.SubCatName.ToString();
-                dest.ImageUrls= src.ProductImages.Select(img => img.Url).ToList();
+                dest.ImageUrls = src.ProductImages.Select(img => img.Url).ToList();
                 dest.RatingStars = src.Ratings.Select(s => s.Stars).ToList();
                 dest.Tags = src.ProductTags.Select(t => t.Tag).ToList();
             });
@@ -127,15 +127,26 @@ namespace Jumia_Api.MapperConfig
                 .ForMember(dest => dest.ImgUrl, opt => opt.MapFrom(src => src.Url));
 
             // Order Item
-            CreateMap<OrderItem, OrderItemDTO>();
-
+            CreateMap<OrderItem, OrderItemDTO>()
+                .ForMember(dest => dest.productName, opt => opt.MapFrom(src => src.Product.Name))
+                .ForMember(dest => dest.Brand, opt => opt.MapFrom(src => src.Product.Brand))
+                .ForMember(dest => dest.SubTotal, opt => opt.MapFrom(src => src.Quantity * src.Product.Price));
             // Order
             CreateMap<Order, OrderDTO>()
                 .ForMember(dest => dest.ShippingInfo, opt => opt.MapFrom(src => src.ShippingInfo))
                 .ForMember(dest => dest.Payment, opt => opt.MapFrom(src => src.Payment))
                 .ForMember(dest => dest.OrderTrackingNumber, opt => opt.MapFrom(src => src.OrderTrackingNumber));
 
+            // Mapping from ApplicationUser to UserDTO
+            CreateMap<ApplicationUser, UserDTO>()
+                .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.FirstName))
+                .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.LastName))
+                .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role))
+                .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Gender));
 
+            // Mapping from Address to AddressDTO
+            CreateMap<Address, AddressDTO>()
+                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId));
         }
     }
 }

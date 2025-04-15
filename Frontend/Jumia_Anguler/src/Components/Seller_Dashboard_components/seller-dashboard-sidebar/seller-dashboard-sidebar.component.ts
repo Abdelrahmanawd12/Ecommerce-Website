@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { LogoutService } from '../../../Services/Auth/logout.service';
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-seller-dashboard-sidebar',
@@ -12,7 +14,25 @@ export class SellerDashboardSidebarComponent implements OnInit {
   isManageProductsOpen = false; 
   isProfileMenuOpen = false; 
   activeLink: string = 'home'; 
-  constructor() {}
+  constructor(private logout: LogoutService, private router: Router) {}
+
+  confirmLogout() {
+    this.logout.logout();
+    this.showToast(); 
+    const modal = bootstrap.Modal.getInstance(document.getElementById('logoutModal'));
+    if (modal) {
+      modal.hide();
+    }
+  }
+
+  showToast() {
+    const toastEl = document.getElementById('logoutToast');
+    if (toastEl) {
+      const toast = new bootstrap.Toast(toastEl);
+      toast.show();
+    }
+  }
+
   @Input() isCollapsed: boolean = false;
   @Output() toggle = new EventEmitter<void>();
   

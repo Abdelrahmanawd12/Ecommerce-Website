@@ -42,7 +42,12 @@ export class ManageProductComponent {
 
   ngOnInit(): void {
     this.getProducts();
-
+    const modalElement = document.getElementById('deleteConfirmModal');
+    if (modalElement) {
+      this.deleteModal = new window.bootstrap.Modal(modalElement);
+    } else {
+      console.error('Delete confirmation modal element not found');
+    }
     this.searchTerms.pipe(
       debounceTime(300),
       distinctUntilChanged(),
@@ -145,13 +150,22 @@ export class ManageProductComponent {
       }
     });
   }
-  deleteProduct(productId: number) {
+  selectedProductId: number | null = null;
+  deleteModal: any;
+
+  openDeleteModal(productId: number) {
+    this.selectedProductId = productId;
+    this.deleteModal.show();
+  }
+
+  confirmDelete() {
     const sellerId = localStorage.getItem('userId');
-    if (confirm('Are you sure you want to delete this product?')) {
-      this.sellerServ.deleteProduct(productId, sellerId!).subscribe({
+    if (this.selectedProductId != null) {
+      this.sellerServ.deleteProduct(this.selectedProductId, sellerId!).subscribe({
         next: () => {
           console.log('Product deleted successfully');
           this.getProducts();
+          this.deleteModal.hide();
         },
         error: (error) => {
           console.error('Failed to delete product:', error);
@@ -159,7 +173,8 @@ export class ManageProductComponent {
       });
     }
   }
+}
   
   
 
-}
+

@@ -28,7 +28,7 @@ export class SellerService {
   
   
 
-  getProductById(id: number): Observable<IProduct> {
+  getProductById(id: string): Observable<IProduct> {
     return this.http.get<IProduct>(`${this.baseUrl}/products/${id}`);
   }
 
@@ -81,15 +81,15 @@ export class SellerService {
     return this.http.get<any>(`${this.baseUrl}/getallCategories`);
   }
 
-  getAllOrders(id: number): Observable<IOrder> {
+  getAllOrders(id: string): Observable<IOrder[]> {
     return this.http.get<any>(`${this.baseUrl}/orders/${id}`);
   }
 
-  getOrderByDate(id: number, startDate: Date, endDate: Date): Observable<IOrder> {
+  getOrderByDate(id: string, startDate: Date, endDate: Date): Observable<IOrder[]> {
     const formattedStartDate = formatDate(startDate, 'yyyy-MM-dd', 'en-US');
     const formattedEndDate = formatDate(endDate, 'yyyy-MM-dd', 'en-US');
 
-    return this.http.get<IOrder>(`${this.baseUrl}/ordersByDate/${id}`, {
+    return this.http.get<IOrder[]>(`${this.baseUrl}/ordersByDate/${id}`, {
       params: {
         startDate: formattedStartDate,
         endDate: formattedEndDate
@@ -97,11 +97,11 @@ export class SellerService {
     });
   }
 
-  getOrderByStatus(id: number, status: string): Observable<IOrder> {
-    return this.http.get<IOrder>(`${this.baseUrl}/ordersByStatus/${id}`, { params: { status } });
+  getOrderByStatus(id: string, status: string): Observable<IOrder[]> {
+    return this.http.get<IOrder[]>(`${this.baseUrl}/ordersByStatus/${id}`, { params: { status } });
   }
 
-  getOrderByDate2(id: number, date: Date): Observable<IOrder> {
+  getOrderByDate2(id: string, date: Date): Observable<IOrder> {
     const formattedDate = formatDate(date, 'yyyy-MM-dd', 'en-US');
 
     return this.http.get<IOrder>(`${this.baseUrl}/ordersByDate`, {
@@ -112,10 +112,16 @@ export class SellerService {
     });
   }
 
-
-  UpdateOrderStatus(sellerId: number, orderId: number, status: string): Observable<IOrder> {
-    return this.http.patch<IOrder>(`${this.baseUrl}/updateStatus`, { status, orderId, sellerId });
+  getOrderById(sellerId: string, orderId: number): Observable<IOrder> {
+    return this.http.get<IOrder>(`${this.baseUrl}/orderById/${sellerId}`, {
+      params: { orderId: orderId.toString() }
+    });
   }
+  
+
+  UpdateOrderStatus(sellerId: string, orderId: number, status: string): Observable<IOrder> {
+    return this.http.patch<IOrder>(`${this.baseUrl}/updateStatus`, { status, orderId, sellerId });
+  }  
 
   deleteOrder(orderId: number, sellerId: string): Observable<IOrder> {
     return this.http.delete<IOrder>(`${this.baseUrl}/deleteOrder`, {
