@@ -1,4 +1,4 @@
-using System.Text;
+﻿using System.Text;
 using Jumia.Data;
 using Jumia.Models;
 using Jumia_Api.Services.Admin_Service;
@@ -85,6 +85,8 @@ namespace Jumia_Api
 
             app.UseCors(txt);
             app.MapControllers();
+            app.UseStaticFiles(); 
+
 
             app.Run();
         }

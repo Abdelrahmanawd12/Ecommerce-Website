@@ -172,6 +172,7 @@ namespace Jumia.Data
                 .HasColumnType("decimal(18, 2)");
 
 
+
             //Solution Error YASMINE 
             base.OnModelCreating(modelBuilder);
 
@@ -188,6 +189,14 @@ namespace Jumia.Data
                 .OnDelete(DeleteBehavior.Restrict); // 🔒 No cascade
 
             // Optionally configure other navigation properties here
+
+            //update
+            modelBuilder.Entity<OrderItem>()
+    .HasOne(oi => oi.Product)
+    .WithMany(p => p.OrderItems)
+    .HasForeignKey(oi => oi.ProductId)
+    .OnDelete(DeleteBehavior.Restrict);
+
         }
     }
 }

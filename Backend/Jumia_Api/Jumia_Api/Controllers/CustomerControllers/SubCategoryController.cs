@@ -22,6 +22,7 @@ namespace Jumia_Api.Controllers.CustomerControllers
         public IActionResult GetAllSubCategories()
         {
             var subCategories = unit.SubCategoryRepository.GetAll();
+
             var subCat = mapper.Map<List<SubCategoryDTO>>(subCategories);
             return Ok(subCat);
         }

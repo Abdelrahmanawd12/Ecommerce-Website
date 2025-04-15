@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { LogoutService } from '../../../Services/Auth/logout.service';
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-seller-dashboard-sidebar',
@@ -9,12 +11,32 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./seller-dashboard-sidebar.component.css']
 })
 export class SellerDashboardSidebarComponent implements OnInit {
-  isCollapsed = false; 
   isManageProductsOpen = false; 
   isProfileMenuOpen = false; 
   activeLink: string = 'home'; 
-  constructor() {}
+  constructor(private logout: LogoutService, private router: Router) {}
 
+  confirmLogout() {
+    this.logout.logout();
+    this.showToast(); 
+    const modal = bootstrap.Modal.getInstance(document.getElementById('logoutModal'));
+    if (modal) {
+      modal.hide();
+    }
+  }
+
+  showToast() {
+    const toastEl = document.getElementById('logoutToast');
+    if (toastEl) {
+      const toast = new bootstrap.Toast(toastEl);
+      toast.show();
+    }
+  }
+
+  @Input() isCollapsed: boolean = false;
+  @Output() toggle = new EventEmitter<void>();
+  
+  
   ngOnInit(): void {
     const savedState = localStorage.getItem('sidebarCollapsed');
     this.isCollapsed = savedState === 'true';

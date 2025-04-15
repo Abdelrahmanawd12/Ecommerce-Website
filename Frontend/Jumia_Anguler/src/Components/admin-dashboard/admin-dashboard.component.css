@@ -1,0 +1,35 @@
+.nav-link.active {
+    background-color: #e3f2fd;
+    border-radius: 8px;
+    color: #007bff !important;
+  }
+  .nav-link {
+    color: #333;
+    padding: 10px 15px;
+  }
+  .shadow {
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  }
+  .dash {
+    padding: 20px;
+    color: #007bff;
+    border-radius: 8px;
+    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  
+  /* الكروت */
+  .p-4 {
+    padding: 20px;
+  }
+  .bg-white {
+    background-color: white;
+  }
+  
+  .shadow {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .rounded {
+    border-radius: 8px;
+  }  

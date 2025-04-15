@@ -2,34 +2,38 @@ export interface IOrder {
     orderId: number;
     productId: number;
     quantity: number;
-    totalPrice: number;
+    totalAmount: number;
     orderDate: Date;
-    status: string;
+    orderStatus: string;
     shippingAddress: string;
     shippingDate: Date;
     deliveryStatus: string;
-    shippingInfo:{
+    shippingInfo: {
         shippingMethod: string;
         shippingAddress: string;
         shippingDate: Date;
         deliveryDate: Date;
-        trackingNumber: string;
+        trackingNumber: number;
         shippingStatus: string;
-        recieverName: string;
+        receiverName: string;
         recieverPhone: string;
         recieverEmail: string;
     }
     orderItems: [
         {
             productName: string;
-            productBrand: string;
+            brand: string;
             quantity: number;
             price: number;
             SubTotalPrice: number;
-            productImage: [];
+            productImages: [
+                {
+                    imgUrl: string;
+                }
+            ];
         }
     ];
-    paymentInfo: {
+    payment: {
         paymentMethod: string;
         paymentStatus: string;
         transactionId: string;

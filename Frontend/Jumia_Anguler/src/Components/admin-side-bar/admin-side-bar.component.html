@@ -1,0 +1,97 @@
+<div [class.collapsed]="isCollapsed" id="sidebar" class="sidebar d-flex flex-column flex-shrink-0 bg-light text-dark"
+    style="height: 100vh; transition: width 0.3s;">
+
+  
+  <button class="btn btn-outline-secondary m-2 align-self-end" (click)="toggleSidebar()">
+    <i class="bi" [ngClass]="isCollapsed ? 'bi-arrow-bar-right' : 'bi-arrow-bar-left'"></i>
+  </button>
+
+
+  <a class="d-flex align-items-center mb-3 text-dark text-decoration-none px-3">
+    <img src="assets/admin.png" style="width: 40px; height: 40px;">
+    <span class="fs-5 ms-2 sidebar-text" *ngIf="!isCollapsed">Admin Dashboard</span>
+  </a>
+
+  <hr class="my-2" />
+
+  <ul class="nav nav-pills nav-flush flex-column text-start">
+
+ 
+    <li class="nav-item">
+      <a class="nav-link py-3 border-bottom text-dark"
+        routerLinkActive="active"
+         [class.active]="isActive('dashboard')"
+         (click)="setActive('dashboard')">
+        <i class="bi bi-speedometer2 fs-5"></i>
+        <span class="ms-2 sidebar-text" *ngIf="!isCollapsed">Dashboard</span>
+      </a>
+    </li>
+    
+
+  
+    <li class="nav-item">
+      <a class="nav-link py-3 border-bottom text-dark d-flex justify-content-between"
+         [class.active]="isActive('users') || isSubmenuActive('users')"
+         (click)="toggleUsersMenu()">
+        <div>
+          <i class="bi bi-people-fill fs-5"></i>
+          <span class="ms-2 sidebar-text" *ngIf="!isCollapsed">Manage Users</span>
+        </div>
+        <i *ngIf="!isCollapsed" class="bi"
+           [ngClass]="{'bi-chevron-down': !isUsersMenuOpen, 'bi-chevron-up': isUsersMenuOpen}"></i>
+      </a>
+      <div class="collapse ps-4" [class.show]="!isCollapsed && isUsersMenuOpen">
+        <a class="nav-link text-dark py-2" routerLink="/admin/users/add"
+           [class.active]="isActive('add-user')"
+           (click)="setActive('add-user')">Add User</a>
+        <a class="nav-link text-dark py-2" routerLink="/admin/users"
+           [class.active]="isActive('view-users')"
+           (click)="setActive('view-users')">View Users</a>
+      </div>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link py-3 border-bottom text-dark d-flex justify-content-between"
+         [class.active]="isActive('products') || isSubmenuActive('products')"
+         (click)="toggleProductsMenu()">
+        <div>
+          <i class="bi bi-box fs-5"></i>
+          <span class="ms-2 sidebar-text" *ngIf="!isCollapsed">Manage Products</span>
+        </div>
+        <i *ngIf="!isCollapsed" class="bi"
+           [ngClass]="{'bi-chevron-down': !isProductsMenuOpen, 'bi-chevron-up': isProductsMenuOpen}"></i>
+      </a>
+      <div class="collapse ps-4" [class.show]="!isCollapsed && isProductsMenuOpen">
+        <a class="nav-link text-dark py-2" routerLink="/admin/products/add"
+           [class.active]="isActive('add-product')"
+           (click)="setActive('add-product')">Add Product</a>
+        <a class="nav-link text-dark py-2" routerLink="/admin/products"
+           [class.active]="isActive('view-products')"
+           (click)="setActive('view-products')">View Products</a>
+      </div>
+    </li>
+
+    
+    <li class="nav-item">
+      <a class="nav-link py-3 border-bottom text-dark"
+         routerLink="/admin/reports"
+         [class.active]="isActive('reports')"
+         (click)="setActive('reports')">
+        <i class="bi bi-bar-chart-line fs-5"></i>
+        <span class="ms-2 sidebar-text" *ngIf="!isCollapsed">Reports</span>
+      </a>
+    </li>
+
+ 
+    <li class="nav-item">
+      <a class="nav-link py-3 border-bottom text-dark"
+         routerLink="/admin/settings"
+         [class.active]="isActive('settings')"
+         (click)="setActive('settings')">
+        <i class="bi bi-gear-fill fs-5"></i>
+        <span class="ms-2 sidebar-text" *ngIf="!isCollapsed">Settings</span>
+      </a>
+    </li>
+
+  </ul>
+</div>

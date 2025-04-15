@@ -157,17 +157,45 @@ namespace Jumia_Api.Controllers.SellerControllers
 
             return Ok(catsDto);
         }
+        //---------------------------------------------------------------------------------------
+        //Get Product Sales
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesErrorResponseType(typeof(void))]
+        [EndpointSummary("Get Product Sales")]
+        [EndpointDescription("Returns total sales (quantity) per product")]
+        [HttpGet("/productSales")]
+        public IActionResult GetProductSales()
+        {
+            var orderItems = unit.OrderItemRepository.GetAll();
+
+            if (orderItems == null || !orderItems.Any())
+            {
+                return NotFound("No order items found.");
+            }
+
+            var salesData = orderItems
+                .GroupBy(oi => new { oi.ProductId, oi.Product.Name })
+                .Select(g => new productSalesDTO
+                {
+                    ProductName = g.Key.Name,
+                    Sales = g.Sum(oi => oi.Quantity)
+                })
+                .ToList();
+
+            return Ok(salesData);
+        }
 
         //-----------------------------------------------------------------------------------------
         //Delete Product By Id
-        [HttpDelete("/delete/{id}")] //[/delete/{id}]
+        [HttpDelete("/delete/{prodId}")] //[/delete/{id}]
         [ProducesResponseType(200, Type = typeof(ProductsSellerDTO))]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
         [ProducesErrorResponseType(typeof(void))]
         [EndpointSummary("Delete Product By Id")]
         [EndpointDescription("Delete Seller Product By Id")]
-        public IActionResult DeleteProductById(string SellerId, int ProdId)
+        public IActionResult DeleteProductById([FromQuery]string SellerId,[FromRoute(Name ="prodId")] int ProdId)
         {
             if (string.IsNullOrWhiteSpace(SellerId))
             {
@@ -449,37 +477,73 @@ namespace Jumia_Api.Controllers.SellerControllers
         }
 
         //-------------------------------------------------------------------------------------
+        //Get Order By Order Id
+        [HttpGet("/orderById/{sellerId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [ProducesErrorResponseType(typeof(void))]
+        [EndpointSummary("Get Order By Order Id And Seller Id")]
+        [EndpointDescription("Get Order By Order Id And Seller Id")]
+        public IActionResult GetOrderById(string sellerId, int orderId)
+        {
+            if (string.IsNullOrEmpty(sellerId))
+            {
+                return BadRequest("Seller Id cannot be empty.");
+            }
+
+            var order = unit.OrderRepository.GetAll()
+                .FirstOrDefault(o => o.SellerId == sellerId && o.OrderId == orderId);
+
+            if (order == null)
+            {
+                return NotFound($"No order found for Seller Id: {sellerId} and Order Id: {orderId}");
+            }
+
+            var orderDto = mapper.Map<OrderDTO>(order);
+
+            // Add Product Images for each item in the order
+            foreach (var item in orderDto.OrderItems)
+            {
+                var productImages = unit.ProductImgRepository.GetAll()
+                    .Where(pi => pi.ProductId == item.ProductId)
+                    .ToList();
+
+                item.ProductImages = mapper.Map<List<ProductImgDTO>>(productImages);
+            }
+
+            return Ok(orderDto);
+        }
+        //-------------------------------------------------------------------------------------
         //Update Status Only By Order Id And Seller Id
         [HttpPatch("/updateStatus")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
-        [ProducesErrorResponseType(typeof(void))]
         [EndpointSummary("Update Order Status")]
         [EndpointDescription("Update Order Status By Order Id And Seller Id")]
-        public IActionResult UpdateStatus(string sellerId, int orderId, string status)
+        public IActionResult UpdateStatus([FromBody] UpdateOrderStatusRequestDTO request)
         {
-            if (string.IsNullOrEmpty(sellerId) || string.IsNullOrEmpty(status) || orderId <= 0)
+            if (string.IsNullOrEmpty(request.SellerId) || string.IsNullOrEmpty(request.Status) || request.OrderId <= 0)
             {
-                return BadRequest("Invalid input data.");
+                return BadRequest(new { message = "Invalid input data." });
             }
 
-            var order = unit.OrderRepository.GetAll().FirstOrDefault(o => o.OrderId == orderId && o.SellerId == sellerId);
+            var order = unit.OrderRepository.GetAll().FirstOrDefault(o => o.OrderId == request.OrderId && o.SellerId == request.SellerId);
 
             if (order == null)
             {
-                return NotFound($"Order with ID {orderId} and Seller ID {sellerId} not found.");
+                return NotFound(new { message = $"Order with ID {request.OrderId} and Seller ID {request.SellerId} not found." });
             }
 
-            order.OrderStatus = status;
-
+            order.OrderStatus = request.Status;
             unit.Save();
 
-            return Ok($"Order status updated to {status} for OrderId {orderId}.");
+            return Ok(new { message = $"Order status updated to {request.Status} for OrderId {request.OrderId}." });
         }
 
         //-------------------------------------------------------------------------------------
-        //Delete Order By Order Id And Seller Id
+        // Delete Order By Order Id And Seller Id
         [HttpDelete("/deleteOrder")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
@@ -491,21 +555,22 @@ namespace Jumia_Api.Controllers.SellerControllers
         {
             if (orderId <= 0 || string.IsNullOrEmpty(sellerId))
             {
-                return BadRequest("Invalid input data.");
+                return BadRequest(new { message = "Invalid input data." });
             }
 
             var order = unit.OrderRepository.GetById(orderId);
 
             if (order == null || order.SellerId != sellerId)
             {
-                return NotFound($"Order with ID {orderId} and Seller ID {sellerId} not found.");
+                return NotFound(new { message = $"Order with ID {orderId} and Seller ID {sellerId} not found." });
             }
 
             unit.OrderRepository.Delete(order.OrderId);
-
             unit.Save();
 
-            return Ok($"Order with ID {orderId} has been deleted.");
+            return Ok(new { message = $"Order with ID {orderId} has been deleted." });
         }
+
+
     }
 }
