@@ -65,6 +65,12 @@ export const routes: Routes = [
             .then((m) => m.SellerSalesComponent)
       },
       {
+        path:'reports',
+        loadComponent:()=>
+          import('../Components/Seller_Dashboard_components/seller-reports/seller-reports.component')
+        .then((m)=>m.SellerReportsComponent)
+      },
+      {
         path: 'accountprofile',
         loadComponent: () =>
           import('../Components/Seller_Dashboard_components/seller-accountprofile/seller-accountprofile.component')

@@ -170,6 +170,12 @@ namespace Jumia.Data
             modelBuilder.Entity<Rating>()
                 .Property(r => r.Stars)
                 .HasColumnType("decimal(18, 2)");
+            //update
+            modelBuilder.Entity<OrderItem>()
+    .HasOne(oi => oi.Product)
+    .WithMany(p => p.OrderItems)
+    .HasForeignKey(oi => oi.ProductId)
+    .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
