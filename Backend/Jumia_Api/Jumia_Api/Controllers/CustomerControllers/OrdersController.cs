@@ -88,11 +88,11 @@ namespace Jumia_Api.Controllers.CustomerControllers
 
             if (category.Equals("current", StringComparison.OrdinalIgnoreCase))
             {
-                statusGroup = new List<string> { "pending", "processing", "shipped" };
+                statusGroup = new List<string> { "pending", "processing", "shipped", "delivered" };
             }
             else if (category.Equals("past", StringComparison.OrdinalIgnoreCase))
             {
-                statusGroup = new List<string> { "delivered", "cancelled", "returned" };
+                statusGroup = new List<string> { "cancelled", "returned" };
             }
             else
             {
@@ -187,7 +187,7 @@ namespace Jumia_Api.Controllers.CustomerControllers
             if (order.OrderStatus != "Pending")
                 return BadRequest("Only ongoing orders can be canceled");
 
-            order.OrderStatus = "CANCELED";
+            order.OrderStatus = "cancelled";
             _context.SaveChanges();
 
             return Ok(new { message = "Order canceled successfully" });
