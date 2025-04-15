@@ -1,68 +1,65 @@
 <div class="container-fluid">
   <div class="row">
-   
-    <div class="col-md-2 bg-white border-end vh-100 p-3">
-      <h5 class="text-primary mb-4">Admin Panel</h5>
-      <ul class="nav flex-column">
-        <a class="nav-link" [routerLink]="'/dashboard'">📊 Dashboard</a>
-        <li class="nav-item"><a class="nav-link" href="#">Products</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Users</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Categories</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Account Statements</a></li>
-      </ul>
-    </div>
 
-  
-    <div class="col-md-10 p-4">
+    <!-- هنا نستخدم col بدل col-md-* عشان الكروت تأخذ عرض كامل المساحة -->
+    <div class="col p-4">
       <div class="d-flex justify-content-between align-items-center mb-4">
         <h4 class="dash">Dashboard Overview</h4>
         <button class="btn btn-outline-warning">Export</button>
       </div>
 
       <div class="row g-4" *ngIf="stats">
-        <div class="col-md-4">
+        <!-- الكروت سوف تأخذ المساحة المتاحة بالكامل داخل الـ row -->
+        <div class="col-12 col-md-4">
           <div class="p-4 bg-white shadow rounded">
             <h6>Total Users</h6>
             <h4 class="text-primary">{{ stats.totalUsers }}</h4>
           </div>
         </div>
-        <div class="col-md-4">
+
+        <div class="col-12 col-md-4">
           <div class="p-4 bg-white shadow rounded">
             <h6>Total Categories</h6>
             <h4 class="text-success">{{ stats.totalCategories }}</h4>
           </div>
         </div>
-        <div class="col-md-4">
+
+        <div class="col-12 col-md-4">
           <div class="p-4 bg-white shadow rounded">
             <h6>Total SubCategories</h6>
             <h4 class="text-info">{{ stats.totalSubCategories }}</h4>
           </div>
         </div>
-        <div class="col-md-4">
+
+        <div class="col-12 col-md-4">
           <div class="p-4 bg-white shadow rounded">
             <h6>Total Products</h6>
             <h4 class="text-dark">{{ stats.totalProducts }}</h4>
           </div>
         </div>
-        <div class="col-md-4">
+
+        <div class="col-12 col-md-4">
           <div class="p-4 bg-white shadow rounded">
             <h6>Out of Stock</h6>
             <h4 class="text-danger">{{ stats.outOfStockProducts }}</h4>
           </div>
         </div>
-        <div class="col-md-4">
+
+        <div class="col-12 col-md-4">
           <div class="p-4 bg-white shadow rounded">
             <h6>New Users (This Month)</h6>
             <h4 class="text-warning">{{ stats.newUsersThisMonth }}</h4>
           </div>
         </div>
-        <div class="col-md-6">
+
+        <div class="col-12 col-md-6">
           <div class="p-4 bg-white shadow rounded">
             <h6>Total Sales</h6>
             <h4 class="text-primary">${{ stats.totalSales }}</h4>
           </div>
         </div>
-        <div class="col-md-6">
+
+        <div class="col-12 col-md-6">
           <div class="p-4 bg-white shadow rounded">
             <h6>Total Commission</h6>
             <h4 class="text-muted">${{ stats.totalCommission }}</h4>
