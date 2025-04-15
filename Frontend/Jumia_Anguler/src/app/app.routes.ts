@@ -75,6 +75,12 @@ export const routes: Routes = [
         loadComponent: () =>
           import('../Components/Seller_Dashboard_components/seller-accountprofile/seller-accountprofile.component')
             .then((m) => m.SellerAccountprofileComponent)
+      },
+      {
+        path: 'addproduct',
+        loadComponent: () =>
+          import('../Components/Seller_Dashboard_components/add-product-dashboard/add-product-dashboard.component')
+            .then((m) => m.AddProductDashboardComponent)
       }
     ]
   },
