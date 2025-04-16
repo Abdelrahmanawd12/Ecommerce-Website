@@ -327,3 +327,20 @@
     margin: 0;
   }
 }
+/* x button style */
+.clear-button {
+  position: absolute;
+  right: 45px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #999;
+  margin: auto 5px;
+}
+
+.clear-button:hover {
+  color: #000 !important
+}

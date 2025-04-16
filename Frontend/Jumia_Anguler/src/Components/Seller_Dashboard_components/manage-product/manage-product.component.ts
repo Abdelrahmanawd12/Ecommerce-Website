@@ -56,6 +56,7 @@ export class ManageProductComponent {
       tap(() => this.filterProducts()),
       tap(() => this.isLoading = false)
     ).subscribe();
+    
   }
 
   getProducts(): void {
@@ -112,7 +113,12 @@ export class ManageProductComponent {
     this.searchTerm = product.name;
     this.showSuggestions = false;
   }
-
+  clearSearch(): void {
+    this.searchTerm = '';
+    this.suggestions = [];
+    this.filterProducts(); 
+  }
+  
   onBlur(): void {
     setTimeout(() => {
       this.showSuggestions = false;
