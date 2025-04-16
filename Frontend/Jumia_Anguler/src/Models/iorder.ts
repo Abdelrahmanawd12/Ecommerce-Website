@@ -26,11 +26,7 @@ export interface IOrder {
             quantity: number;
             price: number;
             SubTotalPrice: number;
-            productImages: [
-                {
-                    imgUrl: string;
-                }
-            ];
+            imageUrls?: string[]
         }
     ];
     payment: {

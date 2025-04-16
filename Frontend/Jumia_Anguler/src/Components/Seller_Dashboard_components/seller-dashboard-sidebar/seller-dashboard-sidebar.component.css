@@ -167,3 +167,5 @@
   .modal-backdrop {
     z-index: 1040 !important; /* الـ backdrop يجب أن يكون تحت الـ modal */
   }
+  
+  

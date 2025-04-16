@@ -56,6 +56,7 @@ export class ManageProductComponent {
       tap(() => this.filterProducts()),
       tap(() => this.isLoading = false)
     ).subscribe();
+    
   }
 
   getProducts(): void {
@@ -174,7 +175,3 @@ export class ManageProductComponent {
     }
   }
 }
-  
-  
-
-
