@@ -1,82 +1,112 @@
-<h2 mat-dialog-title>Edit Product</h2>
-<mat-dialog-content>
-    <form>
-        <div class="mb-3">
-            <label>Name</label>
-            <input class="form-control" [(ngModel)]="updatedProduct.name" name="name">
-        </div>
+<div class="product-edit-dialog">
+    <h2 mat-dialog-title class="dialog-header">
+        <i class="bi bi-pencil-square icon"></i>Edit Product
+    </h2>
 
-        <div class="mb-3">
-            <label>Description</label>
-            <input type="text" class="form-control" [(ngModel)]="updatedProduct.description" name="description">
-        </div>
+    <mat-dialog-content class="dialog-content">
+        <form class="edit-form">
+            <div class="form-columns">
+                <!-- Column 1 -->
+                <div class="form-column">
+                    <div class="form-group">
+                        <label class="form-label">Name</label>
+                        <input class="form-control" [(ngModel)]="updatedProduct.name" name="name">
+                    </div>
 
-        <div class="mb-3">
-            <label>Price</label>
-            <input type="number" class="form-control" [(ngModel)]="updatedProduct.price" name="price">
-        </div>
+                    <div class="form-group">
+                        <label class="form-label">Brand</label>
+                        <input class="form-control" [(ngModel)]="updatedProduct.brand" name="brand">
+                    </div>
 
-        <div class="mb-3">
-            <label>Category</label>
-            <input class="form-control" [(ngModel)]="updatedProduct.subCategoryName" name="Category">
-        </div>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" rows="2" [(ngModel)]="updatedProduct.description" name="description"></textarea>
+                    </div>
+                </div>
 
-        <div class="mb-3">
-            <label>Stock</label>
-            <input type="number" class="form-control" [(ngModel)]="updatedProduct.quantity" name="stock">
-        </div>
+                <!-- Column 2 -->
+                <div class="form-column">
+                    <div class="form-group">
+                        <label class="form-label">Price</label>
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input type="number" class="form-control" [(ngModel)]="updatedProduct.price" name="price">
+                        </div>
+                    </div>
 
-        <div class="mb-3">
-            <label>Brand</label>
-            <input class="form-control" [(ngModel)]="updatedProduct.brand" name="brand">
-        </div>
+                    <div class="form-group">
+                        <label class="form-label">Stock</label>
+                        <input type="number" class="form-control" [(ngModel)]="updatedProduct.quantity" name="quantity">
+                    </div>
 
-        <div class="mb-3">
-            <label>Discount</label>
-            <input type="number" class="form-control" [(ngModel)]="updatedProduct.discount" name="discount">
-        </div>
+                    <div class="form-group">
+                        <label class="form-label">Weight (kg)</label>
+                        <input type="number" step="0.01" class="form-control" [(ngModel)]="updatedProduct.weight" name="weight">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Discount %</label>
+                        <input type="number" step="0.01" class="form-control" [(ngModel)]="updatedProduct.discount" name="discount">
+                    </div>
+                </div>
+            </div>
 
-        <div class="mb-3">
-            <label>Weight</label>
-            <input type="number" class="form-control" [(ngModel)]="updatedProduct.weight" name="weight">
-        </div>
-        <div class="mb-3">
-            <label>Images</label>
-            <input type="file" class="form-control" (change)="onImageSelected($event)" multiple>
-        </div>
-        <div class="mb-3">
-            <label>Tags (comma separated)</label>
-            <input type="text" class="form-control" [(ngModel)]="tagsInput" name="tags">
-        </div>
-        <div class="mb-3">
-            <label>Rating Stars</label>
-            <input type="number"  class="form-control" [(ngModel)]="updatedProduct.ratingStars" name="ratingStars">
-        </div>
+            <!-- Tags and Subcategory section -->
+            <div class="form-columns">
+                <div class="form-column">
+                    <div class="form-group">
+                        <label class="form-label">Tags</label>
+                        <input class="form-control" [(ngModel)]="updatedProduct.tags" name="tags"
+                            placeholder="Enter tags separated by commas">
+                    </div>
+                </div>
 
+                <div class="form-group">
+                    <label class="form-label">Subcategory</label>
+                    <select class="form-control" [(ngModel)]="selectedSubcategoryId"
+                        (change)="onSubcategoryChange($event)" name="subcategory">
+                        <option *ngFor="let subcategory of subcategories" [value]="subcategory.subCatId">
+                            {{ subcategory.subCatName }}
+                        </option>
+                    </select>
+                </div>
+            </div>
 
-    </form>
-</mat-dialog-content>
+            <!-- Images section -->
+            <div class="form-group full-width">
+                <label class="form-label">Images</label>
+                <div class="image-upload-container">
+                    <input type="file" class="form-control" (change)="onImageSelected($event)" multiple>
+                    <small class="upload-hint">PNG, JPG up to 2MB</small>
+                </div>
+            </div>
+        </form>
+    </mat-dialog-content>
 
-<mat-dialog-actions align="end">
-    <button mat-button (click)="closeDialog()">Cancel</button>
-    <button mat-raised-button color="primary" (click)="saveChanges()">Save</button>
-</mat-dialog-actions>
+    <mat-dialog-actions align="end" class="dialog-actions">
+        <button mat-stroked-button class="cancel-btn" (click)="closeDialog()">
+            Cancel
+        </button>
+        <button mat-flat-button class="save-btn" (click)="saveChanges()">
+            Save Changes
+        </button>
+    </mat-dialog-actions>
+</div>
 
 <!-- Toasts -->
 <div class="toast-container position-fixed bottom-0 end-0 p-3">
-    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+    <div id="successToast" class="toast align-items-center text-white bg-success bg-opacity-90 border-0" role="alert">
         <div class="d-flex">
             <div class="toast-body">
-                Product Updated Successfully ✅
+                <i class="bi bi-check-circle-fill me-2"></i>Product updated successfully
             </div>
             <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
         </div>
     </div>
 
-    <div id="errorToast" class="toast align-items-center text-bg-danger border-0" role="alert">
+    <div id="errorToast" class="toast align-items-center text-white bg-danger bg-opacity-90 border-0" role="alert">
         <div class="d-flex">
             <div class="toast-body">
-                Product update Failed ❌
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>Product update failed
             </div>
             <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
         </div>

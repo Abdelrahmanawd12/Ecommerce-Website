@@ -66,7 +66,7 @@ export const routes: Routes = [
             .then((m) => m.ManageProductComponent)
       },
       {
-        path: 'prductSales',
+        path: 'sales',
         loadComponent: () =>
           import('../Components/Seller_Dashboard_components/seller-sales/seller-sales.component')
             .then((m) => m.SellerSalesComponent)

@@ -2,9 +2,9 @@
   <!-- Header with Profile -->
   <div class="account-header text-center mb-5">
     <div class="profile-initials mx-auto mb-3">
-      {{ getInitials(userData?.firstName + ' ' + userData?.lastName) }}
+      {{ getInitials(userData.firstName + ' ' + userData.lastName) }}
     </div>
-    <h2 class="fw-semibold mb-1">{{userData?.firstName}} {{ userData?.lastName }}</h2>
+    <h2 class="fw-semibold mb-1">{{userData.firstName}} {{ userData.lastName }}</h2>
     <p class="text-muted">{{ userData?.storeName }}</p>
     <button class="btn btn-success mt-3" (click)="toggleEditMode()">
       <i class="bi bi-pencil me-2"></i> {{ isEditMode ? 'Save Changes' : 'Edit Profile' }}
