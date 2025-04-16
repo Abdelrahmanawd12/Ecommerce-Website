@@ -133,11 +133,11 @@ namespace Jumia.Data
                 .HasForeignKey(wi => wi.WishlistId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            //modelBuilder.Entity<Order>()
-            //    .HasOne(o => o.Seller)
-            //    .WithMany()
-            //    .HasForeignKey(o => o.SellerId)
-            //    .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Order>()
+                .HasOne(o => o.Seller)
+                .WithMany()
+                .HasForeignKey(o => o.SellerId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Seller>()
                  .Property(s => s.SellerNetIncome)
@@ -172,10 +172,10 @@ namespace Jumia.Data
                 .HasColumnType("decimal(18, 2)");
             //update
             modelBuilder.Entity<OrderItem>()
-    .HasOne(oi => oi.Product)
-    .WithMany(p => p.OrderItems)
-    .HasForeignKey(oi => oi.ProductId)
-    .OnDelete(DeleteBehavior.Restrict);
+                .HasOne(oi => oi.Product)
+                .WithMany(p => p.OrderItems)
+                .HasForeignKey(oi => oi.ProductId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

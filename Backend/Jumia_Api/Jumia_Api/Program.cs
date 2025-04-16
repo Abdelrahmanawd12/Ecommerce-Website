@@ -33,8 +33,13 @@ namespace Jumia_Api
 
 
 
+            //builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+            //   .AddEntityFrameworkStores<JumiaDbContext>();
+
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-               .AddEntityFrameworkStores<JumiaDbContext>();
+                .AddEntityFrameworkStores<JumiaDbContext>()
+                .AddDefaultTokenProviders();
+
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy(txt, builder =>
