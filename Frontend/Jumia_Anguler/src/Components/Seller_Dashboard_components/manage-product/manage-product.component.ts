@@ -180,7 +180,3 @@ export class ManageProductComponent {
     }
   }
 }
-  
-  
-
-

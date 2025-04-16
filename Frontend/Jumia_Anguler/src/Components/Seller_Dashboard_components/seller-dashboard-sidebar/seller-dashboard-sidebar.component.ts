@@ -11,6 +11,8 @@ import { ViewChild, ElementRef } from '@angular/core';
   templateUrl: './seller-dashboard-sidebar.component.html',
   styleUrls: ['./seller-dashboard-sidebar.component.css']
 })
+
+
 export class SellerDashboardSidebarComponent implements OnInit {
   isManageProductsOpen = false;
   isProfileMenuOpen = false;

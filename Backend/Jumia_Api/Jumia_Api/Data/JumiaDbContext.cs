@@ -177,10 +177,15 @@ namespace Jumia.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Order>()
-                .HasOne(o => o.Customer)
-                .WithMany()
-                .HasForeignKey(o => o.CustomerId)
-                .OnDelete(DeleteBehavior.Restrict); // 🔒 No cascade
+               .HasOne(o => o.Customer)
+               .WithMany(c => c.Orders)
+               .HasForeignKey(o => o.CustomerId)
+               .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Customer>()
+                .HasMany(c => c.Orders)
+                .WithOne(o => o.Customer)
+                .HasForeignKey(o => o.CustomerId);
 
             //modelBuilder.Entity<Order>()
             //    .HasOne(o => o.Seller)

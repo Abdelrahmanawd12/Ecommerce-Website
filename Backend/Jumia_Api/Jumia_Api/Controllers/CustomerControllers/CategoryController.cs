@@ -2,7 +2,6 @@
 using Jumia.Data;
 using Jumia.Models;
 using Jumia_Api.DTOs.CustomerDTOs;
-using Jumia_Api.Migrations;
 using Jumia_Api.Repository;
 using Jumia_Api.UnitOFWorks;
 using Microsoft.AspNetCore.Http;
