@@ -9,9 +9,7 @@ namespace Jumia_Api.DTOs.SellerDTOs
         public string Gender { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public string Password { get; set; }
         public DateTime DOB { get; set; }
-        public Address Address { get; set; }
         public DateTime CreatedAt { get; set; }
         public string StoreName { get; set; }
         public string ShippingZone { get; set; }

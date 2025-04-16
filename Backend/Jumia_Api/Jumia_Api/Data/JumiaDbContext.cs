@@ -133,11 +133,11 @@ namespace Jumia.Data
                 .HasForeignKey(wi => wi.WishlistId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            //modelBuilder.Entity<Order>()
-            //    .HasOne(o => o.Seller)
-            //    .WithMany()
-            //    .HasForeignKey(o => o.SellerId)
-            //    .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Order>()
+                .HasOne(o => o.Seller)
+                .WithMany()
+                .HasForeignKey(o => o.SellerId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Seller>()
                  .Property(s => s.SellerNetIncome)
@@ -182,20 +182,21 @@ namespace Jumia.Data
                 .HasForeignKey(o => o.CustomerId)
                 .OnDelete(DeleteBehavior.Restrict); // 🔒 No cascade
 
-            modelBuilder.Entity<Order>()
-                .HasOne(o => o.Seller)
-                .WithMany()
-                .HasForeignKey(o => o.SellerId)
-                .OnDelete(DeleteBehavior.Restrict); // 🔒 No cascade
+            //modelBuilder.Entity<Order>()
+            //    .HasOne(o => o.Seller)
+            //    .WithMany()
+            //    .HasForeignKey(o => o.SellerId)
+            //    .OnDelete(DeleteBehavior.Restrict); // 🔒 No cascade
 
             // Optionally configure other navigation properties here
 
             //update
             modelBuilder.Entity<OrderItem>()
-    .HasOne(oi => oi.Product)
-    .WithMany(p => p.OrderItems)
-    .HasForeignKey(oi => oi.ProductId)
-    .OnDelete(DeleteBehavior.Restrict);
+                .HasOne(oi => oi.Product)
+                .WithMany(p => p.OrderItems)
+                .HasForeignKey(oi => oi.ProductId)
+                .OnDelete(DeleteBehavior.Restrict);
+   
 
         }
     }

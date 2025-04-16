@@ -10,10 +10,22 @@
 </div>
 <!--Search Container-->
 <div class="search-container m-2 p-2">
-  <div class="search-box">
-    <input type="text" [(ngModel)]="searchTerm" (input)="onSearchChange()" (keyup.enter)="onSearch()"
-      (focus)="showSuggestions = true" (blur)="onBlur()" placeholder="Search products..." aria-label="Search products">
-    <button class="search-button" (click)="onSearch()">
+  <div class="search-box position-relative">
+    <input type="text" [(ngModel)]="searchTerm"
+           (input)="onSearchChange()"
+           (keyup.enter)="onSearch()"
+           (focus)="showSuggestions = true"
+           (blur)="onBlur()"
+           placeholder="Search products..."
+           aria-label="Search products">
+
+    <!-- ❌ Clear button -->
+    <button *ngIf="searchTerm" class="clear-button" (click)="clearSearch()" type="button">
+      <i class="bi bi-x"></i>
+    </button>
+
+    <!-- 🔍 Search button -->
+    <button class="search-button" (click)="onSearch()" type="button">
       <i class="bi bi-search"></i>
     </button>
   </div>
@@ -35,6 +47,7 @@
     </div>
   </div>
 </div>
+
 
 <!-- Enhanced Product Table -->
 <div class="product-management-container">
@@ -88,8 +101,8 @@
               <!-- Product Image -->
               <td>
                 <div class="product-image-container">
-                  <img [src]="imageBaseUrl+product.imageUrls || 'assets/default_product.png'" alt="{{product.name}}"
-                    class="product-thumbnail" onerror="this.src='assets/default-product.png'">
+                  <img [src]="imageBaseUrl+product.imageUrls[0] || 'assets/default_product.png'" alt="{{product.name}}"
+                    class="product-thumbnail" onerror="this.src='assets/default_product.png'">
                 </div>
               </td>
 

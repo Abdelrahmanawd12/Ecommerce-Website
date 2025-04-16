@@ -53,7 +53,7 @@
     top: 0;          
     left: 0;
     height: 100vh;   
-    z-index: 1000;     
+    /* z-index: 1000;      */
     overflow-y: auto;
   }
   
@@ -160,10 +160,4 @@
 .collapse .nav-link {
     padding-left: 1.5rem !important;
 }
-.modal {
-    z-index: 1050 !important; /* تأكد من أن المودال يظهر فوق كل شيء */
-  }
-  
-  .modal-backdrop {
-    z-index: 1040 !important; /* الـ backdrop يجب أن يكون تحت الـ modal */
-  }
+
