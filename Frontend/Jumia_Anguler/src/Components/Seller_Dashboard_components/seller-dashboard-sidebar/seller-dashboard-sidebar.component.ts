@@ -12,6 +12,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './seller-dashboard-sidebar.component.html',
   styleUrls: ['./seller-dashboard-sidebar.component.css']
 })
+
+
 export class SellerDashboardSidebarComponent implements OnInit {
   isManageProductsOpen = false;
   isProfileMenuOpen = false;
