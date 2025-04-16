@@ -2,6 +2,7 @@
 using Jumia.Data;
 using Jumia.Models;
 using Jumia_Api.DTOs.CustomerDTOs;
+using Jumia_Api.Migrations;
 using Jumia_Api.Repository;
 using Jumia_Api.UnitOFWorks;
 using Microsoft.AspNetCore.Http;
@@ -63,5 +64,51 @@ namespace Jumia_Api.Controllers.CustomerControllers
             var categoryies = _mapper.Map<CategoryDTO>(category);
             return Ok(categoryies);
         }
+
+        [HttpGet("{categoryId}/subcategories")]
+        public IActionResult GetSubCategoriesByCategoryId(
+        int categoryId,
+        [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 3)
+        {
+            try
+            {
+                if (page < 1 || pageSize < 1)
+                    return BadRequest("Page and pageSize must be greater than 0.");
+
+                var subcategories = unit.SubCategoryRepository
+                                        .GetAll()
+                                        .Where(sc => sc.CatId == categoryId);
+
+                var totalCount = subcategories.Count();
+                if (totalCount == 0)
+                    return NotFound("No subcategories found for this category.");
+
+                var totalPages = (int)Math.Ceiling((decimal)totalCount / pageSize);
+
+                var pagedSubcategories = subcategories
+                                        .Skip((page - 1) * pageSize)
+                                        .Take(pageSize)
+                                        .ToList();
+
+                var subcategoryDtos = _mapper.Map<List<SubCategoryDTO>>(pagedSubcategories);
+
+                var result = new
+                {
+                    TotalCount = totalCount,
+                    TotalPages = totalPages,
+                    CurrentPage = page,
+                    PageSize = pageSize,
+                    Subcategories = subcategoryDtos
+                };
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+        }
+
     }
 }

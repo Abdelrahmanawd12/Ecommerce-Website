@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../Environment/Environment.prod';
-import { Icategory } from '../../Models/Category';
+import { Isubcategory } from '../../Models/Category';
 
 @Injectable({
   providedIn: 'root'
@@ -10,13 +10,16 @@ import { Icategory } from '../../Models/Category';
 export class SubcategoryService {
 
   constructor(private httpclient:HttpClient) { }
-  getAllSubcategories():Observable<Icategory[]>{
-    return this.httpclient.get<Icategory[]>(`${environment.apiUrl}/SubCategory`)
+  getAllSubcategories():Observable<Isubcategory[]>{
+    return this.httpclient.get<Isubcategory[]>(`${environment.apiUrl}/SubCategory`)
   }
-  getSubcategoryById(id:number):Observable<Icategory>{
-    return this.httpclient.get<Icategory>(`${environment.apiUrl}/SubCategory/${id}`)
+  getSubcategoryById(id:number):Observable<Isubcategory>{
+    return this.httpclient.get<Isubcategory>(`${environment.apiUrl}/SubCategory/${id}`)
   }
-  getSubCategoryByName(name:string):Observable<Icategory>{
-    return this.httpclient.get<Icategory>(`${environment.apiUrl}/SubCategory/${name}`)
+  getSubCategoryByName(name:string):Observable<Isubcategory>{
+    return this.httpclient.get<Isubcategory>(`${environment.apiUrl}/SubCategory/${name}`)
   }
+
+
+
 }
