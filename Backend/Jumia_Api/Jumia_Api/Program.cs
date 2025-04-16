@@ -1,4 +1,4 @@
-using System.Text;
+﻿using System.Text;
 using Jumia.Data;
 using Jumia.Models;
 using Jumia_Api.Services.Admin_Service;
@@ -26,7 +26,7 @@ namespace Jumia_Api
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
             builder.Services.AddDbContext<JumiaDbContext>(options =>
-                options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("con1")));
+                options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("Abdou")));
             builder.Services.AddAutoMapper(typeof(AutoMapperConfig));
             builder.Services.AddScoped<UnitOFWork>();
 
@@ -85,6 +85,8 @@ namespace Jumia_Api
 
             app.UseCors(txt);
             app.MapControllers();
+            app.UseStaticFiles(); 
+
 
             app.Run();
         }

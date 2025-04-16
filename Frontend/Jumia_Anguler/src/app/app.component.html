@@ -1,11 +1,15 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-<app-header *ngIf="showHeader"></app-header>
+<app-navbar *ngIf="showHeader"></app-navbar>
 
-<main class="container">
+<div class="main-content">
 <!-- <app-navbar></app-navbar> -->
 <main>
+
   <router-outlet></router-outlet>
 </main>
-<!-- <app-footer></app-footer> -->
+</div>
+
+<app-footer *ngIf="showFooter" class="jumia-footer"></app-footer>
+
