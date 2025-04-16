@@ -4,6 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { LogoutService } from '../../../Services/Auth/logout.service';
 declare var bootstrap: any;
 import { ViewChild, ElementRef } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // Removed conflicting import of bootstrap
 @Component({
   selector: 'app-seller-dashboard-sidebar',
@@ -17,7 +18,7 @@ export class SellerDashboardSidebarComponent implements OnInit {
   isManageProductsOpen = false;
   isProfileMenuOpen = false;
   activeLink: string = 'home';
-  constructor(private logout: LogoutService, private router: Router) { }
+  constructor(private logout: LogoutService, private router: Router,private modalService: NgbModal) { }
 
 
   @Input() isCollapsed: boolean = false;
@@ -51,17 +52,21 @@ export class SellerDashboardSidebarComponent implements OnInit {
   }
   @ViewChild('logoutModal') logoutModal!: ElementRef;
 
-  openLogoutModal() {
-      this.setActive('logout');
-      const modal = new bootstrap.Modal(this.logoutModal.nativeElement);
-      modal.show();
+  isLogoutConfirmationOpen = false;
+
+  openLogoutConfirmation(): void {
+    this.isLogoutConfirmationOpen = true;
   }
-  
-  confirmLogout() {
-      const modal = bootstrap.Modal.getInstance(this.logoutModal.nativeElement);
-      modal?.hide();
-      this.logout.logout();
-      this.showToast();
+
+  closeLogoutConfirmation(): void {
+    this.isLogoutConfirmationOpen = false;
+  }
+
+  Onlogout(): void {
+    this.showToast();
+    console.log('User logged out');
+    this.logout.logout();
+    this.isLogoutConfirmationOpen = false;
   }
 
   toggleManageProductsMenu(): void {
@@ -101,29 +106,9 @@ export class SellerDashboardSidebarComponent implements OnInit {
     return submenuLinks[parentLink]?.includes(this.activeLink) || false;
   }
 
-  // confirmLogout() {
-  //   // Hide the modal first
-  //   try {
-  //     const modal = bootstrap.Modal.getInstance(document.getElementById('logoutModal'));
-  //     if (modal) {
-  //       modal.hide(); 
-  //     }
-  //     this.logout.logout();
-  //     this.showToast();
-  //   } catch (error) {
-  //     console.error('Logout failed:', error);
-  //   }
-  //   // Perform logout
-  //   this.logout.logout();
-
-  //   // Show toast notification
-  //   this.showToast();
-  // }
 
   showToast() {
-    // Implement your toast notification logic here
     console.log('Showing logout toast');
-    // Example using Bootstrap toast:
     const toast = new bootstrap.Toast(document.getElementById('logoutToast'));
     toast.show();
   }

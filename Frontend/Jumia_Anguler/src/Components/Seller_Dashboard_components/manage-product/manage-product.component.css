@@ -344,3 +344,14 @@
 .clear-button:hover {
   color: #000 !important
 }
+/* Add subtle animation on hover */
+.badge[class*="bg-"]:hover {
+  transform: scale(1.02);
+  transition: all 0.2s ease;
+}
+
+/* Make the "no discount" text more subtle */
+.text-muted.small {
+  opacity: 0.8;
+  font-size: 0.85rem;
+}

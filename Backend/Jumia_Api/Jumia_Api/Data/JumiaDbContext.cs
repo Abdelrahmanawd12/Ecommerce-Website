@@ -174,7 +174,7 @@ namespace Jumia.Data
 
 
             //Solution Error YASMINE 
-            base.OnModelCreating(modelBuilder);
+            //base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Order>()
                .HasOne(o => o.Customer)

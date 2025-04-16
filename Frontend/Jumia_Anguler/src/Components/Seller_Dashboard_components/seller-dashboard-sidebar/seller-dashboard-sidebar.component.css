@@ -160,6 +160,40 @@
 .collapse .nav-link {
     padding-left: 1.5rem !important;
 }
+<<<<<<< HEAD
+
+/* Overlay for modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050;
+  }
+  
+  /* Modal content styling */
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 300px;
+  }
+  
+  .modal-actions {
+    margin-top: 20px;
+  }
+  
+  .modal-actions button {
+    margin: 0 10px;
+  }
+  
+=======
 .modal {
     z-index: 1050 !important; /* تأكد من أن المودال يظهر فوق كل شيء */
   }
@@ -169,3 +203,4 @@
   }
   
   
+>>>>>>> b8337eb52d77a01405c6ff2529d5205ce093af97
