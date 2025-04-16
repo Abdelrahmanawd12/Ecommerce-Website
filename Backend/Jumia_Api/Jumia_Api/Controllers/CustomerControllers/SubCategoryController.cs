@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Jumia.Models;
 using Jumia_Api.DTOs.CustomerDTOs;
 using Jumia_Api.UnitOFWorks;
 using Microsoft.AspNetCore.Http;
@@ -48,6 +49,6 @@ namespace Jumia_Api.Controllers.CustomerControllers
             var subCat = mapper.Map<SubCategoryDTO>(subCategory);
             return Ok(subCat);
         }
-
+     
     }
 }
