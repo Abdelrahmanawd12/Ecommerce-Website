@@ -11,7 +11,7 @@ import { CartService } from '../../Services/Customer/cart.service';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent implements OnInit{
-  user=  'user1';
+  user=  localStorage.getItem('userId') || '';
   public totalItem: number = 0;
   product!: IProduct;
 

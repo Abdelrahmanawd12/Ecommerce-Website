@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Jumia_Api.Migrations
 {
     /// <inheritdoc />
-    public partial class initialOne : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -251,7 +251,8 @@ namespace Jumia_Api.Migrations
                         column: x => x.CustomerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                 
                     table.ForeignKey(
                         name: "FK_Order_AspNetUsers_SellerId",
                         column: x => x.SellerId,
@@ -372,7 +373,7 @@ namespace Jumia_Api.Migrations
                     SubCategoryId = table.Column<int>(type: "int", nullable: false),
                     SellerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -617,6 +618,11 @@ namespace Jumia_Api.Migrations
                 name: "IX_Order_CustomerId",
                 table: "Order",
                 column: "CustomerId");
+
+            //migrationBuilder.CreateIndex(
+            //    name: "IX_Order_CustomerId1",
+            //    table: "Order",
+            //    column: "CustomerId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_SellerId",

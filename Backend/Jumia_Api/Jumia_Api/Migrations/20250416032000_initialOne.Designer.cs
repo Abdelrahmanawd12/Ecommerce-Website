@@ -12,8 +12,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Jumia_Api.Migrations
 {
     [DbContext(typeof(JumiaDbContext))]
-    [Migration("20250416032000_initialOne")]
-    partial class initialOne
+
+    [Migration("20250413040201_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -816,10 +817,11 @@ namespace Jumia_Api.Migrations
                         .HasForeignKey("AdminId");
 
                     b.HasOne("Jumia.Models.Customer", "Customer")
-                        .WithMany("Orders")
+                        .WithMany()
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
 
                     b.HasOne("Jumia.Models.Seller", "Seller")
                         .WithMany()

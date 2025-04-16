@@ -8,7 +8,7 @@ export interface IOrder {
     shippingAddress: string;
     shippingDate: Date;
     deliveryStatus: string;
-    shippingInfo:{
+    shippingInfo: {
         shippingMethod: string;
         shippingAddress: string;
         shippingDate: Date;
@@ -26,7 +26,11 @@ export interface IOrder {
             quantity: number;
             price: number;
             SubTotalPrice: number;
-            productImages: [];
+            productImages: [
+                {
+                    imgUrl: string;
+                }
+            ];
         }
     ];
     payment: {

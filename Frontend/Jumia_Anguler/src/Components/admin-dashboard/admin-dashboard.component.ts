@@ -14,8 +14,7 @@ import { AdminDashboard } from '../interfaces/dashboard-stats';
   imports: [
     CommonModule,
     RouterModule,
-    AdminSideBarComponent
-   
+    // AdminSideBarComponent
   ],
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.css']
@@ -29,5 +28,5 @@ export class AdminDashboardComponent implements OnInit {
     });
 
   }
-  
+
 }

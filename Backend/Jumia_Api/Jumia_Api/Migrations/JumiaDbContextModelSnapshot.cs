@@ -232,6 +232,9 @@ namespace Jumia_Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("CustomerId1")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
@@ -269,6 +272,8 @@ namespace Jumia_Api.Migrations
                     b.HasIndex("AdminId");
 
                     b.HasIndex("CustomerId");
+
+                    //b.HasIndex("CustomerId1");
 
                     b.HasIndex("SellerId");
 
@@ -813,9 +818,9 @@ namespace Jumia_Api.Migrations
                         .HasForeignKey("AdminId");
 
                     b.HasOne("Jumia.Models.Customer", "Customer")
-                        .WithMany("Orders")
+                        .WithMany()
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Jumia.Models.Seller", "Seller")

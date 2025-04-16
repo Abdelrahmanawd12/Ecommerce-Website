@@ -1,0 +1,150 @@
+
+
+
+<!-- 2 tables the same -------------------------------------------------------------------------------------->
+<!-- <div class="container mt-5">
+    <div class="row"> -->
+      <!-- Account Details Section -->
+      <!-- <div class="col-md-6 mb-4">
+        <div class="card h-100 shadow-sm border-primary d-flex flex-column">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Account Details</h5>
+          </div>
+          <div class="card-body flex-grow-1" *ngIf="accountDetails">
+            <p><strong>Name:</strong> {{ accountDetails.firstName }} {{ accountDetails.lastName }}</p>
+            <p><strong>Email:</strong> {{ accountDetails.email }}</p>
+          </div>
+        </div>
+      </div> -->
+  
+      <!-- Address Book Section -->
+      <!-- <div class="col-md-6 mb-4">
+        <div class="card h-100 shadow-sm border-success d-flex flex-column">
+          <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Address Book</h5>
+            <button *ngIf="!isEditing" class="btn btn-light btn-sm" (click)="toggleEdit()">Edit</button>
+          </div>
+  
+          <div class="card-body flex-grow-1" *ngIf="addressBook"> -->
+            <!-- Show address if not editing -->
+            <!-- <div *ngIf="!isEditing">
+              <p><strong>Name:</strong> {{ addressBook.firstName }} {{ addressBook.lastName }}</p>
+              <p><strong>Phone:</strong> {{ addressBook.phoneNumber }}</p>
+              <p><strong>Street:</strong> {{ addressBook.street }}</p>
+              <p><strong>City:</strong> {{ addressBook.city }}</p>
+              <p><strong>Country:</strong> {{ addressBook.country }}</p>
+            </div> -->
+  
+            <!-- Edit Form -->
+            <!-- <form *ngIf="isEditing" (ngSubmit)="updateAddressBook()" #addressForm="ngForm">
+              <div class="form-group mb-2">
+                <label>First Name</label>
+                <input type="text" [(ngModel)]="updatedAddressBook.firstName" name="firstName" class="form-control">
+              </div>
+              <div class="form-group mb-2">
+                <label>Last Name</label>
+                <input type="text" [(ngModel)]="updatedAddressBook.lastName" name="lastName" class="form-control">
+              </div>
+              <div class="form-group mb-2">
+                <label>Phone Number</label>
+                <input type="text" [(ngModel)]="updatedAddressBook.phoneNumber" name="phoneNumber" class="form-control">
+              </div>
+              <div class="form-group mb-2">
+                <label>Street</label>
+                <input type="text" [(ngModel)]="updatedAddressBook.street" name="street" class="form-control">
+              </div>
+              <div class="form-group mb-2">
+                <label>City</label>
+                <input type="text" [(ngModel)]="updatedAddressBook.city" name="city" class="form-control">
+              </div>
+              <div class="form-group mb-2">
+                <label>Country</label>
+                <input type="text" [(ngModel)]="updatedAddressBook.country" name="country" class="form-control">
+              </div>
+              <button type="submit" class="btn btn-success mt-2">Update Address Book</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <!----------------------------->
+
+  <div class="container mt-5">
+    <div class="card shadow border-info">
+      <div class="card-header bg-info text-white">
+        <h4 class="mb-0">Account Overview</h4>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <!-- Account Details Section -->
+          <div class="col-md-6 mb-4">
+            <div class="card h-100 shadow-sm border-primary d-flex flex-column">
+              <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Account Details</h5>
+              </div>
+              <div class="card-body flex-grow-1" *ngIf="accountDetails">
+                <p><strong>Name:</strong> {{ accountDetails.firstName }} {{ accountDetails.lastName }}</p>
+                <p><strong>Email:</strong> {{ accountDetails.email }}</p>
+                <p><strong>Gender:</strong> {{ accountDetails.gender }}</p>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Address Book Section -->
+          <div class="col-md-6 mb-4">
+            <div class="card h-100 shadow-sm border-success d-flex flex-column">
+              <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Address Book</h5>
+                <button *ngIf="!isEditing" class="btn btn-light btn-sm" (click)="toggleEdit()">Edit</button>
+              </div>
+  
+              <div class="card-body flex-grow-1" *ngIf="addressBook">
+                <!-- Show address if not editing -->
+                <div *ngIf="!isEditing">
+                  <p><strong>Name:</strong> {{ addressBook.firstName }} {{ addressBook.lastName }}</p>
+                  <p><strong>Phone:</strong> {{ addressBook.phoneNumber }}</p>
+                  <p><strong>Street:</strong> {{ addressBook.street }}</p>
+                  <p><strong>City:</strong> {{ addressBook.city }}</p>
+                  <p><strong>Country:</strong> {{ addressBook.country }}</p>
+                </div>
+  
+                <!-- Edit Form -->
+                <form *ngIf="isEditing" (ngSubmit)="updateAddressBook()" #addressForm="ngForm">
+                  <div class="form-group mb-2">
+                    <label>First Name</label>
+                    <input type="text" [(ngModel)]="updatedAddressBook.firstName" name="firstName" class="form-control">
+                  </div>
+                  <div class="form-group mb-2">
+                    <label>Last Name</label>
+                    <input type="text" [(ngModel)]="updatedAddressBook.lastName" name="lastName" class="form-control">
+                  </div>
+                  <div class="form-group mb-2">
+                    <label>Phone Number</label>
+                    <input type="text" [(ngModel)]="updatedAddressBook.phoneNumber" name="phoneNumber" class="form-control">
+                  </div>
+                  <div class="form-group mb-2">
+                    <label>Street</label>
+                    <input type="text" [(ngModel)]="updatedAddressBook.street" name="street" class="form-control">
+                  </div>
+                  <div class="form-group mb-2">
+                    <label>City</label>
+                    <input type="text" [(ngModel)]="updatedAddressBook.city" name="city" class="form-control">
+                  </div>
+                  <div class="form-group mb-2">
+                    <label>Country</label>
+                    <input type="text" [(ngModel)]="updatedAddressBook.country" name="country" class="form-control">
+                  </div>
+                  <button type="submit" class="btn btn-success mt-2">Update Address Book</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- End of Account Overview -->
+  </div>
+  
+  
+
+

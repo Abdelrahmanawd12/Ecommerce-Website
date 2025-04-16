@@ -1,4 +1,4 @@
-<p>order works!</p>
+
 
 <!-- <div class="container mt-4">
     <h3>Your Orders</h3>
@@ -53,8 +53,19 @@
 
 
 
-  
-<div *ngIf="orders.length > 0; else noOrders">
+
+
+
+
+
+
+
+
+
+
+
+<!-- start -->  
+<!-- <div *ngIf="orders.length > 0; else noOrders">
   <div *ngFor="let order of orders" class="card mb-3 p-3 shadow">
     <h5>Order #{{ order.orderId }}</h5>
     <p>Status: {{ order.orderStatus }}</p>
@@ -64,39 +75,32 @@
       <img [src]="item.productImageUrl" width="60" class="me-2" />
       <span>{{ item.productName }}</span>
     </div>
-<!-- 
-    <div *ngFor="let item of order.items" class="d-flex align-items-center mb-2">
-      <img [src]="item.productImageUrl" width="60" class="me-2" />
-      <span>{{ item.productName }}</span>
-    </div> -->
     <button (click)="showOrderDetails(order.orderId)">See Details</button>
-   <!-- Cancel  -->
     <div>
-      <!-- Button to Cancel Order -->
-      <button (click)="cancelOrder()">Cancel Order</button>
+      <button (click)="cancelOrder(order.orderId)">Cancel Order</button>
+
     </div>
   </div>
 </div>
 
 <ng-template #noOrders>
   <p>No orders found.</p>
-</ng-template>
+</ng-template> 
 
 
 <h1>****************************</h1>
 
 
-  <!-- app/components/order/order.component.html -->
+  
   <div *ngIf="selectedOrder as o" class="card p-4 mt-4 shadow">
     <h2>Order #{{ o?.orderId }}</h2>
     <p>Status: {{ o?.orderStatus }}</p>
-    <p>Date: {{ o?.orderDate}}</p>      <!-- | date -->
+    <p>Date: {{ o?.orderDate}}</p>      
     <p>Total: ${{ o?.totalAmount }}</p>
     <p>Customer: {{ o?.customerName }}</p>
     <p>Shipping Address: {{ o?.shippingAddress }}</p>
     <p>Tracking: {{ o?.shippingInfo?.trackingNumber }}</p>
-    <p>Delivery Estimate: {{ o?.shippingInfo?.estimatedDelivery }}</p>   <!-- | date -->
-  
+    <p>Delivery Estimate: {{ o?.shippingInfo?.estimatedDelivery }}</p>   
     <h4>Items:</h4>
     <div *ngFor="let item of o?.items" class="card my-2 p-2">
       <img [src]="item.productImageUrl" alt="{{ item.productName }}" style="width: 100px;">
@@ -112,7 +116,7 @@
   
   <div *ngIf="!order">
     <p>Loading order details...</p>
-  </div>
+  </div>  -->
   
 
 
@@ -124,22 +128,236 @@
 
 
 
-<h1>*************************************************************************</h1>
-<!-- order.component.html -->
-<!---->
-<!-- <div *ngIf="order">
-  <h2>Order #{{ order.orderId }}</h2>
-  <p>Status: {{ order.orderStatus }}</p>
-  <p>Date: {{ order.orderDate }}</p>
-  <p>Total: ${{ order.totalAmount }}</p>
-  <p>Customer: {{ order.customerName }}</p>
-  <p>Shipping Address: {{ order.shippingAddress }}</p>
+<!-- Tabs -->
+<!-- <ul class="nav nav-tabs mb-4">
+  <li class="nav-item">
+    <a class="nav-link" [class.active]="selectedTab === 'current'" (click)="loadOrdersByCategory('current')">
+      Ongoing / Delivered
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" [class.active]="selectedTab === 'past'" (click)="loadOrdersByCategory('past')">
+      Canceled / Returned ({{ canceledCount }})
+    </a>
+  </li>
+</ul> -->
 
-   Add Cancel Button if the order is Pending 
-  <button *ngIf="order.orderStatus === 'Pending'" (click)="cancelOrder()">Cancel Order</button>
+<!-- Order List -->
+<!-- <div *ngIf="orders.length > 0; else noOrders">
+  <div *ngFor="let order of orders" class="card mb-3 p-3 shadow">
+    <h5>Order #{{ order.orderId }}</h5>
+    <p>Status: {{ order.orderStatus }}</p>
+    <p>Date: {{ order.orderDate | date }}</p>
 
-  Show the cancellation message 
-  <p *ngIf="cancellationMessage">{{ cancellationMessage }}</p>
+    <div *ngFor="let item of order.items" class="d-flex align-items-center mb-2">
+      <img [src]="item.productImageUrl" width="60" class="me-2" />
+      <span>{{ item.productName }}</span>
+    </div>
+
+    <button class="btn btn-primary me-2" (click)="toggleDetails(order.orderId)">
+      {{ expandedOrderId === order.orderId ? 'Hide' : 'See' }} Details
+    </button>
+
+    <button class="btn btn-danger" *ngIf="selectedTab === 'current'" (click)="cancelOrder(order.orderId)">
+      Cancel Order
+    </button> -->
+
+    <!-- Order Details (inside each card) -->
+    <!-- <div *ngIf="expandedOrderId === order.orderId && selectedOrder?.orderId === order.orderId" class="mt-4 p-3 border-top">
+      <h6>Order #{{ selectedOrder?.orderId }} Details</h6>
+      <p>Status: {{ selectedOrder?.orderStatus }}</p>
+      <p>Date: {{ selectedOrder?.orderDate }}</p>
+      <p>Total: ${{ selectedOrder?.totalAmount }}</p>
+      <p>Customer: {{ selectedOrder?.customerName }}</p>
+      <p>Shipping Address: {{ selectedOrder?.shippingAddress }}</p>
+      <p>Tracking: {{ selectedOrder?.shippingInfo?.trackingNumber }}</p>
+      <p>Delivery Estimate: {{ selectedOrder?.shippingInfo?.estimatedDelivery }}</p>
+      
+      <div *ngFor="let item of selectedOrder?.items" class="card my-2 p-2">
+        <div class="d-flex">
+          <img [src]="item.productImageUrl" alt="{{ item.productName }}" style="width: 100px;" class="me-2">
+          <div>
+            <strong>{{ item.productName }}</strong>
+            <p>Quantity: {{ item.quantity }}</p>
+            <p>Subtotal: ${{ item.subTotal }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div> -->
 
+<!-- No Orders Template -->
+<!-- <ng-template #noOrders>
+  <p>No orders found.</p>
+</ng-template> -->
 
+
+
+
+
+
+
+
+<!-- Last ****************************************-->
+<div class="container mt-4">
+  <!-- Tabs -->
+  <ul class="nav nav-tabs mb-3">
+    <li class="nav-item">
+      <a class="nav-link" [class.active]="activeTab === 'ongoing'" (click)="setTab('ongoing')">
+        Ongoing / Delivered
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [class.active]="activeTab === 'canceled'" (click)="setTab('canceled')">
+        Canceled / Returned
+      </a>
+    </li>
+  </ul>
+
+  <!-- Ongoing / Delivered Tab -->
+  <div *ngIf="activeTab === 'ongoing'">
+    <div *ngIf="ongoingOrders.length > 0; else noOrders">
+      <div *ngFor="let order of ongoingOrders" class="card mb-4 p-4 shadow-lg">
+        <h5 class="mb-3">Order {{ order.orderId }}</h5>
+
+        <div *ngFor="let item of order.items" class="d-flex align-items-start mb-3">
+          <!-- Product Image -->
+          <img 
+            [src]="item.productImageUrl" 
+            class="img-fluid rounded border me-3" 
+            style="width: 30%; max-width: 180px;" 
+          />
+        
+          <!-- Product Info, Status, and Date -->
+          <div>
+            <!-- Product Name -->
+            <span class="fs-5 d-block">{{ item.productName }}</span>
+        
+            <!-- Status Badge -->
+            <span 
+              class="badge text-uppercase px-3 py-2 rounded mt-2 d-inline-block" 
+              [ngClass]="{
+                'bg-success': order.orderStatus.trim().toLowerCase() === 'pending',
+                'bg-danger': order.orderStatus.trim().toLowerCase() === 'cancel',
+                'bg-secondary': order.orderStatus.trim().toLowerCase() !== 'pending' && order.orderStatus.trim().toLowerCase() !== 'cancel'
+              }">
+              {{ order.orderStatus }}
+            </span>
+        
+            <!-- Order Date -->
+            <p class="text-muted mt-2 mb-0">Date: {{ order.orderDate | date }}</p>
+          </div>
+        </div>
+        
+        
+
+        
+
+        <!-- <p class="text-muted">Date: {{ order.orderDate | date }}</p> -->
+
+        <button (click)="showOrderDetails(order.orderId)" class="btn btn-outline-primary me-2">See Details</button>
+
+        <button 
+          *ngIf="order.orderStatus.trim().toLowerCase() === 'pending'" 
+          class="btn btn-danger"
+          (click)="confirmCancel(order.orderId)">
+          Cancel Order
+        </button>
+
+        <!-- Show selected order details directly under the order -->
+        <div *ngIf="selectedOrder?.orderId === order.orderId" class="card p-4 mt-4 shadow-sm bg-light">
+          <h4 class="mb-3">Order #{{ selectedOrder?.orderId }}</h4>
+          <p><strong>Shipping Address:</strong> {{ selectedOrder?.shippingAddress }}</p>
+          <p><strong>Status:</strong> {{ selectedOrder?.orderStatus }}</p>
+          <p><strong>Date:</strong> {{ selectedOrder?.orderDate }}</p>
+          <!-- <p><strong>Total:</strong> ${{ selectedOrder?.totalAmount }}</p> -->
+          <!-- <p><strong>Customer:</strong> {{ selectedOrder?.customerName }}</p> -->
+         
+          <!-- <p><strong>Tracking:</strong> {{ selectedOrder?.shippingInfo?.trackingNumber }}</p> -->
+          <!-- <p><strong>Delivery Estimate:</strong> {{ selectedOrder?.shippingInfo?.estimatedDelivery }}</p> -->
+
+          <!-- <h5 class="mt-4 mb-2">Items:</h5> -->
+          <div *ngFor="let item of selectedOrder?.items" class="card p-3 my-2 d-flex flex-row align-items-center">
+            <img [src]="item.productImageUrl" alt="{{ item.productName }}" style="width: 120px; height: 120px;" class="me-3 rounded border">
+            <div>
+              <strong class="fs-5">{{ item.productName }}</strong>
+              <p>Quantity: {{ item.quantity }}</p>
+              <p>total: ${{ item.subTotal }}</p>
+            </div>
+          </div>
+
+          <button class="btn btn-danger mt-3" (click)="hideOrderDetails()">Close Details</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Canceled / Returned Tab -->
+  <div *ngIf="activeTab === 'canceled'">
+    <div *ngIf="canceledOrders.length > 0; else noOrders">
+      <div *ngFor="let order of canceledOrders" class="card mb-4 p-4 shadow-lg">
+        <h5 class="mb-3">Order #{{ order.orderId }}</h5>
+
+        <div *ngFor="let item of order.items" class="d-flex align-items-start mb-3">
+          <!-- Product Image -->
+          <img 
+          [src]="item.productImageUrl" 
+          class="img-fluid rounded border me-3" 
+          style="width: 30%; max-width: 180px;" 
+        />
+      
+        
+          <!-- Text section: Product Name + Status + Date -->
+          <div>
+            <!-- Product Name -->
+            <span class="fs-5 d-block">{{ item.productName }}</span>
+        
+            <!-- Status Badge -->
+            <span class="badge bg-danger text-uppercase px-3 py-2 rounded mt-2 d-inline-block">
+              {{ order.orderStatus }}
+            </span>
+        
+            <!-- Order Date (optional) -->
+            <p class="text-muted mt-2 mb-0">Date: {{ order.orderDate | date }}</p>
+          </div>
+        </div>
+        
+        
+
+        
+
+        <button (click)="showOrderDetails(order.orderId)" class="btn btn-outline-primary">See Details</button>
+
+        <!-- Show selected order details directly under the order -->
+        <div *ngIf="selectedOrder?.orderId === order.orderId" class="card p-4 mt-4 shadow-sm bg-light">
+          <h4 class="mb-3">Order #{{ selectedOrder?.orderId }}</h4>
+          <p><strong>Status:</strong> {{ selectedOrder?.orderStatus }}</p>
+          <p><strong>Date:</strong> {{ selectedOrder?.orderDate }}</p>
+          <p><strong>Total:</strong> ${{ selectedOrder?.totalAmount }}</p>
+          <p><strong>Customer:</strong> {{ selectedOrder?.customerName }}</p>
+          <p><strong>Shipping Address:</strong> {{ selectedOrder?.shippingAddress }}</p>
+          <p><strong>Tracking:</strong> {{ selectedOrder?.shippingInfo?.trackingNumber }}</p>
+          <p><strong>Delivery Estimate:</strong> {{ selectedOrder?.shippingInfo?.estimatedDelivery }}</p>
+
+          <h5 class="mt-4 mb-2">Items:</h5>
+          <div *ngFor="let item of selectedOrder?.items" class="card p-3 my-2 d-flex flex-row align-items-center">
+            <img [src]="item.productImageUrl" alt="{{ item.productName }}" style="width: 120px; height: 120px;" class="me-3 rounded border">
+            <div>
+              <strong class="fs-5">{{ item.productName }}</strong>
+              <p>Quantity: {{ item.quantity }}</p>
+              <p>Subtotal: ${{ item.subTotal }}</p>
+            </div>
+          </div>
+
+          <button class="btn btn-danger mt-3" (click)="hideOrderDetails()">Close Details</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Orders Message -->
+  <ng-template #noOrders>
+    <p class="text-muted">No orders found.</p>
+  </ng-template>
+</div>
