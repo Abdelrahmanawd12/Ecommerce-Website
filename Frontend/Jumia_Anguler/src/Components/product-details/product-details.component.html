@@ -1,71 +1,131 @@
-<div class="container mt-5">
-  <div class="row">
-    <div class="col-lg-6">
-      <!-- Product Image Carousel -->
-      <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-indicators">
+<!-- toast mess -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div class="toast align-items-center text-white border-0" id="cartToast" role="alert" aria-live="assertive"
+    aria-atomic="true" [ngClass]="toastClass">
+    <div class="d-flex">
+      <div class="toast-body">
+        {{ toastMessage }}
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+        aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+
+<!-- toast mess -->
+
+
+<!-- product details -->
+<div class="container py-5">
+  <div class="row align-items-start gy-4">
+    <!-- Product Images -->
+    <div class="col-12 col-lg-6">
+      <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
+
+        <!-- Indicators -->
+        <div class="carousel-indicators" *ngIf="product.imageUrls.length > 1">
           <button *ngFor="let image of product.imageUrls; let i = index" type="button"
             [attr.data-bs-target]="'#carouselExampleIndicators'" [attr.data-bs-slide-to]="i" [class.active]="i === 0"
             [attr.aria-current]="i === 0 ? 'true' : null" [attr.aria-label]="'Slide ' + (i + 1)">
           </button>
         </div>
-        <div class="carousel-inner">
+
+        <!-- Carousel Items -->
+        <div class="carousel-inner rounded shadow-sm">
           <div *ngFor="let image of product.imageUrls; let i = index" class="carousel-item" [class.active]="i === 0">
-            <img [src]="image" class="d-block w-100" alt="Product Image">
+            <img [src]="image" class="d-block w-100 object-fit-contain" style="height: 400px;" alt="Product Image">
           </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-          data-bs-slide="prev">
+
+        <!-- Previous Button -->
+        <button *ngIf="product.imageUrls.length > 1" class="carousel-control-prev" type="button"
+          data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-          data-bs-slide="next">
+
+        <!-- Next Button -->
+        <button *ngIf="product.imageUrls.length > 1" class="carousel-control-next" type="button"
+          data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
         </button>
       </div>
     </div>
 
-    <div class="col-lg-6">
-      <div class="card-body">
-        <h5 class="card-title">{{ product.name }}</h5>
-        <p class="card-text">Price: ${{ product.price }}</p>
-        <p class="card-text">Brand: {{ product.brand }}</p>
-        <p class="card-text">Rating:
-          <span *ngFor="let star of [].constructor(fullStars); let i = index">
-            <i class="bi bi-star-fill text-warning"></i>
-          </span>
-
-          <span *ngIf="halfStars">
-            <i class="bi bi-star-half text-warning"></i>
-          </span>
-
-          <span *ngFor="let star of [].constructor(emptyStars); let i = index">
-            <i class="bi bi-star text-muted"></i>
-          </span>
-
-          <small>({{ averageRating | number: '1.1-1' }} / 5)</small> <!-- Display average rating -->
-        </p>
+    <!-- Product Info -->
+    <div class="col-12 col-lg-6">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body">
+          <h3 class="card-title fw-bold mb-3">{{ product.name }}</h3>
 
 
-        <p class="card-text">{{ product.description }}</p>
+          @if(product.discount>0){
+          <h4 class="text-success fw-semibold mb-2">${{ product.price-product.discount }}</h4>
+          <span class="text-decoration-line-through" style="color: gray;">${{ product.price }}</span>
+          }@else {
+          <h4 class="text-success fw-semibold mb-2">${{ product.price }}</h4>
+          }
 
-        <!-- Quantity Input with Dynamic Max Value -->
-        <div class="mb-3">
-          <label for="quantity">Quantity:</label>
-          <input type="number" [(ngModel)]="selectedQuantity" min="1" [max]="maxAvailableQuantity" class="form-control"
-            style="width: 100px;" (input)="checkQuantity()">
-          <small *ngIf="selectedQuantity > maxAvailableQuantity" class="text-danger">Quantity exceeds available
-            stock!</small>
+          <p class="mb-1"><strong>Brand:</strong> {{ product.brand }}</p>
+
+          <!-- Rating -->
+          <div class="mb-2 d-flex align-items-center gap-1">
+            <span *ngFor="let star of [].constructor(fullStars)">
+              <i class="bi bi-star-fill text-warning"></i>
+            </span>
+            <span *ngIf="halfStars">
+              <i class="bi bi-star-half text-warning"></i>
+            </span>
+            <span *ngFor="let star of [].constructor(emptyStars)">
+              <i class="bi bi-star text-muted"></i>
+            </span>
+            <small class="text-muted ms-2">({{ averageRating | number: '1.1-1' }} / 5)</small>
+          </div>
+
+          <!-- Description -->
+          <p class="text-muted mt-3">{{ product.description }}</p>
+
+          <!-- Quantity Input -->
+          <div class="mb-3">
+            <label for="quantity" class="form-label fw-medium">Quantity:</label>
+            <input type="number" [(ngModel)]="selectedQuantity" min="1" [max]="maxAvailableQuantity"
+              class="form-control w-50" id="quantity" (input)="checkQuantity()">
+            <div *ngIf="selectedQuantity > maxAvailableQuantity" class="form-text text-danger">
+              Quantity exceeds available stock!
+            </div>
+          </div>
+
+          <!-- Add to Cart Button -->
+          <button class="btn btn-warning px-4" (click)="addToCart(product)"
+            [disabled]="selectedQuantity <= 0 || selectedQuantity > maxAvailableQuantity">
+            <i class="bi bi-cart-plus me-1"></i> Add to Cart
+          </button>
         </div>
-
-        <!-- Add to Cart Button -->
-        <button class="btn btn-primary" (click)="addToCart(product)"
-          [disabled]="selectedQuantity <= 0 || selectedQuantity > maxAvailableQuantity">
-          Add To Cart
-        </button>
       </div>
     </div>
   </div>
 </div>
+<!-- product droduct -->
+<!-- related items like this item -->
+<div class="container mt-4 productparent-container">
+  <h5 class="text-center product-title">Related Products</h5>
+  <div class="row g-3 products-container">
+    @for (p of relatedProducts; track p.productId) {
+    <div class="col-6 col-md-4 col-lg-2 parent" style="cursor: pointer;" (click)="goToProductDetails(p.productId)">
+      <div class="card proChild h-100">
+        <img src="{{ p.imageUrls[0] }}" class="imgproduct" alt="{{ p.name }}  ">
+        <div class="card-body" style="background-color: white;">
+          <h6 class="product-name">{{ p.name }}</h6>
+          <div class="priceAndcart ">
+            <p class="product-price">${{ p.price }}</p>
+            <a (click)="addToCart(p); $event.stopPropagation()">
+              <i class="fa-solid fa-cart-shopping "></i>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</div>
+<!-- related items like this item -->

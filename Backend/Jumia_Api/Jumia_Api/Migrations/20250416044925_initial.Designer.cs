@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Jumia_Api.Migrations
 {
     [DbContext(typeof(JumiaDbContext))]
-    [Migration("20250409080727_update address")]
-    partial class updateaddress
+    [Migration("20250416044925_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,6 +36,9 @@ namespace Jumia_Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AddressId"));
 
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -53,6 +56,8 @@ namespace Jumia_Api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AddressId");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Address");
                 });
@@ -249,6 +254,10 @@ namespace Jumia_Api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SellerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SellerId1")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ShippingAddress")
@@ -265,6 +274,8 @@ namespace Jumia_Api.Migrations
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("SellerId");
+
+                    b.HasIndex("SellerId1");
 
                     b.ToTable("Order");
                 });
@@ -347,15 +358,15 @@ namespace Jumia_Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Discount")
                         .HasColumnType("decimal(18, 2)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -371,14 +382,21 @@ namespace Jumia_Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SubCategoryId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Weight")
                         .HasColumnType("decimal(18, 2)");
 
                     b.HasKey("ProductId");
 
-                    b.HasIndex("CategoryId");
-
                     b.HasIndex("SellerId");
+
+                    b.HasIndex("SubCategoryId");
 
                     b.ToTable("Product");
                 });
@@ -737,7 +755,7 @@ namespace Jumia_Api.Migrations
                     b.HasBaseType("Jumia.Models.ApplicationUser");
 
                     b.Property<decimal>("SellerNetIncome")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<string>("ShippingZone")
                         .IsRequired()
@@ -752,6 +770,13 @@ namespace Jumia_Api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("Seller");
+                });
+
+            modelBuilder.Entity("Jumia.Models.Address", b =>
+                {
+                    b.HasOne("Jumia.Models.ApplicationUser", null)
+                        .WithMany("Addresses")
+                        .HasForeignKey("ApplicationUserId");
                 });
 
             modelBuilder.Entity("Jumia.Models.Cart", b =>
@@ -793,14 +818,22 @@ namespace Jumia_Api.Migrations
                     b.HasOne("Jumia.Models.Customer", "Customer")
                         .WithMany("Orders")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Jumia.Models.Seller", "Seller")
+                        .WithMany()
+                        .HasForeignKey("SellerId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Jumia.Models.Seller", null)
                         .WithMany("Orders")
-                        .HasForeignKey("SellerId");
+                        .HasForeignKey("SellerId1");
 
                     b.Navigation("Customer");
+
+                    b.Navigation("Seller");
                 });
 
             modelBuilder.Entity("Jumia.Models.OrderItem", b =>
@@ -835,21 +868,21 @@ namespace Jumia_Api.Migrations
 
             modelBuilder.Entity("Jumia.Models.Product", b =>
                 {
-                    b.HasOne("Jumia.Models.Category", "Category")
-                        .WithMany("Products")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Jumia.Models.Seller", "Seller")
                         .WithMany("Products")
                         .HasForeignKey("SellerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Category");
+                    b.HasOne("Jumia.Models.SubCategory", "SubCategory")
+                        .WithMany("Products")
+                        .HasForeignKey("SubCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Seller");
+
+                    b.Navigation("SubCategory");
                 });
 
             modelBuilder.Entity("Jumia.Models.Rating", b =>
@@ -1006,6 +1039,8 @@ namespace Jumia_Api.Migrations
 
             modelBuilder.Entity("Jumia.Models.ApplicationUser", b =>
                 {
+                    b.Navigation("Addresses");
+
                     b.Navigation("Ratings");
                 });
 
@@ -1016,8 +1051,6 @@ namespace Jumia_Api.Migrations
 
             modelBuilder.Entity("Jumia.Models.Category", b =>
                 {
-                    b.Navigation("Products");
-
                     b.Navigation("SubCategories");
                 });
 
@@ -1045,6 +1078,11 @@ namespace Jumia_Api.Migrations
                     b.Navigation("ProductTags");
 
                     b.Navigation("Ratings");
+                });
+
+            modelBuilder.Entity("Jumia.Models.SubCategory", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Jumia.Models.Wishlist", b =>

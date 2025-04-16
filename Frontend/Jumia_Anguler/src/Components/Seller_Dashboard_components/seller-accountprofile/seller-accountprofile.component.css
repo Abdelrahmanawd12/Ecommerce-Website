@@ -13,7 +13,7 @@
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background-color: #4e73df;
+    background-color: lightslategray;
     color: white;
     display: flex;
     align-items: center;
@@ -147,7 +147,7 @@
   .btn-text {
     background: none;
     border: none;
-    color: #4e73df;
+    color: orangered;
     font-weight: 500;
     cursor: pointer;
   }

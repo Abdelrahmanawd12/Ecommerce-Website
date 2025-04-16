@@ -61,7 +61,8 @@ namespace Jumia_Api.Controllers.CustomerControllers
             }
 
             if (totalRequestedQuantity > product.Quantity)
-                return BadRequest($"Not enough stock. Only {product.Quantity} item(s) available.");
+                return BadRequest(new { message = $"Not enough stock." });
+
 
             if (existingItem != null)
             {

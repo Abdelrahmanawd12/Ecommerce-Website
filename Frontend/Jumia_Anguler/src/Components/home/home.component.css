@@ -1,4 +1,11 @@
  /* Base Styles */
+ *{
+
+  box-sizing: border-box;
+  font-family: "League Spartan", serif;
+  user-select: none;
+}
+/* category */
  .category {
   padding: 8px 12px;
   color: rgb(54, 52, 52);
@@ -14,7 +21,8 @@
   color: #ffc400;
   transform: translateX(3px);
 }
-
+/* category */
+/* promo card */
 .promo-card {
   border: 1px solid #dee2e6;
   border-radius: 8px;
@@ -26,11 +34,13 @@
 .promo-card:hover {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 }
-
+/* promo card */
+/* carousel */
 .carousel-img {
   max-height: 500px;
   object-fit: contain;
 }
+/* carousel */
 
 .promo-img {
   max-height: 100px;
@@ -96,7 +106,7 @@
   color: #222;
   background-color:#FBEBB5;
 }
-
+/* products */
 .imgproduct{
   max-height: 150px;
   object-fit: contain;
@@ -104,7 +114,9 @@
   padding: 10px;
 }
 .parent{
-  background-color: #FFFFFF;
+  /* background-color: #FFFFFF; */
+  padding: 5px;
+
 }
 .proChild{
   border: none;
@@ -113,21 +125,11 @@
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
   transition: all 0.3s;
 }
-.paragraph{
-  padding: 20px;
-  background-color: #eee;
-}
-.paragraph p{
 
-  font-size: 14px;
-
-  font-weight:150;
-
-  padding: 10px;
-}
 .productparent-container{
-  background-color: #f5f5f5;
+  background-color: #f8f9fa  ;
   margin-bottom: 15px;
+  border-radius: 10px;
 }
 .products-container{
   padding: 10px;
@@ -167,4 +169,17 @@
   padding: 10px;
   border-radius: 50%;
   font-size: 20px;
+}
+/* footer */
+.paragraph{
+  padding: 20px;
+  background-color: #eee;
+}
+.paragraph p{
+
+  font-size: 16px;
+
+  font-weight:250;
+
+  padding: 10px;
 }

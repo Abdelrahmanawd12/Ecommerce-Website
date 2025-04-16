@@ -11,7 +11,7 @@ import { IProduct } from '../../Models/Category';
 })
 export class CartService {
 
-   user= 'user1';
+   user= localStorage.getItem('userId') || '';
 
    private cartItemCount = new BehaviorSubject<number>(0);
    public cartItemCount$ = this.cartItemCount.asObservable();
