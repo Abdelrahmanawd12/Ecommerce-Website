@@ -23,11 +23,10 @@ namespace Jumia_Api.DTOs.SellerDTOs
         public int SubCategoryId { get; set; }
         [Required]
         public string SubCategoryName { get; set; }
+
+        public string Status  = "pending";
         [Required]
         public string SellerId { get; set; }
-        [Required]
-        public List<decimal> RatingStars { get; set; } // List of Ratings
-        [Required]
         public List<IFormFile> ImageUrls { get; set; }  // List of Image URLs
         [Required]
         public List<string> Tags { get; set; }

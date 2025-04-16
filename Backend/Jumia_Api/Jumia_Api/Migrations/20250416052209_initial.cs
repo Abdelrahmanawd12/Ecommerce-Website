@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Jumia_Api.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -236,6 +236,7 @@ namespace Jumia_Api.Migrations
                     CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     SellerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     AdminId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CustomerId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     SellerId1 = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -252,7 +253,11 @@ namespace Jumia_Api.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                 
+                    table.ForeignKey(
+                        name: "FK_Order_AspNetUsers_CustomerId1",
+                        column: x => x.CustomerId1,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Order_AspNetUsers_SellerId",
                         column: x => x.SellerId,
@@ -373,7 +378,7 @@ namespace Jumia_Api.Migrations
                     SubCategoryId = table.Column<int>(type: "int", nullable: false),
                     SellerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -619,10 +624,10 @@ namespace Jumia_Api.Migrations
                 table: "Order",
                 column: "CustomerId");
 
-            //migrationBuilder.CreateIndex(
-            //    name: "IX_Order_CustomerId1",
-            //    table: "Order",
-            //    column: "CustomerId1");
+            migrationBuilder.CreateIndex(
+                name: "IX_Order_CustomerId1",
+                table: "Order",
+                column: "CustomerId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_SellerId",
