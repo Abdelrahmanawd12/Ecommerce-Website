@@ -147,7 +147,7 @@
     @for (p of SixProducts; track p.productId) {
       <div class="col-6 col-md-4 col-lg-2 parent" style="cursor: pointer;" (click)="goToProductDetails(p.productId)">
         <div class="card proChild h-100">
-          <img src="{{ p.imageUrls[0] }}" class="imgproduct" alt="{{ p.name }}  ">
+          <img src="{{ p.imageUrls }}" class="imgproduct" alt="{{ p.name }}  ">
           <div class="card-body">
             <h6 class="product-name">{{ p.name }}</h6>
             <div class="priceAndcart ">
@@ -171,7 +171,7 @@
       @for (p of TopCheapestItems; track p.productId) {
         <div class="col-6 col-md-4 col-lg-2 parent" style="cursor: pointer;" (click)="goToProductDetails(p.productId)">
           <div class="card proChild h-100">
-            <img src="{{ p.imageUrls[0] }}" class="imgproduct" alt="{{ p.name }}  ">
+            <img src="{{ imgbaseUrl +p.imageUrls}}" class="imgproduct" alt="{{ p.name }}  ">
             <div class="card-body">
               <h6 class="product-name">{{ p.name }}</h6>
               <div class="priceAndcart ">

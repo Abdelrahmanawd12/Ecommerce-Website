@@ -37,7 +37,7 @@ toastClass: string = 'bg-success';
     private router:Router
 
   ) {}
-  
+
   get user(): string {
     return localStorage.getItem('userId') || '';
   }
@@ -96,7 +96,7 @@ showToast(message: string, type: 'success' | 'error' = 'success') {
     console.error('Toast element not found');
   }
 }
-
+//from item itself
   addToCart(product: IProduct): void {
     const userId = localStorage.getItem('userId');
 
@@ -123,7 +123,27 @@ showToast(message: string, type: 'success' | 'error' = 'success') {
       }
     });
   }
+//add to cart from related div
+addToCartFromRelated(product: IProduct): void {
+  const userId = localStorage.getItem('userId');
 
+  if (!userId || userId.trim() === '') {
+    this.router.navigateByUrl("/login");
+    return;
+  }
+  this._CartServices.addItemToCart(product, this.selectedQuantity).subscribe({
+    next: (res) => {
+      console.log("Product added to cart", res);
+      this.showToast("Product added to cart successfully!", 'success');
+    },
+    error: (err) => {
+      console.log("error", err);
+      const errorMsg = err?.error?.message || "Something went wrong!";
+      this.showToast(errorMsg, 'error');
+    }
+
+  });
+}
   checkQuantity(): void {
     if (this.selectedQuantity > this.maxAvailableQuantity) {
       this.selectedQuantity = this.maxAvailableQuantity; // Limit quantity to available stock
@@ -156,7 +176,7 @@ showToast(message: string, type: 'success' | 'error' = 'success') {
         this.relatedProducts = products.filter(p =>
           p.subCategoryName === this.product.subCategoryName &&
           p.productId !== this.product.productId // exclude current product
-        );
+        ).sort(() => 0.5 - Math.random()).slice(0,6);
       },
       error: (err) => {
         console.log("Error fetching related products", err);

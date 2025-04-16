@@ -20,7 +20,7 @@ export class ShopComponent implements OnInit {
   category!:Icategory;
   subcategory!:Isubcategory;
   currentId:number=0;
-  selectedSubCatId: number | null = null;
+  selectedSubCatIds: number[] =[];
   brands: string[] = [];
 
   selectedBrands: string[] = [];
@@ -68,8 +68,8 @@ currentPage: number = 1;
           this.getBrandsOfCategory(this.category)
           this.productsList = this.category.subcategory.flatMap(sub => sub.products);
               // Initialize pagination data
-              this.totalPages = Math.ceil(this.category.subcategory.length / this.pageSize);
-              this.loadPage(this.currentPage);
+              // this.totalPages = Math.ceil(this.category.subcategory.length / this.pageSize);
+              // this.loadPage(this.currentPage);
         },
         error:(err)=>{
           console.log(err)
@@ -85,13 +85,13 @@ currentPage: number = 1;
     this.router.navigate(['/details', productId]);
   }
   // pagination
-  loadPage(pageNumber: number): void {
-    this.currentPage = pageNumber;
-    const startIndex = (this.currentPage - 1) * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
-    this.displayedSubcategories = this.category.subcategory.slice(startIndex, endIndex);
-  }
-  
+  // loadPage(pageNumber: number): void {
+  //   this.currentPage = pageNumber;
+  //   const startIndex = (this.currentPage - 1) * this.pageSize;
+  //   const endIndex = startIndex + this.pageSize;
+  //   this.displayedSubcategories = this.category.subcategory.slice(startIndex, endIndex);
+  // }
+
 
 //toast mess
 showToast(message: string, type: 'success' | 'error' = 'success') {
@@ -175,5 +175,15 @@ filterProductsByBrands(): void {
     );
   }
 }
+onSubCatCheckboxChange(event: Event, subCatId: number): void {
+  const isChecked = (event.target as HTMLInputElement).checked;
+
+  if (isChecked) {
+    this.selectedSubCatIds.push(subCatId);
+  } else {
+    this.selectedSubCatIds = this.selectedSubCatIds.filter(id => id !== subCatId);
+  }
+}
+
 
 }

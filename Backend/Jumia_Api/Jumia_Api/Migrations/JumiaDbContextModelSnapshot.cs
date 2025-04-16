@@ -273,9 +273,11 @@ namespace Jumia_Api.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    //b.HasIndex("CustomerId1");
+                    b.HasIndex("CustomerId1");
 
                     b.HasIndex("SellerId");
+
+                    b.HasIndex("SellerId1");
 
                     b.ToTable("Order", (string)null);
                 });

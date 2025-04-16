@@ -23,7 +23,7 @@
               <button class="account-btn">
                 <i class="fa fa-user"></i> Account <i class="fa fa-caret-down"></i>
               </button>
-          
+
               <div class="dropdown-menu" *ngIf="dropdownOpen">
                 <button class="signin-btn">Sign In</button>
                 <a href="#"><i class="fa fa-user"></i> My Account</a>
@@ -31,8 +31,8 @@
                 <a href="#"><i class="fa fa-heart"></i> Wishlist</a>
               </div>
             </div>
-          
-          
+
+
             <div class="help-dropdown" (click)="toggleHelpDropdown()" [class.open]="helpDropdownOpen">
                 <a href="#"><i class="fa fa-question-circle"></i> Help <i class="fa fa-caret-down"></i></a>
                 <div class="help-menu" *ngIf="helpDropdownOpen">
@@ -47,7 +47,7 @@
                 </div>
             </div>
 
-            <a href="#"><i class="fa fa-shopping-cart"></i> Cart</a>
+            <a  routerLink="/cart"><i class="fa fa-shopping-cart">    </i> Cart</a>
         </div>
     </div>
 </div>

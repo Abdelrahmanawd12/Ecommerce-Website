@@ -9,6 +9,7 @@ import { CategoryService } from '../../Services/Customer/category.service';
 import { ProductsService } from '../../Services/Customer/products.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { environment } from '../../Environment/Environment.prod';
 declare var bootstrap: any;
 
 
@@ -27,6 +28,7 @@ export class HomeComponent implements OnInit {
   HighstOffer: IProduct[] = [] as IProduct[];
   TopRatedProducts: IProduct[] = [] as IProduct[];
   selectedQuantity: number = 1;
+  readonly imgbaseUrl=environment.imageBaseUrl;
 
   // user= localStorage.getItem('userId') || '';
 
