@@ -1,4 +1,4 @@
 export interface IProductSales {
-ProductName : string,
+productName : string,
 sales :number
 }

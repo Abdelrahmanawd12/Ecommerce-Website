@@ -28,11 +28,6 @@ export const routes: Routes = [
     { path: 'wishlist', component: WishlistComponent  },
   { path: 'shop/:id', component: ShopComponent },
   { path: 'details/:id', component: ProductDetailsComponent },
-
-
-
-
-
   { path: 'order/:id', component: OrderComponent },
 
   //Alaa
@@ -40,7 +35,6 @@ export const routes: Routes = [
     path: 'admin', 
  loadComponent: () => import('../Components/admin-layout/admin-layout.component').then((m) => m.AdminLayoutComponent),
     children: [
-      { path: '',loadComponent:()=> import('../Components/admin-layout/admin-layout.component').then((m) => m.AdminLayoutComponent)}, 
       { path: 'dashboard', loadComponent: () => import('../Components/admin-dashboard/admin-dashboard.component').then((m) => m.AdminDashboardComponent) },
      {path: 'products', loadComponent: () => import('../Components/admin-product/admin-product.component').then((m) => m.AdminProductComponent) },
       { path: 'users', loadComponent: () => import('../Components/admin-users/admin-users.component').then((m) => m.AdminUsersComponent) },

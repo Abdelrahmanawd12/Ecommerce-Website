@@ -1,34 +1,40 @@
 <div class="dashboard-container">
   <!-- Product Sales Section -->
-  <div class="dashboard-section">
+  <div class="dashboard-section sales-analytics">
     <div class="section-header">
-      <i class="bi bi-graph-up section-icon"></i>
-      <h3 class="section-title">Product Sales Analytics</h3>
+      <div class="header-content">
+        <div class="icon-wrapper bg-primary-light">
+          <i class="bi bi-graph-up section-icon text-warning"></i>
+        </div>
+        <h3 class="section-title">Product Sales Analytics</h3>
+      </div>
       <div class="time-filter">
-        <select class="form-select form-select-sm">
+        <select class="form-select form-select-sm time-select">
           <option>Last 7 Days</option>
           <option>Last 30 Days</option>
           <option>Last 90 Days</option>
         </select>
       </div>
     </div>
-    <div echarts [options]="chartOptions" class="chart-container" style="height: 400px;"></div>
+    <div echarts [options]="chartOptions" class="demo-chart chart-container"></div>
   </div>
 
   <!-- Divider -->
   <div class="section-divider">
     <span class="divider-line"></span>
-    <i class="bi bi-currency-dollar divider-icon"></i>
+    <div class="divider-icon-wrapper">
+      <i class="bi bi-currency-dollar divider-icon"></i>
+    </div>
     <span class="divider-line"></span>
   </div>
 
   <!-- Seller Profits Section -->
-  <div class="dashboard-section">
+  <div class="dashboard-section performance-section">
     <h3 class="section-title mb-4">Seller Performance</h3>
-    <div class="row">
+    <div class="row g-3">
       <!-- Weekly Profit -->
-      <div class="col-md-4 mb-3">
-        <div class="stat-card">
+      <div class="col-md-4">
+        <div class="stat-card card-hover">
           <div class="stat-icon weekly">
             <i class="bi bi-calendar-week"></i>
           </div>
@@ -36,8 +42,7 @@
             <h5 class="stat-period">Weekly Profit</h5>
             <h3 class="stat-value text-success">{{ sellerProfits?.weeklyProfit | currency }}</h3>
             <div class="stat-trend">
-              <span class="badge bg-success bg-opacity-10 text-success">
-                <i class="bi bi-arrow-up"></i> 12% from last week
+              <span class="trend-badge success">
               </span>
             </div>
           </div>
@@ -45,8 +50,8 @@
       </div>
 
       <!-- Monthly Profit -->
-      <div class="col-md-4 mb-3">
-        <div class="stat-card">
+      <div class="col-md-4">
+        <div class="stat-card card-hover">
           <div class="stat-icon monthly">
             <i class="bi bi-calendar-month"></i>
           </div>
@@ -54,8 +59,7 @@
             <h5 class="stat-period">Monthly Profit</h5>
             <h3 class="stat-value text-primary">{{ sellerProfits?.monthlyProfit | currency }}</h3>
             <div class="stat-trend">
-              <span class="badge bg-primary bg-opacity-10 text-primary">
-                <i class="bi bi-arrow-up"></i> 8% from last month
+              <span class="trend-badge primary">
               </span>
             </div>
           </div>
@@ -63,8 +67,8 @@
       </div>
 
       <!-- Half Year Profit -->
-      <div class="col-md-4 mb-3">
-        <div class="stat-card">
+      <div class="col-md-4">
+        <div class="stat-card card-hover">
           <div class="stat-icon half-year">
             <i class="bi bi-calendar-range"></i>
           </div>
@@ -72,13 +76,87 @@
             <h5 class="stat-period">6-Month Profit</h5>
             <h3 class="stat-value text-warning">{{ sellerProfits?.halfYearProfit | currency }}</h3>
             <div class="stat-trend">
-              <span class="badge bg-warning bg-opacity-10 text-warning">
-                <i class="bi bi-arrow-up"></i> 22% from last period
+              <span class="trend-badge warning">
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Average Order Value -->
+      <div class="col-md-4">
+        <div class="stat-card card-hover">
+          <div class="stat-icon average">
+            <i class="bi bi-receipt-cutoff"></i>
+          </div>
+          <div class="stat-content">
+            <h5 class="stat-period">Average Order Value</h5>
+            <h3 class="stat-value text-info">{{ averageOrderValue | currency }}</h3>
+            <div class="stat-trend">
+              <span class="trend-badge info">
+                <i class="bi bi-graph-up-arrow"></i> Based on recent orders
               </span>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- Divider -->
+  <div class="section-divider">
+    <span class="divider-line"></span>
+    <div class="divider-icon-wrapper">
+      <i class="bi bi-bar-chart-line divider-icon"></i>
+    </div>
+    <span class="divider-line"></span>
+  </div>
+
+  <!-- Sales Over Time Section -->
+  <div class="dashboard-section sales-over-time">
+    <div class="section-header">
+      <div class="header-content">
+        <div class="icon-wrapper bg-info-light">
+          <i class="bi bi-calendar-range section-icon text-info"></i>
+        </div>
+        <h3 class="section-title">Sales Over Time</h3>
+      </div>
+    </div>
+    <div echarts [options]="salesOverTimeChartOptions" class="demo-chart chart-container"></div>
+  </div>
+
+  <!-- Divider -->
+  <div class="section-divider">
+    <span class="divider-line"></span>
+    <div class="divider-icon-wrapper">
+      <i class="bi bi-exclamation-triangle divider-icon"></i>
+    </div>
+    <span class="divider-line"></span>
+  </div>
+
+  <!-- Low Stock Alerts Section -->
+  <div class="dashboard-section stock-alerts">
+    <div class="section-header">
+      <div class="header-content">
+        <div class="icon-wrapper bg-danger-light">
+          <i class="bi bi-exclamation-triangle section-icon text-danger"></i>
+        </div>
+        <h3 class="section-title">Low Stock Alerts</h3>
+      </div>
+    </div>
+    <div *ngIf="(lowStockProducts?.length ?? 0) > 0; else allGood" class="alert-container">
+      <div class="alert-list">
+        <div class="alert-item" *ngFor="let product of lowStockProducts">
+          <span class="product-name">{{ product.productName }}</span>
+          <span class="stock-badge">{{ product.quantityLeft }} left</span>
+        </div>
+      </div>
+    </div>
+    <ng-template #allGood>
+      <div class="all-good-message">
+        <i class="bi bi-emoji-smile"></i>
+        <p>All products are well-stocked!</p>
+      </div>
+    </ng-template>
   </div>
 </div>
