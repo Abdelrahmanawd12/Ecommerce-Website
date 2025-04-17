@@ -1,134 +1,267 @@
 <div class="seller-account-container">
-    <!-- Header with Profile -->
-  <!-- Header with Profile Initials -->
-<div class="account-header text-center mb-5">
+  <!-- Header with Profile -->
+  <div class="account-header text-center mb-5">
     <div class="profile-initials mx-auto mb-3">
-      {{ getInitials(user.name) }}
+      {{ getInitials(userData.firstName + ' ' + userData.lastName) }}
     </div>
-    <h2 class="fw-semibold mb-1">{{ user.name }}</h2>
-    <p class="text-muted">{{ user.shopName }}</p>
+    <h2 class="fw-semibold mb-1">{{userData.firstName}} {{ userData.lastName }}</h2>
+    <p class="text-muted">{{ userData?.storeName }}</p>
+    <button class="btn btn-success mt-3" (click)="toggleEditMode()">
+      <i class="bi bi-pencil me-2"></i> {{ isEditMode ? 'Save Changes' : 'Edit Profile' }}
+    </button>
   </div>
-  
-    <!-- Main Account Sections -->
-    <div class="account-sections">
-      <!-- Contact Card -->
-      <div class="account-card">
-        <div class="card-header">
-          <i class="bi bi-envelope-fill text-primary"></i>
-          <h5>Contact</h5>
-        </div>
-        <div class="card-body">
-          <div class="info-row">
-            <i class="bi bi-envelope"></i>
-            <div>
-              <small class="text-muted">Email</small>
-              <p>seller&#64;example.com</p>
-            </div>
-            <button class="btn-icon">
-              <i class="bi bi-pencil"></i>
-            </button>
-          </div>
-          
-          <div class="info-row">
-            <i class="bi bi-telephone"></i>
-            <div>
-              <small class="text-muted">Phone</small>
-              <p>+20 123 456 7890</p>
-            </div>
-            <button class="btn-icon">
-              <i class="bi bi-pencil"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-  
+
+  <!-- Two Column Layout -->
+  <div class="account-columns">
+    <!-- Left Column -->
+    <div class="account-column">
       <!-- Personal Info Card -->
       <div class="account-card">
         <div class="card-header">
           <i class="bi bi-person-fill text-success"></i>
-          <h5>Personal</h5>
+          <h5>Personal Information</h5>
         </div>
         <div class="card-body">
           <div class="info-grid">
             <div class="info-item">
-              <small class="text-muted">Full Name</small>
-              <p>Ahmed Mohamed</p>
+              <small class="text-muted">First Name</small>
+              <input *ngIf="isEditMode" type="text" class="form-control" [(ngModel)]="userData.firstName">
+              <p *ngIf="!isEditMode">{{userData?.firstName}}</p>
+            </div>
+            <div class="info-item">
+              <small class="text-muted">Last Name</small>
+              <input *ngIf="isEditMode" type="text" class="form-control" [(ngModel)]="userData.lastName">
+              <p *ngIf="!isEditMode">{{userData?.lastName}}</p>
             </div>
             <div class="info-item">
               <small class="text-muted">Username</small>
-              <p>ahmed_seller</p>
+              <input *ngIf="isEditMode" type="text" class="form-control" [(ngModel)]="userData.email">
+              <p *ngIf="!isEditMode">{{userData?.email}}</p>
             </div>
             <div class="info-item">
               <small class="text-muted">Country</small>
-              <p class="d-flex align-items-center">
-                Egypt <span class="flag-icon flag-icon-eg ms-2"></span>
+              <input *ngIf="isEditMode" type="text" class="form-control" [(ngModel)]="userData.storeAddress">
+              <p *ngIf="!isEditMode" class="d-flex align-items-center">
+                {{userData?.storeAddress}} <span class="flag-icon flag-icon-eg ms-2"></span>
               </p>
             </div>
+            <div class="info-item">
+              <small class="text-muted">Member Since</small>
+              <p>{{ userData?.createdAt | date: 'yyyy-MM-dd' }}</p>
+            </div>
           </div>
-          <button class="btn-edit-full">
-            <i class="bi bi-pencil me-2"></i> Edit Profile
-          </button>
         </div>
       </div>
-  
+
       <!-- Shop Info Card -->
       <div class="account-card">
         <div class="card-header">
           <i class="bi bi-shop-window text-warning"></i>
-          <h5>Shop</h5>
+          <h5>Shop Information</h5>
         </div>
         <div class="card-body">
           <div class="info-item mb-3">
             <small class="text-muted">Shop Name</small>
-            <p>Premium Electronics Store</p>
+            <input *ngIf="isEditMode" type="text" class="form-control" [(ngModel)]="userData.storeName">
+            <p *ngIf="!isEditMode">{{userData?.storeName}}</p>
           </div>
           
           <div class="info-item mb-3">
             <small class="text-muted">Address</small>
-            <p>123 Nile Street, Cairo, Egypt</p>
+            <input *ngIf="isEditMode" type="text" class="form-control" [(ngModel)]="userData.storeAddress">
+            <p *ngIf="!isEditMode">{{userData?.storeAddress}}</p>
           </div>
-          
+      
           <div class="info-item mb-3">
-            <small class="text-muted">Shipping Zones</small>
-            <div class="tags">
-              <span>Middle East</span>
-              <span>North Africa</span>
-              <span>Europe</span>
+            <small class="text-muted">Shipping Zone</small>
+            <select *ngIf="isEditMode" class="form-control" [(ngModel)]="userData.shippingZone">
+              <option value="Local">Local</option>
+              <option value="Regional">Regional</option>
+              <option value="National">National</option>
+              <option value="International">International</option>
+            </select>
+            <div *ngIf="!isEditMode" class="tags">
+              <span class="badge bg-light text-dark">{{userData?.shippingZone}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="account-column">
+      <!-- Contact Card -->
+      <div class="account-card">
+        <div class="card-header">
+          <i class="bi bi-envelope-fill text-primary"></i>
+          <h5>Contact Information</h5>
+        </div>
+        <div class="card-body">
+          <div class="info-row">
+            <i class="bi bi-envelope text-primary"></i>
+            <div>
+              <small class="text-muted">Email</small>
+              <input *ngIf="isEditMode" type="email" class="form-control" [(ngModel)]="userData.email">
+              <p *ngIf="!isEditMode">{{userData?.email}}</p>
             </div>
           </div>
           
-          <button class="btn-edit-full">
-            <i class="bi bi-gear me-2"></i> Shop Settings
-          </button>
+          <div class="info-row">
+            <i class="bi bi-telephone text-primary"></i>
+            <div>
+              <small class="text-muted">Phone</small>
+              <input *ngIf="isEditMode" type="tel" class="form-control" [(ngModel)]="userData.phone">
+              <p *ngIf="!isEditMode">{{userData?.phone ?? 'Not available'}}</p>
+            </div>
+          </div>
+
+          <div class="info-row">
+            <i class="bi bi-globe text-primary"></i>
+            <div>
+              <small class="text-muted">Website</small>
+              <input *ngIf="isEditMode" type="url" class="form-control" [(ngModel)]="userData.storeName" 
+                     [value]="'https://www.' + userData?.storeName + '.com'">
+              <p *ngIf="!isEditMode">https://www.{{userData?.storeName}}.com</p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  
-    <!-- Security Section -->
-    <div class="security-section">
-      <h6 class="section-title mb-3">
-        <i class="bi bi-shield-lock me-2"></i> Security
-      </h6>
-      
-      <div class="security-item">
-        <div>
-          <i class="bi bi-key"></i>
-          <span>Password</span>
-          <small class="text-muted">Last changed 3 months ago</small>
+
+      <!-- Security Section -->
+      <div class="account-card">
+        <div class="card-header">
+          <i class="bi bi-shield-lock text-danger"></i>
+          <h5>Security Settings</h5>
         </div>
-        <button class="btn-text">Change</button>
-      </div>
+        <div class="card-body">
+          <div class="security-item">
+            <div class="security-info">
+              <i class="bi bi-key"></i>
+              <div>
+                <span>Password</span>
+                <small class="text-muted">Last changed {{ userData?.createdAt | date: 'yyyy-MM-dd' }}</small>
+              </div>
+            </div>
+            <button class="btn-text" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Change</button>
+          </div>
+<!--           
+          <div class="form-group mt-3">
+            <label for="oldPassword">Old Password</label>
+            <input
+              type="password"
+              id="oldPassword"
+              class="form-control"
+              [(ngModel)]="oldPassword"
+              placeholder="Enter your old password"
+            />
+          </div>
       
-      <div class="security-item">
-        <div>
-          <i class="bi bi-phone"></i>
-          <span>Two-Factor Authentication</span>
-          <small class="text-muted">Add extra security</small>
+          <div class="form-group mt-3">
+            <label for="newPassword">New Password</label>
+            <input
+              type="password"
+              id="newPassword"
+              class="form-control"
+              [(ngModel)]="newPassword"
+              placeholder="Enter your new password"
+            />
+          </div>
+      
+          <div class="mt-3">
+            <button class="btn btn-danger" (click)="onChangePassword()">Change Password</button>
+          </div>
+      
+          <div *ngIf="message" class="mt-2">
+            <p>{{ message }}</p>
+          </div> -->
+      
+          <div class="security-item">
+            <div class="security-info">
+              <i class="bi bi-phone"></i>
+              <div>
+                <span>Two-Factor Authentication</span>
+                <small class="text-muted">Add extra security</small>
+              </div>
+            </div>
+            <label class="switch">
+              <input type="checkbox">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="security-item">
+            <div class="security-info">
+              <i class="bi bi-device-phone"></i>
+              <div>
+                <span>Active Sessions</span>
+                <small class="text-muted">2 active devices</small>
+              </div>
+            </div>
+            <button class="btn-text">Manage</button>
+          </div>
         </div>
-        <label class="switch">
-          <input type="checkbox">
-          <span class="slider"></span>
-        </label>
       </div>
     </div>
   </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group position-relative">
+          <label for="oldPassword">Old Password</label>
+          <input 
+            [type]="oldPasswordType" 
+            class="form-control" 
+            id="oldPassword" 
+            [(ngModel)]="oldPassword"
+          />
+          <i 
+            class="bi" 
+            [ngClass]="oldPasswordType === 'password' ? 'bi-eye-slash' : 'bi-eye'"
+            (click)="toggleOldPasswordVisibility()"
+            style="position: absolute; top: 38px; right: 15px; cursor: pointer;"
+          ></i>
+        </div>
+        
+        <div class="form-group position-relative mt-3">
+          <label for="newPassword">New Password</label>
+          <input 
+            [type]="newPasswordType" 
+            class="form-control" 
+            id="newPassword" 
+            [(ngModel)]="newPassword"
+          />
+          <i 
+            class="bi" 
+            [ngClass]="newPasswordType === 'password' ? 'bi-eye-slash' : 'bi-eye'"
+            (click)="toggleNewPasswordVisibility()"
+            style="position: absolute; top: 38px; right: 15px; cursor: pointer;"
+          ></i>
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" (click)="onChangePassword()">Change Password</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Toast -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+  <div id="passwordToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        {{ message }}
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>

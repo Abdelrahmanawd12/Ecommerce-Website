@@ -56,7 +56,7 @@ namespace Jumia_Api.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("Address", (string)null);
+                    b.ToTable("Address");
                 });
 
             modelBuilder.Entity("Jumia.Models.ApplicationUser", b =>
@@ -170,7 +170,7 @@ namespace Jumia_Api.Migrations
                     b.HasIndex("CustomerId")
                         .IsUnique();
 
-                    b.ToTable("Cart", (string)null);
+                    b.ToTable("Cart");
                 });
 
             modelBuilder.Entity("Jumia.Models.CartItem", b =>
@@ -196,7 +196,7 @@ namespace Jumia_Api.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CartItem", (string)null);
+                    b.ToTable("CartItem");
                 });
 
             modelBuilder.Entity("Jumia.Models.Category", b =>
@@ -214,7 +214,7 @@ namespace Jumia_Api.Migrations
 
                     b.HasKey("CatId");
 
-                    b.ToTable("Category", (string)null);
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("Jumia.Models.Order", b =>
@@ -254,6 +254,9 @@ namespace Jumia_Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("SellerId1")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("ShippingAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -269,7 +272,9 @@ namespace Jumia_Api.Migrations
 
                     b.HasIndex("SellerId");
 
-                    b.ToTable("Order", (string)null);
+                    b.HasIndex("SellerId1");
+
+                    b.ToTable("Order");
                 });
 
             modelBuilder.Entity("Jumia.Models.OrderItem", b =>
@@ -298,7 +303,7 @@ namespace Jumia_Api.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItem", (string)null);
+                    b.ToTable("OrderItem");
                 });
 
             modelBuilder.Entity("Jumia.Models.Payment", b =>
@@ -335,7 +340,7 @@ namespace Jumia_Api.Migrations
                     b.HasIndex("OrderId")
                         .IsUnique();
 
-                    b.ToTable("Payment", (string)null);
+                    b.ToTable("Payment");
                 });
 
             modelBuilder.Entity("Jumia.Models.Product", b =>
@@ -357,6 +362,9 @@ namespace Jumia_Api.Migrations
                     b.Property<decimal>("Discount")
                         .HasColumnType("decimal(18, 2)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -371,6 +379,10 @@ namespace Jumia_Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("SubCategoryId")
                         .HasColumnType("int");
 
@@ -383,7 +395,7 @@ namespace Jumia_Api.Migrations
 
                     b.HasIndex("SubCategoryId");
 
-                    b.ToTable("Product", (string)null);
+                    b.ToTable("Product");
                 });
 
             modelBuilder.Entity("Jumia.Models.Rating", b =>
@@ -422,7 +434,7 @@ namespace Jumia_Api.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Rating", (string)null);
+                    b.ToTable("Rating");
                 });
 
             modelBuilder.Entity("Jumia.Models.Shipping", b =>
@@ -477,7 +489,7 @@ namespace Jumia_Api.Migrations
                     b.HasIndex("OrderId")
                         .IsUnique();
 
-                    b.ToTable("Shipping", (string)null);
+                    b.ToTable("Shipping");
                 });
 
             modelBuilder.Entity("Jumia.Models.SubCategory", b =>
@@ -499,7 +511,7 @@ namespace Jumia_Api.Migrations
 
                     b.HasIndex("CatId");
 
-                    b.ToTable("SubCategory", (string)null);
+                    b.ToTable("SubCategory");
                 });
 
             modelBuilder.Entity("Jumia.Models.Wishlist", b =>
@@ -518,7 +530,7 @@ namespace Jumia_Api.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Wishlist", (string)null);
+                    b.ToTable("Wishlist");
                 });
 
             modelBuilder.Entity("Jumia.Models.WishlistItem", b =>
@@ -541,7 +553,7 @@ namespace Jumia_Api.Migrations
 
                     b.HasIndex("WishlistId");
 
-                    b.ToTable("WishlistItem", (string)null);
+                    b.ToTable("WishlistItem");
                 });
 
             modelBuilder.Entity("Jumia_Api.Models.ProductImage", b =>
@@ -563,7 +575,7 @@ namespace Jumia_Api.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductImage", (string)null);
+                    b.ToTable("ProductImage");
                 });
 
             modelBuilder.Entity("Jumia_Api.Models.ProductTag", b =>
@@ -585,7 +597,7 @@ namespace Jumia_Api.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductTag", (string)null);
+                    b.ToTable("ProductTag");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -803,14 +815,18 @@ namespace Jumia_Api.Migrations
                     b.HasOne("Jumia.Models.Customer", "Customer")
                         .WithMany("Orders")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Jumia.Models.Seller", "Seller")
-                        .WithMany("Orders")
+                        .WithMany()
                         .HasForeignKey("SellerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("Jumia.Models.Seller", null)
+                        .WithMany("Orders")
+                        .HasForeignKey("SellerId1");
 
                     b.Navigation("Customer");
 

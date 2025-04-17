@@ -1,11 +1,3 @@
-.main-content {
-    min-height: calc(100vh - 400px); 
-    display: flex;
-    flex-grow: 1;
-    padding: 20px;
-  }
- 
- 
  
   .jumia-footer {
     position: relative;

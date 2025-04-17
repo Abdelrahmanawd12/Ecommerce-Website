@@ -36,6 +36,8 @@ namespace Jumia_Api.DTOs.SellerDTOs
         [Required]
         public List<string> Tags { get; set; }
 
+        public string Status { get; set; } 
+
 
     }
 }

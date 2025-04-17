@@ -147,6 +147,17 @@ namespace Jumia_Api.MapperConfig
             // Mapping from Address to AddressDTO
             CreateMap<Address, AddressDTO>()
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId));
+
+            //Mapping from Seller To SellerDTO
+            CreateMap<Seller, sellerDTO>()
+                .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.PhoneNumber))
+                .ForMember(dest => dest.DOB, opt => opt.MapFrom(src => src.DateOfBirth));
+            CreateMap<sellerDTO, Seller>()
+                .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.Phone))
+                .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(src => src.DOB))
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
+
         }
     }
 }

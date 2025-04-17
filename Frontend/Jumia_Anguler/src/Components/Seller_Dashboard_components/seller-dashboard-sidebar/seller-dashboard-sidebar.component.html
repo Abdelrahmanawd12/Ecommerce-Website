@@ -18,9 +18,8 @@
     <ul class="nav nav-pills nav-flush flex-column text-start">
         <!-- Home -->
         <li class="nav-item" routerLink="homeseller">
-            <a class="nav-link py-3 border-bottom text-dark" 
-               [class.active]="isActive('home')"
-               (click)="setActive('home')">
+            <a class="nav-link py-3 border-bottom text-dark" [class.active]="isActive('home')"
+                (click)="setActive('home')">
                 <i class="bi bi-house-fill fs-5"></i>
                 <span class="ms-2 sidebar-text" *ngIf="!isCollapsed">Home</span>
             </a>
@@ -28,9 +27,8 @@
 
         <!-- Orders -->
         <li class="nav-item" routerLink="orderMangement">
-            <a class="nav-link py-3 border-bottom text-dark"
-               [class.active]="isActive('orders')"
-               (click)="setActive('orders')">
+            <a class="nav-link py-3 border-bottom text-dark" [class.active]="isActive('orders')"
+                (click)="setActive('orders')">
                 <i class="bi bi-table fs-5"></i>
                 <span class="ms-2 sidebar-text" *ngIf="!isCollapsed">Orders</span>
             </a>
@@ -39,10 +37,10 @@
         <!-- Manage Products -->
         <li class="nav-item">
             <a class="nav-link py-3 border-bottom text-dark d-flex align-items-center justify-content-between"
-               [class.active]="isActive('manage-products') || isSubmenuActive('manage-products')"
-               data-bs-toggle="collapse" [attr.aria-expanded]="!isCollapsed && isManageProductsOpen"
-               (click)="toggleManageProductsMenu()" href="#manageProductsMenu" role="button"
-               aria-controls="manageProductsMenu">
+                [class.active]="isActive('manage-products') || isSubmenuActive('manage-products')"
+                data-bs-toggle="collapse" [attr.aria-expanded]="!isCollapsed && isManageProductsOpen"
+                (click)="toggleManageProductsMenu()" href="#manageProductsMenu" role="button"
+                aria-controls="manageProductsMenu">
                 <div>
                     <i class="bi bi-box-seam fs-5"></i>
                     <span class="ms-2 sidebar-text" *ngIf="!isCollapsed">Manage Products</span>
@@ -53,23 +51,17 @@
 
             <!-- Submenu -->
             <div class="collapse ps-4" id="manageProductsMenu" [class.show]="!isCollapsed && isManageProductsOpen">
-                <a class="nav-link text-dark py-2" 
-                   [class.active]="isActive('add-product')"
-                   (click)="setActive('add-product')">Add Product</a>
-                <a class="nav-link text-dark py-2"
-                   [class.active]="isActive('view-products')"
-                   routerLink="manageProduct"
-                   (click)="setActive('view-products')">Manage Products</a>
+                <a class="nav-link text-dark py-2" [class.active]="isActive('add-product')"
+                    (click)="setActive('add-product')" routerLink="addproduct">Add Product</a>
+                <a class="nav-link text-dark py-2" [class.active]="isActive('view-products')" routerLink="manageProduct"
+                    (click)="setActive('view-products')">Manage Products</a>
             </div>
         </li>
 
         <!-- Sales -->
         <li class="nav-item">
-            <a class="nav-link py-3 border-bottom text-dark"
-               [class.active]="isActive('sales')"
-               (click)="setActive('sales')"
-               routerLink="prductSales"
-               >
+            <a class="nav-link py-3 border-bottom text-dark" [class.active]="isActive('sales')"
+                (click)="setActive('sales')" routerLink="sales">
                 <i class="bi bi-graph-up fs-5"></i>
                 <span class="ms-2 sidebar-text" *ngIf="!isCollapsed">Sales</span>
             </a>
@@ -77,9 +69,8 @@
 
         <!-- Reports -->
         <li class="nav-item">
-            <a class="nav-link py-3 border-bottom text-dark"
-               [class.active]="isActive('reports')"
-               (click)="setActive('reports')">
+            <a class="nav-link py-3 border-bottom text-dark" [class.active]="isActive('reports')"
+                (click)="setActive('reports')" routerLink="reports">
                 <i class="bi bi-file-earmark-bar-graph fs-5"></i>
                 <span class="ms-2 sidebar-text" *ngIf="!isCollapsed">Reports</span>
             </a>
@@ -89,9 +80,9 @@
         <!-- Profile -->
         <li class="nav-item">
             <a class="nav-link py-3 border-bottom text-dark d-flex align-items-center justify-content-between"
-               [class.active]="isActive('profile') || isSubmenuActive('profile')"
-               data-bs-toggle="collapse" [attr.aria-expanded]="!isCollapsed && isProfileMenuOpen"
-               (click)="toggleProfileMenu()" href="#profileMenu" role="button" aria-controls="profileMenu">
+                [class.active]="isActive('profile') || isSubmenuActive('profile')" data-bs-toggle="collapse"
+                [attr.aria-expanded]="!isCollapsed && isProfileMenuOpen" (click)="toggleProfileMenu()"
+                href="#profileMenu" role="button" aria-controls="profileMenu">
                 <div class="d-flex align-items-center">
                     <img src="assets/sellerUser.png" alt="profile" width="32" height="32" class="rounded-circle">
                     <span class="ms-2 sidebar-text" *ngIf="!isCollapsed">Profile</span>
@@ -102,16 +93,35 @@
 
             <!-- Submenu -->
             <div class="collapse ps-4" id="profileMenu" [class.show]="!isCollapsed && isProfileMenuOpen">
-                <a class="nav-link text-dark py-2"
-                   [class.active]="isActive('account-settings')"
-                   (click)="setActive('account-settings')"
-                   routerLink="accountprofile"
-                   >Account Settings</a>
+                <a class="nav-link text-dark py-2" [class.active]="isActive('account-settings')"
+                    (click)="setActive('account-settings')" routerLink="accountprofile">Account Settings</a>
                 <hr class="dropdown-divider">
-                <a class="nav-link text-dark py-2"
-                   [class.active]="isActive('logout')"
-                   (click)="setActive('logout')">Sign out</a>
+                <!-- Sign Out Link -->
+                <a class="nav-link text-dark py-2" (click)="openLogoutConfirmation()">Sign out</a>
             </div>
         </li>
     </ul>
+</div>
+
+<!-- Logout Confirmation Modal (Pop-up) -->
+<div *ngIf="isLogoutConfirmationOpen" class="modal-overlay">
+    <div class="modal-content">
+        <h5>Are you sure you want to log out?</h5>
+        <div class="modal-actions">
+            <button class="btn btn-secondary" (click)="closeLogoutConfirmation()">Cancel</button>
+            <button class="btn btn-danger" (click)="Onlogout()">Confirm</button>
+        </div>
+    </div>
+</div>
+<!-- Logout Toast -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="logoutToast" class="toast align-items-center text-white bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body">
+                You`re now logged Out
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                aria-label="Close"></button>
+        </div>
+    </div>
 </div>

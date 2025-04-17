@@ -4,6 +4,8 @@ import { CartComponent } from '../Components/cart/cart.component';
 import { ProductDetailsComponent } from '../Components/product-details/product-details.component';
 import { OrderComponent } from '../Components/order/order.component'; // Adjust this path as needed     ./components/order/order.component
 import { Routes } from '@angular/router';
+import { AccountComponent } from '../Components/account/account.component';
+import { WishlistComponent } from '../Components/wishlist/wishlist.component';
 import { AdminLayoutComponent } from '../Components/admin-layout/admin-layout.component';
 
 
@@ -19,6 +21,11 @@ export const routes: Routes = [
 
   { path: 'cart', component: CartComponent },
 
+    //Ahmed
+    //{ path: 'order/:id', component: OrderComponent  },
+    { path: 'order', component: OrderComponent  },
+    { path: 'account', component: AccountComponent  },
+    { path: 'wishlist', component: WishlistComponent  },
   { path: 'shop/:id', component: ShopComponent },
   { path: 'details/:id', component: ProductDetailsComponent },
 
@@ -71,16 +78,28 @@ export const routes: Routes = [
             .then((m) => m.ManageProductComponent)
       },
       {
-        path: 'prductSales',
+        path: 'sales',
         loadComponent: () =>
           import('../Components/Seller_Dashboard_components/seller-sales/seller-sales.component')
             .then((m) => m.SellerSalesComponent)
+      },
+      {
+        path:'reports',
+        loadComponent:()=>
+          import('../Components/Seller_Dashboard_components/seller-reports/seller-reports.component')
+        .then((m)=>m.SellerReportsComponent)
       },
       {
         path: 'accountprofile',
         loadComponent: () =>
           import('../Components/Seller_Dashboard_components/seller-accountprofile/seller-accountprofile.component')
             .then((m) => m.SellerAccountprofileComponent)
+      },
+      {
+        path: 'addproduct',
+        loadComponent: () =>
+          import('../Components/Seller_Dashboard_components/add-product-dashboard/add-product-dashboard.component')
+            .then((m) => m.AddProductDashboardComponent)
       }
     ]
   },
@@ -91,5 +110,5 @@ export const routes: Routes = [
   { path: 'register', loadComponent: () => import('../Components/customer-register/customer-register.component').then(m => m.CustomerRegisterComponent) },
 
   //error routes
-  { path: '', loadComponent: () => import('../Components/error/error.component').then(m => m.ErrorComponent) },
+  { path: '**', loadComponent: () => import('../Components/error/error.component').then(m => m.ErrorComponent) },
 ];

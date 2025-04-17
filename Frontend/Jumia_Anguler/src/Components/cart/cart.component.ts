@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '../../Services/Customer/cart.service';
 
+
 @Component({
   selector: 'app-cart',
   standalone: true,
@@ -13,7 +14,7 @@ import { CartService } from '../../Services/Customer/cart.service';
   styleUrl: './cart.component.css'
 })
 export class CartComponent implements  OnInit {
-  customerId='user1';
+  customerId= localStorage.getItem('userId') || '';
   grandTotal: number = 0;
   cartData: CartDTO = {
     cartId: 0,
@@ -29,7 +30,7 @@ export class CartComponent implements  OnInit {
     this.loadCart();
     this.calculateTotal();
   }
-
+//load
   loadCart() {
     this.cartService.getCart(this.customerId).subscribe({
       next: (res) => {
@@ -43,13 +44,22 @@ export class CartComponent implements  OnInit {
       }
     });
   }
-
+//calculate total after discount
   calculateTotal() {
-    this.grandTotal = this.cartData.items.reduce((total, item) => {
-      return total + (item.price-item.discount) * item.quantity;
-    }, 0);
+    if (!this.cartData?.items?.length) {
+      this.grandTotal = 0;
+      return;
+    }
+
+    this.grandTotal = this.cartData.items
+      .filter(item => item.productStock > 0)
+      .reduce((total, item) => {
+        const validQuantity = Math.min(item.quantity, item.productStock);
+      return total + (item.price - item.discount) * validQuantity;
+      }, 0);
   }
 
+//clear item from cart
   removeItem(item: any) {
     const confirmed = window.confirm(`Are you sure you want to remove "${item.productName}" from the cart?`);
     if (!confirmed) return;
@@ -64,7 +74,7 @@ export class CartComponent implements  OnInit {
     });
   }
 
-
+//clear cart
   clearCart() {
     const confirmed = window.confirm('Are you sure you want to clear the entire cart?');
     if (!confirmed) return;
@@ -76,7 +86,7 @@ export class CartComponent implements  OnInit {
     });
   }
 
-
+//decrease quantity
   decrease(item: any) {
     if (item.quantity > 1) {
       item.quantity -= 1;
@@ -86,7 +96,7 @@ export class CartComponent implements  OnInit {
       });
     }
   }
-
+//increase quantity
   increase(item: any,stock: number) {
     console.log('Stock available:', stock);  // Debugging line
 
@@ -100,6 +110,7 @@ export class CartComponent implements  OnInit {
       alert(`Only ${stock} items available in stock`);
     }
   }
+
 
 
   }

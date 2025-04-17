@@ -1,6 +1,6 @@
 <!-- Main Content (hidden when loading) -->
 <div *ngIf="!isLoading">
-    <div class="container-fluid vh-100 d-flex align-items-center justify-content-center bg-light">
+    <div class="container-fluid vh-100 vw-100 d-flex align-items-center justify-content-center bg-light">
         <div class="container-fluid vh-100 d-flex align-items-center justify-content-center bg-light">
             <div class="row w-100 justify-content-center align-items-center">
                 <!-- Left Image -->
@@ -17,10 +17,9 @@
                 <!-- Form Content -->
                 <div class="col-md-4">
                     <div class="text-center mb-4">
-                        <h4>{{ stepHeaders[currentStep]?.title }}</h4>
-                        <p class="text-muted">{{ stepHeaders[currentStep]?.subtitle }}</p>
+                        <h4>{{ stepHeaders[currentStep].title }}</h4>
+                        <p class="text-muted">{{ stepHeaders[currentStep].subtitle }}</p>
                     </div>
-
                     <div class="card p-4 shadow-sm rounded">
                         <ng-container [ngSwitch]="currentStep">
                             <!-- Step 1 -->

@@ -1,37 +1,35 @@
-app-seller-dashboard-sidebar {
-    position: sticky;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 250px; 
-    z-index: 1000;
-  }
-  .dashboard-wrapper {
-    display: flex;
-    transition: all 0.3s ease;
-  }
-  
-  /* Sidebar already has width control via collapsed class */
-  
-  .main-content-wrapper {
-    flex-grow: 1;
-    transition: margin-left 0.3s ease;
-    padding: 20px;
-    margin-left: 250px; /* نفس عرض السايدبار */
-  }
-  
-  .dashboard-wrapper.sidebar-collapsed .main-content-wrapper {
-    margin-left: 80px; /* أو 0 حسب collapsed width */
-  }
-  
-  .sidebar {
-    width: 250px;
-    transition: width 0.3s ease;
-  }
-  
-  .sidebar.collapsed {
-    width: 80px;
-  }
-  
+* {
+  box-sizing: border-box; /* ضمان أن كل العناصر لا تتجاوز العرض المحدد */
+}
 
-  
+body {
+  overflow-x: hidden; /* إخفاء التمرير الأفقي على مستوى الـ body */
+  margin: 0;
+}
+
+.dashboard-wrapper {
+  display: flex;
+  width: 100vw; /* تأكد أن العرض لا يتجاوز العرض الكامل للنافذة */
+  height: 100vh;
+  overflow-x: hidden; /* إخفاء التمرير الأفقي هنا أيضًا */
+}
+
+.sidebar {
+  width: 250px;
+  transition: width 0.3s ease;
+  height: 100vh;
+  overflow: hidden; /* تأكد من أن الشريط الجانبي لا يمتد خارج العرض */
+}
+
+.sidebar.collapsed {
+  width: 80px;
+}
+
+.main-content {
+  flex-grow: 1;
+  height: 100vh;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden; /* إخفاء التمرير الأفقي في المحتوى الرئيسي */
+}
+

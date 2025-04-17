@@ -1,0 +1,177 @@
+<div class="p-3">
+    <h2>Add Product</h2>
+</div>
+<div class="form-container">
+    <!-- Vertical Progress Steps -->
+    <div class="vertical-progress-steps">
+        <div class="step" [ngClass]="{'active': currentStep >= 1, 'completed': currentStep > 1}">
+            <div class="step-circle">1</div>
+            <div class="step-content">
+                <div class="step-label">Product Information</div>
+                <div class="step-description">Enter product Information</div>
+            </div>
+        </div>
+
+        <div class="step-connector" [ngClass]="{'active': currentStep > 1}"></div>
+
+        <div class="step" [ngClass]="{'active': currentStep >= 2, 'completed': currentStep > 2}">
+            <div class="step-circle">2</div>
+            <div class="step-content">
+                <div class="step-label">Variants</div>
+                <div class="step-description">Enter Variants</div>
+            </div>
+        </div>
+
+        <div class="step-connector" [ngClass]="{'active': currentStep > 2}"></div>
+
+        <div class="step" [ngClass]="{'active': currentStep >= 3, 'completed': currentStep === 3}">
+            <div class="step-circle">3</div>
+            <div class="step-content">
+                <div class="step-label">Product Specifications</div>
+                <div class="step-description">Enter Product Specifications</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Content -->
+    <div class="form-content">
+        <!-- Step 1 Content - Always visible if step 1 is reached -->
+        <div class="form-step" id="step-1" *ngIf="currentStep >= 1" [class.current]="currentStep === 1">
+            <h4>Product Information</h4>
+            <div class="step-form">
+                <!-- Fixed-size Image Upload Boxes -->
+                <div class="fixed-image-container">
+                    <div class="fixed-image-grid">
+                        <div class="fixed-image-box" *ngFor="let box of [1,2,3,4,5,6,7,8]; let i = index"
+                            (click)="triggerFileInput(i)">
+                            <div class="fixed-placeholder" *ngIf="!images[i]">
+                                <span class="upload-icon">+</span>
+                            </div>
+                            <div class="fixed-image-wrapper" *ngIf="images[i]">
+                                <img [src]="images[i].previewUrl" class="fixed-preview-image">
+                            </div>
+                            <input type="file" #fileInput [id]="'fileInput'+i" (change)="handleFileInput($event, i)"
+                                accept="image/*" style="display: none;">
+                            <div class="fixed-remove-btn" *ngIf="images[i]" (click)="removeImage(i, $event)">×</div>
+                        </div>
+                    </div>
+                    <small class="upload-note">Click to upload images (Max 8 images)</small>
+                </div>
+
+                <!-- Product Name and Category -->
+                <div class="row-input-group">
+                    <div class="form-group name-input">
+                        <label>Product Name *</label>
+                        <input type="text" placeholder="Enter product name" class="form-control">
+                    </div>
+
+                    <div class="form-group Brand-input">
+                        <label>Brand *</label>
+                        <input type="text" placeholder="Enter Brand name" class="form-control">
+                    </div>
+
+                </div>
+                <div class="row-input-group">
+                    <div class="form-group dropdown-input">
+                        <label>Category *</label>
+                        <select class="form-control" (change)="onCategoryChange($event)">
+                            <option value="">Select category</option>
+                            <option *ngFor="let category of categories" [value]="category.id">
+                                {{category.name}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <!-- Add this sub-category dropdown -->
+                    <div class="form-group dropdown-input" *ngIf="subCategories.length > 0">
+                        <label>Sub-Category *</label>
+                        <select class="form-control">
+                            <option value="">Select sub-category</option>
+                            <option *ngFor="let subCat of subCategories" [value]="subCat.id">
+                                {{subCat.name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="step-actions">
+                    <button class="next-btn" (click)="nextStep()">Continue</button>
+                </div>
+            </div>
+        </div>
+        <!-- Step 2 Content - Appears below step 1 when progressing -->
+        <div class="form-step" id="step-2" *ngIf="currentStep >= 2" [class.current]="currentStep === 2">
+            <h4>Variants</h4>
+            <div class="step-form">
+                <!-- Variant Fields -->
+                <div class="variant-fields">
+                    <!-- Price -->
+                    <div class="form-group">
+                        <label>Price *</label>
+                        <div class="input-with-symbol">
+                            <span class="symbol">$</span>
+                            <input type="number" placeholder="0.00" class="form-control" step="0.01" min="0">
+                        </div>
+                    </div>
+
+                    <!-- Quantity -->
+                    <div class="form-group">
+                        <label>Quantity *</label>
+                        <input type="number" placeholder="Available quantity" class="form-control" min="0">
+                    </div>
+
+                    <!-- Discount -->
+                    <div class="form-group">
+                        <label>Discount</label>
+                        <div class="input-with-symbol">
+                            <span class="symbol">%</span>
+                            <input type="number" placeholder="0" class="form-control" min="0" max="100">
+                        </div>
+                    </div>
+
+                    <!-- Weight -->
+                    <div class="form-group">
+                        <label>Weight (kg)</label>
+                        <input type="number" placeholder="Product weight" class="form-control" step="0.01" min="0">
+                    </div>
+                </div>
+
+                <div class="step-actions">
+                    <button class="prev-btn" (click)="prevStep()">Back</button>
+                    <button class="next-btn" (click)="nextStep()">Continue</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3 Content - Appears below step 2 when progressing -->
+        <div class="form-step" id="step-3" *ngIf="currentStep >= 3" [class.current]="currentStep === 3">
+            <h4>Product Specifications</h4>
+            <div class="step-form">
+                <!-- Description -->
+                <div class="form-group">
+                    <label>Description *</label>
+                    <textarea placeholder="Enter detailed product description"
+                        [(ngModel)]="productDescription"></textarea>
+                </div>
+
+                <!-- Tags Input -->
+                <div class="form-group">
+                    <label>Product Tags</label>
+                    <div class="tags-input-container">
+                        <div class="tag" *ngFor="let tag of tags; let i = index">
+                            {{tag}}
+                            <span class="remove-tag" (click)="removeTag(i)">×</span>
+                        </div>
+                        <input type="text" placeholder="Add tags (press Enter to add)" class="tags-input"
+                            (keydown.enter)="addTag($event)" (keydown.backspace)="handleBackspace($event)">
+                    </div>
+                    <small class="hint-text">Separate tags with commas or press Enter</small>
+                </div>
+
+                <div class="step-actions">
+                    <button class="prev-btn" (click)="prevStep()">Back</button>
+                    <button class="submit-btn">Submit Product</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

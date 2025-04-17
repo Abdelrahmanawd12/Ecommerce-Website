@@ -1,0 +1,70 @@
+
+
+
+  
+<!-- 
+  <div class="wishlist-container" *ngIf="wishlistItems.length > 0">
+    <div *ngFor="let item of wishlistItems" class="wishlist-item">
+      <img [src]="item.imageUrl" alt="{{ item.productName }}" class="wishlist-item-image" />
+      <div class="wishlist-item-details">
+        <h3>{{ item.productName }}</h3>
+        <p>Price: {{ item.price }}</p>
+        <p>Discount: {{ item.discount }}%</p>
+        <p>Brand: {{ item.brand }}</p>
+  
+        <button (click)="deleteItem(item.wishlistItemId)" class="btn btn-danger mt-2">
+          Remove from Wishlist
+        </button>
+
+        <button (click)="addToCart(item.wishlistItemId)" class="btn btn-primary">
+          Add to Cart
+        </button>
+        
+        
+      </div>
+    </div>
+  </div>
+   -->
+
+   <div class="container mt-4">
+    <h4 class="mb-4">My Wishlist</h4>
+  
+    <div *ngIf="wishlistItems.length > 0; else noWishlistItems">
+      <div *ngFor="let item of wishlistItems" class="card mb-4 p-4 shadow-lg">
+  
+        <!-- Item Layout: Image + Details -->
+        <div class="d-flex align-items-start">
+          <!-- Product Image -->
+          <img 
+            [src]="item.imageUrl" 
+            alt="{{ item.productName }}" 
+            class="img-fluid rounded border me-3"
+            style="width: 30%; max-width: 180px;"
+          />
+  
+          <!-- Product Info -->
+          <div>
+            <h5 class="mb-2">{{ item.productName }}</h5>
+            <p class="mb-1"><strong>Price:</strong> ${{ item.price }}</p>
+            <p class="mb-1"><strong>Discount:</strong> {{ item.discount }}%</p>
+            <p class="mb-3"><strong>Brand:</strong> {{ item.brand }}</p>
+  
+            <!-- Buttons -->
+            <button (click)="addToCart(item.wishlistItemId)" class="btn btn-primary me-2">
+              Add to Cart
+            </button>
+  
+            <button (click)="deleteItem(item.wishlistItemId)" class="btn btn-outline-danger">
+              Remove from Wishlist
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- No items message -->
+    <ng-template #noWishlistItems>
+      <p class="text-muted">Your wishlist is empty.</p>
+    </ng-template>
+  </div>
+  
