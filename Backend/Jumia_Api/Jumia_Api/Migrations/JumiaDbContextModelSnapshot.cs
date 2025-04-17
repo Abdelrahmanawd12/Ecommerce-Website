@@ -270,8 +270,6 @@ namespace Jumia_Api.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("CustomerId1");
-
                     b.HasIndex("SellerId");
 
                     b.HasIndex("SellerId1");
@@ -819,10 +817,6 @@ namespace Jumia_Api.Migrations
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("Jumia.Models.Customer", null)
-                        .WithMany("Orders")
-                        .HasForeignKey("CustomerId1");
 
                     b.HasOne("Jumia.Models.Seller", "Seller")
                         .WithMany()
