@@ -147,3 +147,123 @@
 .collapse .nav-link {
     padding-left: 1.5rem !important;
 }
+
+
+
+/* تغيير تنسيق ال Sidebar */
+.sidebar {
+    background-color: #f8f9fa;
+    color: #495057;
+    height: 100vh;
+    width: 250px;
+    transition: width 0.3s ease;
+  }
+  
+  .sidebar.collapsed {
+    width: 80px; /* الحجم في حالة التصغير */
+  }
+  
+  .sidebar .sidebar-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: #495057;
+  }
+  
+  /* تدرج الألوان عند تمرير الماوس على العناصر */
+  .sidebar .nav-item .nav-link:hover {
+    background-color: #e2e6ea;
+    color: #0056b3;
+  }
+  
+  .sidebar .nav-item .nav-link.active {
+    background-color: #0069d9;
+    color: #fff;
+    font-weight: 600;
+  }
+  
+  /* جعل الأيقونات تظهر بشكل أكبر */
+  .sidebar .nav-item i {
+    font-size: 1.3rem;
+  }
+  
+  /* تعديل المسافة بين العناصر */
+  .sidebar .nav-item {
+    margin-bottom: 15px;
+  }
+  
+  .sidebar .nav-item .nav-link {
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+  }
+  
+  /* إضافة تنسيق خاص بالقائمة المنبثقة */
+  .sidebar .collapse {
+    margin-top: 10px;
+  }
+  
+  .sidebar .collapse .nav-link {
+    padding: 8px 15px;
+    font-size: 14px;
+  }
+  
+  /* جعل الأيقونات تتماشى مع التصغير */
+  .sidebar.collapsed .nav-item .nav-link i {
+    font-size: 1.2rem;
+  }
+  
+  .sidebar.collapsed .nav-item .nav-link span {
+    display: none; /* إخفاء النصوص عند التصغير */
+  }
+  
+  .sidebar.collapsed .nav-item .nav-link.active {
+    background-color: #0056b3;
+  }
+  
+  /* تأثير الإخفاء والظهور لأزرار التبديل */
+  .sidebar button {
+    position: absolute;
+    top: 20px;
+    right: -40px;
+    z-index: 100;
+    border-radius: 50%;
+    background-color: #0069d9;
+    color: #fff;
+    width: 30px;
+    height: 30px;
+    font-size: 1.3rem;
+    border: none;
+  }
+  
+  /* تحسين التفاعل مع عناصر القائمة الفرعية */
+  .sidebar .nav-item .nav-link.d-flex {
+    justify-content: space-between;
+  }
+  
+  /* تحسين تجربة التمرير */
+  .sidebar .nav-item .collapse {
+    padding-left: 20px;
+  }
+  
+  /* تنسيق رابط "Profile" */
+  .sidebar .nav-item .nav-link.profile-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .sidebar .nav-item .nav-link.profile-link img {
+    border-radius: 50%;
+  }
+  
+  .sidebar .nav-item .nav-link.profile-link .ms-2 {
+    margin-left: 10px;
+  }
+  
+  /* تحسين عرض الأيقونات والروابط داخل القائمة المنبثقة */
+  .sidebar .collapse a.nav-link {
+    padding-left: 20px;
+    font-size: 14px;
+  }
+  

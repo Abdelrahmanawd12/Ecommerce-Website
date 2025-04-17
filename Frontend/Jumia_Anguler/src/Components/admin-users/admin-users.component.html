@@ -1,1 +1,40 @@
-<p>admin-users works!</p>
+<div class="container-fluid px-4 py-3">
+  <div class="card shadow-lg rounded-3">
+    <div class="card-body p-0">
+      <table class="table table-hover table-bordered mb-0 w-100 text-center align-middle" style="table-layout: fixed;">
+        <thead class="table-primary">
+          <tr>
+            <th style="width: 20%;">First Name</th>
+            <th style="width: 20%;">Last Name</th>
+            <th style="width: 30%;">Email</th>
+            <th style="width: 15%;">Role</th>
+            <th style="width: 15%;">Update</th>
+            <th style="width: 15%;">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users" class="user-row">
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.lastName }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              <span class="badge bg-info text-dark">{{ user.role }}</span>
+            </td>
+            <!-- Update Button (with icon) -->
+            <td>
+              <button class="btn btn-warning btn-sm" [routerLink]="['/admin/edit-user', user.id]">
+                <i class="bi bi-pencil"></i> Update
+              </button>
+            </td>
+            <!-- Delete Button (with icon) -->
+            <td>
+              <button class="btn btn-danger btn-sm" (click)="deleteUser(user.id)" title="Delete User">
+                <i class="bi bi-trash"></i> Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

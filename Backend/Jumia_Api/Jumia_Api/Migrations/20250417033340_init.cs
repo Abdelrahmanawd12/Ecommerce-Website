@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Jumia_Api.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -236,7 +236,6 @@ namespace Jumia_Api.Migrations
                     CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     SellerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     AdminId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    CustomerId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     SellerId1 = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -253,11 +252,6 @@ namespace Jumia_Api.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Order_AspNetUsers_CustomerId1",
-                        column: x => x.CustomerId1,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Order_AspNetUsers_SellerId",
                         column: x => x.SellerId,
@@ -623,11 +617,6 @@ namespace Jumia_Api.Migrations
                 name: "IX_Order_CustomerId",
                 table: "Order",
                 column: "CustomerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Order_CustomerId1",
-                table: "Order",
-                column: "CustomerId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_SellerId",

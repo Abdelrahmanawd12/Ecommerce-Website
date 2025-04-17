@@ -1,1 +1,37 @@
-<p>admin-product works!</p>
+<div *ngIf="loading" class="loading-spinner">
+    <p>Loading products...</p>
+  </div>
+  
+  <div *ngIf="!loading" class="product-list">
+    <h2>Products List</h2>
+  
+    <div class="row">
+      <div class="col-md-4" *ngFor="let product of products">
+        <div class="card mb-3 h-100">
+          <img src="assets/default-product-image.jpg" class="card-img-top product-img" alt="{{ product.name }}">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">{{ product.name }}</h5>
+            <p class="card-text flex-grow-1">{{ product.description }}</p>
+            <p class="card-text"><strong>Price: </strong>{{ product.price | currency }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="row">
+      <div class="col-md-4" *ngFor="let product of staticProducts">
+        <div class="card mb-3 h-100">
+          <img src="assets/default-product-image.jpg" class="card-img-top product-img" alt="{{ product.name }}">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">{{ product.name }}</h5>
+            <p class="card-text flex-grow-1">{{ product.description }}</p>
+            <p class="card-text"><strong>Price: </strong>{{ product.price | currency }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+  </div>
+  
