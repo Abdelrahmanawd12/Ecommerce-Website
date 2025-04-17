@@ -13,6 +13,8 @@ export class LoginService {
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
 
   isLoggedIn$ = this.isLoggedInSubject.asObservable();
+  private isLogged = false;
+
 
   constructor(private http: HttpClient) { }
 
@@ -28,6 +30,7 @@ export class LoginService {
       tap(response => {
         this.setToken(response.token);  
         this.isLoggedInSubject.next(true);
+        this.isLogged = true;
       }),
       catchError(error => {
         console.error('Login error', error);
@@ -62,6 +65,7 @@ export class LoginService {
     this.clearToken();
     this.clearUserInfo();
     this.isLoggedInSubject.next(false);
+
   }
 
   private setToken(token: string): void {
@@ -108,4 +112,6 @@ export class LoginService {
     const roles = localStorage.getItem('roles');
     return roles ? JSON.parse(roles) : [];
   }
+
+
 }

@@ -28,11 +28,6 @@ export const routes: Routes = [
     { path: 'wishlist', component: WishlistComponent  },
   { path: 'shop/:id', component: ShopComponent },
   { path: 'details/:id', component: ProductDetailsComponent },
-
-
-
-
-
   { path: 'order/:id', component: OrderComponent },
 
   //Alaa
@@ -98,5 +93,5 @@ export const routes: Routes = [
   { path: 'register', loadComponent: () => import('../Components/customer-register/customer-register.component').then(m => m.CustomerRegisterComponent) },
 
   //error routes
-  { path: '', loadComponent: () => import('../Components/error/error.component').then(m => m.ErrorComponent) },
+  { path: '**', loadComponent: () => import('../Components/error/error.component').then(m => m.ErrorComponent) },
 ];
