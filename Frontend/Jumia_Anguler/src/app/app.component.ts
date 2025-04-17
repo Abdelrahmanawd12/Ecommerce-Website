@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from '../Components/navbar/navbar.component';
 import { FooterComponent } from '../Components/footer/footer.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavbarComponent,FooterComponent , HttpClientModule, CommonModule],
+  imports: [RouterOutlet, NavbarComponent,FooterComponent , HttpClientModule, CommonModule ,FormsModule ],
   providers: [],
   standalone: true,
   templateUrl: './app.component.html',
