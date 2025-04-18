@@ -10,7 +10,7 @@ import { environment } from '../../../Environment/Environment.prod';
 import { EditProductPopupComponent } from '../edit-product-popup/edit-product-popup.component';
 
 @Component({
-  imports: [CurrencyPipe, CommonModule, FormsModule, SellerDashboardSidebarComponent,MatDialogModule],
+  imports: [CurrencyPipe, CommonModule, FormsModule, SellerDashboardSidebarComponent, MatDialogModule],
   templateUrl: './manage-product.component.html',
   styleUrl: './manage-product.component.css'
 })
@@ -56,13 +56,14 @@ export class ManageProductComponent {
       tap(() => this.filterProducts()),
       tap(() => this.isLoading = false)
     ).subscribe();
-    
+
   }
 
   getProducts(): void {
     this.isLoading = true;
     this.sellerServ.getAllProducts(this.sellerId).subscribe({
       next: (res) => {
+        console.log('Products from API:', res); 
         this.allProducts = res;
         this.products = res;
         this.isLoading = false;
@@ -73,30 +74,35 @@ export class ManageProductComponent {
       }
     });
   }
-
+  
   filterProducts(): void {
     let filtered = this.allProducts;
-
+  
     if (this.selectedStatus !== 'All') {
-      filtered = filtered.filter(p => p.status === this.selectedStatus);
+      filtered = filtered.filter(p => 
+        p.status.toLowerCase() === this.selectedStatus.toLowerCase()
+      );
     }
-
+  
     if (this.searchTerm.trim().length > 0) {
       filtered = filtered.filter(p =>
         p.name.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     }
-
+  
     this.products = filtered;
   }
+  
 
   selectStatus(selectedStatus: any): void {
-    this.statusOptions.forEach(status => status.active = status.name === selectedStatus.name);
+    this.statusOptions.forEach(status => 
+      status.active = status.name.toUpperCase() === selectedStatus.name.toUpperCase()
+    );
     this.selectedStatus = selectedStatus.name;
     this.statusChanged.emit(this.selectedStatus);
     this.filterProducts();
   }
-
+  
   onSearchChange(): void {
     this.searchTerms.next(this.searchTerm);
   }
@@ -116,9 +122,9 @@ export class ManageProductComponent {
   clearSearch(): void {
     this.searchTerm = '';
     this.suggestions = [];
-    this.filterProducts(); 
+    this.filterProducts();
   }
-  
+
   onBlur(): void {
     setTimeout(() => {
       this.showSuggestions = false;
@@ -141,21 +147,24 @@ export class ManageProductComponent {
     if (quantity <= 5) return 'stock-danger';
     if (quantity <= 20) return 'stock-warning';
     return 'stock-good';
-  }editProduct(product: IProduct) {
+  } 
+  editProduct(product: IProduct) {
     const dialogRef = this.dialog.open(EditProductPopupComponent, {
       width: '600px',
       data: product
     });
-  
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        const index = this.products.findIndex(p => p.productId === result.productId);
+    
+    dialogRef.afterClosed().subscribe(updatedProduct => {
+      if (updatedProduct) {
+        const index = this.products.findIndex(p => p.productId === updatedProduct.productId);
         if (index !== -1) {
-          this.products[index] = result;
+          this.products[index] = { ...this.products[index], ...updatedProduct };
         }
+        this.getProducts(); 
       }
     });
   }
+  
   selectedProductId: number | null = null;
   deleteModal: any;
 
@@ -169,14 +178,48 @@ export class ManageProductComponent {
     if (this.selectedProductId != null) {
       this.sellerServ.deleteProduct(this.selectedProductId, sellerId!).subscribe({
         next: () => {
-          console.log('Product deleted successfully');
-          this.getProducts();
-          this.deleteModal.hide();
+          this.showToast('Product marked as deleted successfully', 'success');
+          this.getProducts(); 
+          this.deleteModal.hide(); 
         },
         error: (error) => {
-          console.error('Failed to delete product:', error);
+          this.showToast('Failed to mark product as deleted', 'danger');
+          console.error('Failed to mark product as deleted:', error);
         }
       });
     }
   }
+  
+  showToast(message: string, type: 'success' | 'danger') {
+    const toastContainer = document.getElementById('toast-container');
+    if (!toastContainer) {
+      return;
+    }
+  
+    const toast = document.createElement('div');
+    toast.classList.add('toast', 'fade', 'show', `bg-${type}`);
+    toast.setAttribute('role', 'alert');
+    toast.setAttribute('aria-live', 'assertive');
+    toast.setAttribute('aria-atomic', 'true');
+    toast.innerHTML = `
+      <div class="toast-body">
+        ${message}
+      </div>
+    `;
+  
+    toastContainer.appendChild(toast);
+  
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => {
+        toast.remove();
+      }, 300);
+    }, 3000);
+  }
+  
+  
+
 }
+
+
+

@@ -1,218 +1,150 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { SellerService } from '../../../Services/SellerServ/seller.service';
+import { IProductSales } from '../../../Models/iproduct-sales';
+import { ISellerProfit } from '../../../Models/iseller-profit';
+import { SalesReportService } from '../../../Services/SellerServ/sales-reports.service';
+import { CommonModule, CurrencyPipe } from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 @Component({
   selector: 'app-sales-dashboard',
-  templateUrl: './seller-sales.component.html',
+  imports: [
+    CurrencyPipe,
+    NgxEchartsModule,
+    CommonModule
+  ], templateUrl: './seller-sales.component.html',
   styleUrls: ['./seller-sales.component.css']
 })
 export class SellerSalesComponent implements OnInit {
-  private salesChart: any;
-  private categoryChart: any;
-  private topProductsChart: any;
-  private revenueChart: any;
+  productSales: IProductSales[] = [];
+  sellerProfits: ISellerProfit | null = null;
+  averageOrderValue: number = 0;
+  salesOverTimeChartOptions: any;
+  lowStockProducts: any[] = [];
 
-  constructor(private sellerService: SellerService) {
-    Chart.register(...registerables);
-  }
-  
+
+  chartOptions: any = {
+    title: {
+      text: 'Product Sales',
+      left: 'center'
+    },
+    tooltip: {},
+    xAxis: {
+      type: 'category',
+      data: []
+    },
+    yAxis: {
+      type: 'value'
+    },
+    series: [
+      {
+        data: [],
+        type: 'bar'
+      }
+    ],
+   
+  };
+
+  constructor(private sales: SalesReportService) { }
 
   ngOnInit(): void {
-    this.loadTopProductsData();
-    this.createSalesChart();
-    this.createCategoryChart();
-    this.createRevenueChart();
+    this.getProductSales();
+    this.getSellerProfits();
+    this.getAverageOrderValue();
+    this.getSalesOverTime();
+    this.getLowStockProducts();
+  }
+  getProductSales() {
+    this.sales.getProductSales().subscribe(data => {
+      console.log('Product Sales Data:', data);
+      this.productSales = data;
+      this.chartOptions = {
+        ...this.chartOptions,
+        xAxis: {
+          ...this.chartOptions.xAxis,
+          data: this.productSales.map(item => item.productName)
+        },
+        series: [
+          {
+            ...this.chartOptions.series[0],
+            data: this.productSales.map(item => item.sales)
+          }
+        ]
+      };
+    });
   }
 
-  createSalesChart(): void {
-    const ctx = document.getElementById('salesChart') as HTMLCanvasElement;
-    this.salesChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-        datasets: [{
-          label: 'Sales',
-          data: [65, 59, 80, 81, 56, 55, 40],
-          backgroundColor: 'rgba(255, 193, 7, 0.2)',
-          borderColor: 'rgba(255, 152, 0, 1)',
-          borderWidth: 2,
-          tension: 0.4,
-          fill: true
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: 'top',
-          },
-          tooltip: {
-            mode: 'index',
-            intersect: false,
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            grid: {
-            }
-          },
-          x: {
-            grid: {
-              display: false
-            }
-          }
-        }
-      }
-    });
-  }
-  loadTopProductsData(): void {
-    this.sellerService.getProductSales().subscribe(data => {
-      const labels = data.map(p => p.ProductName);
-      const values = data.map(p => p.sales);
-  
-      this.createTopProductsChart(labels, values);
-    });
+  getOrangeGradientForValue(value: number, maxValue: number): any {
+    const intensity = 0.3 + (0.7 * (value / maxValue));
+    
+    // Orange color values (RGB: 255, 165, 0)
+    return {
+      type: 'linear',
+      x: 0,
+      y: 0,
+      x2: 0,
+      y2: 1,
+      colorStops: [{
+        offset: 0,
+        color: `rgba(255, ${165 * intensity}, 0, ${intensity})` // Top of bar
+      }, {
+        offset: 1,
+        color: `rgba(255, ${165 * intensity * 0.7}, 0, ${intensity * 0.9})` // Bottom of bar
+      }]
+    };
   }
   
 
-  createCategoryChart(): void {
-    const ctx = document.getElementById('categoryChart') as HTMLCanvasElement;
-    this.categoryChart = new Chart(ctx, {
-      type: 'doughnut',
-      data: {
-        labels: ['Electronics', 'Clothing', 'Home Goods', 'Books', 'Other'],
-        datasets: [{
-          data: [30, 25, 20, 15, 10],
-          backgroundColor: [
-            '#3f51b5',
-            '#2196f3',
-            '#00bcd4',
-            '#4caf50',
-            '#ff9800'
-          ],
-          borderWidth: 0
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: 'right',
-          }
-        },
-        cutout: '70%'
-      }
+  getSellerProfits() {
+    const sellerId = localStorage.getItem('userId')!;
+    this.sales.getSellerProfits(sellerId).subscribe(data => {
+      console.log('Seller Profit Data :', data)
+      this.sellerProfits = data;
     });
   }
-  createTopProductsChart(labels: string[], values: number[]): void {
-    const ctx = document.getElementById('topProductsChart') as HTMLCanvasElement;
-    this.topProductsChart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: labels,
-        datasets: [{
-          label: 'Units Sold',
-          data: values,
-          backgroundColor: 'rgba(0, 188, 212, 0.7)',
-          borderColor: 'rgba(0, 151, 167, 1)',
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-          },
-          x: {
-            grid: {
-              display: false
-            }
-          }
-        }
-      }
+
+
+  getAverageOrderValue() {
+    const sellerId = localStorage.getItem('userId')!;
+    this.sales.getAvgOrderValue(sellerId).subscribe(response => {
+      console.log('Product avg value Data:', response);
+      this.averageOrderValue = response; 
     });
   }
   
 
-  createRevenueChart(): void {
-    const ctx = document.getElementById('revenueChart') as HTMLCanvasElement;
-    this.revenueChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['Q1', 'Q2', 'Q3', 'Q4'],
-        datasets: [{
-          label: '2023 Revenue',
-          data: [50000, 75000, 60000, 90000],
-          borderColor: '#4caf50',
-          backgroundColor: 'rgba(76, 175, 80, 0.1)',
-          borderWidth: 3,
-          tension: 0.3,
-          fill: true
+  getSalesOverTime() {
+    const sellerId = localStorage.getItem('userId')!;
+    this.sales.getSalesOverTime(sellerId).subscribe(data => {
+      console.log('Sales over time Data:', data);
+      this.salesOverTimeChartOptions = {
+        xAxis: {
+          type: 'category',
+          data: data.map((d: any) => d.date.split('T')[0])
         },
-        {
-          label: '2022 Revenue',
-          data: [40000, 65000, 55000, 80000],
-          borderColor: '#2e7d32',
-          backgroundColor: 'rgba(46, 125, 50, 0.1)',
-          borderWidth: 2,
-          borderDash: [5, 5],
-          tension: 0.3,
-          fill: true
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: 'top',
-          },
-          tooltip: {
-            mode: 'index',
-            intersect: false,
-            callbacks: {
-              label: function(context) {
-                return context.dataset.label + ': $' + (context.raw as number).toLocaleString();
-              }
-            }
-          }
+        yAxis: {
+          type: 'value'
         },
-        scales: {
-          y: {
-            beginAtZero: false,
-            ticks: {
-              callback: function(value) {
-                return '$' + value.toLocaleString();
-              }
-            },
-            grid: {
-            }
-          },
-          x: {
-            grid: {
-              display: false
-            }
+        series: [
+          {
+            data: data.map((d: any) => d.totalSales),
+            type: 'line',
+            smooth: true
           }
-        }
-      }
+        ]
+      };
     });
   }
 
-  ngOnDestroy(): void {
-    if (this.salesChart) this.salesChart.destroy();
-    if (this.categoryChart) this.categoryChart.destroy();
-    if (this.topProductsChart) this.topProductsChart.destroy();
-    if (this.revenueChart) this.revenueChart.destroy();
+  getLowStockProducts() {
+    const sellerId = localStorage.getItem('userId')!;
+    this.sales.getLowStock(sellerId).subscribe(data => {
+      console.log('low stock product:', data);
+      this.lowStockProducts = data;
+    });
   }
+
+
 }

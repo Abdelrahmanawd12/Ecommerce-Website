@@ -28,15 +28,21 @@ export const routes: Routes = [
   { path: 'wishlist', component: WishlistComponent },
   { path: 'shop/:id', component: ShopComponent },
   { path: 'details/:id', component: ProductDetailsComponent },
-
-
-
-
-
   { path: 'order/:id', component: OrderComponent },
 
   //Alaa
-
+  { 
+    path: 'admin', 
+ loadComponent: () => import('../Components/admin-layout/admin-layout.component').then((m) => m.AdminLayoutComponent),
+    children: [
+      { path: 'dashboard', loadComponent: () => import('../Components/admin-dashboard/admin-dashboard.component').then((m) => m.AdminDashboardComponent) },
+     {path: 'products', loadComponent: () => import('../Components/admin-product/admin-product.component').then((m) => m.AdminProductComponent) },
+      { path: 'users', loadComponent: () => import('../Components/admin-users/admin-users.component').then((m) => m.AdminUsersComponent) },
+      {path:'adduser', loadComponent: () => import('../Components/adduser/adduser.component').then((m) => m.AdduserComponent) },
+       { path: 'edit-user/:id', loadComponent: () => import('../Components/edituser/edituser.component').then((m) => m.EditUserComponent) },
+{path:'accountprofile', loadComponent: () => import('../Components/admin-accountprofile/admin-accountprofile.component').then((m) => m.AdminAccountprofileComponent) },
+    ]
+  },
   //Rania
   { path: 'sellerRegisteration', loadComponent: () => import('../Components/seller-register/seller-register.component').then((m) => m.SellerRegisterComponent) },
   { path: 'sellOnJumia', loadComponent: () => import('../Components/SellOnJumia/sell-on-jumia/sell-on-jumia.component').then((m) => m.SellOnJumiaComponent) },
@@ -71,7 +77,7 @@ export const routes: Routes = [
             .then((m) => m.ManageProductComponent)
       },
       {
-        path: 'prductSales',
+        path: 'sales',
         loadComponent: () =>
           import('../Components/Seller_Dashboard_components/seller-sales/seller-sales.component')
             .then((m) => m.SellerSalesComponent)
@@ -103,5 +109,5 @@ export const routes: Routes = [
   { path: 'register', loadComponent: () => import('../Components/customer-register/customer-register.component').then(m => m.CustomerRegisterComponent) },
 
   //error routes
-  { path: '', loadComponent: () => import('../Components/error/error.component').then(m => m.ErrorComponent) },
+  { path: '**', loadComponent: () => import('../Components/error/error.component').then(m => m.ErrorComponent) },
 ];

@@ -11,13 +11,8 @@
 <!--Search Container-->
 <div class="search-container m-2 p-2">
   <div class="search-box position-relative">
-    <input type="text" [(ngModel)]="searchTerm"
-           (input)="onSearchChange()"
-           (keyup.enter)="onSearch()"
-           (focus)="showSuggestions = true"
-           (blur)="onBlur()"
-           placeholder="Search products..."
-           aria-label="Search products">
+    <input type="text" [(ngModel)]="searchTerm" (input)="onSearchChange()" (keyup.enter)="onSearch()"
+      (focus)="showSuggestions = true" (blur)="onBlur()" placeholder="Search products..." aria-label="Search products">
 
     <!-- ❌ Clear button -->
     <button *ngIf="searchTerm" class="clear-button" (click)="clearSearch()" type="button">
@@ -67,6 +62,7 @@
               <th>Rating</th>
               <th>Discount</th>
               <th>Weight</th>
+              <th>Status</th>
               <th class="text-end" style="min-width: 120px;">Actions</th>
             </tr>
           </thead>
@@ -168,15 +164,36 @@
 
               <!-- Discount -->
               <td>
-                <span *ngIf="product.discount > 0" class="badge bg-success bg-opacity-10 text-success">
-                  {{ product.discount }}% OFF
+                <span *ngIf="product.discount > 0" 
+                      class="badge bg-success bg-opacity-10 text-success fw-medium px-2 py-1">
+                  🎁 {{ product.discount }}% OFF
+                  <span class="ms-1 small text-success">(Sale!)</span>
                 </span>
-                <span *ngIf="product.discount <= 0" class="text-muted small">None</span>
+                
+                <span *ngIf="product.discount <= 0" 
+                      class="text-muted small fst-italic">
+                  ✖️ No discount
+                </span>
               </td>
 
               <!-- Weight -->
               <td>
                 <span class="text-muted">{{ product.weight || 'N/A' }}</span>
+              </td>
+              <!-- Status -->
+              <td>
+                <span *ngIf="product.status === 'Accepted' || product.status === 'accepted'" class="badge bg-success bg-opacity-10 text-success">
+                  {{ product.status }}
+                </span>
+                <span *ngIf="product.status === 'Rejected' || product.status === 'rejected'" class="badge bg-danger bg-opacity-10 text-danger">
+                  {{ product.status }}
+                </span>
+                <span *ngIf="(product.status === 'Pending' || product.status === 'pending' || !product.status) && 
+                            !(product.status === 'Accepted' || product.status === 'accepted') && 
+                            !(product.status === 'Rejected' || product.status === 'rejected')" 
+                      class="badge bg-secondary bg-opacity-10 text-muted">
+                  {{ product.status || 'N/A' }}
+                </span>
               </td>
 
               <!-- Actions -->
@@ -219,4 +236,7 @@
       </div>
     </div>
   </div>
+</div>
+<div id="toast-container" class="position-fixed top-0 end-0 p-3" style="z-index: 1050;">
+  <!-- Toasts will be inserted here dynamically -->
 </div>

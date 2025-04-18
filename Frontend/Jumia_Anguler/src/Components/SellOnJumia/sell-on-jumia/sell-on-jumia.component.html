@@ -17,10 +17,9 @@
                 <!-- Form Content -->
                 <div class="col-md-4">
                     <div class="text-center mb-4">
-                        <h4>{{ stepHeaders[currentStep]?.title }}</h4>
-                        <p class="text-muted">{{ stepHeaders[currentStep]?.subtitle }}</p>
+                        <h4>{{ stepHeaders[currentStep].title }}</h4>
+                        <p class="text-muted">{{ stepHeaders[currentStep].subtitle }}</p>
                     </div>
-
                     <div class="card p-4 shadow-sm rounded">
                         <ng-container [ngSwitch]="currentStep">
                             <!-- Step 1 -->

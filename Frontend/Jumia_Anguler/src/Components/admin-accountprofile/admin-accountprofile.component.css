@@ -1,0 +1,160 @@
+.sub-menu {
+  background-color: transparent;
+  color: #333;
+}
+
+.sub-menu a {
+  color: #333;
+}
+
+.sub-menu:hover {
+  background-color: #f1f5f9;
+}
+
+.sub-menu a:hover {
+  color: #4f46e5;
+}
+
+.account-sections {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+  overflow-x: auto;
+}
+
+.account-card {
+  background: none;
+  border-radius: 12px;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 48%;
+  min-width: 350px;
+  max-height: 500px;
+  transition: all 0.3s ease-in-out;
+}
+
+.account-card:hover {
+  box-shadow: 0px 12px 18px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+}
+
+.card-header {
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  border-bottom: 1px solid #f1f5f9;
+  background: transparent;
+}
+
+.card-header i {
+  font-size: 1.8rem;
+  color: #4f46e5;
+}
+
+.card-body {
+  padding: 1.5rem;
+  background: transparent;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid #f8fafc;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-row i {
+  color: #4f46e5;
+  font-size: 1.5rem;
+}
+
+.info-row div {
+  flex: 1;
+}
+
+.info-row p {
+  margin: 0.25rem 0;
+  font-weight: 500;
+  color: #333;
+}
+
+.security-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid #f8fafc;
+}
+
+.security-item>div {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.security-item i {
+  color: #4f46e5;
+  font-size: 1.5rem;
+}
+
+.security-item span {
+  font-weight: 500;
+  color: #333;
+}
+
+.security-item small {
+  display: block;
+  color: #64748b;
+  font-size: 0.95rem;
+  margin-top: 0.25rem;
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  color: #4f46e5;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.btn-icon:hover {
+  background: #e0e7ff;
+  color: #4f46e5;
+  transform: scale(1.1);
+}
+
+.btn-text {
+  background: none;
+  border: none;
+  color: #4f46e5;
+  font-weight: 500;
+  padding: 1rem 1.5rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn-text:hover {
+  background: #e0e7ff;
+}
+
+@media (max-width: 768px) {
+  .account-sections {
+    flex-direction: column;
+  }
+
+  .account-card {
+    width: 100%;
+  }
+}

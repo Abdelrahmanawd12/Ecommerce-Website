@@ -39,5 +39,7 @@ namespace Jumia_Api.DTOs.SellerDTOs
         [Required]
         public String Status { get; set; }
 
+
+
     }
 }

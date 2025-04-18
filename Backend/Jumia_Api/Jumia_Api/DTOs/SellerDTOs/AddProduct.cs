@@ -27,10 +27,10 @@ namespace Jumia_Api.DTOs.SellerDTOs
         [Required]
         public string SellerId { get; set; }
 
-        //public List<decimal> RatingStars { get; set; } = new List<decimal>();
 
         [Required]
         public List<IFormFile> ImageUrls { get; set; }
+
         [Required]
         public List<string> Tags { get; set; }
 

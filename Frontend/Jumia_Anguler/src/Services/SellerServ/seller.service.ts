@@ -16,6 +16,7 @@ import { SubCategories } from '../../Models/sub-categories';
 })
 export class SellerService {
   private baseUrl = environment.apiSellUrl;
+  readonly sellerId = localStorage.getItem('userId');
 
   constructor(
     private http: HttpClient,
@@ -42,40 +43,55 @@ export class SellerService {
     });
   }
 
-  updateProduct(productId: number, product: IProductSell): Observable<any> {
-    const formData = new FormData();
-      formData.append('Name', product.name);
-    formData.append('Description', product.description);
-    formData.append('Price', product.price.toString());
-    formData.append('Quantity', product.quantity.toString());
-    formData.append('Brand', product.brand);
-    formData.append('Discount', product.discount.toString());
-    formData.append('Weight', product.weight.toString());
-    if (product.subCategoryName) {
-      formData.append('SubCategoryName', product.subCategoryName.toString());
-    }
-    formData.append('SellerId', product.sellerId.toString());
+  // updateProduct(productId: number, formData: FormData): Observable<any> {
+  //   return this.http.put(`${this.baseUrl}/updateProduct/${productId}`, formData, {
+  //   });
+  // }
+  updateProduct(productId: number, formData: FormData): Observable<IProduct> {
+    return this.http.put<IProduct>(`${this.baseUrl}/updateProduct/${productId}`, formData).pipe(
+      catchError(this.handleError<IProduct>('updateProduct'))
+    );
+  }
+  // updateProduct(productId: number, product: IProduct): Observable<any> {
+  //   const formData = new FormData();
+  //     formData.append('Name', product.name);
+  //   formData.append('Description', product.description);
+  //   formData.append('Price', product.price.toString());
+  //   formData.append('Quantity', product.quantity.toString());
+  //   formData.append('Brand', product.brand);
+  //   formData.append('Discount', product.discount.toString());
+  //   formData.append('Weight', product.weight.toString());
+  //   if (product.subCategoryName) {
+  //     formData.append('SubCategoryName', product.subCategoryName.toString());
+  //   }
+  //   formData.append('SellerId', this.sellerId ? this.sellerId.toString() : '');
   
-    if (product.imageUrls && product.imageUrls.length > 0) {
-      for (let image of product.imageUrls) {
-        formData.append('ImageUrls', image);
-      }
-    }
+  //   if (product.imageUrls && product.imageUrls.length > 0) {
+  //     for (let image of product.imageUrls) {
+  //       formData.append('ImageUrls', image);
+  //     }
+  //   }
   
-    if (product.tags && product.tags.length > 0) {
-      for (let tag of product.tags) {
-        formData.append('Tags', tag);
-      }
-    }
+  //   if (product.tags && product.tags.length > 0) {
+  //     for (let tag of product.tags) {
+  //       formData.append('Tags', tag);
+  //     }
+  //   }
   
-    return this.http.put(`${this.baseUrl}/updateProduct/${product.productId}`, formData);
+  //   return this.http.put(`${this.baseUrl}/updateProduct/${product.productId}`, formData);
+  // }
+  
+  deleteProduct(productId: number, sellerId: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/delete/${productId}?SellerId=${sellerId}`).pipe(
+      catchError(this.handleError<any>('deleteProduct'))
+    );
   }
   
 
-  deleteProduct(productId: number, sellerId: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/delete/${productId}?SellerId=${sellerId}`);
-  }
   
+  getAllSubcategories():Observable<Isubcategory>{
+    return this.http.get<Isubcategory>(`${this.baseUrl}/getAllSubcategories`)
+  }
 
   getSubcategoriesByCatName(catName: string): Observable<Isubcategory> {
     return this.http.get<any>(`${this.baseUrl}/subcategories`, { params: { catName } });

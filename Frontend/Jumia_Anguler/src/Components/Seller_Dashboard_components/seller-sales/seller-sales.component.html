@@ -1,189 +1,162 @@
 <div class="dashboard-container">
-  <!-- Top Stats Cards -->
-  <div class="row mb-4">
-    <div class="col-md-3">
-      <div class="stat-card bg-primary-gradient">
-        <div class="stat-icon">
-          <i class="bi bi-cart3"></i>
+  <!-- Product Sales Section -->
+  <div class="dashboard-section sales-analytics">
+    <div class="section-header">
+      <div class="header-content">
+        <div class="icon-wrapper bg-primary-light">
+          <i class="bi bi-graph-up section-icon text-warning"></i>
         </div>
-        <div class="stat-content">
-          <h3>1,842</h3>
-          <p>Monthly Sales</p>
-          <span class="badge bg-white text-primary">+12.5% <i class="bi bi-arrow-up"></i></span>
-        </div>
+        <h3 class="section-title">Product Sales Analytics</h3>
+      </div>
+      <div class="time-filter">
+        <select class="form-select form-select-sm time-select">
+          <option>Last 7 Days</option>
+          <option>Last 30 Days</option>
+          <option>Last 90 Days</option>
+        </select>
       </div>
     </div>
-    <div class="col-md-3">
-      <div class="stat-card bg-success-gradient">
-        <div class="stat-icon">
-          <i class="bi bi-currency-dollar"></i>
-        </div>
-        <div class="stat-content">
-          <h3>$24,589</h3>
-          <p>Monthly Revenue</p>
-          <span class="badge bg-white text-success">+8.2% <i class="bi bi-arrow-up"></i></span>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="stat-card bg-warning-gradient">
-        <div class="stat-icon">
-          <i class="bi bi-box-seam"></i>
-        </div>
-        <div class="stat-content">
-          <h3>247</h3>
-          <p>Total Products</p>
-          <span class="badge bg-white text-warning">+5 New</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="stat-card bg-info-gradient">
-        <div class="stat-icon">
-          <i class="bi bi-star-fill"></i>
-        </div>
-        <div class="stat-content">
-          <h3>4.8/5</h3>
-          <p>Customer Rating</p>
-          <span class="badge bg-white text-info">94% Positive</span>
-        </div>
-      </div>
-    </div>
+    <div echarts [options]="chartOptions" class="demo-chart chart-container"></div>
   </div>
 
-  <!-- Main Sales Chart -->
-  <div class="card dashboard-card mb-4">
-    <div class="card-header d-flex justify-content-between align-items-center">
-      <div>
-        <h5 class="card-title mb-0">
-          <i class="bi bi-graph-up me-2"></i> Sales Performance
-        </h5>
-        <p class="card-subtitle text-muted mb-0">Last 30 days performance</p>
-      </div>
-      <div class="dropdown">
-        <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" id="timeRangeDropdown" data-bs-toggle="dropdown">
-          Last 30 Days
-        </button>
-        <ul class="dropdown-menu dropdown-menu-end shadow">
-          <li><a class="dropdown-item active" href="#">Last 7 Days</a></li>
-          <li><a class="dropdown-item" href="#">Last 30 Days</a></li>
-          <li><a class="dropdown-item" href="#">Last 90 Days</a></li>
-          <li><a class="dropdown-item" href="#">This Year</a></li>
-        </ul>
-      </div>
+  <!-- Divider -->
+  <div class="section-divider">
+    <span class="divider-line"></span>
+    <div class="divider-icon-wrapper">
+      <i class="bi bi-currency-dollar divider-icon"></i>
     </div>
-    <div class="card-body">
-      <div class="chart-container">
-        <canvas id="salesChart"></canvas>
-      </div>
-      <div class="chart-legend mt-3">
-        <div class="legend-item">
-          <span class="legend-color bg-primary"></span>
-          <span class="legend-label">Completed Orders</span>
-        </div>
-        <div class="legend-item">
-          <span class="legend-color bg-warning"></span>
-          <span class="legend-label">Pending Orders</span>
-        </div>
-        <div class="legend-item">
-          <span class="legend-color bg-danger"></span>
-          <span class="legend-label">Cancelled Orders</span>
-        </div>
-      </div>
-    </div>
+    <span class="divider-line"></span>
   </div>
 
-  <!-- Middle Row - Side by Side Charts -->
-  <div class="row mb-4">
-    <div class="col-lg-6">
-      <div class="card dashboard-card h-100">
-        <div class="card-header">
-          <h5 class="card-title mb-0">
-            <i class="bi bi-pie-chart me-2"></i> Sales by Category
-          </h5>
-        </div>
-        <div class="card-body">
-          <div class="chart-container">
-            <canvas id="categoryChart"></canvas>
+  <!-- Seller Profits Section -->
+  <div class="dashboard-section performance-section">
+    <h3 class="section-title mb-4">Seller Performance</h3>
+    <div class="row g-3">
+      <!-- Weekly Profit -->
+      <div class="col-md-4">
+        <div class="stat-card card-hover">
+          <div class="stat-icon weekly">
+            <i class="bi bi-calendar-week"></i>
           </div>
-          <div class="d-flex justify-content-center mt-3">
-            <button class="btn btn-sm btn-outline-primary me-2">View Details</button>
-            <button class="btn btn-sm btn-outline-secondary">Export</button>
+          <div class="stat-content">
+            <h5 class="stat-period">Weekly Profit</h5>
+            <h3 class="stat-value text-success">{{ sellerProfits?.weeklyProfit | currency }}</h3>
+            <div class="stat-trend">
+              <span class="trend-badge success">
+              </span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="col-lg-6">
-      <div class="card dashboard-card h-100">
-        <div class="card-header">
-          <h5 class="card-title mb-0">
-            <i class="bi bi-bar-chart me-2"></i> Top Selling Products
-          </h5>
-        </div>
-        <div class="card-body">
-          <div class="chart-container">
-            <canvas id="topProductsChart"></canvas>
+
+      <!-- Monthly Profit -->
+      <div class="col-md-4">
+        <div class="stat-card card-hover">
+          <div class="stat-icon monthly">
+            <i class="bi bi-calendar-month"></i>
           </div>
-          <div class="table-responsive mt-3">
-            <table class="table table-sm table-borderless">
-              <thead>
-                <tr>
-                  <th>Product</th>
-                  <th class="text-end">Sales</th>
-                  <th class="text-end">Revenue</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Wireless Earbuds</td>
-                  <td class="text-end">342</td>
-                  <td class="text-end">$5,130</td>
-                </tr>
-                <tr>
-                  <td>Smart Watch</td>
-                  <td class="text-end">287</td>
-                  <td class="text-end">$8,610</td>
-                </tr>
-                <tr>
-                  <td>Bluetooth Speaker</td>
-                  <td class="text-end">215</td>
-                  <td class="text-end">$3,655</td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="stat-content">
+            <h5 class="stat-period">Monthly Profit</h5>
+            <h3 class="stat-value text-primary">{{ sellerProfits?.monthlyProfit | currency }}</h3>
+            <div class="stat-trend">
+              <span class="trend-badge primary">
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Half Year Profit -->
+      <div class="col-md-4">
+        <div class="stat-card card-hover">
+          <div class="stat-icon half-year">
+            <i class="bi bi-calendar-range"></i>
+          </div>
+          <div class="stat-content">
+            <h5 class="stat-period">6-Month Profit</h5>
+            <h3 class="stat-value text-warning">{{ sellerProfits?.halfYearProfit | currency }}</h3>
+            <div class="stat-trend">
+              <span class="trend-badge warning">
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Average Order Value -->
+      <div class="col-md-4">
+        <div class="stat-card card-hover">
+          <div class="stat-icon average">
+            <i class="bi bi-receipt-cutoff"></i>
+          </div>
+          <div class="stat-content">
+            <h5 class="stat-period">Average Order Value</h5>
+            <h3 class="stat-value text-info">{{ averageOrderValue | currency }}</h3>
+            <div class="stat-trend">
+              <span class="trend-badge info">
+                <i class="bi bi-graph-up-arrow"></i> Based on recent orders
+              </span>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Bottom Row - Revenue Trend -->
-  <div class="card dashboard-card">
-    <div class="card-header d-flex justify-content-between align-items-center">
-      <div>
-        <h5 class="card-title mb-0">
-          <i class="bi bi-currency-exchange me-2"></i> Revenue Trend
-        </h5>
-        <p class="card-subtitle text-muted mb-0">Monthly comparison</p>
-      </div>
-      <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" id="revenueToggle" checked>
-        <label class="form-check-label" for="revenueToggle">Compare to Last Year</label>
-      </div>
+  <!-- Divider -->
+  <div class="section-divider">
+    <span class="divider-line"></span>
+    <div class="divider-icon-wrapper">
+      <i class="bi bi-bar-chart-line divider-icon"></i>
     </div>
-    <div class="card-body">
-      <div class="chart-container">
-        <canvas id="revenueChart"></canvas>
-      </div>
-      <div class="d-flex justify-content-between align-items-center mt-3">
-        <div>
-          <span class="badge bg-primary me-2">Current Year</span>
-          <span class="badge bg-secondary">Previous Year</span>
+    <span class="divider-line"></span>
+  </div>
+
+  <!-- Sales Over Time Section -->
+  <div class="dashboard-section sales-over-time">
+    <div class="section-header">
+      <div class="header-content">
+        <div class="icon-wrapper bg-info-light">
+          <i class="bi bi-calendar-range section-icon text-info"></i>
         </div>
-        <button class="btn btn-sm btn-primary">
-          <i class="bi bi-download me-1"></i> Export Report
-        </button>
+        <h3 class="section-title">Sales Over Time</h3>
       </div>
     </div>
+    <div echarts [options]="salesOverTimeChartOptions" class="demo-chart chart-container"></div>
+  </div>
+
+  <!-- Divider -->
+  <div class="section-divider">
+    <span class="divider-line"></span>
+    <div class="divider-icon-wrapper">
+      <i class="bi bi-exclamation-triangle divider-icon"></i>
+    </div>
+    <span class="divider-line"></span>
+  </div>
+
+  <!-- Low Stock Alerts Section -->
+  <div class="dashboard-section stock-alerts">
+    <div class="section-header">
+      <div class="header-content">
+        <div class="icon-wrapper bg-danger-light">
+          <i class="bi bi-exclamation-triangle section-icon text-danger"></i>
+        </div>
+        <h3 class="section-title">Low Stock Alerts</h3>
+      </div>
+    </div>
+    <div *ngIf="(lowStockProducts?.length ?? 0) > 0; else allGood" class="alert-container">
+      <div class="alert-list">
+        <div class="alert-item" *ngFor="let product of lowStockProducts">
+          <span class="product-name">{{ product.productName }}</span>
+          <span class="stock-badge">{{ product.quantityLeft }} left</span>
+        </div>
+      </div>
+    </div>
+    <ng-template #allGood>
+      <div class="all-good-message">
+        <i class="bi bi-emoji-smile"></i>
+        <p>All products are well-stocked!</p>
+      </div>
+    </ng-template>
   </div>
 </div>

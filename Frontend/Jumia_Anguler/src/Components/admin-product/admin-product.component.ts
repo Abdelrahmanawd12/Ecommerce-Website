@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Product, ProductService } from '../../Services/product.service';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-admin-product',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './admin-product.component.html',
   styleUrls: ['./admin-product.component.css']
 })
@@ -32,22 +35,25 @@ export class AdminProductComponent implements OnInit {
       }
     });
   }
-
-  deleteProduct(id: number) {
-    if (confirm('Are you sure you want to delete this product?')) {
-      this.productService.deleteProduct(id).subscribe(() => {
-        this.products = this.products.filter(p => p.productId !== id);
-      });
+  staticProducts = [
+    {
+      name: 'Laptop',
+      description: 'High-performance laptop with 16GB RAM',
+      price: 1500
+    },
+    {
+      name: 'Smartphone',
+      description: 'Latest model with amazing camera',
+      price: 999
+    },
+    {
+      name: 'Headphones',
+      description: 'Noise-cancelling wireless headphones',
+      price: 199
     }
-  }
-
-  addProduct() {
-    this.router.navigate(['/admin/products/create']);
-  }
-
-  editProduct(id: number) {
-    this.router.navigate(['/admin/products/edit', id]);
-  }
+  ];
+  
+ 
 }
 
 
