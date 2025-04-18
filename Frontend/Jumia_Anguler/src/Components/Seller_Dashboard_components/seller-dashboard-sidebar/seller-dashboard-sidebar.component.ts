@@ -22,7 +22,7 @@ export class SellerDashboardSidebarComponent implements OnInit {
 
 
   @Input() isCollapsed: boolean = false;
-  @Output() toggle = new EventEmitter<void>();
+  @Output() toggle = new EventEmitter<boolean>();
 
 
   ngOnInit(): void {
@@ -44,12 +44,15 @@ export class SellerDashboardSidebarComponent implements OnInit {
   toggleSidebar(): void {
     this.isCollapsed = !this.isCollapsed;
     localStorage.setItem('sidebarCollapsed', this.isCollapsed.toString());
-
+  
     if (this.isCollapsed) {
       this.isManageProductsOpen = false;
       this.isProfileMenuOpen = false;
     }
+  
+    this.toggle.emit(this.isCollapsed);
   }
+  
   @ViewChild('logoutModal') logoutModal!: ElementRef;
 
   isLogoutConfirmationOpen = false;

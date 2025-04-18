@@ -146,8 +146,7 @@
               "RelativeToolTip": "Jumia_Api\\Migrations\\20250416052902_inital.Designer.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-18T00:28:36.99Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-18T00:28:36.99Z"
             },
             {
               "$type": "Document",
@@ -159,8 +158,7 @@
               "RelativeToolTip": "Jumia_Api\\Migrations\\20250416052902_inital.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-18T00:27:53.238Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-18T00:27:53.238Z"
             },
             {
               "$type": "Document",
@@ -170,7 +168,7 @@
               "RelativeDocumentMoniker": "Jumia_Api\\Controllers\\SellerControllers\\SellerController.cs",
               "ToolTip": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Controllers\\SellerControllers\\SellerController.cs",
               "RelativeToolTip": "Jumia_Api\\Controllers\\SellerControllers\\SellerController.cs",
-              "ViewState": "AgIAADkBAAAAAAAAAAAcwEEBAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAD8BAAAAAAAAAAAcwEEBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-11T09:08:45.732Z",
               "EditorCaption": ""
@@ -209,8 +207,7 @@
               "RelativeToolTip": "Jumia_Api\\DTOs\\SellerDTOs\\AddProduct.cs",
               "ViewState": "AgIAABcAAAAAAAAAAADwvyEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T09:37:01.362Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-11T09:37:01.362Z"
             },
             {
               "$type": "Document",
@@ -222,8 +219,7 @@
               "RelativeToolTip": "Jumia_Api\\DTOs\\SellerDTOs\\ProductsSellerDTO.cs",
               "ViewState": "AgIAABMAAAAAAAAAAAAkwCcAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T09:18:35.935Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-11T09:18:35.935Z"
             },
             {
               "$type": "Document",
