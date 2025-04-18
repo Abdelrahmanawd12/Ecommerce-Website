@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { SalesReportService } from '../../../Services/SellerServ/sales-reports.service';
-import { NgxEchartsModule } from 'ngx-echarts';
 import { CommonModule } from '@angular/common';
 import { ISellerProfit } from '../../../Models/iseller-profit';
 import { TopSellingProduct } from '../../../Models/topselling-product';
@@ -8,6 +7,7 @@ import { CustomerInsights } from '../../../Models/customer-insights';
 import { OrderSummary } from '../../../Models/order-summary';
 import { ReturnReport } from '../../../Models/return-report';
 import { BestSalesTime } from '../../../Models/sales-timing';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 @Component({
   selector: 'app-seller-reports',

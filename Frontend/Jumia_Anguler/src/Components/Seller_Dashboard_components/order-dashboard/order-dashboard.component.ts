@@ -306,4 +306,17 @@ export class OrderDashboardComponent implements OnInit {
     };
     return statusMap[status.toLowerCase()] || '';
   }
+
+  getPayStatusClass(status: string): string {
+    switch(status.toLowerCase()) {
+      case 'paid':
+        return 'paid-status';
+      case 'pending':
+        return 'pending-status';
+      case 'canceled':
+        return 'canceled-status';
+      default:
+        return 'default-status';
+    }
+  }
 }

@@ -36,7 +36,6 @@ export class CustomerRegisterComponent{
   showPassword = false;
   showConfirmPassword = false; 
 
-  userName = 'Yasmine';
   redirectSeconds = 2;
   redirectInterval: any;
   

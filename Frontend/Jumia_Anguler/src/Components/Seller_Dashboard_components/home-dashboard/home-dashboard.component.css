@@ -359,3 +359,39 @@ body {
     opacity: 1;
   }
 }
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-block;
+  text-align: center;
+  min-width: 70px;
+}
+
+
+.paid-status {
+  background-color: #e6f7ee;
+  color: #10b981;
+  border: 1px solid #10b981;
+}
+
+.pending-status {
+  background-color: #fff8e6;
+  color: #f59e0b;
+  border: 1px solid #f59e0b;
+}
+
+.canceled-status {
+  background-color: #feecec;
+  color: #ef4444;
+  border: 1px solid #ef4444;
+}
+
+.default-status {
+  background-color: #f3f4f6;
+  color: #6b7280;
+  border: 1px solid #d1d5db;
+}
+

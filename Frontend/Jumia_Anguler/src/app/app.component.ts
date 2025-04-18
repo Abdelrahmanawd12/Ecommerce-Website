@@ -6,8 +6,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from '../Components/navbar/navbar.component';
 import { FooterComponent } from '../Components/footer/footer.component';
-import { NgxEchartsModule, NGX_ECHARTS_CONFIG } from 'ngx-echarts';
 import { FormsModule } from '@angular/forms';
+import { NGX_ECHARTS_CONFIG, NgxEchartsModule } from 'ngx-echarts';
 
 @Component({
   selector: 'app-root',
