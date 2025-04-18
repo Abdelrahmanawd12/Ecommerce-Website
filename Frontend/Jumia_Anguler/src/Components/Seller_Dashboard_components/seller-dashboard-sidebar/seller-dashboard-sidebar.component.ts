@@ -32,8 +32,8 @@ export class SellerDashboardSidebarComponent implements OnInit {
             document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
         });
     }
-    const savedState = localStorage.getItem('sidebarCollapsed');
-    this.isCollapsed = savedState === 'true';
+    // const savedState = localStorage.getItem('sidebarCollapsed');
+    this.isCollapsed  = false;
 
     if (this.isCollapsed) {
       this.isManageProductsOpen = false;
@@ -43,7 +43,7 @@ export class SellerDashboardSidebarComponent implements OnInit {
 
   toggleSidebar(): void {
     this.isCollapsed = !this.isCollapsed;
-    localStorage.setItem('sidebarCollapsed', this.isCollapsed.toString());
+    // localStorage.setItem('sidebarCollapsed', this.isCollapsed.toString());
   
     if (this.isCollapsed) {
       this.isManageProductsOpen = false;
@@ -73,6 +73,7 @@ export class SellerDashboardSidebarComponent implements OnInit {
   }
 
   toggleManageProductsMenu(): void {
+    this.isCollapsed = !this.isCollapsed;
     if (this.isCollapsed) {
       this.isCollapsed = false;
       setTimeout(() => {
@@ -81,9 +82,11 @@ export class SellerDashboardSidebarComponent implements OnInit {
     } else {
       this.isManageProductsOpen = !this.isManageProductsOpen;
     }
+    this.toggle.emit(this.isCollapsed);
   }
 
   toggleProfileMenu(): void {
+    this.isCollapsed = !this.isCollapsed;
     if (this.isCollapsed) {
       this.isCollapsed = false;
       setTimeout(() => {
@@ -92,6 +95,7 @@ export class SellerDashboardSidebarComponent implements OnInit {
     } else {
       this.isProfileMenuOpen = !this.isProfileMenuOpen;
     }
+    this.toggle.emit(this.isCollapsed);
   }
   setActive(linkName: string) {
     this.activeLink = linkName;

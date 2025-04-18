@@ -1,8 +1,11 @@
-<div class="dashboard-wrapper app-container d-flex">
-  <div class="sidebar" [class.collapsed]="isCollapsed">
-    <app-seller-dashboard-sidebar (toggle)="isCollapsed = $event"></app-seller-dashboard-sidebar>
-  </div> 
-  <div class="main-content flex-grow-1">
+<div class="dashboard-wrapper d-flex" style="min-height: 100vh;">
+  <!-- Sidebar -->
+  <div [class.collapsed]="isCollapsed" class="sidebar bg-light text-dark">
+    <app-seller-dashboard-sidebar [isCollapsed]="isCollapsed" (toggle)="toggleSidebar()"></app-seller-dashboard-sidebar>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
     <router-outlet></router-outlet>
   </div>
 </div>
