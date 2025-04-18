@@ -2,9 +2,6 @@
 .dashboard-container {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
 }
 
 .dashboard-section {
