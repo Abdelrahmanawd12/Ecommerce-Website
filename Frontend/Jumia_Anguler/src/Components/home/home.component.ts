@@ -9,12 +9,13 @@ import { CategoryService } from '../../Services/Customer/category.service';
 import { ProductsService } from '../../Services/Customer/products.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ChatBotAiComponent } from "../chat-bot-ai/chat-bot-ai.component";
 declare var bootstrap: any;
 
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink,FormsModule,CommonModule],
+  imports: [RouterLink, FormsModule, CommonModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
