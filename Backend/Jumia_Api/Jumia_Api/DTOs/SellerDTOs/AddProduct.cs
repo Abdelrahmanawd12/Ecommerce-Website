@@ -21,14 +21,21 @@ namespace Jumia_Api.DTOs.SellerDTOs
         public decimal Weight { get; set; }
         [Required]
         public int SubCategoryId { get; set; }
-        [Required]
+
         public string SubCategoryName { get; set; }
 
-        public string Status  = "pending";
         [Required]
         public string SellerId { get; set; }
-        public List<IFormFile> ImageUrls { get; set; }  // List of Image URLs
+
+
+        [Required]
+        public List<IFormFile> ImageUrls { get; set; }
+
         [Required]
         public List<string> Tags { get; set; }
+
+        public string Status = "Pending";
+
+
     }
 }

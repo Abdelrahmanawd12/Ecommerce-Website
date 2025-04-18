@@ -87,13 +87,9 @@
     margin-bottom: 4px;
   }
   
-  
-  
-  
-  
   .header-cell {
     padding: 12px 8px;
-    text-align: left;
+    text-align: center;
   }
   
   .table-body {
@@ -1418,43 +1414,43 @@
 .status-pending {
   background: #fff3cd;
   color: #856404;
-  border-left: 4px solid #ffc107;
+  /* border-left: 4px solid #ffc107; */
 }
 
 .status-ready {
   background: #fff8e1;
   color: #ff8f00;
-  border-left: 4px solid #ffa000;
+  /* border-left: 4px solid #ffa000; */
 }
 
 .status-shipped {
   background: #e3f2fd;
   color: #0d47a1;
-  border-left: 4px solid #2196f3;
+  /* border-left: 4px solid #2196f3; */
 }
 
 .status-delivered {
   background: #e8f5e9;
   color: #1b5e20;
-  border-left: 4px solid #4caf50;
+  /* border-left: 4px solid #4caf50; */
 }
 
 .status-canceled {
   background: #ffebee;
   color: #b71c1c;
-  border-left: 4px solid #f44336;
+  /* border-left: 4px solid #f44336; */
 }
 
 .status-failed {
   background: #fce4ec;
   color: #880e4f;
-  border-left: 4px solid #e91e63;
+  /* border-left: 4px solid #e91e63; */
 }
 
 .status-returned {
   background: #e0f7fa;
   color: #006064;
-  border-left: 4px solid #00bcd4;
+  /* border-left: 4px solid #00bcd4; */
 }
 
 /* Fade In Animation */
@@ -1482,7 +1478,6 @@
       opacity: 1;
   }
 }
-/* الخلفية مع بلور خفيف */
 .status-modal-overlay {
   position: fixed;
   top: 0;
@@ -1744,7 +1739,6 @@
 
 
 
-/* تصميم عام */
 .jumia-modal-overlay {
   position: fixed;
   top: 0;
@@ -1771,7 +1765,6 @@
   animation: slideUp 0.4s ease-out;
 }
 
-/* الهيدر */
 .modal-header {
   padding: 20px;
   display: flex;
@@ -1807,7 +1800,6 @@
   height: 32px;
 }
 
-/* محتوى المودال */
 .modal-body {
   padding: 20px;
 }
@@ -1821,7 +1813,6 @@
   gap: 8px;
 }
 
-/* قسم المعلومات */
 .summary-section {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1862,7 +1853,6 @@
   color: #333;
 }
 
-/* حالة الطلب */
 .status-badge {
   display: inline-block;
   padding: 6px 12px;
@@ -1877,7 +1867,6 @@
 .status-delivered { background: #D4EDDA; color: #155724; }
 .status-cancelled { background: #F8D7DA; color: #721C24; }
 
-/* المجموع الكلي */
 .order-totals {
   border-top: 1px solid #eee;
   padding-top: 12px;
@@ -1898,7 +1887,6 @@
   border-top: 1px solid #ddd;
 }
 
-/* جدول المنتجات */
 .products-section {
   margin-top: 20px;
 }
@@ -2134,6 +2122,41 @@
     transform: translateY(0);
     opacity: 1;
   }
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-block;
+  text-align: center;
+  min-width: 70px;
+}
+
+
+.paid-status {
+  background-color: #e6f7ee;
+  color: #10b981;
+  border: 1px solid #10b981;
+}
+
+.pending-status {
+  background-color: #fff8e6;
+  color: #f59e0b;
+  border: 1px solid #f59e0b;
+}
+
+.canceled-status {
+  background-color: #feecec;
+  color: #ef4444;
+  border: 1px solid #ef4444;
+}
+
+.default-status {
+  background-color: #f3f4f6;
+  color: #6b7280;
+  border: 1px solid #d1d5db;
 }
 
 .status-pending { background: #fff3cd; color: #856404; }

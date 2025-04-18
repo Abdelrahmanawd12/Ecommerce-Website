@@ -83,8 +83,10 @@ export class AccountComponent implements OnInit {
 
   // Toggle for form visibility
   isEditing: boolean = false;
+  
 
-  customerId = 'user1'; // Replace with your test user ID
+  readonly customerId = localStorage.getItem('userId') || '';
+  // customerId = 'user1'; // Replace with your test user ID
 
   constructor(private accountService: AccountService) {}
 

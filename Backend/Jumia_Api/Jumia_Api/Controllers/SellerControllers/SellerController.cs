@@ -182,6 +182,63 @@ namespace Jumia_Api.Controllers.SellerControllers
             return Ok(catsDto);
         }     
 
+        //---------------------------------------------------------------------------------------
+        //Get All categories
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesErrorResponseType(typeof(void))]
+        [EndpointSummary("Get All Categories")]
+        [EndpointDescription("Return All Categories")]
+        [HttpGet("/allcat")]
+        public IActionResult GetAllCats()
+        {
+            var categories = unit.CategoryRepository.GetAll()
+                .Select(cat => new CategoryDTO
+                {
+                    Id = cat.CatId,
+                    Name = cat.CatName,
+                    Subcategory = cat.SubCategories.Select(sub => new SubCategoryDTO
+                    {
+                        SubCatId = sub.SubCatId,
+                        SubCatName = sub.SubCatName,
+                        CategoryName = cat.CatName
+                    }).ToList()
+                })
+                .ToList();
+
+            if (categories == null || categories.Count == 0)
+                return NotFound();
+
+            return Ok(categories);
+        }
+
+
+        //---------------------------------------------------------------------------------------
+        //Get All SubCategories by Category Id
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesErrorResponseType(typeof(void))]
+        [EndpointSummary("Get All SubCategories")]
+        [EndpointDescription("Return All SubCategories by Category Id")]
+        [HttpGet("/allsubcat")]
+        public IActionResult GetAllSubCats(int categoryId)
+        {
+            var subCategories = unit.SubCategoryRepository.GetAll()
+                .Where(sc => sc.SubCatId == categoryId)
+                .Select(sc => new SubCategoryDTO
+                {
+                    SubCatId = sc.SubCatId,
+                    SubCatName = sc.SubCatName,
+                    CategoryName = sc.Category.CatName
+                })
+                .ToList();
+
+            if (subCategories == null || subCategories.Count == 0)
+                return NotFound();
+
+            return Ok(subCategories);
+        }
+
         //-----------------------------------------------------------------------------------------
         //Delete Product By Id
         [HttpDelete("/delete/{prodId}")] //[/delete/{id}]
@@ -261,7 +318,7 @@ namespace Jumia_Api.Controllers.SellerControllers
                 SubCategoryId = dto.SubCategoryId,
                 SellerId = dto.SellerId,
                 ProductImages = imagePaths.Select(p => new ProductImage { Url = p }).ToList(),
-                ProductTags = dto.Tags.Select(t => new ProductTag { Tag = t }).ToList()
+                ProductTags = dto.Tags.Select(t => new ProductTag { Tag = t }).ToList(),
             };
             unit.ProductsRepository.Add(product);
             unit.Save();
@@ -531,6 +588,33 @@ namespace Jumia_Api.Controllers.SellerControllers
             if (order == null)
             {
                 return NotFound(new { message = $"Order with ID {request.OrderId} and Seller ID {request.SellerId} not found." });
+            }
+
+            if (request.Status == "delivered")
+            {
+                var paymentstatus = unit.PaymentRepository.GetAll().FirstOrDefault(p => p.OrderId == request.OrderId);
+                if (paymentstatus != null)
+                {
+                    paymentstatus.Status = "Paid";
+                }
+            }
+
+            if (request.Status == "pending" || request.Status == "ready" || request.Status == "shipped")
+            {
+                var paymentstatus = unit.PaymentRepository.GetAll().FirstOrDefault(p => p.OrderId == request.OrderId);
+                if (paymentstatus != null)
+                {
+                    paymentstatus.Status = "Pending";
+                }
+            }
+
+            if (request.Status == "canceled" || request.Status == "failed" || request.Status == "returned")
+            {
+                var paymentstatus = unit.PaymentRepository.GetAll().FirstOrDefault(p => p.OrderId == request.OrderId);
+                if (paymentstatus != null)
+                {
+                    paymentstatus.Status = "Canceled";
+                }
             }
 
             order.OrderStatus = request.Status;

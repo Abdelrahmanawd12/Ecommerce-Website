@@ -6,12 +6,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from '../Components/navbar/navbar.component';
 import { FooterComponent } from '../Components/footer/footer.component';
-import { NgxEchartsModule, NGX_ECHARTS_CONFIG } from 'ngx-echarts';
 import { FormsModule } from '@angular/forms';
+import { NGX_ECHARTS_CONFIG, NgxEchartsModule } from 'ngx-echarts';
+import { ChatBotAiComponent } from "../Components/chat-bot-ai/chat-bot-ai.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavbarComponent,FooterComponent , HttpClientModule, CommonModule,NgxEchartsModule , FormsModule],
+  imports: [RouterOutlet, NavbarComponent, FooterComponent, HttpClientModule, CommonModule, NgxEchartsModule, FormsModule, ChatBotAiComponent],
   providers: [
     {
       provide: NGX_ECHARTS_CONFIG,

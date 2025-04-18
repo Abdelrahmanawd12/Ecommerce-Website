@@ -49,10 +49,10 @@
                 <div class="header-cell">#</div>
                 <div class="header-cell">Order Number</div>
                 <div class="header-cell">Order Date</div>
+                <div class="header-cell">Payment Status</div>
                 <div class="header-cell">Payment Method</div>
+                <div class="header-cell">Deleviry Status</div>
                 <div class="header-cell">Price</div>
-                <div class="header-cell">Status</div>
-                <div class="header-cell">Customer Name</div>
                 <div class="header-cell">Actions</div>
             </div>
 
@@ -65,13 +65,17 @@
                     <div class="table-cell">{{order.orderId}}</div>
                     <div class="table-cell">{{ order.orderDate | date:'dd/MM/yyyy' }}</div>
                     <div class="table-cell">{{order.payment.paymentMethod}}</div>
-                    <div class="table-cell">{{order.totalAmount}}</div>
+                    <div class="table-cell">
+                        <span class="status-badge" [class]="getPayStatusClass(order.payment.status)">
+                            {{order.payment.status}}
+                        </span>
+                    </div>
                     <div class="table-cell">
                         <span class="status-badge" [class]="getStatusClass(order.orderStatus)">
                             {{order.orderStatus}}
                         </span>
                     </div>
-                    <div class="table-cell">{{order.shippingInfo.receiverName}}</div>
+                    <div class="table-cell">{{order.totalAmount | currency:'$':'symbol':'1.2-2'}}</div>
                     <div class="table-cell actions-cell">
                         <button class="action-btn view-btn" (click)="openOrderModal(order)">
                             <svg class="action-icon" viewBox="0 0 24 24">
@@ -147,7 +151,7 @@
                                                 <div class="detail-content">
                                                     <span class="detail-label">Total Price:</span>
                                                     <span class="detail-value">{{selectedOrder.totalAmount |
-                                                        currency:'EGP':'symbol':'1.2-2'}}</span>
+                                                        currency:'$':'symbol':'1.2-2'}}</span>
                                                 </div>
                                             </div>
 
@@ -186,7 +190,7 @@
                                                     </td>
                                                     <td>{{orderItem.productName}}</td>
                                                     <td>{{orderItem.brand}}</td>
-                                                    <td>{{orderItem.subTotal | currency:'EGB':'symbol':'1.2-2'}}</td>
+                                                    <td>{{orderItem.subTotal | currency:'$':'symbol':'1.2-2'}}</td>
                                                     <td>{{orderItem.quantity}}</td>
                                                 </tr>
                                             </tbody>

@@ -8,6 +8,8 @@ import { formatDate } from '@angular/common';
 import { IProductSales } from '../../Models/iproduct-sales';
 import { IProduct, Isubcategory, Icategory } from '../../Models/Category';
 import { IProductSell } from '../../Models/iproduct-sell';
+import { Categories } from '../../Models/categories';
+import { SubCategories } from '../../Models/sub-categories';
 
 @Injectable({
   providedIn: 'root'
@@ -35,8 +37,10 @@ export class SellerService {
 
 
 
-  addProduct(product: IProduct): Observable<IProduct> {
-    return this.http.post<IProduct>(`${this.baseUrl}/addProduct`, product);
+  addProduct(product: FormData): Observable<any> {
+    return this.http.post(`${this.baseUrl}/addProduct`, product, {
+      responseType: 'text' as 'json' 
+    });
   }
 
   // updateProduct(productId: number, formData: FormData): Observable<any> {
@@ -178,6 +182,15 @@ export class SellerService {
 
   getProductSales():Observable<IProductSales[]>{
     return this.http.get<IProductSales[]>(`${this.baseUrl}/productSales`);
+  }
+
+  //Categories
+  getAllCategories(): Observable<Categories[]> {
+    return this.http.get<Categories[]>(`${this.baseUrl}/allcat`);
+  }
+
+  getSubCategoriesByCategoryId(categoryId: number): Observable<SubCategories[]> {
+    return this.http.get<SubCategories[]>(`${this.baseUrl}/allsubcat?categoryId=${categoryId}`);
   }
 }
 

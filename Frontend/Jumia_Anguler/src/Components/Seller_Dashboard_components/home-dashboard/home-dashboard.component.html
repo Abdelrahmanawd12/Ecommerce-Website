@@ -111,8 +111,12 @@
                   <td>{{ tx.date }}</td>
                   <td>{{ tx.amount }}</td>
                   <td>{{ tx.buyer }}</td>
-                  <td><span class="badge bg-success">{{ tx.status }}</span></td>
-                </tr>
+                  <td>
+                    <span class="status-badge" [attr.data-status]="tx.status.toLowerCase()" [class]="getPayStatusClass(tx.status)">
+                      {{ tx.status }}
+                    </span>
+                  </td>               
+                 </tr>
               </tbody>
             </table>
           </div>

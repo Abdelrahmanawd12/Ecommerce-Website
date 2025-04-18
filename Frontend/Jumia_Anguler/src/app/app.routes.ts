@@ -10,9 +10,9 @@ import { AdminLayoutComponent } from '../Components/admin-layout/admin-layout.co
 
 
 export const routes: Routes = [
- 
-{path:'navbar', loadComponent: () => import('../Components/navbar/navbar.component').then((m) => m.NavbarComponent)},
-  {path:'footer' , loadComponent: () => import('../Components/footer/footer.component').then((m) => m.FooterComponent)},
+
+  { path: 'navbar', loadComponent: () => import('../Components/navbar/navbar.component').then((m) => m.NavbarComponent) },
+  { path: 'footer', loadComponent: () => import('../Components/footer/footer.component').then((m) => m.FooterComponent) },
 
   //Abdelrahman
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -21,18 +21,13 @@ export const routes: Routes = [
 
   { path: 'cart', component: CartComponent },
 
-    //Ahmed
-    //{ path: 'order/:id', component: OrderComponent  },
-    { path: 'order', component: OrderComponent  },
-    { path: 'account', component: AccountComponent  },
-    { path: 'wishlist', component: WishlistComponent  },
+  //Ahmed
+  //{ path: 'order/:id', component: OrderComponent  },
+  { path: 'order', component: OrderComponent },
+  { path: 'account', component: AccountComponent },
+  { path: 'wishlist', component: WishlistComponent },
   { path: 'shop/:id', component: ShopComponent },
   { path: 'details/:id', component: ProductDetailsComponent },
-
-
-
-
-
   { path: 'order/:id', component: OrderComponent },
 
   //Alaa
@@ -40,7 +35,6 @@ export const routes: Routes = [
     path: 'admin', 
  loadComponent: () => import('../Components/admin-layout/admin-layout.component').then((m) => m.AdminLayoutComponent),
     children: [
-      { path: '',loadComponent:()=> import('../Components/admin-layout/admin-layout.component').then((m) => m.AdminLayoutComponent)}, 
       { path: 'dashboard', loadComponent: () => import('../Components/admin-dashboard/admin-dashboard.component').then((m) => m.AdminDashboardComponent) },
      {path: 'products', loadComponent: () => import('../Components/admin-product/admin-product.component').then((m) => m.AdminProductComponent) },
       { path: 'users', loadComponent: () => import('../Components/admin-users/admin-users.component').then((m) => m.AdminUsersComponent) },
@@ -61,6 +55,11 @@ export const routes: Routes = [
       import('../Components/Seller_Dashboard_components/seller-dashboard/seller-dashboard.component')
         .then((m) => m.SellerDashboardComponent),
     children: [
+      {
+        path: '',
+        redirectTo: 'homeseller',
+        pathMatch: 'full'
+      },
       {
         path: 'homeseller',
         loadComponent: () =>
@@ -86,10 +85,10 @@ export const routes: Routes = [
             .then((m) => m.SellerSalesComponent)
       },
       {
-        path:'reports',
-        loadComponent:()=>
+        path: 'reports',
+        loadComponent: () =>
           import('../Components/Seller_Dashboard_components/seller-reports/seller-reports.component')
-        .then((m)=>m.SellerReportsComponent)
+            .then((m) => m.SellerReportsComponent)
       },
       {
         path: 'accountprofile',
