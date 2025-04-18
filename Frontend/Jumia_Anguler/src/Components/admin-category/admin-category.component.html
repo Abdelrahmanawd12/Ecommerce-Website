@@ -1,0 +1,140 @@
+<div class="container my-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Category Management</h2>
+    
+    <!-- Search and Filter Section -->
+    <div class="search-filter-bar">
+      <!-- Your search and filter inputs here -->
+    </div>
+  </div>
+
+  <div class="table-responsive shadow rounded overflow-hidden">
+    <table class="table table-hover align-middle mb-0 bg-white">
+      <thead class="table-light">
+        <tr>
+          <th style="width: 10%;">#</th>
+          <th style="width: 60%;">Name</th>
+          <th style="width: 30%;">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let category of getPaginatedCategories()">
+          <td>{{ category.id }}</td>
+          <td>{{ category.name }}</td>
+          <td>
+            <button class="btn btn-sm btn-outline-primary me-2" (click)="openUpdateModal(category)">
+              <i class="bi bi-pencil-square"></i> Edit
+            </button>
+            <button class="btn btn-sm btn-outline-danger" (click)="confirmDelete(category.id)">
+              <i class="bi bi-trash"></i> Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="pagination-container mt-3" *ngIf="filteredCategories.length > 0">
+      <button class="btn btn-sm btn-outline-secondary" (click)="previousPage()" [disabled]="currentPage === 1">
+        Previous
+      </button>
+      <span class="mx-2">Page {{ currentPage }} of {{ totalPages }}</span>
+      <button class="btn btn-sm btn-outline-secondary" (click)="nextPage()" [disabled]="currentPage === totalPages">
+        Next
+      </button>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal-backdrop" *ngIf="showDeleteModal">
+    <div class="confirmation-modal">
+      <div class="modal-header">
+        <h3>Confirm Deletion</h3>
+        <button class="close-btn" (click)="cancelDelete()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this category?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline-secondary" (click)="cancelDelete()">Cancel</button>
+        <button class="btn btn-danger" (click)="deleteCategory()">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" *ngIf="showUpdateModal">
+    <div class="update-modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Update Category</h3>
+        <button class="close-btn" (click)="showUpdateModal = false">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+  
+      <div class="modal-body">
+        <form (ngSubmit)="saveCategory()">
+          <div class="form-group mb-4">
+            <label for="categoryId" class="form-label">Category ID</label>
+            <input id="categoryId" class="form-control" [(ngModel)]="currentCategory.id" 
+                   name="categoryId" readonly disabled>
+          </div>
+  
+          <div class="form-group mb-4">
+            <label for="categoryName" class="form-label">Category Name</label>
+            <input id="categoryName" class="form-control" [(ngModel)]="currentCategory.name" 
+                   name="categoryName" required>
+          </div>
+  
+          <div class="subcategories-section">
+            <h5 class="section-title mb-3">Subcategories</h5>
+            
+            <div class="subcategory-card" *ngFor="let sub of currentCategory.subcategory; let i = index; trackBy: trackBySubCategory">
+              <div class="card mb-3">
+                <div class="card-header bg-light">
+                  <h6 class="card-title mb-0">Subcategory {{ i + 1 }}</h6>
+                </div>
+                <div class="card-body">
+                  <div class="form-group mb-3">
+                    <label [for]="'subCatId'+i" class="form-label">Subcategory ID</label>
+                    <input [id]="'subCatId'+i" class="form-control" [(ngModel)]="sub.subCatId" 
+                           [name]="'subCatId'+i" required>
+                  </div>
+  
+                  <div class="form-group mb-3">
+                    <label [for]="'subCatName'+i" class="form-label">Subcategory Name</label>
+                    <input [id]="'subCatName'+i" class="form-control" [(ngModel)]="sub.subCatName" 
+                           [name]="'subCatName'+i" required>
+                  </div>
+  
+                  <div class="form-group mb-3">
+                    <label [for]="'categoryName'+i" class="form-label">Category Name</label>
+                    <input [id]="'categoryName'+i" class="form-control" [(ngModel)]="sub.categoryName" 
+                           [name]="'categoryName'+i" required>
+                  </div>
+  
+                  <div class="form-group">
+                    <label [for]="'subCategoryId'+i" class="form-label">Category ID</label>
+                    <input [id]="'subCategoryId'+i" class="form-control" [(ngModel)]="sub.categoryId" 
+                           [name]="'subCategoryId'+i" required>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div *ngIf="errorMessage" class="alert alert-danger mt-3 mb-0">
+            <i class="bi bi-exclamation-circle me-2"></i>{{ errorMessage }}
+          </div>
+  
+          <div class="modal-footer mt-4">
+            <button type="button" class="btn btn-outline-secondary" (click)="showUpdateModal = false">
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-primary">
+              <i class="bi bi-save me-2"></i>Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
