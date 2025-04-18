@@ -203,4 +203,17 @@
     z-index: 1040 !important; 
   } */
   
+  .sidebar {
+    width: 250px;
+    transition: width 0.3s;
+  }
+  
+  .sidebar.collapsed {
+    width: 70px;
+  }
+  
+  .main-content {
+    flex-grow: 1;
+    transition: margin-left 0.3s;
+  }
   
