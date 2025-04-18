@@ -134,10 +134,11 @@ namespace Jumia.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Order>()
-                .HasOne(o => o.Seller)
-                .WithMany()
-                .HasForeignKey(o => o.SellerId)
-                .OnDelete(DeleteBehavior.Restrict);
+                 .HasOne(o => o.Seller)
+                 .WithMany(s => s.Orders)
+                 .HasForeignKey(o => o.SellerId)
+                 .OnDelete(DeleteBehavior.Restrict);
+
 
             modelBuilder.Entity<Seller>()
                  .Property(s => s.SellerNetIncome)

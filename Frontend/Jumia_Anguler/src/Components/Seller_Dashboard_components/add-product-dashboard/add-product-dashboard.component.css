@@ -654,3 +654,140 @@ textarea {
   .form-container {
     scroll-behavior: smooth; 
   }
+
+  button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: #e0e0e0 !important;
+    color: #9e9e9e !important;
+  }
+  
+  .next-btn:disabled, .submit-btn:disabled {
+    background-color: #cccccc !important;
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* General Validation Styles */
+.text-danger {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.85rem;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Input Error State */
+.form-control.ng-invalid.ng-touched,
+.form-control.ng-invalid.ng-dirty {
+  border-color: #ff4444;
+  background-color: #fff9f9;
+  box-shadow: 0 0 0 2px rgba(255, 68, 68, 0.1);
+}
+
+/* Validation Message Styling */
+.validation-message {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  margin: 6px 0;
+  border-radius: 4px;
+  background-color: #fff4f4;
+  color: #d32f2f;
+  border-left: 3px solid #d32f2f;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.validation-message::before {
+  content: "⚠";
+  margin-right: 8px;
+  font-size: 1rem;
+}
+
+/* Tags Input Validation */
+.tags-input-container.ng-invalid.ng-touched {
+  border-color: #ff4444;
+}
+
+/* Textarea Validation */
+textarea.ng-invalid.ng-touched {
+  border-color: #ff4444;
+  background-color: #fff9f9;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Custom Style for Image Validation */
+.image-validation-error {
+  background-color: #fff4f4;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-top: 10px;
+  border-left: 3px solid #d32f2f;
+  color: #d32f2f;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .validation-message {
+    font-size: 0.8rem;
+    padding: 6px 10px;
+  }
+}
+.fixed-image-box .upload-icon.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.fixed-image-box input[disabled] + .fixed-placeholder {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.toast-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 20px;
+  border-radius: 4px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 250px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1100;
+  animation: slideIn 0.3s ease-out;
+}
+
+.toast-success {
+  background-color: #28a745;
+}
+
+.toast-error {
+  background-color: #dc3545;
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: 15px;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

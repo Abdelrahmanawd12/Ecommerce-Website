@@ -31,7 +31,7 @@ export interface IOrder {
     ];
     payment: {
         paymentMethod: string;
-        paymentStatus: string;
+        status: string;
         transactionId: string;
         transactionDate: Date;
         amount: number;
