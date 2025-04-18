@@ -3,24 +3,20 @@
   "WorkspaceRootPath": "D:\\data\\iti4months\\data\\GraduationProject\\Jumia\\Ecommerce-Website\\Backend\\Jumia_Api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|d:\\data\\iti4months\\data\\graduationproject\\jumia\\ecommerce-website\\backend\\jumia_api\\jumia_api\\migrations\\jumiadbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|solutionrelative:jumia_api\\migrations\\jumiadbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|d:\\data\\iti4months\\data\\graduationproject\\jumia\\ecommerce-website\\backend\\jumia_api\\jumia_api\\controllers\\customercontrollers\\checkoutcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|solutionrelative:jumia_api\\controllers\\customercontrollers\\checkoutcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|d:\\data\\iti4months\\data\\graduationproject\\jumia\\ecommerce-website\\backend\\jumia_api\\jumia_api\\data\\jumiadbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|solutionrelative:jumia_api\\data\\jumiadbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|d:\\data\\iti4months\\data\\graduationproject\\jumia\\ecommerce-website\\backend\\jumia_api\\jumia_api\\controllers\\customercontrollers\\orderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|solutionrelative:jumia_api\\controllers\\customercontrollers\\orderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|d:\\data\\iti4months\\data\\graduationproject\\jumia\\ecommerce-website\\backend\\jumia_api\\jumia_api\\controllers\\customercontrollers\\wishlistcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|solutionrelative:jumia_api\\controllers\\customercontrollers\\wishlistcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|d:\\data\\iti4months\\data\\graduationproject\\jumia\\ecommerce-website\\backend\\jumia_api\\jumia_api\\dtos\\customerdtos\\orderconfirmationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|solutionrelative:jumia_api\\dtos\\customerdtos\\orderconfirmationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|d:\\data\\iti4months\\data\\graduationproject\\jumia\\ecommerce-website\\backend\\jumia_api\\jumia_api\\dtos\\customerdtos\\wishlistitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|solutionrelative:jumia_api\\dtos\\customerdtos\\wishlistitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|d:\\data\\iti4months\\data\\graduationproject\\jumia\\ecommerce-website\\backend\\jumia_api\\jumia_api\\models\\productimage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|solutionrelative:jumia_api\\models\\productimage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|d:\\data\\iti4months\\data\\graduationproject\\jumia\\ecommerce-website\\backend\\jumia_api\\jumia_api\\dtos\\sellerdtos\\shippingdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|solutionrelative:jumia_api\\dtos\\sellerdtos\\shippingdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,69 +26,55 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "JumiaDbContextModelSnapshot.cs",
-              "DocumentMoniker": "D:\\data\\iti4months\\data\\GraduationProject\\Jumia\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Migrations\\JumiaDbContextModelSnapshot.cs",
-              "RelativeDocumentMoniker": "Jumia_Api\\Migrations\\JumiaDbContextModelSnapshot.cs",
-              "ToolTip": "D:\\data\\iti4months\\data\\GraduationProject\\Jumia\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Migrations\\JumiaDbContextModelSnapshot.cs",
-              "RelativeToolTip": "Jumia_Api\\Migrations\\JumiaDbContextModelSnapshot.cs",
-              "ViewState": "AgIAAAYBAAAAAAAAAAAQwBEBAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-15T03:12:37.323Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "JumiaDbContext.cs",
-              "DocumentMoniker": "D:\\data\\iti4months\\data\\GraduationProject\\Jumia\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Data\\JumiaDbContext.cs",
-              "RelativeDocumentMoniker": "Jumia_Api\\Data\\JumiaDbContext.cs",
-              "ToolTip": "D:\\data\\iti4months\\data\\GraduationProject\\Jumia\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Data\\JumiaDbContext.cs",
-              "RelativeToolTip": "Jumia_Api\\Data\\JumiaDbContext.cs",
-              "ViewState": "AgIAALIAAAAAAAAAAAAhwMIAAAAdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-15T03:10:58.37Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ProductImage.cs",
-              "DocumentMoniker": "D:\\data\\iti4months\\data\\GraduationProject\\Jumia\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Models\\ProductImage.cs",
-              "RelativeDocumentMoniker": "Jumia_Api\\Models\\ProductImage.cs",
-              "ToolTip": "D:\\data\\iti4months\\data\\GraduationProject\\Jumia\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Models\\ProductImage.cs",
-              "RelativeToolTip": "Jumia_Api\\Models\\ProductImage.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-14T14:32:25.934Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "WishlistItemDto.cs",
-              "DocumentMoniker": "D:\\data\\iti4months\\data\\GraduationProject\\Jumia\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\DTOs\\CustomerDTOs\\WishlistItemDto.cs",
-              "RelativeDocumentMoniker": "Jumia_Api\\DTOs\\CustomerDTOs\\WishlistItemDto.cs",
-              "ToolTip": "D:\\data\\iti4months\\data\\GraduationProject\\Jumia\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\DTOs\\CustomerDTOs\\WishlistItemDto.cs",
-              "RelativeToolTip": "Jumia_Api\\DTOs\\CustomerDTOs\\WishlistItemDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAEAAAAAAAAAA==",
+              "Title": "ShippingDTO.cs",
+              "DocumentMoniker": "D:\\data\\iti4months\\data\\GraduationProject\\Jumia\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\DTOs\\SellerDTOs\\ShippingDTO.cs",
+              "RelativeDocumentMoniker": "Jumia_Api\\DTOs\\SellerDTOs\\ShippingDTO.cs",
+              "ToolTip": "D:\\data\\iti4months\\data\\GraduationProject\\Jumia\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\DTOs\\SellerDTOs\\ShippingDTO.cs",
+              "RelativeToolTip": "Jumia_Api\\DTOs\\SellerDTOs\\ShippingDTO.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAzwA8AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-14T14:04:41.644Z"
+              "WhenOpened": "2025-04-18T04:36:34.895Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "WishlistController.cs",
-              "DocumentMoniker": "D:\\data\\iti4months\\data\\GraduationProject\\Jumia\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Controllers\\CustomerControllers\\WishlistController.cs",
-              "RelativeDocumentMoniker": "Jumia_Api\\Controllers\\CustomerControllers\\WishlistController.cs",
-              "ToolTip": "D:\\data\\iti4months\\data\\GraduationProject\\Jumia\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Controllers\\CustomerControllers\\WishlistController.cs",
-              "RelativeToolTip": "Jumia_Api\\Controllers\\CustomerControllers\\WishlistController.cs",
-              "ViewState": "AgIAAFkAAAAAAAAAAAAAwGoAAAAAAAAAAAAAAA==",
+              "Title": "OrderConfirmationDto.cs",
+              "DocumentMoniker": "D:\\data\\iti4months\\data\\GraduationProject\\Jumia\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\DTOs\\CustomerDTOs\\OrderConfirmationDto.cs",
+              "RelativeDocumentMoniker": "Jumia_Api\\DTOs\\CustomerDTOs\\OrderConfirmationDto.cs",
+              "ToolTip": "D:\\data\\iti4months\\data\\GraduationProject\\Jumia\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\DTOs\\CustomerDTOs\\OrderConfirmationDto.cs",
+              "RelativeToolTip": "Jumia_Api\\DTOs\\CustomerDTOs\\OrderConfirmationDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-14T05:22:40.466Z",
+              "WhenOpened": "2025-04-18T03:09:22.014Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "OrdersController.cs",
+              "DocumentMoniker": "D:\\data\\iti4months\\data\\GraduationProject\\Jumia\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Controllers\\CustomerControllers\\OrdersController.cs",
+              "RelativeDocumentMoniker": "Jumia_Api\\Controllers\\CustomerControllers\\OrdersController.cs",
+              "ToolTip": "D:\\data\\iti4months\\data\\GraduationProject\\Jumia\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Controllers\\CustomerControllers\\OrdersController.cs",
+              "RelativeToolTip": "Jumia_Api\\Controllers\\CustomerControllers\\OrdersController.cs",
+              "ViewState": "AgIAAEMAAAAAAAAAAAAmwFQAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T00:25:44.733Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CheckoutController.cs",
+              "DocumentMoniker": "D:\\data\\iti4months\\data\\GraduationProject\\Jumia\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Controllers\\CustomerControllers\\CheckoutController.cs",
+              "RelativeDocumentMoniker": "Jumia_Api\\Controllers\\CustomerControllers\\CheckoutController.cs",
+              "ToolTip": "D:\\data\\iti4months\\data\\GraduationProject\\Jumia\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Controllers\\CustomerControllers\\CheckoutController.cs",
+              "RelativeToolTip": "Jumia_Api\\Controllers\\CustomerControllers\\CheckoutController.cs",
+              "ViewState": "AgIAAP8AAAAAAAAAAAAiwBABAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-15T15:59:44.905Z",
               "EditorCaption": ""
             }
           ]

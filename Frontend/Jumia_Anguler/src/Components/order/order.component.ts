@@ -204,6 +204,11 @@ export class OrderComponent implements OnInit {
   selectedOrder: OrderDetailsDto | null = null;
   activeTab: string = 'ongoing'; // Default tab
 
+  
+  //customerId = 'user1';
+  customerId: string = localStorage.getItem('userId') ?? '';
+
+
   constructor(private orderService: OrderService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
@@ -237,31 +242,9 @@ export class OrderComponent implements OnInit {
     this.selectedOrder = null;
   }
 
-  // loadOrdersByCategory(): void {
-  //   const customerId = 'user1';
-  //   const category = 'current';
-
-  //   this.orderService.getOrdersByStatusCategory(customerId, category).subscribe({
-  //     next: (data) => {
-  //       this.orders = data;
-
-  //       this.ongoingOrders = data.filter(order => {
-  //         const status = order.orderStatus.trim().toLowerCase();
-  //         return ['pending', 'shipped', 'delivered'].includes(status);
-  //       }
-  //       );
-
-  //       this.canceledOrders = data.filter(order =>{
-  //         const status = order.orderStatus.trim().toLowerCase();
-  //         return status === 'canceled';
-  //       }
-  //       );
-  //     },
-  //     error: (err) => console.error('Failed to load orders:', err)
-  //   });
-  // }
   loadOrdersByCategory(): void {
     const customerId = 'user1';
+    
   
     // Get current (ongoing/delivered) orders
     this.orderService.getOrdersByStatusCategory(customerId, 'current').subscribe({

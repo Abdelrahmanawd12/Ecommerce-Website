@@ -65,6 +65,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-account',
   templateUrl: './account.component.html',
   standalone: true, // ✅ Add this if you're using `imports` array
+  styleUrls: ['./account.component.css'],  // <-- لازم يكون موجود كده
   imports: [CommonModule, FormsModule],
 })
 export class AccountComponent implements OnInit {
@@ -84,7 +85,8 @@ export class AccountComponent implements OnInit {
   // Toggle for form visibility
   isEditing: boolean = false;
 
-  customerId = 'user1'; // Replace with your test user ID
+  //customerId = 'user1'; // Replace with your test user ID
+  customerId: string = localStorage.getItem('userId') ?? '';
 
   constructor(private accountService: AccountService) {}
 
@@ -124,7 +126,16 @@ export class AccountComponent implements OnInit {
     });
   }
 
+
+  isAddressValid(): boolean {
+    const a = this.addressBook;
+    return a.firstName && a.lastName && a.phoneNumber && a.street && a.city && a.country ? true : false;
+  }
+  
+
   toggleEdit(): void {
     this.isEditing = !this.isEditing; // Toggle the visibility of the form
   }
 }
+
+

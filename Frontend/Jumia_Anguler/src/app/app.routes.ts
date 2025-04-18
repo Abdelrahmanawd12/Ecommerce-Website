@@ -7,6 +7,7 @@ import { Routes } from '@angular/router';
 import { AccountComponent } from '../Components/account/account.component';
 import { WishlistComponent } from '../Components/wishlist/wishlist.component';
 import { AdminLayoutComponent } from '../Components/admin-layout/admin-layout.component';
+import { CheckoutComponent } from '../Components/checkout/checkout.component';
 
 
 export const routes: Routes = [
@@ -26,6 +27,11 @@ export const routes: Routes = [
     { path: 'order', component: OrderComponent  },
     { path: 'account', component: AccountComponent  },
     { path: 'wishlist', component: WishlistComponent  },
+    { path: 'checkout', component: CheckoutComponent  },
+
+
+
+
   { path: 'shop/:id', component: ShopComponent },
   { path: 'details/:id', component: ProductDetailsComponent },
 

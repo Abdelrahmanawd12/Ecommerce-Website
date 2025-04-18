@@ -1,0 +1,49 @@
+/* Wishlist Custom Styling */
+.add-to-cart-btn {
+    background-color: #f68b1e;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-to-cart-btn:hover {
+    background-color: #e67b10; /* أغمق شويه */
+  }
+  
+  .remove-btn {
+    background-color: transparent;
+    border: 1px solid #f68b1e;
+    color: #f68b1e;
+    transition: all 0.3s ease;
+  }
+  
+  .remove-btn:hover {
+    background-color: #fef1e6;
+    color: #d96c00;
+    border-color: #d96c00;
+  }
+  
+
+  .text-decoration-line-through {
+    text-decoration: line-through;
+  }
+  .discounted-price {
+    text-decoration: line-through;
+    color: #999;
+    font-weight: normal;
+  }
+    
+/* 
+  .discounted-price {
+    text-decoration: line-through;
+    color: #888;
+  }
+  
+  .btn-warning:hover {
+    filter: brightness(1.1);
+    transform: scale(1.02);
+  }
+  
+  .btn-warning:hover {
+  filter: brightness(1.1);
+  transform: scale(1.02);
+} */
