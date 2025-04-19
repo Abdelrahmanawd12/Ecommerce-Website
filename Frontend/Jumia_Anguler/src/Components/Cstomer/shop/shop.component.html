@@ -1,4 +1,4 @@
-<!-- toast mess  -->
+<!-- toast message -->
 <div class="toast-container position-fixed bottom-0 end-0 p-3">
   <div class="toast align-items-center text-white border-0"
        id="cartToast"
@@ -8,157 +8,213 @@
        [ngClass]="toastClass">
     <div class="d-flex">
       <div class="toast-body">
-        {{ toastMessage }}
+        <i class="fas fa-check-circle me-2"></i> {{ toastMessage }}
       </div>
       <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
   </div>
 </div>
 
-<!-- contenet -->
-<div class="container row mt-4">
+<!-- content -->
+<div class="container-fluid mt-4 px-md-4">
 
-  <!-- left -->
-  <div class="col-3 col-md-2 ">
-    <div class="category-list bg-light p-2 rounded">
-      <h5 class="text-center">{{category.name}} Category</h5>
-      <div class="mb-2">
-        <a class="category d-block" (click)="selectedSubCatId = null">All</a>
+  <div class="row gx-md-3">
+
+    <!-- left sidebar -->
+    <div class="col-12 col-md-3 col-lg-2 mb-4">
+      <div class="sidebar-card bg-white p-3 rounded-3 shadow-sm">
+        <h5 class="sidebar-title mb-3 ">{{category.name}} Category</h5>
+        <div class="subcategory-list mb-4">
+          @for(c of category.subcategory; track c.subCatId) {
+          <div class="mb-2">
+            <label class="category-checkbox-label d-flex align-items-center py-2 px-3 rounded-2"
+                   [class.active]="selectedSubCatIds.includes(c.subCatId)">
+              <input type="checkbox" class="me-2" [value]="c.subCatId"
+              [checked]="selectedSubCatIds.includes(c.subCatId)"
+              (change)="onSubCatCheckboxChange($event, c.subCatId)"
+              />
+              <span>{{ c.subCatName }}</span>
+            </label>
+          </div>
+          }
+        </div>
+
+        <div class="brands-filter">
+          <h5 class="sidebar-title mb-3 ">Brands</h5>
+          <div class="brand-list">
+            @for(brand of brands; track brand) {
+            <div class="mb-2">
+              <label class="brand-checkbox-label d-flex align-items-center py-2 px-3 rounded-2"
+                     [class.active]="selectedBrands.includes(brand)">
+                <input type="checkbox" class="me-2" [value]="brand"
+                       (change)="onBrandCheckboxChange($event, brand)"
+                       [checked]="selectedBrands.includes(brand)" />
+                <span>{{ brand }}</span>
+              </label>
+            </div>
+            }
+          </div>
+        </div>
       </div>
-      @for(c of displayedSubcategories; track c.subCatId) {
-      <div class="mb-2">
-        <a class="category d-block" (click)="selectedSubCatId = c.subCatId">{{c.subCatName}}</a>
+    </div>
+
+    <!-- right content -->
+    <div class="col-12 col-md-9 col-lg-10">
+
+      <!-- Filtered products by brand -->
+      @if (filteredProducts.length > 0 && selectedBrands.length > 0) {
+      <div class="product-section mb-5">
+        <h4 class="section-title mb-4 position-relative">
+          <span class="section-title-text bg-white ps-2 pe-3">Filtered Products</span>
+          <span class="section-title-line"></span>
+        </h4>
+        <div class="row g-3">
+          @for(p of filteredProducts; track p.productId) {
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 product-card">
+            <div class=" h-100 shadow-sm rounded-3 overflow-hidden"
+                 (click)="goToProductDetails(p.productId)">
+              <div class="product-image-container">
+                <img [src]="imgbaseUrl+p.imageUrls[0]" class="product-image" alt="{{ p.name }}" loading="lazy">
+                <div class="product-badge" *ngIf="p.discount > 0">-{{ (p.discount/p.price)*100| number:'1.2-2'  }}%</div>
+              </div>
+              <div class="product-body p-3">
+
+                <div class="d-flex justify-content-between">
+                  <h6 class="product-name mb-2">{{ p.name }}</h6>
+
+                  <a  (click)="toggleWishlist(p.productId);$event.stopPropagation() "> <i
+                                  [class.fa-solid]="isInWishlist(p.productId)"
+                                  [class.fa-regular]="!isInWishlist(p.productId)"
+                                  class="fa-heart"
+                                          style="font-size: 25px; cursor: pointer;"></i> </a>
+
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <p class="product-price mb-0" [class.discounted]="p.discount > 0">
+                      ${{ (p.price-p.discount)| number:'1.2-2' }}
+                    </p>
+                    <p class="product-original-price mb-0 text-muted text-decoration-line-through"
+                       *ngIf="p.discount > 0">
+                      ${{ p.price  | number:'1.2-2' }}
+                    </p>
+                  </div>
+                  <button class="btn btn-sm btn-outline-warning rounded-circle p-2"
+                          (click)="addToCart(p); $event.stopPropagation()">
+                    <i class="fas fa-shopping-cart"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          }
+        </div>
       </div>
       }
 
-      <!-- brands -->
-      <div class="category-list bg-light p-2 rounded">
+      <!-- Products by subcategory -->
+      @if (selectedSubCatIds.length > 0) {
+        @for (subcategory of category.subcategory; track subcategory.subCatId) {
+          @if (selectedSubCatIds.includes(subcategory.subCatId)) {
+            <div class="product-section mb-5">
+              <h4 class="section-title mb-4 position-relative">
+                <span class="section-title-text bg-white ps-2 pe-3">{{ subcategory.subCatName }}</span>
+                <span class="section-title-line"></span>
+              </h4>
+              <div class="row g-3">
+                @for (p of subcategory.products; track p.productId) {
+                <div class="col-6 col-md-4 col-lg-3 col-xl-2 product-card">
+                  <div class=" h-100 shadow-sm rounded-3 overflow-hidden"
+                       (click)="goToProductDetails(p.productId)">
+                    <div class="product-image-container">
+                      <img [src]="imgbaseUrl+p.imageUrls[0]" class="product-image" alt="{{ p.name }}" loading="lazy">
+                      <div class="product-badge" *ngIf="p.discount > 0">-{{ (p.discount/p.price)*100| number:'1.2-2'  }}%</div>
+                    </div>
+                    <div class="product-body p-3">
+                      <div class="d-flex justify-content-between">
+                        <h6 class="product-name mb-2">{{ p.name }}</h6>
+                        <a  (click)="toggleWishlist(p.productId);$event.stopPropagation() "> <i
+                          [class.fa-solid]="isInWishlist(p.productId)"
+                          [class.fa-regular]="!isInWishlist(p.productId)"
+                          class="fa-heart"
+                                  style="font-size: 25px; cursor: pointer;"></i> </a>
 
-        <h5 class="text-center">Brands</h5>
-
-
-
-
-        <div class="mb-2" *ngFor="let brand of brands">
-          <label class="brand-checkbox-label" [class.active]="selectedBrands.includes(brand)">
-            <input type="checkbox" [value]="brand" (change)="onBrandCheckboxChange($event, brand)"
-              [checked]="selectedBrands.includes(brand)" />
-            {{ brand }}
-          </label>
-        </div>
-
-
-
-      </div>
-    </div>
-  </div>
-  <!-- left -->
-
-
-
-  <!-- right -->
-
-  <div class="col-9 col-md-10">
-
-    <!-- brands -->
-
-    <div class="container productparent-container" *ngIf="filteredProducts.length > 0 && selectedBrands.length > 0">
-      <h5 class="text-center product-title" style="text-transform: capitalize;">
-        Filtered Products
-      </h5>
-      <div class="row g-3 products-container">
-        <div *ngFor="let p of filteredProducts" class="col-6 col-md-4 col-lg-2 parent" style="cursor: pointer;"
-          (click)="goToProductDetails(p.productId)">
-          <div class="card proChild h-100">
-            <img [src]="p.imageUrls[0]" class="imgproduct" alt="{{ p.name }}">
-            <div class="card-body" style="background-color: white;">
-              <h6 class="product-name">{{ p.name }}</h6>
-              <div class="priceAndcart">
-                <p class="product-price">${{ p.price }}</p>
-                <a (click)="addToCart(p); $event.stopPropagation()">
-                  <i class="fa-solid fa-cart-shopping"></i>
-                </a>
+                                </div>
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                          <p class="product-price mb-0" [class.discounted]="p.discount > 0">
+                            ${{ (p.price-p.discount) | number:'1.2-2' }}
+                          </p>
+                          <p class="product-original-price mb-0 text-muted text-decoration-line-through"
+                             *ngIf="p.discount > 0">
+                            ${{ p.price  | number:'1.2-2' }}
+                          </p>
+                        </div>
+                        <button class="btn btn-sm btn-outline-warning rounded-circle p-2"
+                                (click)="addToCart(p); $event.stopPropagation()">
+                          <i class="fas fa-shopping-cart"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                }
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-
-
-
-    <!-- Subcategory -->
-
-    @if (!selectedSubCatId)
-    {
-    @for (subcategory of displayedSubcategories;track subcategory.subCatId) {
-    <div class="container  productparent-container">
-      <h5 class="text-center product-title" style="text-transform: capitalize;">{{ subcategory.subCatName }}</h5>
-      <div class="row g-3 products-container">
-        @for (p of subcategory.products; track p.productId) {
-        <div class="col-6 col-md-4 col-lg-2 parent" style="cursor: pointer;" (click)="goToProductDetails(p.productId)">
-          <div class="card proChild h-100">
-            <img src="{{ p.imageUrls[0] }}" class="imgproduct" alt="{{ p.name }}">
-            <div class="card-body" style="background-color: white;">
-              <h6 class="product-name">{{ p.name }}</h6>
-              <div class="priceAndcart">
-                <p class="product-price">${{ p.price }}</p>
-                <a (click)="addToCart(p); $event.stopPropagation()">
-                  <i class="fa-solid fa-cart-shopping"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
+          }
         }
-      </div>
-    </div>
-    }
-    }
-    @else
-     {
-    @for (subcategory of displayedSubcategories;track subcategory.subCatId) {
-    @if (subcategory.subCatId === selectedSubCatId) {
-    <div class="container  productparent-container">
-      <h5 class="text-center product-title" style="text-transform: capitalize;">{{ subcategory.subCatName }}</h5>
-      <div class="row g-3 products-container ">
-        @for (p of subcategory.products; track p.productId) {
-        <div class="col-6 col-md-4 col-lg-2 parent" style="cursor: pointer;" (click)="goToProductDetails(p.productId)">
-          <div class="card proChild h-100">
-            <img src="{{ p.imageUrls[0] }}" class="imgproduct" alt="{{ p.name }}">
-            <div class="card-body" style="background-color: white;">
-              <h6 class="product-name">{{ p.name }}</h6>
-              <div class="priceAndcart">
-                <p class="product-price">${{ p.price }}</p>
-                <a (click)="addToCart(p); $event.stopPropagation()">
-                  <i class="fa-solid fa-cart-shopping"></i>
-                </a>
+      }
+      @else {
+        <!-- Show all subcategories by default -->
+        @for (subcategory of category.subcategory; track subcategory.subCatId) {
+          <div class="product-section mb-5">
+            <h4 class="section-title mb-4 position-relative">
+              <span class="section-title-text bg-white ps-2 pe-3">{{ subcategory.subCatName }}</span>
+              <span class="section-title-line"></span>
+            </h4>
+            <div class="row g-3">
+              @for (p of subcategory.products; track p.productId) {
+              <div class="col-6 col-md-4 col-lg-3 col-xl-2 product-card">
+                <div class=" h-100 shadow-sm rounded-3 overflow-hidden"
+                     (click)="goToProductDetails(p.productId)">
+                  <div class="product-image-container">
+                    <img [src]="imgbaseUrl+p.imageUrls[0]" class="product-image" alt="{{ p.name }}" loading="lazy">
+                    <div class="product-badge" *ngIf="p.discount > 0">-{{ (p.discount/p.price)*100| number:'1.2-2'  }}%</div>
+                  </div>
+                  <div class="product-body p-3">
+                    <div class="d-flex justify-content-between">
+                      <h6 class="product-name mb-2">{{ p.name }}</h6>
+                      <a  (click)="toggleWishlist(p.productId);$event.stopPropagation() "> <i
+                        [class.fa-solid]="isInWishlist(p.productId)"
+                        [class.fa-regular]="!isInWishlist(p.productId)"
+                        class="fa-heart"
+                                style="font-size: 25px; cursor: pointer;"></i> </a>
+
+                            </div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div>
+                        <p class="product-price mb-0" [class.discounted]="p.discount > 0">
+                          ${{ (p.price-p.discount) | number:'1.2-2' }}
+                        </p>
+                        <p class="product-original-price mb-0 text-muted text-decoration-line-through"
+                           *ngIf="p.discount > 0">
+                          ${{ (p.price ) | number:'1.2-2' }}
+                        </p>
+                      </div>
+                      <button class="btn btn-sm btn-outline-warning rounded-circle p-2"
+                              (click)="addToCart(p); $event.stopPropagation()">
+                        <i class="fas fa-shopping-cart"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
+              }
             </div>
           </div>
-        </div>
         }
-      </div>
+      }
     </div>
-    }
-    }
-    }
-
-
-<!-- pagination  -->
-
-    <div class="pagination mt-4">
-      <button *ngFor="let page of [].constructor(totalPages); let i = index"
-        class="btn btn-primary" (click)="loadPage(i + 1)">
-        {{ i + 1 }}
-      </button>
-    </div>
-
-
   </div>
 </div>
-
-
-

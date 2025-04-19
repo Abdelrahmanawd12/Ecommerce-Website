@@ -7,6 +7,8 @@ import { Icategory, IProduct, Isubcategory } from '../../../Models/Category';
 import { CartDTO } from '../../../Models/cart';
 import { CartService } from '../../../Services/Customer/cart.service';
 import { SubcategoryService } from '../../../Services/Customer/subcategory.service';
+import { AwadWishlistService } from '../../../Services/Customer/awad-wishlist.service';
+import { environment } from '../../../Environment/Environment.prod';
 declare var bootstrap: any;
 
 
@@ -20,11 +22,15 @@ export class ShopComponent implements OnInit {
   category!:Icategory;
   subcategory!:Isubcategory;
   currentId:number=0;
-  selectedSubCatId: number | null = null;
+  selectedSubCatIds: number[] =[];
   brands: string[] = [];
+  // toggle wishlist
+wishlistProductIds: number[] = [];
 
   selectedBrands: string[] = [];
 filteredProducts: IProduct[] = [];
+  readonly imgbaseUrl=environment.imageBaseUrl;
+
 
 //toast mess
 toastMessage = '';
@@ -50,7 +56,8 @@ currentPage: number = 1;
     private activerouter:ActivatedRoute,
     private router:Router,
     private _CartServices:CartService,
-    private _SubCategoryService:SubcategoryService
+    private _SubCategoryService:SubcategoryService,
+    private _wishlistService:AwadWishlistService,
   ) {}
   //get user
   get user(): string {
@@ -68,8 +75,8 @@ currentPage: number = 1;
           this.getBrandsOfCategory(this.category)
           this.productsList = this.category.subcategory.flatMap(sub => sub.products);
               // Initialize pagination data
-              this.totalPages = Math.ceil(this.category.subcategory.length / this.pageSize);
-              this.loadPage(this.currentPage);
+              // this.totalPages = Math.ceil(this.category.subcategory.length / this.pageSize);
+              // this.loadPage(this.currentPage);
         },
         error:(err)=>{
           console.log(err)
@@ -77,21 +84,98 @@ currentPage: number = 1;
       })
 
     })
+    if (this.user) {
+      this._wishlistService.getWishlist(this.user).subscribe({
+        next: (wishlist) => {
+          this.wishlistProductIds = wishlist.wishlistItems
+          .map(p => p.products.find(i => i.productId)?.productId || 0)
+          .filter(id => id !== 0);
+                },
+        error: (err) => {
+          console.error("Error fetching wishlist", err);
+        }
+      });
+    }
+
 
   }
+
+ //add to wishlist
+ addToWishlist(productId: number): void {
+  const userId = localStorage.getItem('userId');
+  if (!userId || userId.trim() === '') {
+    this.router.navigateByUrl("/login");
+    return;
+  }
+  this._wishlistService.addToWishlist(userId, productId).subscribe({
+    next: (res) => {
+      console.log("Product added to wishlist", res);
+      //toggle the wishlist state
+      this.wishlistProductIds.push(productId);
+
+      this.showToast("Product added to wishlist successfully!", 'success');
+    },
+    error: (err) => {
+      console.log("error", err);
+      const errorMsg = err?.error?.message || "Something went wrong!";
+      this.showToast(errorMsg, 'error');
+    }
+  });
+}
+//remove from wishlist
+removeFromWishlist(productId: number): void {
+  const userId = localStorage.getItem('userId');
+  if (!userId || userId.trim() === '') {
+    this.router.navigateByUrl("/login");
+    return;
+  }
+  this._wishlistService.removeFromWishlist(userId, productId).subscribe({
+    next: (res) => {
+      console.log("Product removed from wishlist", res);
+      //toggle the wishlist state
+      this.wishlistProductIds = this.wishlistProductIds.filter(id => id !== productId);
+      this.showToast("Product removed from wishlist successfully!", 'success');
+    },
+    error: (err) => {
+      console.log("error", err);
+      const errorMsg = err?.error?.message || "Something went wrong!";
+      this.showToast(errorMsg, 'error');
+    }
+  });
+}
+
+
+
+// toggle to check if the product is in the wishlist
+isInWishlist(productId: number): boolean {
+  return this.wishlistProductIds.includes(productId);
+}
+toggleWishlist(productId: number): void {
+  if (this.isInWishlist(productId)) {
+    this.removeFromWishlist(productId);
+  } else {
+    this.addToWishlist(productId);
+  }
+}
+
+
+
+
+
+
   //go to Product Details
   goToProductDetails(productId: number): void {
     console.log("hi")
     this.router.navigate(['/details', productId]);
   }
   // pagination
-  loadPage(pageNumber: number): void {
-    this.currentPage = pageNumber;
-    const startIndex = (this.currentPage - 1) * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
-    this.displayedSubcategories = this.category.subcategory.slice(startIndex, endIndex);
-  }
-  
+  // loadPage(pageNumber: number): void {
+  //   this.currentPage = pageNumber;
+  //   const startIndex = (this.currentPage - 1) * this.pageSize;
+  //   const endIndex = startIndex + this.pageSize;
+  //   this.displayedSubcategories = this.category.subcategory.slice(startIndex, endIndex);
+  // }
+
 
 //toast mess
 showToast(message: string, type: 'success' | 'error' = 'success') {
@@ -175,5 +259,15 @@ filterProductsByBrands(): void {
     );
   }
 }
+onSubCatCheckboxChange(event: Event, subCatId: number): void {
+  const isChecked = (event.target as HTMLInputElement).checked;
+
+  if (isChecked) {
+    this.selectedSubCatIds.push(subCatId);
+  } else {
+    this.selectedSubCatIds = this.selectedSubCatIds.filter(id => id !== subCatId);
+  }
+}
+
 
 }

@@ -6,7 +6,10 @@ import { CommonModule } from '@angular/common';
 import { CartDTO } from '../../Models/cart';
 import { IProduct } from '../../Models/Category';
 import { CartService } from '../../Services/Customer/cart.service';
+import { AwadWishlistService } from '../../Services/Customer/awad-wishlist.service';
+import { environment } from '../../Environment/Environment.prod';
 declare var bootstrap: any;
+
 
 
 @Component({
@@ -24,23 +27,72 @@ export class ProductDetailsComponent implements OnInit {
     customerName: '',
     items: []
   };
-  // user= localStorage.getItem('userId') || '';
+    readonly imgbaseUrl=environment.imageBaseUrl;
 
 
   //toast mess
 toastMessage = '';
+// toggle wishlist
+wishlistProductIds: number[] = [];
+
 toastClass: string = 'bg-success';
   constructor(
     private activerouter:ActivatedRoute,
     private _productservice:ProductsService,
     private _CartServices:CartService,
-    private router:Router
+    private router:Router,
+    private _wishlistService:AwadWishlistService,
+
 
   ) {}
-  
+// Get the user ID from local storage
   get user(): string {
     return localStorage.getItem('userId') || '';
   }
+  //add to wishlist
+  addToWishlist(productId: number): void {
+    const userId = localStorage.getItem('userId');
+    if (!userId || userId.trim() === '') {
+      this.router.navigateByUrl("/login");
+      return;
+    }
+    this._wishlistService.addToWishlist(userId, productId).subscribe({
+      next: (res) => {
+        console.log("Product added to wishlist", res);
+        //toggle the wishlist state
+        this.wishlistProductIds.push(productId);
+
+        this.showToast("Product added to wishlist successfully!", 'success');
+      },
+      error: (err) => {
+        console.log("error", err);
+        const errorMsg = err?.error?.message || "Something went wrong!";
+        this.showToast(errorMsg, 'error');
+      }
+    });
+  }
+  //remove from wishlist
+  removeFromWishlist(productId: number): void {
+    const userId = localStorage.getItem('userId');
+    if (!userId || userId.trim() === '') {
+      this.router.navigateByUrl("/login");
+      return;
+    }
+    this._wishlistService.removeFromWishlist(userId, productId).subscribe({
+      next: (res) => {
+        console.log("Product removed from wishlist", res);
+        //toggle the wishlist state
+        this.wishlistProductIds = this.wishlistProductIds.filter(id => id !== productId);
+        this.showToast("Product removed from wishlist successfully!", 'success');
+      },
+      error: (err) => {
+        console.log("error", err);
+        const errorMsg = err?.error?.message || "Something went wrong!";
+        this.showToast(errorMsg, 'error');
+      }
+    });
+  }
+
   ngOnInit(): void {
     //get product by id from url
     this.activerouter.paramMap.subscribe((paramMap)=>{
@@ -64,9 +116,35 @@ toastClass: string = 'bg-success';
         console.log("Error loading cart data", err);
       }
     });
+    // Check if the user is logged in and fetch wishlist items`
+    if (this.user) {
+      this._wishlistService.getWishlist(this.user).subscribe({
+        next: (wishlist) => {
+          this.wishlistProductIds = wishlist.wishlistItems
+          .map(p => p.products.find(i => i.productId)?.productId || 0)
+          .filter(id => id !== 0);
+                },
+        error: (err) => {
+          console.error("Error fetching wishlist", err);
+        }
+      });
+    }
 
 
   }
+// toggle to check if the product is in the wishlist
+  isInWishlist(productId: number): boolean {
+    return this.wishlistProductIds.includes(productId);
+  }
+  toggleWishlist(productId: number): void {
+    if (this.isInWishlist(productId)) {
+      this.removeFromWishlist(productId);
+    } else {
+      this.addToWishlist(productId);
+    }
+  }
+
+
   get alreadyInCartQty(): number {
     const item = this.cartData.items.find(i => i.productId === this.product?.productId);
     return item ? item.quantity : 0;
@@ -96,7 +174,7 @@ showToast(message: string, type: 'success' | 'error' = 'success') {
     console.error('Toast element not found');
   }
 }
-
+//from item itself
   addToCart(product: IProduct): void {
     const userId = localStorage.getItem('userId');
 
@@ -123,7 +201,27 @@ showToast(message: string, type: 'success' | 'error' = 'success') {
       }
     });
   }
+//add to cart from related div
+addToCartFromRelated(product: IProduct): void {
+  const userId = localStorage.getItem('userId');
 
+  if (!userId || userId.trim() === '') {
+    this.router.navigateByUrl("/login");
+    return;
+  }
+  this._CartServices.addItemToCart(product, this.selectedQuantity).subscribe({
+    next: (res) => {
+      console.log("Product added to cart", res);
+      this.showToast("Product added to cart successfully!", 'success');
+    },
+    error: (err) => {
+      console.log("error", err);
+      const errorMsg = err?.error?.message || "Something went wrong!";
+      this.showToast(errorMsg, 'error');
+    }
+
+  });
+}
   checkQuantity(): void {
     if (this.selectedQuantity > this.maxAvailableQuantity) {
       this.selectedQuantity = this.maxAvailableQuantity; // Limit quantity to available stock
@@ -156,7 +254,7 @@ showToast(message: string, type: 'success' | 'error' = 'success') {
         this.relatedProducts = products.filter(p =>
           p.subCategoryName === this.product.subCategoryName &&
           p.productId !== this.product.productId // exclude current product
-        );
+        ).sort(() => 0.5 - Math.random()).slice(0,6);
       },
       error: (err) => {
         console.log("Error fetching related products", err);

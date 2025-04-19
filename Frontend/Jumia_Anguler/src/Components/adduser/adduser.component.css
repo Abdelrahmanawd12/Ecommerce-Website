@@ -1,0 +1,87 @@
+.user-form-container {
+    background-color: #f5f5f5;
+    padding: 30px 0;
+    min-height: 100vh;
+  }
+  
+  .jumia-form-card {
+    max-width: 700px;
+    margin: 0 auto;
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background: white;
+  }
+  
+  .form-title {
+    color: #FF9900;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 24px;
+  }
+  
+  .jumia-form {
+    padding: 20px;
+  }
+  
+  .jumia-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+  }
+  
+  .jumia-input, .jumia-select {
+    padding: 12px 15px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    transition: all 0.3s;
+  }
+  
+  .jumia-input:focus, .jumia-select:focus {
+    border-color: #FF9900;
+    box-shadow: 0 0 0 2px rgba(255, 153, 0, 0.2);
+  }
+  
+  .jumia-error {
+    color: #e53935;
+    font-size: 12px;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .jumia-error i {
+    margin-right: 5px;
+  }
+  
+  .jumia-submit-btn {
+    background-color: #FF9900;
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 4px;
+    font-weight: 600;
+    margin-top: 15px;
+    transition: all 0.3s;
+  }
+  
+  .jumia-submit-btn:hover {
+    background-color: #e68a00;
+  }
+  
+  .jumia-submit-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  
+  .jumia-alert {
+    border-radius: 4px;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }

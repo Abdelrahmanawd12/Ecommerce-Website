@@ -1,69 +1,80 @@
 <div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center bg-light">
-    <div class="w-100" style="max-width: 1200px;">
-      <div class="card shadow-lg border-0" style="border-radius: 15px; background: #fff;">
-        <div class="card-body p-5">
-          <h2 class="text-center text-warning mb-4">Update User</h2>
-  
-          <!-- Success/Error Messages -->
-          <div *ngIf="successMessage" class="alert alert-success text-center">{{ successMessage }}</div>
-          <div *ngIf="errorMessage" class="alert alert-danger text-center">{{ errorMessage }}</div>
-  
-          <form [formGroup]="updateUserForm" (ngSubmit)="onSubmit()">
-            <div class="row g-3">
-              <!-- First Name -->
-              <div class="col-md-6">
-                <input type="text" class="form-control" formControlName="firstName" placeholder="First Name">
-                <div *ngIf="updateUserForm.get('firstName')?.invalid && updateUserForm.get('firstName')?.touched" class="form-text text-danger">
-                  First Name is required
-                </div>
-              </div>
-  
-              <!-- Last Name -->
-              <div class="col-md-6">
-                <input type="text" class="form-control" formControlName="lastName" placeholder="Last Name">
-                <div *ngIf="updateUserForm.get('lastName')?.invalid && updateUserForm.get('lastName')?.touched" class="form-text text-danger">
-                  Last Name is required
-                </div>
-              </div>
-  
-              <!-- Email -->
-              <div class="col-md-12">
-                <input type="email" class="form-control" formControlName="email" placeholder="Email Address">
-                <div *ngIf="updateUserForm.get('email')?.invalid && updateUserForm.get('email')?.touched" class="form-text text-danger">
-                  Valid email is required
-                </div>
-              </div>
-  
-              <!-- Role -->
-              <div class="col-md-12">
-                <input type="text" class="form-control" formControlName="role" placeholder="Role">
-                <div *ngIf="updateUserForm.get('role')?.invalid && updateUserForm.get('role')?.touched" class="form-text text-danger">
-                  Role is required
-                </div>
-              </div>
-  
-              <!-- Gender -->
-              <div class="col-md-6">
-                <select class="form-select" formControlName="gender">
-                  <option value="" disabled>-- Choose Gender --</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                </select>
-              </div>
-  
-              <!-- Date of Birth -->
-              <div class="col-md-12">
-                <input type="date" class="form-control" formControlName="dateOfBirth">
-              </div>
-  
-              <!-- Submit Button -->
-              <div class="col-12 d-grid">
-                <button class="btn btn-warning mt-3" [disabled]="updateUserForm.invalid">Update User</button>
+  <div class="w-100" style="max-width: 1200px;">
+    <div class="card shadow-lg border-0 professional-card">
+      <div class="card-body p-5">
+        <h2 class="text-center text-primary mb-3">Update User</h2>
+
+        <div *ngIf="successMessage" class="alert alert-success professional-alert">{{ successMessage }}</div>
+        <div *ngIf="errorMessage" class="alert alert-danger professional-alert">{{ errorMessage }}</div>
+
+      
+        <form [formGroup]="updateUserForm" (ngSubmit)="onSubmit()">
+          <div class="row g-3">
+                <div class="col-md-6">
+              <label class="form-label">First Name</label>
+              <input type="text" class="form-control professional-input" 
+                     formControlName="firstName" placeholder="First Name">
+              <div *ngIf="updateUserForm.get('firstName')?.invalid && updateUserForm.get('firstName')?.touched" 
+                   class="invalid-feedback">
+                First Name is required
               </div>
             </div>
-          </form>
-        </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Last Name</label>
+              <input type="text" class="form-control professional-input" 
+                     formControlName="lastName" placeholder="Last Name">
+              <div *ngIf="updateUserForm.get('lastName')?.invalid && updateUserForm.get('lastName')?.touched" 
+                   class="invalid-feedback">
+                Last Name is required
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <label class="form-label">Email Address</label>
+              <input type="email" class="form-control professional-input" 
+                     formControlName="email" placeholder="Email Address">
+              <div *ngIf="updateUserForm.get('email')?.invalid && updateUserForm.get('email')?.touched" 
+                   class="invalid-feedback">
+                Valid email is required
+              </div>
+            </div>
+
+        
+            <div class="col-md-12">
+              <label class="form-label">Role</label>
+              <input type="text" class="form-control professional-input" 
+                     formControlName="role" placeholder="Role">
+              <div *ngIf="updateUserForm.get('role')?.invalid && updateUserForm.get('role')?.touched" 
+                   class="invalid-feedback">
+                Role is required
+              </div>
+            </div>
+
+          
+            <div class="col-md-6">
+              <label class="form-label">Gender</label>
+              <select class="form-select professional-input" formControlName="gender">
+                <option value="" disabled>-- Choose Gender --</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </div>
+
+       
+            <div class="col-md-6">
+              <label class="form-label">Date of Birth</label>
+              <input type="date" class="form-control professional-input" formControlName="dateOfBirth">
+            </div>
+
+            <div class="col-12 d-grid mt-4">
+              <button class="btn btn-primary professional-btn" [disabled]="updateUserForm.invalid">
+                Update User
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>
-  
+</div>
