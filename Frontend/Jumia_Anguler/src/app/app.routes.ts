@@ -41,6 +41,8 @@ export const routes: Routes = [
       {path:'adduser', loadComponent: () => import('../Components/adduser/adduser.component').then((m) => m.AdduserComponent) },
        { path: 'edit-user/:id', loadComponent: () => import('../Components/edituser/edituser.component').then((m) => m.EditUserComponent) },
 {path:'accountprofile', loadComponent: () => import('../Components/admin-accountprofile/admin-accountprofile.component').then((m) => m.AdminAccountprofileComponent) },
+{path:'categories', loadComponent: () => import('../Components/admin-category/admin-category.component').then((m) => m.AdminCategoryComponent) },
+{path:'addcategory', loadComponent: () => import('../Components/add-category/add-category.component').then((m) => m.AddCategoryComponent) },
     ]
   },
   //Rania

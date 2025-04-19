@@ -29,20 +29,18 @@ namespace Jumia_Api.Services.Admin_Service
             Task<bool> UpdateProductAsync(ProductsDTO productDto);
             Task<bool> DeleteProductAsync(int productId);
 
-      
-            Task<IEnumerable<CategoryDTO>> GetAllCategoriesAsync(); 
-            Task<CategoryDTO> GetCategoryByIdAsync(int categoryId); 
-            Task<CategoryDTO> AddCategoryAsync(CategoryDTO categoryDto); 
-            Task<bool> UpdateCategoryAsync(int categoryId, CategoryDTO categoryDto); 
-            Task<bool> DeleteCategoryAsync(int categoryId);
 
-            
-            Task<IEnumerable<SubCategoryDTO>> GetAllSubCategoriesAsync(); 
-            Task<SubCategoryDTO> GetSubCategoryByIdAsync(int subCategoryId); 
-            Task<SubCategoryDTO> AddSubCategoryAsync(SubCategoryDTO subCategoryDto);
-            Task<bool> UpdateSubCategoryAsync(int subCategoryId, SubCategoryDTO subCategoryDto); 
-            Task<bool> DeleteSubCategoryAsync(int subCategoryId);
-        }
+        Task<IEnumerable<adminCategoryDTO>> GetAllCategoriesAsync();
+        Task<adminCategoryDTO> GetCategoryByIdAsync(int categoryId);
+        Task<adminCategoryDTO> AddCategoryAsync(adminCategoryDTO categoryDto);
+        Task<bool> UpdateCategoryAsync(int categoryId, adminCategoryDTO categoryDto);
+        Task<bool> DeleteCategoryAsync(int categoryId);
+
+
+
+        
+        
+    }
     }
 
 

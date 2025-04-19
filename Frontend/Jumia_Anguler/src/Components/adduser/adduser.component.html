@@ -1,79 +1,85 @@
-<div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center bg-light">
-  <div class="w-100" style="max-width: 1200px;">
-    <div class="card shadow-lg border-0" style="border-radius: 15px; background: #fff;">
-      <div class="card-body p-5">
-        <h2 class="text-center text-warning mb-4">Add New User</h2>
+<div class="container-fluid user-form-container">
+  <div class="jumia-form-card">
+    <div class="card-body">
+      <h2 class="form-title">Add New User</h2>
 
-        <!-- Success/Error Messages -->
-        <div *ngIf="successMessage" class="alert alert-success text-center">{{ successMessage }}</div>
-        <div *ngIf="errorMessage" class="alert alert-danger text-center">{{ errorMessage }}</div>
+      <!-- Success/Error Messages -->
+      <div *ngIf="successMessage" class="alert alert-success jumia-alert">{{ successMessage }}</div>
+      <div *ngIf="errorMessage" class="alert alert-danger jumia-alert">{{ errorMessage }}</div>
 
-        <form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
-          <div class="row g-3">
-            <!-- First Name -->
-            <div class="col-md-6">
-              <input type="text" class="form-control" formControlName="firstName" placeholder="First Name">
-              <div *ngIf="addUserForm.get('firstName')?.invalid && addUserForm.get('firstName')?.touched" class="form-text text-danger">
-                First Name is required
-              </div>
-            </div>
-
-            <!-- Last Name -->
-            <div class="col-md-6">
-              <input type="text" class="form-control" formControlName="lastName" placeholder="Last Name">
-              <div *ngIf="addUserForm.get('lastName')?.invalid && addUserForm.get('lastName')?.touched" class="form-text text-danger">
-                Last Name is required
-              </div>
-            </div>
-
-            <!-- Email -->
-            <div class="col-md-12">
-              <input type="email" class="form-control" formControlName="email" placeholder="Email Address">
-              <div *ngIf="addUserForm.get('email')?.invalid && addUserForm.get('email')?.touched" class="form-text text-danger">
-                Valid email is required
-              </div>
-            </div>
-
-            <!-- Role -->
-            <div class="col-md-6">
-              <select class="form-select" formControlName="role">
-                <option value="" disabled>-- Choose Role --</option>
-                <option value="Customer">Customer</option>
-                <option value="Admin">Admin</option>
-                <option value="Seller">Seller</option>
-              </select>
-              <div *ngIf="addUserForm.get('role')?.invalid && addUserForm.get('role')?.touched" class="form-text text-danger">
-                Role is required
-              </div>
-            </div>
-
-            <!-- Gender -->
-            <div class="col-md-6">
-              <select class="form-select" formControlName="gender">
-                <option value="" disabled>-- Choose Gender --</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-              </select>
-              <div *ngIf="addUserForm.get('gender')?.invalid && addUserForm.get('gender')?.touched" class="form-text text-danger">
-                Gender is required
-              </div>
-            </div>
-
-            <!-- Date of Birth -->
-            <div class="col-md-12">
-              <input type="date" class="form-control" formControlName="dateOfBirth">
-              <div *ngIf="addUserForm.get('dateOfBirth')?.invalid && addUserForm.get('dateOfBirth')?.touched" class="form-text text-danger">
-                Date of Birth is required
-              </div>
-            </div>
-
-            <!-- Submit Button -->
-            <div class="col-12 d-grid">
-              <button class="btn btn-warning mt-3" [disabled]="addUserForm.invalid">Add User</button>
+      <form [formGroup]="addUserForm" (ngSubmit)="onSubmit()" class="jumia-form">
+        <div class="row g-3">
+          <!-- First Name -->
+          <div class="col-md-6">
+            <label class="jumia-label">First Name</label>
+            <input type="text" class="form-control jumia-input" formControlName="firstName" placeholder="Enter first name">
+            <div *ngIf="addUserForm.get('firstName')?.invalid && addUserForm.get('firstName')?.touched" class="jumia-error">
+              <i class="fas fa-exclamation-circle"></i> First name is required
             </div>
           </div>
-        </form>
-      </div>
+
+          <!-- Last Name -->
+          <div class="col-md-6">
+            <label class="jumia-label">Last Name</label>
+            <input type="text" class="form-control jumia-input" formControlName="lastName" placeholder="Enter last name">
+            <div *ngIf="addUserForm.get('lastName')?.invalid && addUserForm.get('lastName')?.touched" class="jumia-error">
+              <i class="fas fa-exclamation-circle"></i> Last name is required
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="col-md-12">
+            <label class="jumia-label">Email Address</label>
+            <input type="email" class="form-control jumia-input" formControlName="email" placeholder="Enter email address">
+            <div *ngIf="addUserForm.get('email')?.invalid && addUserForm.get('email')?.touched" class="jumia-error">
+              <i class="fas fa-exclamation-circle"></i> Valid email is required
+            </div>
+          </div>
+
+          <!-- Role -->
+          <div class="col-md-6">
+            <label class="jumia-label">Role</label>
+            <select class="form-select jumia-select" formControlName="role">
+              <option value="" disabled selected>-- Select Role --</option>
+              <option value="Customer">Customer</option>
+              <option value="Admin">Admin</option>
+              <option value="Seller">Seller</option>
+            </select>
+            <div *ngIf="addUserForm.get('role')?.invalid && addUserForm.get('role')?.touched" class="jumia-error">
+              <i class="fas fa-exclamation-circle"></i> Role is required
+            </div>
+          </div>
+
+          <!-- Gender -->
+          <div class="col-md-6">
+            <label class="jumia-label">Gender</label>
+            <select class="form-select jumia-select" formControlName="gender">
+              <option value="" disabled selected>-- Select Gender --</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+            <div *ngIf="addUserForm.get('gender')?.invalid && addUserForm.get('gender')?.touched" class="jumia-error">
+              <i class="fas fa-exclamation-circle"></i> Gender is required
+            </div>
+          </div>
+
+          <!-- Date of Birth -->
+          <div class="col-md-12">
+            <label class="jumia-label">Date of Birth</label>
+            <input type="date" class="form-control jumia-input" formControlName="dateOfBirth">
+            <div *ngIf="addUserForm.get('dateOfBirth')?.invalid && addUserForm.get('dateOfBirth')?.touched" class="jumia-error">
+              <i class="fas fa-exclamation-circle"></i> Date of birth is required
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="col-12">
+            <button class="btn jumia-submit-btn" [disabled]="addUserForm.invalid">
+              <i class="fas fa-user-plus"></i> Add User
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>
