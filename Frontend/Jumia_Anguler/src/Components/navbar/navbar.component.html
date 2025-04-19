@@ -28,7 +28,7 @@
                 <button class="signin-btn">Sign In</button>
                 <a href="#"><i class="fa fa-user"></i> My Account</a>
                 <a href="#"><i class="fa fa-box"></i> Orders</a>
-                <a href="#"><i class="fa fa-heart"></i> Wishlist</a>
+                <a routerLink="/awadwishlist"><i class="fa fa-heart"></i> Wishlist</a>
               </div>
             </div>
 
@@ -47,7 +47,10 @@
                 </div>
             </div>
 
-            <a  routerLink="/cart"><i class="fa fa-shopping-cart">    </i> Cart</a>
-        </div>
+            <button class="btn" routerLink="/cart" >
+              <i class="fa-solid fa-cart-shopping" style="font-size: 30px;"></i>
+              <span class="badge bg-warning">{{totalItem}}</span>
+            </button>
+                  </div>
     </div>
 </div>

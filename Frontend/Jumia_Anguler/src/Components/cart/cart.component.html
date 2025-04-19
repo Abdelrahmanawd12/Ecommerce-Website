@@ -23,7 +23,7 @@
                 <td class="text-center align-middle">{{ i + 1 }}</td>
                 <td class="align-middle font-weight-bold">{{ item.productName }}</td>
                 <td class="text-center align-middle">
-                  <img [src]="item.imageUrl" class="img-thumbnail" style="max-width: 80px; height: auto;" alt="product image" />
+                  <img [src]="imgbaseUrl+item.imageUrl" class="img-thumbnail" style="max-width: 80px; height: auto;" alt="product image" />
                 </td>
                 <td class="text-center align-middle">
                   <div class="d-flex justify-content-center align-items-center gap-2">
@@ -47,7 +47,7 @@
                 <td class="text-center align-middle">{{ i + 1 }}</td>
                 <td class="align-middle font-weight-bold">{{ item.productName }}</td>
                 <td class="text-center align-middle">
-                  <img [src]="item.imageUrl" class="img-thumbnail" style="max-width: 80px; height: auto; opacity: 0.5;" alt="product image" />
+                  <img [src]="imgbaseUrl+item.imageUrl" class="img-thumbnail" style="max-width: 80px; height: auto; opacity: 0.5;" alt="product image" />
                 </td>
                 <td class="text-center align-middle">
                   <small class="text-danger">Out of stock</small>
@@ -66,7 +66,7 @@
                 <td class="text-center align-middle">{{ i + 1 }}</td>
                 <td class="align-middle font-weight-bold">{{ item.productName }}</td>
                 <td class="text-center align-middle">
-                  <img [src]="item.imageUrl" class="img-thumbnail" style="max-width: 80px; height: auto;" alt="product image" />
+                  <img [src]="imgbaseUrl+item.imageUrl" class="img-thumbnail" style="max-width: 80px; height: auto;" alt="product image" />
                 </td>
                 <td class="text-center align-middle">
                   <div class="text-danger mb-1"><del>{{item.quantity}}</del></div>

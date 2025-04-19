@@ -208,6 +208,12 @@ export class SellOnJumiaComponent {
         .subscribe({
           next: (response) => {
             console.log('Registration successful:', response);
+            this.isLoading = true;
+
+            setTimeout(() => {
+              this.isLoading = false;
+              this.router.navigate(['/login']);
+            }, 3000); 
           },
           error: (error) => {
             console.error('Registration failed:', error);
@@ -215,12 +221,7 @@ export class SellOnJumiaComponent {
             this.isLoading = false;
           },
         });
-      this.isLoading = true;
-
-      setTimeout(() => {
-        this.isLoading = false;
-        this.router.navigate(['/sellerDashboard']);
-      }, 3000); 
+  
     }
   }
 

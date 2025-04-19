@@ -25,13 +25,13 @@ namespace Jumia_Api.Controllers.SellerControllers
 
         //-----------------------------------------------------------------------------------------
         //Get All Products
-        [HttpGet("/products")] //[/products]
+        [HttpGet("/products")]
         [ProducesResponseType(200, Type = typeof(ProductsSellerDTO))]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
         [ProducesErrorResponseType(typeof(void))]
         [EndpointSummary("Get All Seller's Products")]
-        [EndpointDescription("Get All Products By of Seller by Seller ID")]
+        [EndpointDescription("Get All Products By Seller ID where isDeleted = false")]
         public IActionResult GetAllProducts(string SellerId)
         {
             if (string.IsNullOrWhiteSpace(SellerId))
@@ -39,17 +39,20 @@ namespace Jumia_Api.Controllers.SellerControllers
                 return BadRequest("SellerId is required.");
             }
 
-            var products = unit.ProductsRepository.GetAll().Where(p => p.SellerId == SellerId).ToList();
-
-            var dto = mapper.Map<List<ProductsSellerDTO>>(products);
+            var products = unit.ProductsRepository.GetAll()
+                                    .Where(p => p.SellerId == SellerId && p.IsDeleted == false)
+                                    .ToList();
 
             if (products == null || !products.Any())
             {
                 return NotFound("No products found for the specified seller.");
             }
 
+            var dto = mapper.Map<List<ProductsSellerDTO>>(products);
+
             return Ok(dto);
         }
+
 
         //-----------------------------------------------------------------------------------------
         //Get Product By Id
@@ -157,34 +160,27 @@ namespace Jumia_Api.Controllers.SellerControllers
 
             return Ok(catsDto);
         }
-        //---------------------------------------------------------------------------------------
-        //Get Product Sales
-        [ProducesResponseType(200)]
+        //Get All SubCategories
+        [HttpGet("/getAllSubcategories")]
+        [ProducesResponseType(200, Type = typeof(SubCategoryDTO))]
         [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
         [ProducesErrorResponseType(typeof(void))]
-        [EndpointSummary("Get Product Sales")]
-        [EndpointDescription("Returns total sales (quantity) per product")]
-        [HttpGet("/productSales")]
-        public IActionResult GetProductSales()
+        [EndpointSummary("Get All Subcategories")]
+        [EndpointDescription("Get All Subcategories")]
+        public IActionResult GetAllSubs()
         {
-            var orderItems = unit.OrderItemRepository.GetAll();
+            var subs = unit.SubCategoryRepository.GetAll();
 
-            if (orderItems == null || !orderItems.Any())
+            if (subs == null || !subs.Any())
             {
-                return NotFound("No order items found.");
+                return NotFound("No categories found.");
             }
 
-            var salesData = orderItems
-                .GroupBy(oi => new { oi.ProductId, oi.Product.Name })
-                .Select(g => new productSalesDTO
-                {
-                    ProductName = g.Key.Name,
-                    Sales = g.Sum(oi => oi.Quantity)
-                })
-                .ToList();
+            var catsDto = mapper.Map<List<SubCategoryDTO>>(subs);
 
-            return Ok(salesData);
-        }
+            return Ok(catsDto);
+        }     
 
         //-----------------------------------------------------------------------------------------
         //Delete Product By Id
@@ -193,9 +189,9 @@ namespace Jumia_Api.Controllers.SellerControllers
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
         [ProducesErrorResponseType(typeof(void))]
-        [EndpointSummary("Delete Product By Id")]
-        [EndpointDescription("Delete Seller Product By Id")]
-        public IActionResult DeleteProductById([FromQuery]string SellerId,[FromRoute(Name ="prodId")] int ProdId)
+        [EndpointSummary("Mark Product as Deleted")]
+        [EndpointDescription("Mark Seller Product as Deleted By Id")]
+        public IActionResult DeleteProductById([FromQuery] string SellerId, [FromRoute(Name = "prodId")] int ProdId)
         {
             if (string.IsNullOrWhiteSpace(SellerId))
             {
@@ -214,10 +210,12 @@ namespace Jumia_Api.Controllers.SellerControllers
                 return Unauthorized("The product does not belong to the specified seller.");
             }
 
-            unit.ProductsRepository.Delete(ProdId);
+            product.IsDeleted = true;
+
+            unit.ProductsRepository.Update(product);
             unit.Save();
 
-            return Ok("Product deleted successfully.");
+            return Ok("Product has been marked as deleted successfully.");
         }
 
         //----------------------------------------------------------------------------------
@@ -259,6 +257,7 @@ namespace Jumia_Api.Controllers.SellerControllers
                 Brand = dto.Brand,
                 Discount = dto.Discount,
                 Weight = dto.Weight,
+                Status = dto.Status,
                 SubCategoryId = dto.SubCategoryId,
                 SellerId = dto.SellerId,
                 ProductImages = imagePaths.Select(p => new ProductImage { Url = p }).ToList(),
@@ -267,7 +266,7 @@ namespace Jumia_Api.Controllers.SellerControllers
             unit.ProductsRepository.Add(product);
             unit.Save();
 
-            return Ok("Product added successfully");
+            return Ok(new { message = "Product updated successfully" });
         }
 
         //-------------------------------------------------------------------------------------
@@ -323,11 +322,9 @@ namespace Jumia_Api.Controllers.SellerControllers
             unit.ProductsRepository.Update(product);
             unit.Save();
 
-            return Ok("Product updated successfully");
+            return Ok(new { message = "Product updated successfully" });
         }
 
-        //-------------------------------------------------------------------------------------
-        //Order
         //-------------------------------------------------------------------------------------
         //Get All Orders By Seller Id
         [HttpGet("/orders/{sellerId}")]
@@ -541,7 +538,7 @@ namespace Jumia_Api.Controllers.SellerControllers
 
             return Ok(new { message = $"Order status updated to {request.Status} for OrderId {request.OrderId}." });
         }
-
+       
         //-------------------------------------------------------------------------------------
         // Delete Order By Order Id And Seller Id
         [HttpDelete("/deleteOrder")]

@@ -33,7 +33,7 @@
         <!-- Carousel Items -->
         <div class="carousel-inner rounded shadow-sm">
           <div *ngFor="let image of product.imageUrls; let i = index" class="carousel-item" [class.active]="i === 0">
-            <img [src]="image" class="d-block w-100 object-fit-contain" style="height: 400px;" alt="Product Image">
+            <img [src]="imgbaseUrl+image" class="d-block w-100 object-fit-contain" style="height: 400px;" alt="Product Image">
           </div>
         </div>
 
@@ -57,7 +57,12 @@
         <div class="card-body">
           <div class="d-flex justify-content-between">
             <h3 class="card-title fw-bold mb-3">{{ product.name }}</h3>
-            <a> <i class="fa-regular fa-heart" style="font-size: 25px; cursor: pointer;"></i> </a>
+            <!-- wishlist toggle  -->
+            <a  (click)="toggleWishlist(product.productId)"> <i
+              [class.fa-solid]="isInWishlist(product.productId)"
+              [class.fa-regular]="!isInWishlist(product.productId)"
+              class="fa-heart"
+                      style="font-size: 25px; cursor: pointer;"></i> </a>
 
           </div>
 
@@ -122,13 +127,22 @@
       <div class=" h-100 shadow-sm rounded-3 overflow-hidden"
            (click)="goToProductDetails(p.productId)">
         <div class="product-image-container">
-          <img [src]="p.imageUrls[0]" class="product-image" alt="{{ p.name }}" loading="lazy">
+          <img [src]="imgbaseUrl+p.imageUrls[0]" class="product-image" alt="{{ p.name }}" loading="lazy">
           <div class="product-badge" *ngIf="p.discount > 0">-{{ (p.discount/p.price)*100| number:'1.2-2'  }}%</div>
         </div>
         <div class="product-body p-3">
           <div class="d-flex justify-content-between">
             <h6 class="product-name mb-2">{{ p.name }}</h6>
-            <a> <i class="fa-regular fa-heart"></i> </a>
+
+              <!-- wishlist toggle  -->
+              <a  (click)="toggleWishlist(p.productId);$event.stopPropagation() "> <i
+                [class.fa-solid]="isInWishlist(p.productId)"
+                [class.fa-regular]="!isInWishlist(p.productId)"
+                class="fa-heart"
+                        style="font-size: 25px; cursor: pointer;"></i> </a>
+
+
+
           </div>
 
           <div class="d-flex justify-content-between align-items-center">

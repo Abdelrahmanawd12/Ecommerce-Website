@@ -7,19 +7,26 @@ import { Routes } from '@angular/router';
 import { AccountComponent } from '../Components/account/account.component';
 import { WishlistComponent } from '../Components/wishlist/wishlist.component';
 import { AdminLayoutComponent } from '../Components/admin-layout/admin-layout.component';
+import { AwadWishListComponent } from '../Components/awad-wish-list/awad-wish-list.component';
 
 
 export const routes: Routes = [
- 
+
 {path:'navbar', loadComponent: () => import('../Components/navbar/navbar.component').then((m) => m.NavbarComponent)},
   {path:'footer' , loadComponent: () => import('../Components/footer/footer.component').then((m) => m.FooterComponent)},
 
   //Abdelrahman
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
-  { path: 'shop', component: ShopComponent },
+  {path:'home' , loadComponent: () => import('../Components/home/home.component').then((m) => m.HomeComponent)},
 
-  { path: 'cart', component: CartComponent },
+  {path:'shop' , loadComponent: () => import('../Components/Cstomer/shop/shop.component').then((m) => m.ShopComponent)},
+
+
+  {path:'cart' , loadComponent: () => import('../Components/cart/cart.component').then((m) => m.CartComponent)},
+
+  {path:'awadwishlist' , loadComponent: () => import('../Components/awad-wish-list/awad-wish-list.component').then((m) => m.AwadWishListComponent)},
+
+
 
     //Ahmed
     //{ path: 'order/:id', component: OrderComponent  },
@@ -66,7 +73,7 @@ export const routes: Routes = [
             .then((m) => m.ManageProductComponent)
       },
       {
-        path: 'prductSales',
+        path: 'sales',
         loadComponent: () =>
           import('../Components/Seller_Dashboard_components/seller-sales/seller-sales.component')
             .then((m) => m.SellerSalesComponent)

@@ -1,123 +1,123 @@
 <div class="dashboard-container">
-    <div class="header">
-      <h1>Dashboard</h1>
-    </div>
-  
-    <!-- Overview Cards -->
-    <div class="row overview-cards">
-      <div class="col-md-4">
-        <div class="card stat-card hover-animate">
-          <div class="card-body">
-            <h5 class="card-title">Total Revenue</h5>
-            <h2 class="card-value">{{ dashboardStats.revenue }}</h2>
-            <div class="trend positive">
-              <i class="bi bi-arrow-up"></i> 5% vs last 30 days
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card stat-card hover-animate">
-          <div class="card-body">
-            <h5 class="card-title">Total Income</h5>
-            <h2 class="card-value">{{ dashboardStats.income }}</h2>
-            <div class="trend positive">
-              <i class="bi bi-arrow-up"></i> 2.2% vs last 30 days
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card stat-card hover-animate">
-          <div class="card-body">
-            <h5 class="card-title">Total Order</h5>
-            <h2 class="card-value">{{ dashboardStats.orders }}</h2>
-            <div class="trend positive">
-              <i class="bi bi-arrow-up"></i> 4.2% vs last 30 days
-            </div>
+  <div class="header">
+    <h1>Dashboard</h1>
+  </div>
+
+  <!-- Overview Cards -->
+  <div class="row overview-cards">
+    <div class="col-md-4 col-sm-6 col-12">
+      <div class="card stat-card hover-animate">
+        <div class="card-body">
+          <h5 class="card-title">Total Revenue</h5>
+          <h2 class="card-value">{{ dashboardStats.revenue }}</h2>
+          <div class="trend positive">
+            <i class="bi bi-arrow-up"></i> 5% vs last 30 days
           </div>
         </div>
       </div>
     </div>
-  
-    <!-- Charts Row -->
-    <div class="row charts-row">
-      <!-- Balance Chart -->
-      <div class="col-md-8">
-        <div class="card chart-card slide-in-left">
-          <div class="card-header">
-            <h3>Balance Overview</h3>
-          </div>
-          <div class="card-body">
-            <div class="chart-container">
-              <canvas id="balanceChart"></canvas>
-            </div>
-            <div class="chart-legend">
-              <span class="legend-item"><span class="color-box primary"></span> Current</span>
-              <span class="legend-item"><span class="color-box secondary"></span> Previous</span>
-            </div>
-          </div>
-        </div>
-      </div>
-  
-      <!-- Top Sales Products -->
-      <div class="col-md-4">
-        <div class="card products-card slide-in-right">
-          <div class="card-header">
-            <h3>Top Selling Products</h3>
-          </div>
-          <div class="card-body">
-            <ul class="product-list">
-              <li class="product-item hover-animate" *ngFor="let product of dashboardStats.topProducts">
-                <div class="product-info">
-                  <h4>{{ product.name }}</h4>
-                  <span class="price">{{ product.price }}</span>
-                </div>
-                <div class="product-stats">
-                  <span class="sold">{{ product.sold }} Sold</span>
-                  <span class="trend positive">{{ product.trend }}</span>
-                </div>
-              </li>
-            </ul>
+    <div class="col-md-4 col-sm-6 col-12">
+      <div class="card stat-card hover-animate">
+        <div class="card-body">
+          <h5 class="card-title">Total Income</h5>
+          <h2 class="card-value">{{ dashboardStats.income }}</h2>
+          <div class="trend positive">
+            <i class="bi bi-arrow-up"></i> 2.2% vs last 30 days
           </div>
         </div>
       </div>
     </div>
-  
-    <!-- Recent Transactions -->
-    <div class="row">
-      <div class="col-12">
-        <div class="card transactions-card fade-in">
-          <div class="card-header">
-            <h3>Recent Transactions</h3>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th>Product</th>
-                    <th>Purchase No</th>
-                    <th>Date</th>
-                    <th>Amount</th>
-                    <th>Buyer</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="hover-animate" *ngFor="let tx of dashboardStats.transactions">
-                    <td><strong>{{ tx.product }}</strong></td>
-                    <td>{{ tx.id }}</td>
-                    <td>{{ tx.date }}</td>
-                    <td>{{ tx.amount }}</td>
-                    <td>{{ tx.buyer }}</td>
-                    <td><span class="badge bg-success">{{ tx.status }}</span></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+    <div class="col-md-4 col-sm-6 col-12">
+      <div class="card stat-card hover-animate">
+        <div class="card-body">
+          <h5 class="card-title">Total Order</h5>
+          <h2 class="card-value">{{ dashboardStats.orders }}</h2>
+          <div class="trend positive">
+            <i class="bi bi-arrow-up"></i> 4.2% vs last 30 days
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Charts Row -->
+  <div class="row charts-row">
+    <!-- Balance Chart -->
+    <div class="col-lg-8 col-md-12">
+      <div class="card chart-card slide-in-left">
+        <div class="card-header">
+          <h3>Balance Overview</h3>
+        </div>
+        <div class="card-body">
+          <div class="chart-container">
+            <canvas id="balanceChart"></canvas>
+          </div>
+          <div class="chart-legend">
+            <span class="legend-item"><span class="color-box primary"></span> Current</span>
+            <span class="legend-item"><span class="color-box secondary"></span> Previous</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Sales Products -->
+    <div class="col-lg-4 col-md-12">
+      <div class="card products-card slide-in-right">
+        <div class="card-header">
+          <h3>Top Selling Products</h3>
+        </div>
+        <div class="card-body">
+          <ul class="product-list">
+            <li class="product-item hover-animate" *ngFor="let product of dashboardStats.topProducts">
+              <div class="product-info">
+                <h4>{{ product.name }}</h4>
+                <span class="price">{{ product.price }}</span>
+              </div>
+              <div class="product-stats">
+                <span class="sold">{{ product.sold }} Sold</span>
+                <span class="trend positive">{{ product.trend }}</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Transactions -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card transactions-card fade-in">
+        <div class="card-header">
+          <h3>Recent Transactions</h3>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Purchase No</th>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th>Buyer</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="hover-animate" *ngFor="let tx of dashboardStats.transactions">
+                  <td><strong>{{ tx.product }}</strong></td>
+                  <td>{{ tx.id }}</td>
+                  <td>{{ tx.date }}</td>
+                  <td>{{ tx.amount }}</td>
+                  <td>{{ tx.buyer }}</td>
+                  <td><span class="badge bg-success">{{ tx.status }}</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

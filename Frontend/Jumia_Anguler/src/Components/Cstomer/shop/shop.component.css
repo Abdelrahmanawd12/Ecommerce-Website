@@ -213,10 +213,12 @@ body {
 .btn-outline-warning:hover {
   background-color: #ffc400;
 }
-.fa-heart{
-  color: #ffc400;
+.fa-heart {
+  color: red;
+  transition: all 0.3s;
 }
-.fa-heart:hover{
-    box-shadow: 0 0 10px #ffc400;;
 
-  }
+.fa-heart:hover {
+  transform: scale(1.1);
+  text-shadow: 0 0 8px rgba(253, 3, 19, 0.4);
+}

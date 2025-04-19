@@ -74,14 +74,20 @@
             <div class=" h-100 shadow-sm rounded-3 overflow-hidden"
                  (click)="goToProductDetails(p.productId)">
               <div class="product-image-container">
-                <img [src]="p.imageUrls[0]" class="product-image" alt="{{ p.name }}" loading="lazy">
+                <img [src]="imgbaseUrl+p.imageUrls[0]" class="product-image" alt="{{ p.name }}" loading="lazy">
                 <div class="product-badge" *ngIf="p.discount > 0">-{{ (p.discount/p.price)*100| number:'1.2-2'  }}%</div>
               </div>
               <div class="product-body p-3">
 
                 <div class="d-flex justify-content-between">
                   <h6 class="product-name mb-2">{{ p.name }}</h6>
-                  <a> <i class="fa-regular fa-heart"></i> </a>
+
+                  <a  (click)="toggleWishlist(p.productId);$event.stopPropagation() "> <i
+                                  [class.fa-solid]="isInWishlist(p.productId)"
+                                  [class.fa-regular]="!isInWishlist(p.productId)"
+                                  class="fa-heart"
+                                          style="font-size: 25px; cursor: pointer;"></i> </a>
+
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                   <div>
@@ -121,14 +127,19 @@
                   <div class=" h-100 shadow-sm rounded-3 overflow-hidden"
                        (click)="goToProductDetails(p.productId)">
                     <div class="product-image-container">
-                      <img [src]="p.imageUrls[0]" class="product-image" alt="{{ p.name }}" loading="lazy">
+                      <img [src]="imgbaseUrl+p.imageUrls[0]" class="product-image" alt="{{ p.name }}" loading="lazy">
                       <div class="product-badge" *ngIf="p.discount > 0">-{{ (p.discount/p.price)*100| number:'1.2-2'  }}%</div>
                     </div>
                     <div class="product-body p-3">
                       <div class="d-flex justify-content-between">
                         <h6 class="product-name mb-2">{{ p.name }}</h6>
-                        <a> <i class="fa-regular fa-heart"></i> </a>
-                      </div>
+                        <a  (click)="toggleWishlist(p.productId);$event.stopPropagation() "> <i
+                          [class.fa-solid]="isInWishlist(p.productId)"
+                          [class.fa-regular]="!isInWishlist(p.productId)"
+                          class="fa-heart"
+                                  style="font-size: 25px; cursor: pointer;"></i> </a>
+
+                                </div>
                       <div class="d-flex justify-content-between align-items-center">
                         <div>
                           <p class="product-price mb-0" [class.discounted]="p.discount > 0">
@@ -167,14 +178,19 @@
                 <div class=" h-100 shadow-sm rounded-3 overflow-hidden"
                      (click)="goToProductDetails(p.productId)">
                   <div class="product-image-container">
-                    <img [src]="p.imageUrls[0]" class="product-image" alt="{{ p.name }}" loading="lazy">
+                    <img [src]="imgbaseUrl+p.imageUrls[0]" class="product-image" alt="{{ p.name }}" loading="lazy">
                     <div class="product-badge" *ngIf="p.discount > 0">-{{ (p.discount/p.price)*100| number:'1.2-2'  }}%</div>
                   </div>
                   <div class="product-body p-3">
                     <div class="d-flex justify-content-between">
                       <h6 class="product-name mb-2">{{ p.name }}</h6>
-                      <a> <i class="fa-regular fa-heart"></i> </a>
-                    </div>
+                      <a  (click)="toggleWishlist(p.productId);$event.stopPropagation() "> <i
+                        [class.fa-solid]="isInWishlist(p.productId)"
+                        [class.fa-regular]="!isInWishlist(p.productId)"
+                        class="fa-heart"
+                                style="font-size: 25px; cursor: pointer;"></i> </a>
+
+                            </div>
 
                     <div class="d-flex justify-content-between align-items-center">
                       <div>

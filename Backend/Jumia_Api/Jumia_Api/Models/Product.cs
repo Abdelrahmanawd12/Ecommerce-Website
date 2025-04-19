@@ -23,6 +23,9 @@ namespace Jumia.Models
         [ForeignKey("Seller")]
         public string SellerId { get; set; }
 
+        public bool IsDeleted { get; set; }
+        public string Status { get; set; }
+
         // Navigation property for ProductImages (One to Many relationship)
         public virtual ICollection<ProductImage> ProductImages { get; set; }
 

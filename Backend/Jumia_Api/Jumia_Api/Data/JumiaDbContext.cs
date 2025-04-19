@@ -133,11 +133,11 @@ namespace Jumia.Data
                 .HasForeignKey(wi => wi.WishlistId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            //modelBuilder.Entity<Order>()
-            //    .HasOne(o => o.Seller)
-            //    .WithMany()
-            //    .HasForeignKey(o => o.SellerId)
-            //    .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Order>()
+                .HasOne(o => o.Seller)
+                .WithMany()
+                .HasForeignKey(o => o.SellerId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Seller>()
                  .Property(s => s.SellerNetIncome)
@@ -174,28 +174,34 @@ namespace Jumia.Data
 
 
             //Solution Error YASMINE 
-            base.OnModelCreating(modelBuilder);
+            //base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Order>()
-                .HasOne(o => o.Customer)
-                .WithMany()
-                .HasForeignKey(o => o.CustomerId)
-                .OnDelete(DeleteBehavior.Restrict); // 🔒 No cascade
+               .HasOne(o => o.Customer)
+               .WithMany(c => c.Orders)
+               .HasForeignKey(o => o.CustomerId)
+               .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Order>()
-                .HasOne(o => o.Seller)
-                .WithMany()
-                .HasForeignKey(o => o.SellerId)
-                .OnDelete(DeleteBehavior.Restrict); // 🔒 No cascade
+            modelBuilder.Entity<Customer>()
+                .HasMany(c => c.Orders)
+                .WithOne(o => o.Customer)
+                .HasForeignKey(o => o.CustomerId);
+
+            //modelBuilder.Entity<Order>()
+            //    .HasOne(o => o.Seller)
+            //    .WithMany()
+            //    .HasForeignKey(o => o.SellerId)
+            //    .OnDelete(DeleteBehavior.Restrict); // 🔒 No cascade
 
             // Optionally configure other navigation properties here
 
             //update
             modelBuilder.Entity<OrderItem>()
-    .HasOne(oi => oi.Product)
-    .WithMany(p => p.OrderItems)
-    .HasForeignKey(oi => oi.ProductId)
-    .OnDelete(DeleteBehavior.Restrict);
+                .HasOne(oi => oi.Product)
+                .WithMany(p => p.OrderItems)
+                .HasForeignKey(oi => oi.ProductId)
+                .OnDelete(DeleteBehavior.Restrict);
+   
 
         }
     }

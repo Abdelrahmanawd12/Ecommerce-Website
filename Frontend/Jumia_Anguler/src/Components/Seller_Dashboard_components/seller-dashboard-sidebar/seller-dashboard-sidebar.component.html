@@ -51,9 +51,8 @@
 
             <!-- Submenu -->
             <div class="collapse ps-4" id="manageProductsMenu" [class.show]="!isCollapsed && isManageProductsOpen">
-                <a class="nav-link text-dark py-2" 
-                   [class.active]="isActive('add-product')"
-                   (click)="setActive('add-product')" routerLink="addproduct">Add Product</a>
+                <a class="nav-link text-dark py-2" [class.active]="isActive('add-product')"
+                    (click)="setActive('add-product')" routerLink="addproduct">Add Product</a>
                 <a class="nav-link text-dark py-2" [class.active]="isActive('view-products')" routerLink="manageProduct"
                     (click)="setActive('view-products')">Manage Products</a>
             </div>
@@ -62,7 +61,7 @@
         <!-- Sales -->
         <li class="nav-item">
             <a class="nav-link py-3 border-bottom text-dark" [class.active]="isActive('sales')"
-                (click)="setActive('sales')" routerLink="prductSales">
+                (click)="setActive('sales')" routerLink="sales">
                 <i class="bi bi-graph-up fs-5"></i>
                 <span class="ms-2 sidebar-text" *ngIf="!isCollapsed">Sales</span>
             </a>
@@ -97,37 +96,23 @@
                 <a class="nav-link text-dark py-2" [class.active]="isActive('account-settings')"
                     (click)="setActive('account-settings')" routerLink="accountprofile">Account Settings</a>
                 <hr class="dropdown-divider">
-                <a class="nav-link text-dark py-2" [attr.data-bs-toggle]="'modal'"
-                    [attr.data-bs-target]="'#logoutModal'" (click)="setActive('logout')">
-                    Sign out
-                </a>
+                <!-- Sign Out Link -->
+                <a class="nav-link text-dark py-2" (click)="openLogoutConfirmation()">Sign out</a>
             </div>
         </li>
     </ul>
 </div>
-<!-- Logout Confirmation Modal -->
 
-<!-- Modal -->
-<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="logoutModalLabel">Logout Confirmation</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to log out?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" (click)="confirmLogout()">Log out</button>
-            </div>
+<!-- Logout Confirmation Modal (Pop-up) -->
+<div *ngIf="isLogoutConfirmationOpen" class="modal-overlay">
+    <div class="modal-content">
+        <h5>Are you sure you want to log out?</h5>
+        <div class="modal-actions">
+            <button class="btn btn-secondary" (click)="closeLogoutConfirmation()">Cancel</button>
+            <button class="btn btn-danger" (click)="Onlogout()">Confirm</button>
         </div>
     </div>
-    <!-- Modal backdrop -->
-    <div class="modal-backdrop fade show"></div>
 </div>
-
 <!-- Logout Toast -->
 <div class="toast-container position-fixed bottom-0 end-0 p-3">
     <div id="logoutToast" class="toast align-items-center text-white bg-success border-0" role="alert">
