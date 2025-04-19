@@ -7,6 +7,7 @@ import { Routes } from '@angular/router';
 import { AccountComponent } from '../Components/account/account.component';
 import { WishlistComponent } from '../Components/wishlist/wishlist.component';
 import { AdminLayoutComponent } from '../Components/admin-layout/admin-layout.component';
+import { AwadWishListComponent } from '../Components/awad-wish-list/awad-wish-list.component';
 
 
 export const routes: Routes = [
@@ -16,10 +17,16 @@ export const routes: Routes = [
 
   //Abdelrahman
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
-  { path: 'shop', component: ShopComponent },
+  {path:'home' , loadComponent: () => import('../Components/home/home.component').then((m) => m.HomeComponent)},
 
-  { path: 'cart', component: CartComponent },
+  {path:'shop' , loadComponent: () => import('../Components/Cstomer/shop/shop.component').then((m) => m.ShopComponent)},
+
+
+  {path:'cart' , loadComponent: () => import('../Components/cart/cart.component').then((m) => m.CartComponent)},
+
+  {path:'awadwishlist' , loadComponent: () => import('../Components/awad-wish-list/awad-wish-list.component').then((m) => m.AwadWishListComponent)},
+
+
 
   //Ahmed
   //{ path: 'order/:id', component: OrderComponent  },
@@ -31,8 +38,8 @@ export const routes: Routes = [
   { path: 'order/:id', component: OrderComponent },
 
   //Alaa
-  { 
-    path: 'admin', 
+  {
+    path: 'admin',
  loadComponent: () => import('../Components/admin-layout/admin-layout.component').then((m) => m.AdminLayoutComponent),
     children: [
       { path: 'dashboard', loadComponent: () => import('../Components/admin-dashboard/admin-dashboard.component').then((m) => m.AdminDashboardComponent) },

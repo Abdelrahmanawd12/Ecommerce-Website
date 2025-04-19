@@ -27,7 +27,7 @@ namespace Jumia_Api.MapperConfig
                     SubCatName = s.SubCatName,
                     CategoryName = src.CatName.ToString(),
 
-                    Products = s.Products.Select(p => new ProductsDTO
+                    Products = s.Products.Where(p => p.Status == "accepted" && p.IsDeleted == false).Select(p => new ProductsDTO
                     {
                         ProductId = p.ProductId,
                         Name = p.Name,
@@ -72,13 +72,25 @@ namespace Jumia_Api.MapperConfig
 
                 }).ToList();
             });
+            CreateMap<Wishlist, AwadWishListDTO>().AfterMap((src, dest, context) =>
+            {
+                dest.WishlistId = src.WishlistId;
+
+                dest.CustomerName = src.Customer != null
+                    ? $"{src.Customer.FirstName} {src.Customer.LastName}"
+                    : "Unknown";
+
+                dest.WishlistItems = src.WishlistItems
+                    .Select(item => context.Mapper.Map<AwadWishListItemDTO>(item))
+                    .ToList();
+            });
 
             CreateMap<SubCategory, SubCategoryDTO>().AfterMap((src, dest) =>
             {
                 dest.SubCatName = src.SubCatName;
                 dest.SubCatId = src.SubCatId;
                 dest.CategoryName = src.Category?.CatName ?? "Unknown";
-                dest.Products = src.Products.Select(p => new ProductsDTO
+                dest.Products = src.Products.Where(p => p.Status == "accepted" && p.IsDeleted == false).Select(p => new ProductsDTO
                 {
                     ProductId = p.ProductId,
                     Name = p.Name,
@@ -106,7 +118,29 @@ namespace Jumia_Api.MapperConfig
                 dest.ProductStock = src.Product.Quantity;
                 dest.ImageUrl = src.Product.ProductImages.FirstOrDefault()?.Url;
             });
-
+            CreateMap<WishlistItem,AwadWishListItemDTO>().AfterMap((src, dest) =>
+            {
+                dest.WishlistId = src.WishlistId;
+                dest.WishlistItemId = src.WishlistItemId;
+                dest.Products = new List<ProductsDTO>
+                {
+                    new ProductsDTO
+                    {
+                        ProductId = src.Product.ProductId,
+                        Name = src.Product.Name,
+                        Description = src.Product.Description,
+                        SubCategoryName = src.Product.SubCategory.SubCatName.ToString(),
+                        Price = src.Product.Price,
+                        Quantity = src.Product.Quantity,
+                        Brand = src.Product.Brand,
+                        Discount = src.Product.Discount,
+                        Weight = src.Product.Weight,
+                        ImageUrls = src.Product.ProductImages.Select(img => img.Url).ToList(),
+                        RatingStars = src.Product.Ratings.Select(r => r.Stars).ToList(),
+                        Tags = src.Product.ProductTags.Select(t => t.Tag).ToList()
+                    }
+                };
+            });
 
             CreateMap<Product, ProductsSellerDTO>().AfterMap((src, dest) =>
             {
