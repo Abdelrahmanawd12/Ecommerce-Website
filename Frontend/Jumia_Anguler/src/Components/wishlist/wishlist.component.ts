@@ -13,7 +13,9 @@ import { FormsModule } from '@angular/forms';
 })
 export class WishlistComponent implements OnInit {
   wishlistItems: WishlistItem[] = [];
-  customerId: string = 'user1'; // Replace with the actual customer ID or dynamically get it
+  //customerId: string = 'user1'; // Replace with the actual customer ID or dynamically get it
+  customerId: string = localStorage.getItem('userId') ?? '';
+  
 
   constructor(private wishlistService: WishlistService) {}
 

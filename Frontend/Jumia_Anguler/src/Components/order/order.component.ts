@@ -204,6 +204,11 @@ export class OrderComponent implements OnInit {
   selectedOrder: OrderDetailsDto | null = null;
   activeTab: string = 'ongoing'; // Default tab
 
+  
+  //customerId = 'user1';
+  customerId: string = localStorage.getItem('userId') ?? '';
+
+
   constructor(private orderService: OrderService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
@@ -237,6 +242,9 @@ export class OrderComponent implements OnInit {
     this.selectedOrder = null;
   }
 
+  //loadOrdersByCategory(): void {
+    //const customerId = 'user1';
+    
   // loadOrdersByCategory(): void {
   //   const customerId = 'user1';
   //   const category = 'current';
@@ -260,7 +268,7 @@ export class OrderComponent implements OnInit {
   //     error: (err) => console.error('Failed to load orders:', err)
   //   });
   // }
-  readonly customerId = localStorage.getItem('userId') ||'';
+  //readonly customerId = localStorage.getItem('userId') ||'';
   loadOrdersByCategory(): void {
     // const customerId = 'user1';
   

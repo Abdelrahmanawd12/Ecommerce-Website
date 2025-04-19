@@ -109,5 +109,66 @@ namespace Jumia_Api.Controllers.CustomerControllers
 
         }
 
+
+
+
+
+
+        [HttpPost("add")]
+        public async Task<ActionResult<WishlistItemDto>> AddWishlistItem([FromBody] WishlistItemCreateDto dto)
+        {
+            if (dto == null || string.IsNullOrEmpty(dto.CustomerId))
+                return BadRequest("Invalid request.");
+
+            var wishlist = await _context.Wishlist
+                .Include(w => w.WishlistItems)
+                .FirstOrDefaultAsync(w => w.CustomerId == dto.CustomerId);
+
+            if (wishlist == null)
+            {
+                wishlist = new Wishlist
+                {
+                    CustomerId = dto.CustomerId,
+                    WishlistItems = new List<WishlistItem>()
+                };
+                _context.Wishlist.Add(wishlist);
+                await _context.SaveChangesAsync();
+            }
+
+            bool exists = wishlist.WishlistItems.Any(wi => wi.ProductId == dto.ProductId);
+            if (exists)
+                return BadRequest("Product already in wishlist.");
+
+            var newItem = new WishlistItem
+            {
+                WishlistId = wishlist.WishlistId,
+                ProductId = dto.ProductId
+            };
+
+            _context.WishlistItems.Add(newItem);
+            await _context.SaveChangesAsync();
+
+            // هات بيانات المنتج بالكامل
+            var product = await _context.Products
+                .Include(p => p.ProductImages)
+                .FirstOrDefaultAsync(p => p.ProductId == dto.ProductId);
+
+            if (product == null)
+                return NotFound("Product not found.");
+
+            var itemDto = new WishlistItemDto
+            {
+                WishlistItemId = newItem.WishlistItemId,
+                ProductId = product.ProductId,
+                ProductName = product.Name,
+                Price = product.Price,
+                Discount = product.Discount,
+                Brand = product.Brand,
+                ImageUrl = product.ProductImages.FirstOrDefault()?.Url
+            };
+
+            return Ok(itemDto);
+        }
+
     }
 }
