@@ -12,8 +12,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Jumia_Api.Migrations
 {
     [DbContext(typeof(JumiaDbContext))]
-    [Migration("20250416220209_last")]
-    partial class last
+
+    [Migration("20250416052902_inital")]
+    partial class inital
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -257,9 +258,6 @@ namespace Jumia_Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("SellerId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("ShippingAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -274,8 +272,6 @@ namespace Jumia_Api.Migrations
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("SellerId");
-
-                    b.HasIndex("SellerId1");
 
                     b.ToTable("Order");
                 });
@@ -822,14 +818,10 @@ namespace Jumia_Api.Migrations
                         .IsRequired();
 
                     b.HasOne("Jumia.Models.Seller", "Seller")
-                        .WithMany()
+                        .WithMany("Orders")
                         .HasForeignKey("SellerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("Jumia.Models.Seller", null)
-                        .WithMany("Orders")
-                        .HasForeignKey("SellerId1");
 
                     b.Navigation("Customer");
 

@@ -1,0 +1,48 @@
+/* Professional Styling - لا يؤثر على المنطق */
+.professional-card {
+    border-radius: 10px;
+    border: none;
+    overflow: hidden;
+  }
+  
+  .professional-alert {
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+  }
+  
+  .professional-input {
+    padding: 12px 15px;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+    transition: all 0.3s ease;
+  }
+  
+  .professional-input:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+  }
+  
+  .invalid-feedback {
+    color: #e74c3c;
+    font-size: 13px;
+    margin-top: 5px;
+  }
+  
+  .professional-btn {
+    padding: 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+  }
+  
+  .professional-btn:hover {
+    transform: translateY(-1px);
+  }
+  
+  .form-label {
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }

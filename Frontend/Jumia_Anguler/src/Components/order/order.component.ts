@@ -260,11 +260,13 @@ export class OrderComponent implements OnInit {
   //     error: (err) => console.error('Failed to load orders:', err)
   //   });
   // }
+  readonly customerId = localStorage.getItem('userId') ||'';
   loadOrdersByCategory(): void {
-    const customerId = 'user1';
+    // const customerId = 'user1';
+  
   
     // Get current (ongoing/delivered) orders
-    this.orderService.getOrdersByStatusCategory(customerId, 'current').subscribe({
+    this.orderService.getOrdersByStatusCategory(this.customerId, 'current').subscribe({
       next: (data) => {
         this.ongoingOrders = data; // already filtered by API
       },
@@ -272,7 +274,7 @@ export class OrderComponent implements OnInit {
     });
   
     // Get past (cancelled/returned) orders
-    this.orderService.getOrdersByStatusCategory(customerId, 'past').subscribe({
+    this.orderService.getOrdersByStatusCategory(this.customerId, 'past').subscribe({
       next: (data) => {
         this.canceledOrders = data; // already filtered by API
       },

@@ -191,7 +191,11 @@ namespace Jumia_Api.MapperConfig
                 .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(src => src.DOB))
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
-
+            //----------------------------------- 
+            CreateMap<Product, SearchProductDTO>()
+               .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+               .ForMember(dest => dest.Brand, opt => opt.MapFrom(src => src.Brand))
+               .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.ProductTags.Select(t => t.Tag).ToList()));
         }
     }
 }

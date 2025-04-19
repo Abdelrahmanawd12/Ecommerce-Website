@@ -1,6 +1,9 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, NavigationEnd, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { filter } from 'rxjs/operators';
+import * as bootstrap from 'bootstrap';
+
 
 @Component({
   selector: 'app-admin-side-bar',
@@ -10,26 +13,83 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./admin-side-bar.component.css']
 })
 export class AdminSideBarComponent implements OnInit {
-  @Output() collapseChange = new EventEmitter<boolean>(); // Emit collapse state
-  
+
+  @Output() collapseChange = new EventEmitter<boolean>();
+ 
   isCollapsed = false;
   isUsersMenuOpen = false;
-  isProductsMenuOpen = false;
-  activeLink: string = 'dashboard';
+  isCategoriesMenuOpen = false;
+  isSubcategoriesMenuOpen = false;
+  isProfileMenuOpen = false;
+  isLogoutConfirmationOpen = false;
+
+  activeLink: string = 'home';
+
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
-    const savedState = localStorage.getItem('adminSidebarCollapsed');
-    this.isCollapsed = savedState === 'true';
-  }
+    this.router.navigate(['/admin/dashboard']);
 
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      const url = event.urlAfterRedirects;
+
+     
+      if (url.includes('home')) {
+        this.activeLink = 'home'; 
+      } else if (url.includes('adduser')) {
+        this.activeLink = 'add-user';
+      } else if (url.includes('users')) {
+        this.activeLink = 'view-users';
+      } else if (url.includes('categories')) {
+        this.activeLink = 'view-categories';
+      } else if (url.includes('subcategories')) {
+        this.activeLink = 'view-subcategories';
+      } else if (url.includes('accountprofile')) {
+        this.activeLink = 'account-settings';
+      } else if (url.includes('reports')) {
+        this.activeLink = 'reports';
+      } else {
+        this.activeLink = '';
+      }
+    });
+  }
+ 
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;
     localStorage.setItem('adminSidebarCollapsed', this.isCollapsed.toString());
-    this.collapseChange.emit(this.isCollapsed); // Emit the new state
-    
+    this.collapseChange.emit(this.isCollapsed);
+
     if (this.isCollapsed) {
+     
       this.isUsersMenuOpen = false;
-      this.isProductsMenuOpen = false;
+      this.isCategoriesMenuOpen = false;
+      this.isSubcategoriesMenuOpen = false;
+      this.isProfileMenuOpen = false;
+    }
+  }
+ 
+ 
+  toggleCategoriesMenu() {
+    if (this.isCollapsed) {
+      this.isCollapsed = false;
+      setTimeout(() => {
+        this.isCategoriesMenuOpen = true;
+      }, 300);
+    } else {
+      this.isCategoriesMenuOpen = !this.isCategoriesMenuOpen;
+    }
+  }
+
+  toggleSubcategoriesMenu() {
+    if (this.isCollapsed) {
+      this.isCollapsed = false;
+      setTimeout(() => {
+        this.isSubcategoriesMenuOpen = true;
+      }, 300);
+    } else {
+      this.isSubcategoriesMenuOpen = !this.isSubcategoriesMenuOpen;
     }
   }
 
@@ -44,30 +104,56 @@ export class AdminSideBarComponent implements OnInit {
     }
   }
 
-  toggleProductsMenu() {
+  toggleProfileMenu() {
     if (this.isCollapsed) {
       this.isCollapsed = false;
       setTimeout(() => {
-        this.isProductsMenuOpen = true;
+        this.isProfileMenuOpen = true;
       }, 300);
     } else {
-      this.isProductsMenuOpen = !this.isProductsMenuOpen;
+      this.isProfileMenuOpen = !this.isProfileMenuOpen;
     }
-  }
-
-  setActive(link: string) {
-    this.activeLink = link;
   }
 
   isActive(link: string): boolean {
     return this.activeLink === link;
   }
 
-  isSubmenuActive(parentLink: 'users' | 'products'): boolean {
+  isSubmenuActive(parentLink: 'users' | 'categories' | 'subcategories' | 'profile'): boolean {
     const map = {
       users: ['add-user', 'view-users'],
-      products: ['add-product', 'view-products']
+      categories: ['view-categories', 'add-category'],
+      subcategories: ['view-subcategories', 'add-subcategory'],
+      profile: ['account-settings', 'logout']
     };
     return map[parentLink].includes(this.activeLink);
   }
+
+  
+  showToast() {
+    console.log('Showing logout toast');
+    const toastElement = document.getElementById('logoutToast');
+    if (toastElement) {
+      const toast = new bootstrap.Toast(toastElement);
+      toast.show();
+    } else {
+      console.error('Logout toast element not found');
+    }
+  }
+  openLogoutConfirmation() {
+    this.isLogoutConfirmationOpen = true;
+  }
+  
+  closeLogoutConfirmation() {
+    this.isLogoutConfirmationOpen = false;
+  }
+  
+  Onlogout() {
+    this.isLogoutConfirmationOpen = false;
+    this.showToast();
+    setTimeout(() => {
+      this.router.navigate(['/login']);
+    }, 1500);
+  }
+  
 }

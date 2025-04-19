@@ -1,0 +1,289 @@
+/* Orders Summary Cards */
+.stat-card {
+    border-radius: 12px;
+    padding: 20px;
+    height: 100%;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  
+  .stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+  }
+  
+  .stat-content {
+    flex: 1;
+  }
+  
+  .stat-label {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+  
+  .stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  
+  .trend-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  .trend-text {
+    font-size: 0.7rem;
+  }
+  
+  /* Today Card */
+  .today-card {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  }
+  
+  .today-card .stat-icon {
+    background-color: rgba(108, 117, 125, 0.1);
+    color: #6c757d;
+  }
+  
+  .today-card .stat-value {
+    color: #2c3e50;
+  }
+  
+  .today-card .trend-badge {
+    color: #2c3e50;
+  }
+  
+  /* Weekly Card */
+  .weekly-card {
+    background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+    color: white;
+  }
+  
+  .weekly-card .stat-icon {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+  }
+  
+  .weekly-card .stat-value,
+  .weekly-card .stat-label {
+    color: white;
+  }
+  
+  .weekly-card .trend-badge {
+    color: white;
+  }
+  
+  /* Monthly Card */
+  .monthly-card {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    color: white;
+  }
+  
+  .monthly-card .stat-icon {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+  }
+  
+  .monthly-card .stat-value,
+  .monthly-card .stat-label {
+    color: white;
+  }
+  
+  .monthly-card .trend-badge {
+    color: white;
+  }
+  
+  /* Hover Effects */
+  .stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  }
+  /* Customer Insights Card */
+.insights-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.insights-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.card-header {
+  background: linear-gradient(135deg, #6c5ce7 0%, #4a3fcf 100%);
+  color: white;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-icon {
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.card-title {
+  margin: 0;
+  font-weight: 600;
+  flex-grow: 1;
+}
+
+.total-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.customer-stats {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.stat-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.stat-item i {
+  font-size: 1.5rem;
+  color: #6c5ce7;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.75rem;
+  color: #6c757d;
+}
+
+.stat-value {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.section-title {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #6c757d;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.customer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.customer-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+  transition: all 0.2s ease;
+}
+
+.customer-item:hover {
+  background: #f8f9fa;
+  transform: translateX(4px);
+}
+
+.customer-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6c5ce7 0%, #4a3fcf 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.customer-info {
+  flex-grow: 1;
+}
+
+.customer-name {
+  display: block;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.customer-orders {
+  display: block;
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+.customer-orders i {
+  margin-right: 4px;
+}
+
+.customer-badge .badge {
+  font-size: 0.7rem;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+.gold {
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  color: #2c3e50;
+}
+
+.silver {
+  background: linear-gradient(135deg, #C0C0C0 0%, #A9A9A9 100%);
+  color: #2c3e50;
+}
+
+.bronze {
+  background: linear-gradient(135deg, #CD7F32 0%, #A0522D 100%);
+  color: white;
+}

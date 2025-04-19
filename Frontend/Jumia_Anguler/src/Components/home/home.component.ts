@@ -16,7 +16,7 @@ declare var bootstrap: any;
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink,FormsModule,CommonModule],
+  imports: [RouterLink, FormsModule, CommonModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })

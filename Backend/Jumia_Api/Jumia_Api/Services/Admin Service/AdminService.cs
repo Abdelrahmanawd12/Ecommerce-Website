@@ -1,4 +1,4 @@
-using Jumia.Data;
+﻿using Jumia.Data;
 using Jumia.Models;
 using Jumia_Api.DTOs.AdminDTOs;
 using Jumia_Api.DTOs.CustomerDTOs;
@@ -109,6 +109,72 @@ namespace Jumia_Api.Services.Admin_Service
             await _context.SaveChangesAsync();
             return true;
         }
+        public async Task<AdminDTO> AddUserAsync(CreateUserDTO userDto)
+        {
+            if (userDto == null)
+            {
+                return null;
+            }
+
+            var user = new ApplicationUser
+            {
+                FirstName = userDto.FirstName,
+                LastName = userDto.LastName,
+                Email = userDto.Email,
+                Role = userDto.Role,
+                DateOfBirth = userDto.DateOfBirth.HasValue ? userDto.DateOfBirth.Value : DateTime.MinValue
+,
+                CreatedAt = DateTime.Now,
+                Gender = userDto.Gender
+            };
+
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            return new AdminDTO
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Role = user.Role,
+                DateOfBirth = user.DateOfBirth,
+                CreatedAt = user.CreatedAt,
+                Gender = user.Gender
+            };
+        }
+
+        public async Task<AdminDTO> UpdateUserAsync(AdminDTO userDto)
+        {
+            var user = await _context.Users.FindAsync(userDto.Id);
+            if (user == null)
+            {
+                return null;  
+            }
+
+           
+            user.FirstName = userDto.FirstName;
+            user.LastName = userDto.LastName;
+            user.Email = userDto.Email;
+            user.Role = userDto.Role;  
+            user.Gender = userDto.Gender;
+            user.DateOfBirth = userDto.DateOfBirth;
+
+            _context.Users.Update(user);  
+            await _context.SaveChangesAsync();
+
+            return new AdminDTO
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Role = user.Role,
+                Gender = user.Gender,
+                DateOfBirth = user.DateOfBirth
+            };
+        }
+
 
 
         public async Task<AdminDashboardDTO> GetDashboardStatsAsync()
@@ -348,10 +414,136 @@ namespace Jumia_Api.Services.Admin_Service
             await _context.SaveChangesAsync();
             return true;
         }
+        public async Task<adminCategoryDTO> AddCategoryAsync(adminCategoryDTO categoryDto)
+        {
+            var category = new Category
+            {
+                CatName = categoryDto.Name,
+                SubCategories = categoryDto.Subcategory.Select(sc => new SubCategory
+                {
+                    SubCatName = sc.SubCatName
+                }).ToList()
+            };
+
+            _context.Categories.Add(category);
+            await _context.SaveChangesAsync();
+
+            categoryDto.Id = category.CatId;
+            return categoryDto;
+        }
 
 
+        public async Task<bool> UpdateCategoryAsync(int categoryId, adminCategoryDTO categoryDto)
+        {
+            var category = await _context.Categories
+                .Include(c => c.SubCategories)
+                .FirstOrDefaultAsync(c => c.CatId == categoryId);
+
+            if (category == null)
+                return false;
+
+            category.CatName = categoryDto.Name;
+
+            if (categoryDto.Subcategory != null && categoryDto.Subcategory.Any())
+            {
+                foreach (var subCategoryDto in categoryDto.Subcategory)
+                {
+                    var subCategory = category.SubCategories
+                        .FirstOrDefault(sc => sc.SubCatId == subCategoryDto.SubCatId);
+
+                    if (subCategory != null)
+                    {
+                        subCategory.SubCatName = subCategoryDto.SubCatName;
+                    }
+                    else
+                    {
+                        category.SubCategories.Add(new SubCategory
+                        {
+                            SubCatName = subCategoryDto.SubCatName
+                        });
+                    }
+                }
+            }
+
+            _context.Categories.Update(category);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+
+        public async Task<bool> DeleteCategoryAsync(int categoryId)
+        {
+            var category = await _context.Categories
+                .Include(c => c.SubCategories)
+                .FirstOrDefaultAsync(c => c.CatId == categoryId);
+
+            if (category == null)
+            {
+                return false;
+            }
+
+            
+            _context.SubCategories.RemoveRange(category.SubCategories);
+
+          
+            _context.Categories.Remove(category);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<adminCategoryDTO> GetCategoryByIdAsync(int categoryId)
+        {
+            var category = await _context.Categories
+                .Include(c => c.SubCategories)
+                .FirstOrDefaultAsync(c => c.CatId == categoryId);
+
+            if (category == null)
+                return null;
+
+            return new adminCategoryDTO
+            {
+                Id = category.CatId,
+                Name = category.CatName,
+                Subcategory = category.SubCategories.Select(sc => new SubCatDTO
+                {
+                    SubCatId = sc.SubCatId,
+                    SubCatName = sc.SubCatName
+                }).ToList()
+            };
+        }
+
+
+        public async Task<IEnumerable<adminCategoryDTO>> GetAllCategoriesAsync()
+        {
+            var categories = await _context.Categories
+                .Include(c => c.SubCategories)
+                .ToListAsync();
+
+            return categories.Select(c => new adminCategoryDTO
+            {
+                Id = c.CatId,
+                Name = c.CatName,
+                Subcategory = c.SubCategories.Select(sc => new SubCatDTO
+                {
+                    SubCatId = sc.SubCatId,
+                    SubCatName = sc.SubCatName
+                }).ToList()
+            }).ToList();
+        }
+
+
+
+
+
+
+
+
+
+
+
+       
 
     }
-
-
 }
+    
+

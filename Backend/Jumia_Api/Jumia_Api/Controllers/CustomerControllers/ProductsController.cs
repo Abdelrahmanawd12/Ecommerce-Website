@@ -55,6 +55,28 @@ namespace Jumia_Api.Controllers.CustomerControllers
           var products = mapper.Map<ProductsDTO>(product);
             return Ok(products);
         }
+        //-------------------------------------------------------------------------
+        [HttpGet("search")]
+        public IActionResult SearchProducts([FromQuery] string query)
+        {
+            if (string.IsNullOrWhiteSpace(query))
+                return BadRequest("Search query cannot be empty");
+
+            var products = unit.ProductsRepository.SearchByQuery(query);
+
+            var filtered = products
+                .Where(p =>
+                    p.Name.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                    p.ProductTags.Any(tag => tag.Tag.Contains(query, StringComparison.OrdinalIgnoreCase)))
+                .ToList();
+
+            var result = mapper.Map<List<ProductsDTO>>(filtered);
+
+            return Ok(result);
+        }
+
+
+
 
 
     }

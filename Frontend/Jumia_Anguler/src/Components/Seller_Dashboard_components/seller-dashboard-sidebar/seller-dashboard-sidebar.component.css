@@ -160,7 +160,6 @@
 .collapse .nav-link {
     padding-left: 1.5rem !important;
 }
-<<<<<<< HEAD
 
 /* Overlay for modal */
 .modal-overlay {
@@ -173,7 +172,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1050;
+    z-index: 1000;
   }
   
   /* Modal content styling */
@@ -183,9 +182,12 @@
     border-radius: 8px;
     text-align: center;
     width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
   }
   
   .modal-actions {
+    display: flex;
+    justify-content: space-between;
     margin-top: 20px;
   }
   
@@ -193,14 +195,25 @@
     margin: 0 10px;
   }
   
-=======
-.modal {
-    z-index: 1050 !important; /* تأكد من أن المودال يظهر فوق كل شيء */
+/* .modal {
+    z-index: 1050 !important; 
   }
   
   .modal-backdrop {
-    z-index: 1040 !important; /* الـ backdrop يجب أن يكون تحت الـ modal */
+    z-index: 1040 !important; 
+  } */
+  
+  .sidebar {
+    width: 250px;
+    transition: width 0.3s;
   }
   
+  .sidebar.collapsed {
+    width: 70px;
+  }
   
->>>>>>> b8337eb52d77a01405c6ff2529d5205ce093af97
+  .main-content {
+    flex-grow: 1;
+    transition: margin-left 0.3s;
+  }
+  

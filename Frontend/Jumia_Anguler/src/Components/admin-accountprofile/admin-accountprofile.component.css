@@ -1,0 +1,205 @@
+/* Container for the whole admin account page */
+.admin-account-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+/* طول Personal Information ليأخذ نفس الارتفاع كالأقسام الأخرى */
+.col-lg-6 {
+  display: flex;
+  flex-direction: column;
+}
+
+.card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-body {
+  flex: 1;
+}
+
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  flex-grow: 1; 
+}
+
+.card-body .section-header {
+  margin-bottom: 1rem;
+}
+
+/* Avatar styling */
+.admin-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #f0f2f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  font-size: 3rem;
+  color: #6c757d;
+}
+
+/* Header section with title and button */
+.section-header {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.75rem;
+}
+
+.section-title {
+  color: #495057;
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+/* Edit button styles */
+.btn-edit {
+  background-color: transparent;
+  color: #0d6efd;
+  border: 1px solid #0d6efd;
+  padding: 0.25rem 0.75rem;
+}
+
+.btn-edit:hover {
+  background-color: #e7f1ff;
+}
+
+/* Grid for displaying information in cards */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.info-item {
+  background: white;
+  padding: 1rem;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.info-label {
+  display: block;
+  font-size: 0.875rem;
+  color: #6c757d;
+  margin-bottom: 0.25rem;
+}
+
+.info-value {
+  font-weight: 500;
+  color: #212529;
+}
+
+/* Security button styles */
+.btn-security {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  color: #495057;
+  padding: 0.5rem 1rem;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-security:hover {
+  background-color: #e9ecef;
+  border-color: #ced4da;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .info-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Button hover effects */
+.btn:hover {
+  background-color: #0056b3;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Fade-in animation for content */
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.fade-in {
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Tooltip customization */
+[data-bs-toggle="tooltip"] {
+  cursor: pointer;
+}
+
+/* Outline button style for primary button */
+.btn-outline-primary {
+  border-color: #007bff;
+  color: #007bff;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-outline-primary:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Style the avatar in the admin section */
+.admin-avatar {
+  font-size: 3rem;
+  background-color: #f0f0f0;
+  border-radius: 50%;
+  padding: 1rem;
+}
+
+/* Security options button hover effect */
+.security-options .btn {
+  transition: all 0.3s ease-in-out;
+}
+
+.security-options .btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Adjust margins for cards */
+.card {
+  margin-bottom: 20px;
+}
+
+/* Extend Personal Information section to fill the height */
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card-body {
+  flex: 1;
+}
+
+/* Final button hover effect for security options */
+.security-options .btn {
+  transition: all 0.3s ease-in-out;
+}
+
+.security-options .btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

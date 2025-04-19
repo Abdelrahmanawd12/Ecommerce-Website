@@ -1,10 +1,11 @@
 <div class="container-fluid layout-container">
   <div class="row">
-    <div class="col-2 sidebar" [ngClass]="isCollapsed ? 'collapsed' : ''">
-      <app-admin-side-bar (collapseChange)="isCollapsed = $event"></app-admin-side-bar>
+    <div class="col-2 sidebar" [ngClass]="isCollapsed ? 'collapsed' : ''" id="sidebar">
+    
+      <app-admin-side-bar (collapseChange)="toggleSidebar()"></app-admin-side-bar>
     </div>
 
-    <div class="col main-content">
+    <div class="col main-content" [ngClass]="isCollapsed ? 'collapsed' : ''">
       <router-outlet></router-outlet>
     </div>
   </div>
