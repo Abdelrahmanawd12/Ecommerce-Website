@@ -1,0 +1,62 @@
+<div class="admin-account-container">
+    <!-- Profile Section -->
+    <div class="profile-header text-center">
+      <div class="profile-initials">
+        {{ getInitials(admin.name) }}
+      </div>
+      <div class="account-header">
+        <h2>{{ admin.name }}</h2>
+        <p>{{ admin.role }}</p>
+      </div>
+    </div>
+  
+    <!-- Account Sections -->
+    <div class="account-sections">
+      <!-- Account Information Card -->
+      <div class="account-card">
+        <div class="card-header">
+          <i class="bi bi-person-fill"></i>
+          <h3>Account Information</h3>
+        </div>
+        <div class="card-body">
+          <div class="info-row">
+            <i class="bi bi-person"></i>
+            <div>
+              <p><strong>Name:</strong> {{ admin.name }}</p>
+              <p><strong>Role:</strong> {{ admin.role }}</p>
+            </div>
+            <button class="btn-icon">
+              <i class="bi bi-pencil"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Security Card -->
+      <div class="account-card">
+        <div class="card-header">
+          <i class="bi bi-shield-lock"></i>
+          <h3>Security</h3>
+        </div>
+        <div class="card-body">
+          <div class="security-item">
+            <div>
+              <i class="bi bi-lock"></i>
+              <span>Password</span>
+              <small>Last updated: 3 days ago</small>
+            </div>
+            <button class="btn-text">Change</button>
+          </div>
+          <div class="security-item">
+            <div>
+              <i class="bi bi-envelope"></i>
+              <span>Email</span>
+              <small>Last updated: 1 week ago</small>
+            </div>
+            <button class="btn-text">Change</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

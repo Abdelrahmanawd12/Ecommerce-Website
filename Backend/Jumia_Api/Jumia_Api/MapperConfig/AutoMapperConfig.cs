@@ -149,7 +149,19 @@ namespace Jumia_Api.MapperConfig
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId));
 
             //Mapping from Seller To SellerDTO
-            CreateMap<Seller, sellerDTO>();
+            CreateMap<Seller, sellerDTO>()
+                .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.PhoneNumber))
+                .ForMember(dest => dest.DOB, opt => opt.MapFrom(src => src.DateOfBirth));
+            CreateMap<sellerDTO, Seller>()
+                .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.Phone))
+                .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(src => src.DOB))
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
+            //----------------------------------- 
+            CreateMap<Product, SearchProductDTO>()
+               .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+               .ForMember(dest => dest.Brand, opt => opt.MapFrom(src => src.Brand))
+               .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.ProductTags.Select(t => t.Tag).ToList()));
         }
     }
 }

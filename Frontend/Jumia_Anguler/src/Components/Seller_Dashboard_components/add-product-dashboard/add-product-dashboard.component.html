@@ -1,1 +1,314 @@
-<p>add-product-dashboard works!</p>
+<div class="p-3">
+    <h2>Add Product</h2>
+</div>
+<div class="form-container">
+    <!-- Vertical Progress Steps -->
+    <div class="vertical-progress-steps">
+        <div class="step" [ngClass]="{'active': currentStep >= 1, 'completed': currentStep > 1}">
+            <div class="step-circle">1</div>
+            <div class="step-content">
+                <div class="step-label">Product Information</div>
+                <div class="step-description">Enter product Information</div>
+            </div>
+        </div>
+
+        <div class="step-connector" [ngClass]="{'active': currentStep > 1}"></div>
+
+        <div class="step" [ngClass]="{'active': currentStep >= 2, 'completed': currentStep > 2}">
+            <div class="step-circle">2</div>
+            <div class="step-content">
+                <div class="step-label">Variants</div>
+                <div class="step-description">Enter Variants</div>
+            </div>
+        </div>
+
+        <div class="step-connector" [ngClass]="{'active': currentStep > 2}"></div>
+
+        <div class="step" [ngClass]="{'active': currentStep >= 3, 'completed': currentStep === 3}">
+            <div class="step-circle">3</div>
+            <div class="step-content">
+                <div class="step-label">Product Specifications</div>
+                <div class="step-description">Enter Product Specifications</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Content -->
+    <div class="form-content">
+        <form [formGroup]="AddProductForm" (ngSubmit)="onSubmit()">
+            <!-- Step 1 Content -->
+            <div class="form-step" id="step-1" *ngIf="currentStep >= 1" [class.current]="currentStep === 1">
+                <h4>Product Information</h4>
+                <div class="step-form">
+                    <!-- Fixed-size Image Upload Boxes -->
+                    <div class="fixed-image-container">
+                        <div class="fixed-image-grid">
+                            <div class="fixed-image-box" *ngFor="let box of [1,2,3,4,5,6,7,8]; let i = index"
+                                (click)="triggerFileInput(i, canUpload(i))">
+                                <div class="fixed-placeholder" *ngIf="!images[i]">
+                                    <span class="upload-icon" *ngIf="canUpload(i)">+</span>
+                                    <span class="upload-icon disabled" *ngIf="!canUpload(i)">+</span>
+                                </div>
+                                <div class="fixed-image-wrapper" *ngIf="images[i]">
+                                    <img [src]="images[i].previewUrl" class="fixed-preview-image">
+                                </div>
+                                <input type="file" #fileInput [id]="'fileInput'+i" (change)="handleFileInput($event, i)"
+                                    accept="image/*" style="display: none;" formControlName="images"
+                                    [disabled]="!canUpload(i)">
+                                <div class="fixed-remove-btn" *ngIf="images[i]" (click)="removeImage(i, $event)">×</div>
+                            </div>
+                        </div>
+                        <small class="upload-note">Click to upload images (Max 8 images)</small>
+                        <div *ngIf="image?.invalid && (image?.dirty || image?.touched)" class="text-danger">
+                            <div *ngIf="image?.errors?.['required']">
+                                At least one image is required
+                            </div>
+                            <div *ngIf="image?.errors?.['minLength']">
+                                At least one image is required
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Name and Brand -->
+                    <div class="row-input-group">
+                        <div class="form-group name-input">
+                            <label>Product Name *</label>
+                            <input type="text" placeholder="Enter product name" class="form-control"
+                                formControlName="productname">
+                            <div *ngIf="productname?.invalid && (productname?.dirty || productname?.touched)"
+                                class="text-danger">
+                                <div *ngIf="productname?.errors?.['required']">
+                                    Product name is required
+                                </div>
+                                <div *ngIf="productname?.errors?.['pattern']">
+                                    Letters needed, not just numbers
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group Brand-input">
+                            <label>Brand *</label>
+                            <input type="text" placeholder="Enter Brand name" class="form-control"
+                                formControlName="brand">
+                            <div *ngIf="brand?.invalid && (brand?.dirty || brand?.touched)" class="text-danger">
+                                <div *ngIf="brand?.errors?.['required']">
+                                    Brand name is required
+                                </div>
+                                <div *ngIf="brand?.errors?.['pattern']">
+                                    Letters needed, not just numbers
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category and Sub-Category -->
+                    <div class="row-input-group">
+                        <div class="form-group dropdown-input">
+                            <label>Category *</label>
+                            <select class="form-control" (change)="onCategoryChange($event)" formControlName="cat">
+                                <option value="">Select category</option>
+                                <option *ngFor="let category of categories" [value]="category.id">
+                                    {{category.name}}
+                                </option>
+                            </select>
+                            <div *ngIf="cat?.invalid && (cat?.dirty || cat?.touched)" class="text-danger">
+                                <div *ngIf="cat?.errors?.['required']">
+                                    Category is required
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group dropdown-input" *ngIf="subCategories.length > 0">
+                            <label>Sub-Category *</label>
+                            <select class="form-control" formControlName="subcat">
+                                <option value="">Select sub-category</option>
+                                <option *ngFor="let subCat of subCategories" [value]="subCat.subCatId">
+                                    {{subCat.subCatName}}
+                                </option>
+                            </select>
+                            <div *ngIf="subcat?.invalid && (subcat?.dirty || subcat?.touched)" class="text-danger">
+                                <div *ngIf="subcat?.errors?.['required']">
+                                    Sub-category is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step-actions">
+                        <button class="next-btn" [disabled]="!AddProductForm.get('images')?.valid || 
+                                          !AddProductForm.get('productname')?.valid || 
+                                          !AddProductForm.get('brand')?.valid || 
+                                          !AddProductForm.get('cat')?.valid || 
+                                          (subCategories.length > 0 && !AddProductForm.get('subcat')?.valid)"
+                            (click)="nextStep()">
+                            Continue
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2 Content -->
+            <div class="form-step" id="step-2" *ngIf="currentStep >= 2" [class.current]="currentStep === 2">
+                <h4>Variants</h4>
+                <div class="step-form">
+                    <!-- Variant Fields -->
+                    <div class="variant-fields">
+                        <!-- Price -->
+                        <div class="form-group">
+                            <label>Price *</label>
+                            <div class="input-with-symbol">
+                                <span class="symbol">$</span>
+                                <input type="number" placeholder="0.00" class="form-control" step="0.01" min="0"
+                                    formControlName="price">
+                            </div>
+                            <div *ngIf="price?.invalid && (price?.dirty || price?.touched)" class="text-danger">
+                                <div *ngIf="price?.errors?.['required']">
+                                    Price is required
+                                </div>
+                                <div *ngIf="price?.errors?.['pattern']">
+                                    Please enter a valid price (e.g. 19.99)
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quantity -->
+                        <div class="form-group">
+                            <label>Quantity *</label>
+                            <input type="number" placeholder="Available quantity" class="form-control" min="0"
+                                formControlName="quantity">
+                            <div *ngIf="quantity?.invalid && (quantity?.dirty || quantity?.touched)"
+                                class="text-danger">
+                                <div *ngIf="quantity?.errors?.['required']">
+                                    Quantity is required
+                                </div>
+                                <div *ngIf="quantity?.errors?.['pattern']">
+                                    Please enter a valid quantity (minimum 1)
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Discount -->
+                        <div class="form-group">
+                            <label>Discount</label>
+                            <div class="input-with-symbol">
+                                <span class="symbol">%</span>
+                                <input type="number" placeholder="0" class="form-control" min="0" max="100"
+                                    formControlName="discount">
+                            </div>
+                            <div *ngIf="discount?.invalid && (discount?.dirty || discount?.touched)"
+                                class="text-danger">
+                                <div *ngIf="discount?.errors?.['required']">
+                                    Discount is required
+                                </div>
+                                <div *ngIf="discount?.errors?.['min']">
+                                    Discount must be at least 0.01%
+                                </div>
+                                <div *ngIf="discount?.errors?.['max']">
+                                    Discount cannot exceed 100%
+                                </div>
+                                <div *ngIf="discount?.errors?.['pattern']">
+                                    Please enter a valid discount
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Weight -->
+                        <div class="form-group">
+                            <label>Weight (kg)</label>
+                            <input type="number" placeholder="Product weight" class="form-control" step="0.01" min="0"
+                                formControlName="weight">
+                            <div *ngIf="weight?.invalid && (weight?.dirty || weight?.touched)" class="text-danger">
+                                <div *ngIf="weight?.errors?.['required']">
+                                    Weight is required
+                                </div>
+                                <div *ngIf="weight?.errors?.['pattern']">
+                                    Please enter a valid weight
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step-actions">
+                        <button class="prev-btn" (click)="prevStep()">Back</button>
+                        <button class="next-btn" [disabled]="!AddProductForm.get('price')?.valid || 
+                                          !AddProductForm.get('quantity')?.valid || 
+                                          !AddProductForm.get('discount')?.valid || 
+                                          !AddProductForm.get('weight')?.valid" (click)="nextStep()">
+                            Continue
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3 Content -->
+            <div class="form-step" id="step-3" *ngIf="currentStep >= 3" [class.current]="currentStep === 3">
+                <h4>Product Specifications</h4>
+                <div class="step-form">
+                    <!-- Description -->
+                    <div class="form-group">
+                        <label>Description *</label>
+                        <textarea placeholder="Enter detailed product description" [(ngModel)]="productDescription"
+                            formControlName="description"></textarea>
+                        <div *ngIf="description?.invalid && (description?.dirty || description?.touched)"
+                            class="text-danger">
+                            <div *ngIf="description?.errors?.['required']">
+                                Description is required
+                            </div>
+                            <div *ngIf="description?.errors?.['minlength']">
+                                Description must be at least 10 characters
+                            </div>
+                            <div *ngIf="description?.errors?.['pattern']">
+                                Letters needed, not just numbers
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tags Input -->
+                    <div class="form-group">
+                        <label>Product Tags</label>
+                        <div class="tags-input-container">
+                            <div class="tag" *ngFor="let tag of tags; let i = index">
+                                {{tag}}
+                                <span class="remove-tag" (click)="removeTag(i)">×</span>
+                            </div>
+                            <input type="text" placeholder="Add tags (press Enter to add)" class="tags-input"
+                                (keydown.enter)="addTag($event)" (keydown.backspace)="handleBackspace($event)"
+                                formControlName="tags">
+                        </div>
+                        <small class="hint-text">Separate tags with commas or press Enter</small>
+                        <div *ngIf="tag?.invalid && (tag?.dirty || tag?.touched)" class="text-danger">
+                            <div *ngIf="tag?.errors?.['required']">
+                                At least one tag is required
+                            </div>
+                            <div *ngIf="tag?.errors?.['minlength']">
+                                Tag must be at least 2 characters
+                            </div>
+                            <div *ngIf="tag?.errors?.['pattern']">
+                                Letters needed, not just numbers
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step-actions">
+                        <button class="prev-btn" (click)="prevStep()">Back</button>
+                        <button class="submit-btn" [disabled]="!AddProductForm.get('description')?.valid || 
+                                          !AddProductForm.get('tags')?.valid">
+                            Submit Product
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <!-- Toast Notification -->
+        <div class="toast-notification" *ngIf="showToast" [ngClass]="{
+    'toast-success': toastType === 'success',
+    'toast-error': toastType === 'error'
+  }">
+            <div class="toast-message">
+                {{ toastMessage }}
+            </div>
+            <button class="toast-close" (click)="hideToast()">×</button>
+        </div>
+    </div>
+</div>

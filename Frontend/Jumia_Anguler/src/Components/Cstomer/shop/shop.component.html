@@ -1,22 +1,164 @@
-<div *ngIf="category">
-
-  <h1>{{ category.name }}</h1>
-
-  <h1>Subcategories:</h1>
-  <div class="subcategory" *ngFor="let subcategory of category.subcategory">
-    <h2>{{ subcategory.subCatName }}</h2>
-
-    <div class="card product" style="width: 18rem;" *ngFor="let product of subcategory.products">
-      <img [src]="product.imageUrls[0]" class="card-img-top" alt="..." width="200" height="150">
-      <div class="card-body">
-        <h5 class="card-title">{{product.brand}}</h5>
-        <h5 class="card-title">{{product.name}}</h5>
-        <h5 class="card-title">{{product.price}}$</h5>
-        <h5 class="card-title">{{product.productId}}</h5>
-
-        <p class="card-text">{{product.description}}</p>
-        <button [routerLink]="['/details', product.productId]">details</button>
+<!-- toast mess  -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div class="toast align-items-center text-white border-0"
+       id="cartToast"
+       role="alert"
+       aria-live="assertive"
+       aria-atomic="true"
+       [ngClass]="toastClass">
+    <div class="d-flex">
+      <div class="toast-body">
+        {{ toastMessage }}
       </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
   </div>
 </div>
+
+<!-- contenet -->
+<div class="container row mt-4">
+
+  <!-- left -->
+  <div class="col-3 col-md-2 ">
+    <div class="category-list bg-light p-2 rounded">
+      <h5 class="text-center">{{category.name}} Category</h5>
+      <div class="mb-2">
+        <a class="category d-block" (click)="selectedSubCatId = null">All</a>
+      </div>
+      @for(c of displayedSubcategories; track c.subCatId) {
+      <div class="mb-2">
+        <a class="category d-block" (click)="selectedSubCatId = c.subCatId">{{c.subCatName}}</a>
+      </div>
+      }
+
+      <!-- brands -->
+      <div class="category-list bg-light p-2 rounded">
+
+        <h5 class="text-center">Brands</h5>
+
+
+
+
+        <div class="mb-2" *ngFor="let brand of brands">
+          <label class="brand-checkbox-label" [class.active]="selectedBrands.includes(brand)">
+            <input type="checkbox" [value]="brand" (change)="onBrandCheckboxChange($event, brand)"
+              [checked]="selectedBrands.includes(brand)" />
+            {{ brand }}
+          </label>
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+  <!-- left -->
+
+
+
+  <!-- right -->
+
+  <div class="col-9 col-md-10">
+
+    <!-- brands -->
+
+    <div class="container productparent-container" *ngIf="filteredProducts.length > 0 && selectedBrands.length > 0">
+      <h5 class="text-center product-title" style="text-transform: capitalize;">
+        Filtered Products
+      </h5>
+      <div class="row g-3 products-container">
+        <div *ngFor="let p of filteredProducts" class="col-6 col-md-4 col-lg-2 parent" style="cursor: pointer;"
+          (click)="goToProductDetails(p.productId)">
+          <div class="card proChild h-100">
+            <img [src]="p.imageUrls[0]" class="imgproduct" alt="{{ p.name }}">
+            <div class="card-body" style="background-color: white;">
+              <h6 class="product-name">{{ p.name }}</h6>
+              <div class="priceAndcart">
+                <p class="product-price">${{ p.price }}</p>
+                <a (click)="addToCart(p); $event.stopPropagation()">
+                  <i class="fa-solid fa-cart-shopping"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+    <!-- Subcategory -->
+
+    @if (!selectedSubCatId)
+    {
+    @for (subcategory of displayedSubcategories;track subcategory.subCatId) {
+    <div class="container  productparent-container">
+      <h5 class="text-center product-title" style="text-transform: capitalize;">{{ subcategory.subCatName }}</h5>
+      <div class="row g-3 products-container">
+        @for (p of subcategory.products; track p.productId) {
+        <div class="col-6 col-md-4 col-lg-2 parent" style="cursor: pointer;" (click)="goToProductDetails(p.productId)">
+          <div class="card proChild h-100">
+            <img src="{{ p.imageUrls[0] }}" class="imgproduct" alt="{{ p.name }}">
+            <div class="card-body" style="background-color: white;">
+              <h6 class="product-name">{{ p.name }}</h6>
+              <div class="priceAndcart">
+                <p class="product-price">${{ p.price }}</p>
+                <a (click)="addToCart(p); $event.stopPropagation()">
+                  <i class="fa-solid fa-cart-shopping"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+    }
+    }
+    @else
+     {
+    @for (subcategory of displayedSubcategories;track subcategory.subCatId) {
+    @if (subcategory.subCatId === selectedSubCatId) {
+    <div class="container  productparent-container">
+      <h5 class="text-center product-title" style="text-transform: capitalize;">{{ subcategory.subCatName }}</h5>
+      <div class="row g-3 products-container ">
+        @for (p of subcategory.products; track p.productId) {
+        <div class="col-6 col-md-4 col-lg-2 parent" style="cursor: pointer;" (click)="goToProductDetails(p.productId)">
+          <div class="card proChild h-100">
+            <img src="{{ p.imageUrls[0] }}" class="imgproduct" alt="{{ p.name }}">
+            <div class="card-body" style="background-color: white;">
+              <h6 class="product-name">{{ p.name }}</h6>
+              <div class="priceAndcart">
+                <p class="product-price">${{ p.price }}</p>
+                <a (click)="addToCart(p); $event.stopPropagation()">
+                  <i class="fa-solid fa-cart-shopping"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+    }
+    }
+    }
+
+
+<!-- pagination  -->
+
+    <div class="pagination mt-4">
+      <button *ngFor="let page of [].constructor(totalPages); let i = index"
+        class="btn btn-primary" (click)="loadPage(i + 1)">
+        {{ i + 1 }}
+      </button>
+    </div>
+
+
+  </div>
+</div>
+
+
+

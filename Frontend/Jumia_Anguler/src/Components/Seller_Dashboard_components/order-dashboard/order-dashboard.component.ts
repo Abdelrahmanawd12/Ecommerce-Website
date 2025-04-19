@@ -7,6 +7,7 @@ import { SellerService } from '../../../Services/SellerServ/seller.service';
 import { RouterEvent, RouterLink, RouterModule } from '@angular/router';
 import { trigger, style, animate, transition, state } from '@angular/animations';
 import * as bootstrap from 'bootstrap';
+import { environment } from '../../../Environment/Environment.prod';
 
 
 @Component({
@@ -92,8 +93,7 @@ export class OrderDashboardComponent implements OnInit {
     { value: 'returned', label: 'Returned' }
   ];
   search: any;
-  readonly imageBaseUrl = 'https://localhost:7266/images/'; 
-
+  readonly imageBaseUrl = environment.imageBaseUrl;
   constructor(private orderService: SellerService, private cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
@@ -117,12 +117,17 @@ export class OrderDashboardComponent implements OnInit {
     this.search = null;
   }
 
+
   filterByDate() {
     if (this.startDate && this.endDate && this.sellerId) {
       this.orderService.getOrderByDate(this.sellerId, new Date(this.startDate), new Date(this.endDate))
         .subscribe((orders) => {
           this.orders = orders;
+        }, (error) => {
+          this.orders = [];
         });
+    } else {
+      this.orders = [];
     }
   }
 
@@ -177,16 +182,16 @@ export class OrderDashboardComponent implements OnInit {
   }
 
 
-openModal(order: any) {
-  this.selectedOrder = order;
-  this.showModal = true;
-  document.body.style.overflow = 'hidden'; 
-}
+  openModal(order: any) {
+    this.selectedOrder = order;
+    this.showModal = true;
+    document.body.style.overflow = 'hidden';
+  }
 
-closeModal() {
-  this.showModal = false;
-  document.body.style.overflow = 'auto'; 
-}
+  closeModal() {
+    this.showModal = false;
+    document.body.style.overflow = 'auto';
+  }
 
   confirmDelete() {
     if (!this.selectedOrder || !this.sellerId) return;
@@ -269,7 +274,7 @@ closeModal() {
   openOrderModal(order: any) {
     this.selectedOrder = order;
     this.showModal = true;
-    console.log('showModal:', this.showModal);  
+    console.log('showModal:', this.showModal);
     document.body.style.overflow = 'hidden';
   }
 
@@ -300,5 +305,18 @@ closeModal() {
       'returned': 'status-returned'
     };
     return statusMap[status.toLowerCase()] || '';
+  }
+
+  getPayStatusClass(status: string): string {
+    switch(status.toLowerCase()) {
+      case 'paid':
+        return 'paid-status';
+      case 'pending':
+        return 'pending-status';
+      case 'canceled':
+        return 'canceled-status';
+      default:
+        return 'default-status';
+    }
   }
 }

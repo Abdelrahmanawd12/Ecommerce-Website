@@ -2,6 +2,7 @@
 using Jumia_Api.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 
 namespace Jumia_Api.DTOs.SellerDTOs
 {
@@ -35,6 +36,9 @@ namespace Jumia_Api.DTOs.SellerDTOs
         public List<string> ImageUrls { get; set; }  // List of Image URLs
         [Required]
         public List<string> Tags { get; set; }
+        [Required]
+        public String Status { get; set; }
+
 
 
     }

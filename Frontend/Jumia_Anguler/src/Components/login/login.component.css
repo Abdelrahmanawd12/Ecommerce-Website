@@ -1,4 +1,9 @@
 /* seller-login.component.scss */
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
 .login-container {
     display: flex;
     justify-content: center;
@@ -6,7 +11,6 @@
     min-height: 100vh;
     background: linear-gradient(135deg, #f9f9f9 0%, #f0f0f0 100%);
     font-family: 'Roboto', sans-serif;
-    padding: 20px;
 }
 
 .login-card {
@@ -408,3 +412,26 @@
       }
     }
   }
+
+  .login-container {
+    width: 100vw;
+    overflow-x: hidden;
+  }
+  .login-card {
+    box-sizing: border-box;
+  }
+  html, body {
+    width: 100%;
+    overflow-x: hidden;
+  }
+  
+  .login-container {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  
+  .login-card {
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+  

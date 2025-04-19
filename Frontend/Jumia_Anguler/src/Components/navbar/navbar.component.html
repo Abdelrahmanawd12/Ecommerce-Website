@@ -1,53 +1,138 @@
 <div class="top-bar">
-    <a href="#">Sell on Jumia</a>
-    <div class="logo">
-        <img src="assets/jumia-logo.png" alt="Jumia" />
-    </div>
-    <div class="lang-switch">
-        <span class="lang">English</span> | <span class="lang">عربي</span>
-        <img src="assets/egypt-flag.png" alt="EG" />
-    </div>
+  <a>Sell on Jumia</a>
+  <div class="logo">
+    <img src="assets/Jumia-Logo.png" alt="Jumia" />
+  </div>
+  <div class="lang-switch">
+    <span class="lang">English</span> | <span class="lang">عربي</span>
+    <img src="assets/egyptFlag.jpg" alt="EG" />
+  </div>
 </div>
 
 <div class="navbar">
-    <div class="logo">
-        <img src="assets/jumia-logo.png" alt="Jumia" />
-    </div>
-    <div class="search-box">
-        <input type="text" placeholder="Search products, brands and categories" />
-        <button>Search</button>
-    </div>
-    <div class="right-section">
-        <div class="user-actions">
-            <div class="dropdown" (click)="toggleDropdown()" [class.open]="dropdownOpen">
-              <button class="account-btn">
-                <i class="fa fa-user"></i> Account <i class="fa fa-caret-down"></i>
-              </button>
-          
-              <div class="dropdown-menu" *ngIf="dropdownOpen">
-                <button class="signin-btn">Sign In</button>
-                <a href="#"><i class="fa fa-user"></i> My Account</a>
-                <a href="#"><i class="fa fa-box"></i> Orders</a>
-                <a href="#"><i class="fa fa-heart"></i> Wishlist</a>
-              </div>
-            </div>
-          
-          
-            <div class="help-dropdown" (click)="toggleHelpDropdown()" [class.open]="helpDropdownOpen">
-                <a href="#"><i class="fa fa-question-circle"></i> Help <i class="fa fa-caret-down"></i></a>
-                <div class="help-menu" *ngIf="helpDropdownOpen">
-                    <a href="#"><i class="fa fa-question-circle"></i> Help Center</a>
-                            <a href="#"><i class="fa fa-cart-plus"></i> Place an Order</a>
-                            <a href="#"><i class="fa fa-credit-card"></i> Pay for Your Order</a>
-                            <a href="#"><i class="fa fa-map-marker-alt"></i> Track Your Order</a>
-                            <a href="#"><i class="fa fa-times-circle"></i> Cancel an Order</a>
-                            <a href="#"><i class="fa fa-undo"></i> Create a Return</a>
-                            <div class="divider"></div>
-                            <button class="signin-btn">Live Chat</button>
-                </div>
-            </div>
+  <div class="logo">
+    <img src="assets/Jumia-Logo.png" alt="Jumia" />
+  </div>
+  <div class="search-box position-relative">
+    <!-- input field -->
+    <input type="text" placeholder="Search products, brands and categories" [(ngModel)]="searchQuery"
+      (input)="onSearchChange()" class="form-control search-input" />
 
-            <a href="#"><i class="fa fa-shopping-cart"></i> Cart</a>
+    <button (click)="goToSearchResult(searchQuery)" class="btn btn-search">
+      <i class="bi bi-search"></i>
+    </button>
+
+    <span *ngIf="searchQuery.trim().length > 0" (click)="clearSearch()" class=" btn-clear">
+      <i class="bi bi-x-circle"></i>
+    </span>
+
+
+    <!-- Elegant Dropdown with results -->
+    <div *ngIf="searchResults.length > 0" class="search-results-container mt-5" (click)="$event.stopPropagation()">
+      <div class="search-results-header">
+        <span>Search Results</span>
+        <small class="text-muted">{{ searchResults.length }} items found</small>
+      </div>
+      <div class="search-results-list">
+        <div *ngFor="let product of searchResults" (click)="goToSearchResult(product)" class="search-result-item">
+          <div class="product-info">
+            <div class="product-name">{{ product.name }}</div>
+            <div class="product-category text-muted">{{ product.subCategoryName }}</div>
+          </div>
+          <div class="product-brand">
+            <span class="brand-badge">{{ product.brand }}</span>
+            <div class="product-price">${{ product.price | number:'1.2-2' }}</div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
+
+  <div class="right-section">
+    <div class="user-actions">
+      <div class="dropdown" (click)="toggleDropdown()" [class.open]="dropdownOpen">
+        <button class="account-btn ">
+          <i class="fa fa-user"></i> Account <i class="fa fa-caret-down"></i>
+        </button>
+
+        <div class="dropdown-menu" *ngIf="dropdownOpen">
+          <!-- For Logged IN state (Logout button) -->
+          <button *ngIf="isLoggedIn" (click)="openLogoutModal()" class="signin-btn">
+            Logout
+          </button>
+
+          <!-- For Logged OUT state (Login button) -->
+          <button *ngIf="!isLoggedIn" routerLink="/login" class="signin-btn">
+            Login
+          </button>
+          <a routerLink="/account"><i class="fa fa-user"></i> My Account</a>
+          <a routerLink="/order"><i class="fa fa-box"></i> Orders</a>
+          <a routerLink="/wishlist"><i class="fa fa-heart"></i> Wishlist</a>
+        </div>
+      </div>
+
+
+      <div class="help-dropdown" (click)="toggleHelpDropdown()" [class.open]="helpDropdownOpen">
+        <a><i class="fa fa-question-circle"></i> Help <i class="fa fa-caret-down"></i></a>
+        <div class="help-menu" *ngIf="helpDropdownOpen">
+          <a><i class="fa fa-question-circle"></i> Help Center</a>
+          <a><i class="fa fa-cart-plus"></i> Place an Order</a>
+          <a><i class="fa fa-credit-card"></i> Pay for Your Order</a>
+          <a><i class="fa fa-map-marker-alt"></i> Track Your Order</a>
+          <a><i class="fa fa-times-circle"></i> Cancel an Order</a>
+          <a><i class="fa fa-undo"></i> Create a Return</a>
+          <div class="divider"></div>
+        </div>
+      </div>
+
+      <button routerLink="/cart" class="cart"><i class=" fa fa-shopping-cart"></i> Cart</button>
+    </div>
+  </div>
+  <!-- <div class="toast-container position-fixed bottom-0 end-0 p-3" *ngIf="showToast" style="z-index: 1100;">
+    <div class="toast show align-items-center text-white bg-success border-0" role="alert">
+      <div class="d-flex">
+        <div class="toast-body">
+          Logged out successfully ✅
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" (click)="showToast = false"></button>
+      </div>
+    </div>
+  </div> -->
+</div>
+<!-- Logout Confirmation Modal -->
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to logout?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="logout()" data-bs-dismiss="modal">Logout</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Toast -->
+<div
+  class="toast-container position-fixed bottom-0 end-0 p-3"
+  style="z-index: 1055"
+  *ngIf="showToast"
+>
+  <div class="toast show text-white bg-success border-0">
+    <div class="d-flex">
+      <div class="toast-body">
+        Logged out successfully ✅
+      </div>
+      <button
+        type="button"
+        class="btn-close btn-close-white me-2 m-auto"
+        (click)="showToast = false"
+      ></button>
+    </div>
+  </div>
 </div>

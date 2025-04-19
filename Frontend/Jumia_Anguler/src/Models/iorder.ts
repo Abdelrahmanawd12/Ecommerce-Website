@@ -26,16 +26,12 @@ export interface IOrder {
             quantity: number;
             price: number;
             SubTotalPrice: number;
-            productImages: [
-                {
-                    imgUrl: string;
-                }
-            ];
+            imageUrls?: string[]
         }
     ];
     payment: {
         paymentMethod: string;
-        paymentStatus: string;
+        status: string;
         transactionId: string;
         transactionDate: Date;
         amount: number;

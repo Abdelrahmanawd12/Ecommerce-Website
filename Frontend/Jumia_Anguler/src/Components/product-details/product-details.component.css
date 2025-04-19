@@ -1,18 +1,125 @@
-/* Add custom styling for product details */
+/* Global Styling */
+* {
+  font-family: "League Spartan", sans-serif;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+/* Card Body */
 .card-body {
   background-color: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
 }
 
+/* Carousel Image */
 .carousel-inner img {
   max-height: 400px;
-  object-fit: cover;
+  object-fit: contain;
+  border-radius: 0.5rem;
 }
 
+/* Carousel Buttons */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+}
+
+/* Disable Button Look */
 .btn-primary:disabled {
   background-color: #ccc;
   border-color: #ccc;
+  cursor: not-allowed;
 }
 
+/* Danger Text (e.g. for error messages) */
 .text-danger {
   font-size: 0.9rem;
+}
+
+/* Quantity Input */
+input[type="number"] {
+  border-radius: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #ced4da;
+}
+
+/* Rating stars spacing */
+.bi-star,
+.bi-star-fill,
+.bi-star-half {
+  font-size: 1.2rem;
+  margin-right: 2px;
+}
+
+/* Responsive Fixes */
+@media (max-width: 768px) {
+  .card-body {
+    padding: 1rem;
+  }
+
+  .carousel-inner img {
+    max-height: 300px;
+  }
+}
+/* products */
+.imgproduct{
+  max-height: 150px;
+  object-fit: contain;
+  width: 100%;
+  padding: 10px;
+}
+.parent{
+  background-color: #FFFFFF;
+}
+.proChild{
+  border: none;
+}
+.proChild:hover{
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  transition: all 0.3s;
+}
+
+.productparent-container{
+  background-color: #f8f9fa  ;
+  margin-bottom: 15px;
+  border-radius: 10px;
+}
+.products-container{
+  padding: 10px;
+}
+.product-title{
+  padding-top: 10px;
+}
+.product-name{
+  font-size: 16px;
+  font-weight: 500;
+  color: #222;
+  text-align: center;
+}
+.priceAndcart {
+
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.product-price{
+  font-size: 14px;
+  font-weight: 500;
+  color: #686666;
+  padding-top: 10px;
+}
+.fa-cart-shopping{
+  color: #727171;
+  background-color: #ffc400;
+  padding: 10px;
+  border-radius: 50%;
+  font-size: 20px;
 }

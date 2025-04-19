@@ -1,16 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from '../Components/navbar/navbar.component';
 import { FooterComponent } from '../Components/footer/footer.component';
+import { FormsModule } from '@angular/forms';
+import { NGX_ECHARTS_CONFIG, NgxEchartsModule } from 'ngx-echarts';
+import { ChatBotAiComponent } from "../Components/chat-bot-ai/chat-bot-ai.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavbarComponent,FooterComponent , HttpClientModule, CommonModule],
-  providers: [],
+  imports: [RouterOutlet, NavbarComponent, FooterComponent, HttpClientModule, CommonModule, NgxEchartsModule, FormsModule, ChatBotAiComponent],
+  providers: [
+    {
+      provide: NGX_ECHARTS_CONFIG,
+      useValue: {
+        echarts: () => import('echarts')
+      }
+    }
+  ],
   standalone: true,
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
@@ -39,14 +49,14 @@ export class AppComponent implements OnInit {
         // Hide header for Seller Dashboard, Admin Dashboard, and Login pages
         const currentRoute = this.router.url;
 
-        if (currentRoute === '/login' || currentRoute === '/error' || currentRoute === '/register' || currentRoute === '/sellerRegisteration' || currentRoute === '/sellerDashboard' || currentRoute === '/intro' || currentRoute === '/sellonjumia' || currentRoute === '/dashboard' || currentRoute == '/sellerDashboard/homeseller' || currentRoute == '/sellerDashboard/orderMangement' || currentRoute == '/sellerDashboard/manageProduct' || currentRoute == '/sellerDashboard/prductSales' ||currentRoute == '/sellerDashboard/accountprofile' || currentRoute == '/sellerDashboard/addproduct' ||currentRoute == '/sellerDashboard/reports') {
+        if (currentRoute === '/login' || currentRoute === '/error' || currentRoute === '/register' || currentRoute === '/sellerRegisteration' || currentRoute === '/sellerDashboard' || currentRoute === '/intro' || currentRoute === '/sellOnJumia' || currentRoute === '/dashboard' || currentRoute == '/sellerDashboard/homeseller' || currentRoute == '/sellerDashboard/orderMangement' || currentRoute == '/sellerDashboard/manageProduct' || currentRoute == '/sellerDashboard/prductSales' ||currentRoute == '/sellerDashboard/accountprofile'||currentRoute == '/sellerDashboard/reports'|| currentRoute == '/sellerDashboard/addproduct' || currentRoute=='/sellerDashboard/sales') {
           this.showHeader = false;
         } else {
           this.showHeader = true;
         }
 
         // Optionally, you can also hide the footer for certain pages
-        if (currentRoute === '/login' || currentRoute === '/error' || currentRoute === '/register' || currentRoute === '/sellerRegisteration' || currentRoute === '/sellerDashboard' || currentRoute === '/intro' || currentRoute === '/sellonjumia' || currentRoute === '/dashboard' ||currentRoute == '/sellerDashboard/homeseller' || currentRoute == '/sellerDashboard/orderMangement' || currentRoute == '/sellerDashboard/manageProduct' || currentRoute == '/sellerDashboard/prductSales' ||currentRoute == '/sellerDashboard/accountprofile' || currentRoute == '/sellerDashboard/addproduct' ||currentRoute == '/sellerDashboard/reports') {
+        if (currentRoute === '/login' || currentRoute === '/error' || currentRoute === '/register' || currentRoute === '/sellerRegisteration' || currentRoute === '/sellerDashboard' || currentRoute === '/intro' || currentRoute === '/sellOnJumia' || currentRoute === '/dashboard' ||currentRoute == '/sellerDashboard/homeseller' || currentRoute == '/sellerDashboard/orderMangement' || currentRoute == '/sellerDashboard/manageProduct' || currentRoute == '/sellerDashboard/prductSales' ||currentRoute == '/sellerDashboard/accountprofile'||currentRoute == '/sellerDashboard/reports' || currentRoute == '/sellerDashboard/addproduct' || currentRoute == '/sellerDashboard/sales' ) {
           this.showFooter = false;
         } else {
           this.showFooter = true;
@@ -54,4 +64,5 @@ export class AppComponent implements OnInit {
       }
     });
   }
+  
 }

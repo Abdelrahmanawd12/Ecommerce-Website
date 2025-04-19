@@ -242,12 +242,39 @@ export class OrderComponent implements OnInit {
     this.selectedOrder = null;
   }
 
-  loadOrdersByCategory(): void {
-    const customerId = 'user1';
+  //loadOrdersByCategory(): void {
+    //const customerId = 'user1';
     
+  // loadOrdersByCategory(): void {
+  //   const customerId = 'user1';
+  //   const category = 'current';
+
+  //   this.orderService.getOrdersByStatusCategory(customerId, category).subscribe({
+  //     next: (data) => {
+  //       this.orders = data;
+
+  //       this.ongoingOrders = data.filter(order => {
+  //         const status = order.orderStatus.trim().toLowerCase();
+  //         return ['pending', 'shipped', 'delivered'].includes(status);
+  //       }
+  //       );
+
+  //       this.canceledOrders = data.filter(order =>{
+  //         const status = order.orderStatus.trim().toLowerCase();
+  //         return status === 'canceled';
+  //       }
+  //       );
+  //     },
+  //     error: (err) => console.error('Failed to load orders:', err)
+  //   });
+  // }
+  //readonly customerId = localStorage.getItem('userId') ||'';
+  loadOrdersByCategory(): void {
+    // const customerId = 'user1';
+  
   
     // Get current (ongoing/delivered) orders
-    this.orderService.getOrdersByStatusCategory(customerId, 'current').subscribe({
+    this.orderService.getOrdersByStatusCategory(this.customerId, 'current').subscribe({
       next: (data) => {
         this.ongoingOrders = data; // already filtered by API
       },
@@ -255,7 +282,7 @@ export class OrderComponent implements OnInit {
     });
   
     // Get past (cancelled/returned) orders
-    this.orderService.getOrdersByStatusCategory(customerId, 'past').subscribe({
+    this.orderService.getOrdersByStatusCategory(this.customerId, 'past').subscribe({
       next: (data) => {
         this.canceledOrders = data; // already filtered by API
       },

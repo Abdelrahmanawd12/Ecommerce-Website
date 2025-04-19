@@ -1,16 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { Icategory } from '../../Models/Category';
 
-import { Router, RouterLink} from '@angular/router';
+import { Router, RouterLink, RouterModule} from '@angular/router';
 import { IProduct } from '../../Models/Category';
 import { CartDTO } from '../../Models/cart';
 import { CartService } from '../../Services/Customer/cart.service';
 import { CategoryService } from '../../Services/Customer/category.service';
 import { ProductsService } from '../../Services/Customer/products.service';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { ChatBotAiComponent } from "../chat-bot-ai/chat-bot-ai.component";
+declare var bootstrap: any;
+
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink],
+  imports: [RouterLink, FormsModule, CommonModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
@@ -23,12 +28,17 @@ export class HomeComponent implements OnInit {
   HighstOffer: IProduct[] = [] as IProduct[];
   TopRatedProducts: IProduct[] = [] as IProduct[];
   selectedQuantity: number = 1;
-  user= 'user1';
+
+  // user= localStorage.getItem('userId') || '';
+
    cartData: CartDTO = {
       cartId: 0,
       customerName: '',
       items: []
     };
+//toast mess
+toastMessage = '';
+toastClass: string = 'bg-success';
 
   constructor(
     private _catService: CategoryService,
@@ -36,6 +46,13 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private _CartServices: CartService
   ) { }
+
+
+  //get user
+  get user(): string {
+    return localStorage.getItem('userId') || '';
+  }
+
 
 // get All Category
   ngOnInit(): void {
@@ -72,7 +89,6 @@ export class HomeComponent implements OnInit {
         console.log("error message ya awad", err)
       }
     });
-
     //get cart
     this._CartServices.getCart(this.user).subscribe({
       next: (data) => {
@@ -119,18 +135,42 @@ export class HomeComponent implements OnInit {
       .slice(0, 6);
       return this.TopRatedProducts;
   }
+  //show toast
+  showToast(message: string, type: 'success' | 'error' = 'success') {
+    this.toastMessage = message;
+    this.toastClass = type === 'success' ? 'bg-success' : 'bg-danger';
 
+    const toastEl = document.getElementById('cartToast');
+    if (toastEl) {
+      const toast = new bootstrap.Toast(toastEl);
+      toast.show();
+    } else {
+      console.error('Toast element not found');
+    }
+  }
   //add to cart
+
   addToCart(product: IProduct): void {
+    const userId = localStorage.getItem('userId');
+
+    if (!userId || userId.trim() === '') {
+      this.router.navigateByUrl("/login");
+      return;
+    }
+
     this._CartServices.addItemToCart(product, this.selectedQuantity).subscribe({
       next: (res) => {
         console.log("Product added to cart", res);
-        alert("Product added to cart successfully!");
+        this.showToast("Product added to cart successfully!","success");
+        this.ngOnInit();
+
       },
       error: (err) => {
         console.log("error", err);
-        alert(err?.error || "Something went wrong!");
+        const errorMsg = err?.error?.message || "Something went wrong!";
+        this.showToast(errorMsg,"error");
       }
+
     });
   }
 

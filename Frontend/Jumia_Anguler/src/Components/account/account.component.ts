@@ -84,6 +84,7 @@ export class AccountComponent implements OnInit {
 
   // Toggle for form visibility
   isEditing: boolean = false;
+  
 
   //customerId = 'user1'; // Replace with your test user ID
   customerId: string = localStorage.getItem('userId') ?? '';

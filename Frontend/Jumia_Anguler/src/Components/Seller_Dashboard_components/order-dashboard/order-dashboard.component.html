@@ -49,27 +49,33 @@
                 <div class="header-cell">#</div>
                 <div class="header-cell">Order Number</div>
                 <div class="header-cell">Order Date</div>
+                <div class="header-cell">Payment Status</div>
                 <div class="header-cell">Payment Method</div>
+                <div class="header-cell">Deleviry Status</div>
                 <div class="header-cell">Price</div>
-                <div class="header-cell">Status</div>
-                <div class="header-cell">Customer Name</div>
                 <div class="header-cell">Actions</div>
             </div>
 
             <div class="table-body ">
-                <div class="no-orders" *ngIf="orders.length === 0">Oops! No orders to display!</div>
+                <div class="no-orders" *ngIf="orders.length === 0">
+                    Oops! No orders to display!
+                </div>
                 <div class="table-row" *ngFor="let order of orders; let i = index">
                     <div class="table-cell">{{i + 1}}</div>
                     <div class="table-cell">{{order.orderId}}</div>
                     <div class="table-cell">{{ order.orderDate | date:'dd/MM/yyyy' }}</div>
                     <div class="table-cell">{{order.payment.paymentMethod}}</div>
-                    <div class="table-cell">{{order.totalAmount}}</div>
+                    <div class="table-cell">
+                        <span class="status-badge" [class]="getPayStatusClass(order.payment.status)">
+                            {{order.payment.status}}
+                        </span>
+                    </div>
                     <div class="table-cell">
                         <span class="status-badge" [class]="getStatusClass(order.orderStatus)">
                             {{order.orderStatus}}
                         </span>
                     </div>
-                    <div class="table-cell">{{order.shippingInfo.receiverName}}</div>
+                    <div class="table-cell">{{order.totalAmount | currency:'$':'symbol':'1.2-2'}}</div>
                     <div class="table-cell actions-cell">
                         <button class="action-btn view-btn" (click)="openOrderModal(order)">
                             <svg class="action-icon" viewBox="0 0 24 24">
@@ -101,60 +107,66 @@
                                     <!-- Customer Information (Simple Layout) -->
                                     <div class="customer-info">
                                         <h4 class="section-title">
-                                          <i class="bi bi-person-badge"></i> Customer Information
+                                            <i class="bi bi-person-badge"></i> Customer Information
                                         </h4>
                                         <div class="customer-details">
-                                          <div class="detail-row">
-                                            <i class="bi bi-person icon"></i>
-                                            <div class="detail-content">
-                                              <span class="detail-label">Name:</span>
-                                              <span class="detail-value">{{selectedOrder.shippingInfo.receiverName}}</span>
+                                            <div class="detail-row">
+                                                <i class="bi bi-person icon"></i>
+                                                <div class="detail-content">
+                                                    <span class="detail-label">Name:</span>
+                                                    <span
+                                                        class="detail-value">{{selectedOrder.shippingInfo.receiverName}}</span>
+                                                </div>
                                             </div>
-                                          </div>
-                                          
-                                          <div class="detail-row">
-                                            <i class="bi bi-envelope icon"></i>
-                                            <div class="detail-content">
-                                              <span class="detail-label">Email:</span>
-                                              <span class="detail-value">{{selectedOrder.shippingInfo.receiverEmail}}</span>
+
+                                            <div class="detail-row">
+                                                <i class="bi bi-envelope icon"></i>
+                                                <div class="detail-content">
+                                                    <span class="detail-label">Email:</span>
+                                                    <span
+                                                        class="detail-value">{{selectedOrder.shippingInfo.receiverEmail}}</span>
+                                                </div>
                                             </div>
-                                          </div>
-                                          
-                                          <div class="detail-row">
-                                            <i class="bi bi-telephone icon"></i>
-                                            <div class="detail-content">
-                                              <span class="detail-label">Phone:</span>
-                                              <span class="detail-value">{{selectedOrder.shippingInfo?.receiverPhone}}</span>
+
+                                            <div class="detail-row">
+                                                <i class="bi bi-telephone icon"></i>
+                                                <div class="detail-content">
+                                                    <span class="detail-label">Phone:</span>
+                                                    <span
+                                                        class="detail-value">{{selectedOrder.shippingInfo?.receiverPhone}}</span>
+                                                </div>
                                             </div>
-                                          </div>
-                                          
-                                          <div class="detail-row">
-                                            <i class="bi bi-geo-alt icon"></i>
-                                            <div class="detail-content">
-                                              <span class="detail-label">Address:</span>
-                                              <span class="detail-value">{{selectedOrder.shippingInfo.shippingAddress}}</span>
+
+                                            <div class="detail-row">
+                                                <i class="bi bi-geo-alt icon"></i>
+                                                <div class="detail-content">
+                                                    <span class="detail-label">Address:</span>
+                                                    <span
+                                                        class="detail-value">{{selectedOrder.shippingInfo.shippingAddress}}</span>
+                                                </div>
                                             </div>
-                                          </div>
-                                          
-                                          <div class="detail-row">
-                                            <i class="bi bi-currency-dollar icon"></i>
-                                            <div class="detail-content">
-                                              <span class="detail-label">Total Price:</span>
-                                              <span class="detail-value">{{selectedOrder.totalAmount | currency:'EGP':'symbol':'1.2-2'}}</span>
+
+                                            <div class="detail-row">
+                                                <i class="bi bi-currency-dollar icon"></i>
+                                                <div class="detail-content">
+                                                    <span class="detail-label">Total Price:</span>
+                                                    <span class="detail-value">{{selectedOrder.totalAmount |
+                                                        currency:'$':'symbol':'1.2-2'}}</span>
+                                                </div>
                                             </div>
-                                          </div>
-                                          
-                                          <div class="detail-row">
-                                            <i class="bi bi-clipboard-check icon"></i>
-                                            <div class="detail-content">
-                                              <span class="detail-label">Order Status:</span>
-                                              <span class="status-badge" [class]="getStatusClass(selectedOrder.orderStatus)">
-                                                {{selectedOrder.orderStatus}}
-                                              </span>
+
+                                            <div class="detail-row">
+                                                <i class="bi bi-clipboard-check icon"></i>
+                                                <div class="detail-content">
+                                                    <span class="detail-label">Order Status:</span>
+                                                    <span class="status-badge"
+                                                        [class]="getStatusClass(selectedOrder.orderStatus)">
+                                                        {{selectedOrder.orderStatus}}
+                                                    </span>
+                                                </div>
                                             </div>
-                                          </div>
                                         </div>
-                                      </div>                    
+                                    </div>
 
                                     <!-- Products Table -->
                                     <div class="products-table">
@@ -171,18 +183,20 @@
                                             </thead>
                                             <tbody>
                                                 <tr *ngFor="let orderItem of selectedOrder?.orderItems">
-                                                    <td><img [src]="imageBaseUrl+orderItem.productImages.imgUrls"
-                                                            class="product-img"></td>
+                                                    <td style="width: 110px; height: 110px; overflow: hidden;">
+                                                        <img [src]="imageBaseUrl + orderItem.productImages[0]?.imgUrl || 'assets/default-product.png'"
+                                                            class="product-img"
+                                                            style="width: 100%; height: 100%; object-fit: cover;">
+                                                    </td>
                                                     <td>{{orderItem.productName}}</td>
                                                     <td>{{orderItem.brand}}</td>
-                                                    <td>{{orderItem.subTotal | currency:'EGB':'symbol':'1.2-2'}}</td>
+                                                    <td>{{orderItem.subTotal | currency:'$':'symbol':'1.2-2'}}</td>
                                                     <td>{{orderItem.quantity}}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
-
                                 <div class="modal-footer">
                                     <button class="jumia-btn secondary" (click)="closeModal()">Close</button>
                                 </div>
@@ -291,4 +305,3 @@
             <button class="toast-close" (click)="hideToast()">×</button>
         </div>
     </div>
-
