@@ -22,8 +22,9 @@ export class AdminSideBarComponent implements OnInit {
   isSubcategoriesMenuOpen = false;
   isProfileMenuOpen = false;
   isLogoutConfirmationOpen = false;
-
+  showLogoutModal = false;
   activeLink: string = 'home';
+  toastr: any;
 
   constructor(private router: Router) {}
 
@@ -156,4 +157,34 @@ export class AdminSideBarComponent implements OnInit {
     }, 1500);
   }
   
+
+
+
+
+  openLogoutModal() {
+    this.showLogoutModal = true;
+  }
+
+  closeLogoutModal() {
+    this.showLogoutModal = false;
+  }
+
+  confirmLogout() {
+   
+    localStorage.clear();
+    
+  
+   
+    sessionStorage.clear();
+    
+    
+    this.router.navigate(['/login']);
+    
+  
+    this.closeLogoutModal();
+    
+ 
+    this.toastr.success('Logout successful')
+    
+  }
 }

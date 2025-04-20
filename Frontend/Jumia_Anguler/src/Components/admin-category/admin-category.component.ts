@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { AdminCategoryService, Category, SubCategory } from '../../Services/admin-category.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-admin-category',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule ,RouterModule],
   templateUrl: './admin-category.component.html',
   styleUrls: ['./admin-category.component.css']
 })
@@ -118,58 +119,9 @@ export class AdminCategoryComponent implements OnInit {
     if (this.currentPage < this.totalPages) this.currentPage++;
   }
 
-  openUpdateModal(category: Category): void {
-    this.currentCategory = {
-      id: category.id,
-      name: category.name,
-      subcategory: category.subcategory?.map(sub => ({
-        subCatId: sub.subCatId || 0,
-        subCatName: sub.subCatName || '',
-        categoryName: sub.categoryName || category.name,
-        categoryId: category.id   
-      })) || [{
-        subCatId: 0,
-        subCatName: '',
-        categoryName: category.name,
-        categoryId: category.id
-      }]
-    };
-    this.showUpdateModal = true;
-    this.errorMessage = '';
+  getMin(a: number, b: number): number {
+    return Math.min(a, b);
   }
-
-  saveCategory(): void {
-    if (!this.currentCategory?.name?.trim()) {
-      this.errorMessage = 'Category name is required';
-      return;
-    }
-  
-    const categoryToUpdate: Category = {
-      id: this.currentCategory!.id,
-      name: this.currentCategory!.name,
-      subcategory: this.currentCategory.subcategory?.map(sub => ({
-        subCatId: sub.subCatId || 0,
-        subCatName: sub.subCatName || '',
-        categoryName: sub.categoryName || this.currentCategory!.name,
-        categoryId: this.currentCategory!.id
-      })) || []
-    };
-    
-    this.isLoading = true;
-    this.categoryService.updateCategory(this.currentCategory.id, categoryToUpdate)
-      .subscribe({
-        next: () => {
-          this.loadCategories();
-          this.showUpdateModal = false;
-          this.isLoading = false;
-        },
-        error: (err) => {
-          this.errorMessage = 'Failed to update category';
-          this.isLoading = false;
-        }
-      });
-  }
-
   confirmDelete(id: number): void {
     this.selectedCategoryId = id;
     this.showDeleteModal = true;
