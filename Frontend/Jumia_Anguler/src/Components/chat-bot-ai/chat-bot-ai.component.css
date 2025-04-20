@@ -209,8 +209,8 @@
   }
   
   .user-avatar {
-    background: #1A1A1A;
-    color: white;
+    background: #eee;
+    color: #FF7900;
   }
   
   .message .content {
@@ -292,3 +292,53 @@
   ::-webkit-scrollbar-thumb:hover {
     background: #aaa;
   }
+
+  /* Add to your existing CSS */
+.message.bot .content {
+  border-radius: 18px 18px 18px 0;
+  background: #f1f1f1;
+  padding: 10px 15px;
+  max-width: 80%;
+  display: inline-block;
+  position: relative;
+}
+
+/* Typing indicator animation */
+.message.bot[isTyping] .content::after {
+  content: '|';
+  animation: blink 1s infinite;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.message.bot[isThinking] .content {
+  min-width: 20px;
+}
+
+.message.bot[isThinking] .content::after {
+  content: '...';
+  position: relative;
+  animation: thinkingDots 1.5s infinite;
+}
+
+@keyframes thinkingDots {
+  0% { content: '.'; }
+  33% { content: '..'; }
+  66% { content: '...'; }
+  100% { content: '.'; }
+}
+
+.message.bot[isTyping] .content::after {
+  content: '|';
+  animation: blink 1s infinite;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
