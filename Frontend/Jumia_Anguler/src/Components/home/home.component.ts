@@ -39,7 +39,6 @@ export class HomeComponent implements OnInit {
 //toast mess
 toastMessage = '';
 toastClass: string = 'bg-success';
-
   constructor(
     private _catService: CategoryService,
     private _product: ProductsService,
@@ -47,12 +46,11 @@ toastClass: string = 'bg-success';
     private _CartServices: CartService
   ) { }
 
-
   //get user
-  get user(): string {
-    return localStorage.getItem('userId') || '';
-  }
-
+  // get user(): string {
+  //   return localStorage.getItem('userId') || '';
+  // }
+  CustomerId = localStorage.getItem('userId') || '';
 
 // get All Category
   ngOnInit(): void {
@@ -90,7 +88,7 @@ toastClass: string = 'bg-success';
       }
     });
     //get cart
-    this._CartServices.getCart(this.user).subscribe({
+    this._CartServices.getCart(this.CustomerId).subscribe({
       next: (data) => {
         this.cartData = data;
       },

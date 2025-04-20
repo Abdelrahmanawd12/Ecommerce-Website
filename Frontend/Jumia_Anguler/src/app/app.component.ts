@@ -40,6 +40,7 @@ export class AppComponent implements OnInit {
 
   showHeader: boolean = true; // Flag to control header visibility
   showFooter: boolean = true; // Flag to control footer visibility
+  showMarginTop: boolean = true; // Flag to control margin
 
   constructor(private router: Router) {}
 
@@ -51,18 +52,21 @@ export class AppComponent implements OnInit {
 
         if (currentRoute === '/login' || currentRoute === '/error' || currentRoute === '/register' || currentRoute === '/sellerRegisteration' || currentRoute === '/sellerDashboard' || currentRoute === '/intro' || currentRoute === '/sellOnJumia' || currentRoute === '/dashboard' || currentRoute == '/sellerDashboard/homeseller' || currentRoute == '/sellerDashboard/orderMangement' || currentRoute == '/sellerDashboard/manageProduct' || currentRoute == '/sellerDashboard/prductSales' ||currentRoute == '/sellerDashboard/accountprofile'||currentRoute == '/sellerDashboard/reports'|| currentRoute == '/sellerDashboard/addproduct' || currentRoute=='/sellerDashboard/sales') {
           this.showHeader = false;
+          this.showMarginTop = false;
         } else {
           this.showHeader = true;
+          this.showMarginTop = true;
         }
 
         // Optionally, you can also hide the footer for certain pages
         if (currentRoute === '/login' || currentRoute === '/error' || currentRoute === '/register' || currentRoute === '/sellerRegisteration' || currentRoute === '/sellerDashboard' || currentRoute === '/intro' || currentRoute === '/sellOnJumia' || currentRoute === '/dashboard' ||currentRoute == '/sellerDashboard/homeseller' || currentRoute == '/sellerDashboard/orderMangement' || currentRoute == '/sellerDashboard/manageProduct' || currentRoute == '/sellerDashboard/prductSales' ||currentRoute == '/sellerDashboard/accountprofile'||currentRoute == '/sellerDashboard/reports' || currentRoute == '/sellerDashboard/addproduct' || currentRoute == '/sellerDashboard/sales' ) {
           this.showFooter = false;
+          this.showMarginTop = false;
         } else {
           this.showFooter = true;
+          this.showMarginTop = true;
         }
       }
     });
   }
-  
 }
