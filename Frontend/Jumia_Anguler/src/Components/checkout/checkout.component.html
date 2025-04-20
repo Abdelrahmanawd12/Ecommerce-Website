@@ -1,0 +1,219 @@
+<p>checkout works!</p>
+
+
+
+<!-- Big Container to wrap everything -->
+<div class="container mt-4">
+
+  <!-- Address Book Display Only -->
+  <div class="col-md-12 mb-4" *ngIf="addressBook">
+    <div class="card shadow-lg border-0 d-flex flex-column"> <!-- Increase shadow here -->
+
+      <!-- Only show full section if all values are valid -->
+      <ng-container *ngIf="isAddressValid(); else noAddress">
+        <div class="card-header bg-white border-bottom">
+          <h5 class="mb-0">Address Book</h5>
+        </div>
+
+        <div class="card-body flex-grow-1">
+          <p><strong>Name:</strong> {{ addressBook.firstName }} {{ addressBook.lastName }}</p>
+          <p><strong>Phone:</strong> {{ addressBook.phoneNumber }}</p>
+          <p><strong>Street:</strong> {{ addressBook.street }}</p>
+          <p><strong>City:</strong> {{ addressBook.city }}</p>
+          <p><strong>Country:</strong> {{ addressBook.country }}</p>
+        </div>
+      </ng-container>
+
+      <!-- Message when address is missing -->
+      <ng-template #noAddress>
+        <div class="card-header bg-white border-bottom">
+          <h5 class="mb-0">Address Book</h5>
+        </div>
+        <div class="card-body">
+          <!-- Show "Add Address" Button if no address -->
+          <button class="btn btn-primary" (click)="addAddress()">   
+            Add Address
+          </button>
+        </div>
+      </ng-template>
+
+    </div>
+  </div>
+
+  <!-- Add Shipping Address Form (Only displayed when showForm is true) -->
+  <div *ngIf="showForm">
+    <div class="card shadow-lg border-0 mb-4">
+      <div class="card-body">
+        <h2>Add Shipping Address</h2>
+
+        <form (ngSubmit)="onSubmit()" #form="ngForm">
+          <div class="mb-3">
+            <label class="form-label">Street</label>
+            <input class="form-control" [(ngModel)]="address.street" name="street" required />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">City</label>
+            <input class="form-control" [(ngModel)]="address.city" name="city" required />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Country</label>
+            <input class="form-control" [(ngModel)]="address.country" name="country" required />
+          </div>
+
+          <button class="btn btn-primary" type="submit">Add Address</button>
+        </form>
+
+        <div class="mt-3" *ngIf="message">
+          <div class="alert alert-info">{{ message }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Order Details -->
+  <div class="card shadow-lg border-0">
+    <div class="card-body">
+      <h3 class="mb-4 text-center">Order Details</h3>
+      <div class="row">
+        <div class="col-12">
+          <div class="table-responsive">
+            <table class="table table-borderless table-striped">
+              <thead class="thead-light">
+                <tr>
+                  <th> </th>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                  <th>Discount</th>
+                  <th>Total Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let product of cartProducts; index as i">
+                  <td>{{ i + 1 }}</td>
+                  <td>
+                    <img [src]="product.imageUrl" width="60" height="60" class="img-fluid rounded" />
+                  </td>
+                  <td>{{ product.name }}</td>
+                  <td>{{ product.quantity }}</td>
+                  <td>{{ product.price | currency }}</td>
+                  <td>{{ product.discount }}%</td>
+                  <td>{{ product.totalPrice | currency }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Total Price Section with improved styling -->
+      <div class="d-flex justify-content-end mt-4">
+        <h4 class="text-dark fw-bold bg-light p-2 rounded">Total: {{ grandTotal | currency }}</h4>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- Confirm Order Button -->
+<div class="mt-4">
+  <button class="btn btn-success" [disabled]="isLoading || cartProducts.length === 0" (click)="confirmOrder()">
+    <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+    Confirm Order
+  </button>
+</div>
+<!-- <div class="confirm-btn-container mt-4">
+  <button class="btn btn-success" [disabled]="isLoading || cartProducts.length === 0" (click)="confirmOrder()">
+    <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+    Confirm Order
+  </button>
+</div> -->
+<!-- <div class="confirm-btn-container mt-4 d-flex flex-column align-items-center">
+  <button 
+    class="btn btn-success" 
+    [disabled]="isLoading || cartProducts.length === 0 || !isAddressValid()" 
+    (click)="confirmOrder()">
+    <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+    Confirm Order
+  </button>
+
+  
+  <small class="text-danger mt-2" *ngIf="!isAddressValid()">Please enter your address first</small>
+</div>  -->
+
+
+
+<!-- Success/Error Message -->
+<div *ngIf="message" class="mt-3 alert alert-info">
+  {{ message }}
+</div>
+
+
+
+
+
+
+<!-- paymentMethod
+<div class="container mt-4">
+  <h2>Payment Method</h2>
+
+ 
+  <div class="form-group">
+    <label for="paymentMethod">Choose Payment Method</label>
+    <select [(ngModel)]="selectedPaymentMethod" name="paymentMethod" class="form-control" id="paymentMethod">
+      <option value="visa">Visa</option>
+      <option value="mastercard">MasterCard</option>
+    </select>
+  </div>
+
+  Visa Card Number Input (only shown when Visa is selected) 
+  <div *ngIf="selectedPaymentMethod === 'visa'" class="form-group mt-3">
+    <label for="visaCardNumber">Visa Card Number</label>
+    <input 
+      type="text" 
+      id="visaCardNumber" 
+      [(ngModel)]="visaCardNumber" 
+      name="visaCardNumber" 
+      class="form-control"
+      placeholder="Enter your Visa Card Number"
+      [ngClass]="{'is-invalid': !isValidVisaCard}" 
+      (input)="validateVisaCardNumber()"
+    />
+    <div *ngIf="!isValidVisaCard" class="invalid-feedback">
+      Please enter a valid Visa card number (16 digits).
+    </div>
+  </div>
+
+   Pay Now Button (disabled until valid Visa number is entered) 
+  <button 
+    class="btn btn-primary mt-3" 
+    [disabled]="!isValidVisaCard" 
+    (click)="payNow()">
+    Pay Now
+  </button>
+</div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+

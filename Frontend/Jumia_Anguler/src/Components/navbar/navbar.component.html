@@ -85,8 +85,11 @@
         </div>
       </div>
 
-      <button routerLink="/cart" class="cart"><i class=" fa fa-shopping-cart"></i> Cart</button>
-    </div>
+      <button class="btn" routerLink="/cart" >
+        <i class="fa-solid fa-cart-shopping" style="font-size: 30px;"></i>
+        <span class="badge bg-warning">{{totalItem}}</span>
+      </button>
+        </div>
   </div>
   <!-- <div class="toast-container position-fixed bottom-0 end-0 p-3" *ngIf="showToast" style="z-index: 1100;">
     <div class="toast show align-items-center text-white bg-success border-0" role="alert">

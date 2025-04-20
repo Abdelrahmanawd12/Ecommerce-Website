@@ -17,6 +17,8 @@ namespace Jumia_Api.UnitOFWorks
         GenericRepository<Shipping> shippingRepository;
         GenericRepository<ProductImage> productImageRepository;
         SellerRepository sellerRepository;
+        GenericRepository<Wishlist> wishlistRepository;
+        GenericRepository<WishlistItem> wishlistItemRepository;
         public UnitOFWork(JumiaDbContext context)
         {
             db = context;
@@ -134,6 +136,28 @@ namespace Jumia_Api.UnitOFWorks
                     sellerRepository = new SellerRepository(db);
                 }
                 return sellerRepository;
+            }
+        }
+        public GenericRepository<Wishlist> WishlistRepository
+        {
+            get
+            {
+                if (wishlistRepository == null)
+                {
+                    wishlistRepository = new GenericRepository<Wishlist>(db);
+                }
+                return wishlistRepository;
+            }
+        }
+        public GenericRepository<WishlistItem> WishlistItemRepository
+        {
+            get
+            {
+                if (wishlistItemRepository == null)
+                {
+                    wishlistItemRepository = new GenericRepository<WishlistItem>(db);
+                }
+                return wishlistItemRepository;
             }
         }
         public void Save()

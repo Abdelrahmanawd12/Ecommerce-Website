@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '../../Services/Customer/cart.service';
+import { environment } from '../../Environment/Environment.prod';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class CartComponent implements  OnInit {
     customerName: '',
     items: []
   };
+  readonly imgbaseUrl=environment.imageBaseUrl;
 
   constructor(private cartService: CartService) {}
 
