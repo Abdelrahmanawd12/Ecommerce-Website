@@ -8,3 +8,5 @@ export interface AdminDashboard {
   totalSales: number;
   totalCommission: number;
 }
+
+
