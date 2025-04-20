@@ -1,19 +1,24 @@
+<<<<<<< HEAD
  .jumia-footer {
+=======
+/*
+  .jumia-footer {
+>>>>>>> 47643ef0566ef1672cd887827def627914fc06b8
     position: relative;
     width: 100%;
     background-color: #333;
     color: #fff;
     padding: 30px 0;
     text-align: center;
-    margin-top: auto; 
+    margin-top: auto;
   }
-  
+
   .jumia-footer a {
     color: #fff;
     text-decoration: none;
   }
-  
+
   .jumia-footer a:hover {
-    color: #f68b1e; 
+    color: #f68b1e;
   }
-  
+ */

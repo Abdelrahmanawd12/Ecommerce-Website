@@ -27,7 +27,7 @@ namespace Jumia_Api.Controllers.CustomerControllers
         [HttpGet]
         public IActionResult GetAllProducts()
         {
-            var products = unit.ProductsRepository.GetAll(); 
+            var products = unit.ProductsRepository.GetAll().Where(p=>p.Status=="accepted"&&p.IsDeleted==false); 
             var product = mapper.Map<List<ProductsDTO>>(products);
             return Ok(product);
         }
@@ -36,7 +36,7 @@ namespace Jumia_Api.Controllers.CustomerControllers
 
         public IActionResult GetProductById(int id)
         {
-            var product = unit.ProductsRepository.GetById(id);
+            var product = unit.ProductsRepository.getById(id) ;
             if (product == null)
             {
                 return NotFound();

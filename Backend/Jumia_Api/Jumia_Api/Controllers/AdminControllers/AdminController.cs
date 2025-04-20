@@ -3,6 +3,7 @@ using Jumia_Api.DTOs.AdminDTOs;
 using Jumia_Api.DTOs.CustomerDTOs;
 using Jumia_Api.Services.Admin_Service;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Jumia_Api.Controllers
 {
@@ -242,25 +243,25 @@ namespace Jumia_Api.Controllers
         }
 
         [HttpPost("categories")]
-        public async Task<IActionResult> AddCategory([FromBody] CategoryDTO categoryDto)
+        public async Task<IActionResult> AddCategoryWithSubCategory([FromBody] adminCategoryDTO? categoryDto)
         {
             if (categoryDto == null)
             {
-                return BadRequest("Category data is required.");
+                return BadRequest("Invalid data.");
             }
 
-            var addedCategory = await _adminService.AddCategoryAsync(categoryDto);
+            var result = await _adminService.AddCategoryAsync(categoryDto);
 
-            if (addedCategory == null)
+            if (result == null)
             {
-                return BadRequest("Category could not be added.");
+                return BadRequest("Failed to add category and subcategories.");
             }
 
-            return CreatedAtAction(nameof(GetCategoryById), new { categoryId = addedCategory.Id }, addedCategory);
+            return Ok(new { message = "Category and SubCategory added successfully." });
         }
 
         [HttpPut("categories/{categoryId}")]
-        public async Task<IActionResult> UpdateCategory(int categoryId, [FromBody] CategoryDTO categoryDto)
+        public async Task<IActionResult> UpdateCategory(int categoryId, [FromBody] adminCategoryDTO categoryDto)
         {
             if (categoryDto == null)
             {
@@ -290,74 +291,6 @@ namespace Jumia_Api.Controllers
             return NoContent();
         }
 
-        // SubCategory Endpoints
-        [HttpGet("subcategories")]
-        public async Task<IActionResult> GetAllSubCategories()
-        {
-            var subCategories = await _adminService.GetAllSubCategoriesAsync();
-            return Ok(subCategories);
-        }
-
-        [HttpGet("subcategories/{subCategoryId}")]
-        public async Task<IActionResult> GetSubCategoryById(int subCategoryId)
-        {
-            var subCategory = await _adminService.GetSubCategoryByIdAsync(subCategoryId);
-
-            if (subCategory == null)
-            {
-                return NotFound($"SubCategory with ID {subCategoryId} not found.");
-            }
-
-            return Ok(subCategory);
-        }
-
-        [HttpPost("subcategories")]
-        public async Task<IActionResult> AddSubCategory([FromBody] SubCategoryDTO subCategoryDto)
-        {
-            if (subCategoryDto == null)
-            {
-                return BadRequest("SubCategory data is required.");
-            }
-
-            var addedSubCategory = await _adminService.AddSubCategoryAsync(subCategoryDto);
-
-            if (addedSubCategory == null)
-            {
-                return NotFound("Category not found.");
-            }
-
-            return CreatedAtAction(nameof(GetSubCategoryById), new { subCategoryId = addedSubCategory.SubCatId }, addedSubCategory);
-        }
-
-        [HttpPut("subcategories/{subCategoryId}")]
-        public async Task<IActionResult> UpdateSubCategory(int subCategoryId, [FromBody] SubCategoryDTO subCategoryDto)
-        {
-            if (subCategoryDto == null)
-            {
-                return BadRequest("SubCategory data is required.");
-            }
-
-            var result = await _adminService.UpdateSubCategoryAsync(subCategoryId, subCategoryDto);
-
-            if (!result)
-            {
-                return NotFound($"SubCategory with ID {subCategoryId} not found.");
-            }
-
-            return NoContent();
-        }
-
-        [HttpDelete("subcategories/{subCategoryId}")]
-        public async Task<IActionResult> DeleteSubCategory(int subCategoryId)
-        {
-            var result = await _adminService.DeleteSubCategoryAsync(subCategoryId);
-
-            if (!result)
-            {
-                return NotFound($"SubCategory with ID {subCategoryId} not found.");
-            }
-
-            return NoContent();
-        }
+       
     }
 }

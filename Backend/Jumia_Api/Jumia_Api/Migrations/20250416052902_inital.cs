@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Jumia_Api.Migrations
 {
     /// <inheritdoc />
+
     public partial class inital : Migration
     {
         /// <inheritdoc />
@@ -235,7 +236,9 @@ namespace Jumia_Api.Migrations
                     OrderTrackingNumber = table.Column<int>(type: "int", nullable: false),
                     CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     SellerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    AdminId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    AdminId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    SellerId1 = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    
                 },
                 constraints: table =>
                 {

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { CartService } from '../../Services/Customer/cart.service';
 import { ProductService } from '../../Services/product.service';
 import { FormsModule } from '@angular/forms';
 import { SearchResponse } from '../../Models/search-response';
@@ -15,6 +16,25 @@ declare var bootstrap: any;
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent implements OnInit {
+  public totalItem: number = 0;
+  get user(): string {
+    return localStorage.getItem('userId') || '';
+  }
+
+  ngOnInit(): void {
+// cart counter
+this._CartService.cartItemCount$.subscribe(count => {
+  this.totalItem = count;
+});
+
+this._CartService.getCart(this.user).subscribe(cart => {
+  this._CartService.updateCartCount(cart.items.length);
+});
+
+this.toggleAuth();
+
+
+}
 
   dropdownOpen = false;
   helpDropdownOpen = false;
@@ -23,7 +43,7 @@ export class NavbarComponent implements OnInit {
   showToast = false;
 
 
-  constructor(private productService: ProductService, private router: Router,private auth:LoginService) { }
+  constructor(private productService: ProductService, private router: Router,private auth:LoginService,private _CartService:CartService) { }
 
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
@@ -37,7 +57,10 @@ export class NavbarComponent implements OnInit {
     if (!(event.target as HTMLElement).closest('.help-dropdown')) {
       this.helpDropdownOpen = false;
     }
-  }
+}
+
+
+
 
   onSearchChange() {
     if (this.searchQuery.trim() === '') {
@@ -62,7 +85,7 @@ export class NavbarComponent implements OnInit {
     } else {
       this.router.navigate(['shop/', queryOrProduct.productId]);
     }
-    this.searchResults = []; 
+    this.searchResults = [];
   }
   clearSearch() {
     this.searchQuery = '';
@@ -71,22 +94,20 @@ export class NavbarComponent implements OnInit {
   }
   isLoggedIn: boolean = false;
 
-  ngOnInit() {
-    this.toggleAuth();
-  }
+
 
   toggleAuth() {
     const token = localStorage.getItem('token');
-    this.isLoggedIn = !!token; 
+    this.isLoggedIn = !!token;
   }
-  
+
   logout() {
       localStorage.clear();
-      this.toggleAuth(); 
+      this.toggleAuth();
       this.router.navigate(['/home']);
-      
+
       this.showToast = true;
-  
+
       // Hide toast after 3 seconds
       setTimeout(() => {
         this.showToast = false;
@@ -100,5 +121,5 @@ export class NavbarComponent implements OnInit {
       modal.show();
     }
   }
-  
+
 }

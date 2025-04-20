@@ -2,6 +2,8 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router, NavigationEnd, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs/operators';
+import * as bootstrap from 'bootstrap';
+
 
 @Component({
   selector: 'app-admin-side-bar',
@@ -13,19 +15,21 @@ import { filter } from 'rxjs/operators';
 export class AdminSideBarComponent implements OnInit {
 
   @Output() collapseChange = new EventEmitter<boolean>();
-
+ 
   isCollapsed = false;
   isUsersMenuOpen = false;
   isCategoriesMenuOpen = false;
   isSubcategoriesMenuOpen = false;
   isProfileMenuOpen = false;
+  isLogoutConfirmationOpen = false;
+  showLogoutModal = false;
   activeLink: string = 'home';
+  toastr: any;
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    const savedState = localStorage.getItem('adminSidebarCollapsed');
-    this.isCollapsed = savedState === 'true';
+    this.router.navigate(['/admin/dashboard']);
 
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
@@ -52,7 +56,7 @@ export class AdminSideBarComponent implements OnInit {
       }
     });
   }
-
+ 
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;
     localStorage.setItem('adminSidebarCollapsed', this.isCollapsed.toString());
@@ -66,7 +70,7 @@ export class AdminSideBarComponent implements OnInit {
       this.isProfileMenuOpen = false;
     }
   }
-
+ 
  
   toggleCategoriesMenu() {
     if (this.isCollapsed) {
@@ -124,5 +128,63 @@ export class AdminSideBarComponent implements OnInit {
       profile: ['account-settings', 'logout']
     };
     return map[parentLink].includes(this.activeLink);
+  }
+
+  
+  showToast() {
+    console.log('Showing logout toast');
+    const toastElement = document.getElementById('logoutToast');
+    if (toastElement) {
+      const toast = new bootstrap.Toast(toastElement);
+      toast.show();
+    } else {
+      console.error('Logout toast element not found');
+    }
+  }
+  openLogoutConfirmation() {
+    this.isLogoutConfirmationOpen = true;
+  }
+  
+  closeLogoutConfirmation() {
+    this.isLogoutConfirmationOpen = false;
+  }
+  
+  Onlogout() {
+    this.isLogoutConfirmationOpen = false;
+    this.showToast();
+    setTimeout(() => {
+      this.router.navigate(['/login']);
+    }, 1500);
+  }
+  
+
+
+
+
+  openLogoutModal() {
+    this.showLogoutModal = true;
+  }
+
+  closeLogoutModal() {
+    this.showLogoutModal = false;
+  }
+
+  confirmLogout() {
+   
+    localStorage.clear();
+    
+  
+   
+    sessionStorage.clear();
+    
+    
+    this.router.navigate(['/login']);
+    
+  
+    this.closeLogoutModal();
+    
+ 
+    this.toastr.success('Logout successful')
+    
   }
 }

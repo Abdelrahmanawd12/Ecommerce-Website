@@ -4,7 +4,7 @@
       <div class="card-body p-0">
         <div class="table-responsive">
           <table class="table table-hover mb-0">
-            <thead class=" table-dark">
+            <thead class="table-dark">
               <tr>
                 <th class="text-center">#</th>
                 <th>Product</th>
@@ -23,7 +23,7 @@
                 <td class="text-center align-middle">{{ i + 1 }}</td>
                 <td class="align-middle font-weight-bold">{{ item.productName }}</td>
                 <td class="text-center align-middle">
-                  <img [src]="item.imageUrl" class="img-thumbnail" style="max-width: 80px; height: auto;" alt="product image" />
+                  <img [src]="imgbaseUrl+item.imageUrl" class="img-thumbnail" style="max-width: 80px; height: auto;" alt="product image" />
                 </td>
                 <td class="text-center align-middle">
                   <div class="d-flex justify-content-center align-items-center gap-2">
@@ -47,7 +47,7 @@
                 <td class="text-center align-middle">{{ i + 1 }}</td>
                 <td class="align-middle font-weight-bold">{{ item.productName }}</td>
                 <td class="text-center align-middle">
-                  <img [src]="item.imageUrl" class="img-thumbnail" style="max-width: 80px; height: auto; opacity: 0.5;" alt="product image" />
+                  <img [src]="imgbaseUrl+item.imageUrl" class="img-thumbnail" style="max-width: 80px; height: auto; opacity: 0.5;" alt="product image" />
                 </td>
                 <td class="text-center align-middle">
                   <small class="text-danger">Out of stock</small>
@@ -66,7 +66,7 @@
                 <td class="text-center align-middle">{{ i + 1 }}</td>
                 <td class="align-middle font-weight-bold">{{ item.productName }}</td>
                 <td class="text-center align-middle">
-                  <img [src]="item.imageUrl" class="img-thumbnail" style="max-width: 80px; height: auto;" alt="product image" />
+                  <img [src]="imgbaseUrl+item.imageUrl" class="img-thumbnail" style="max-width: 80px; height: auto;" alt="product image" />
                 </td>
                 <td class="text-center align-middle">
                   <div class="text-danger mb-1"><del>{{item.quantity}}</del></div>
@@ -97,10 +97,10 @@
               <i class="fas fa-broom me-2"></i>Clear Cart
             </button>
             <div class="text-end">
-              <h4 class="mb-0">Total: <span class="text-primary">{{ grandTotal | currency }}</span></h4>
+              <h4 class="mb-0">Total: <span class="text-warning">{{ grandTotal | currency }}</span></h4>
               <small class="text-muted">Including all discounts</small>
             </div>
-            <button class="btn btn-primary button-checkout responsive-btn" routerLink="/checkout">
+            <button class="btn btn-warning button-checkout responsive-btn" routerLink="/checkout">
               <i class="fas fa-credit-card me-2"></i>Checkout
             </button>
           </div>

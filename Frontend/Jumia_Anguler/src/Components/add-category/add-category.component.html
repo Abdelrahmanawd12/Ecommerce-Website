@@ -1,0 +1,53 @@
+<div class="container py-4">
+  <h2 class="mb-4">Add Category</h2>
+
+  <div class="row">
+    <!-- Stepper -->
+    <div class="col-md-4">
+      <div class="list-group">
+        <div class="list-group-item" [ngClass]="{'active': currentStep === 1}">
+          <strong>Step 1:</strong> Category Info
+        </div>
+        <div class="list-group-item" [ngClass]="{'active': currentStep === 2}">
+          <strong>Step 2:</strong> Subcategories
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Steps -->
+    <div class="col-md-8">
+      <!-- Step 1 -->
+      <form *ngIf="currentStep === 1" [formGroup]="categoryForm" class="border p-4 rounded shadow-sm bg-light">
+        <div class="mb-3">
+          <label for="id" class="form-label">ID *</label>
+          <input type="number" id="id" class="form-control" formControlName="id" readonly>
+        </div>
+        <div class="mb-3">
+          <label for="categoryName" class="form-label">Category Name *</label>
+          <input type="text" id="categoryName" class="form-control" formControlName="name">
+        </div>
+        <div class="d-flex justify-content-end">
+          <button type="button" class="btn btn-primary" (click)="nextStep()">Continue</button>
+        </div>
+      </form>
+
+      <!-- Step 2 -->
+      <form *ngIf="currentStep === 2" [formGroup]="categoryForm" class="border p-4 rounded shadow-sm bg-light">
+        <h5 class="mb-3">Subcategories</h5>
+        <div formArrayName="subcategories">
+          <div *ngFor="let subCat of subcategories.controls; let i = index" [formGroupName]="i" class="mb-3 d-flex align-items-center gap-2">
+            <input type="number" class="form-control" formControlName="subCatId" placeholder="Subcategory ID" readonly >
+            <input type="text" class="form-control" formControlName="subCatName" placeholder="Subcategory Name">
+            <input type="text" class="form-control" formControlName="categoryName" placeholder="Category Name" readonly>
+            <button type="button" class="btn btn-danger btn-sm" (click)="removeSubCategory(i)">×</button>
+          </div>
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm mb-3" (click)="addSubCategory()">+ Add Subcategory</button>
+        <div class="d-flex justify-content-between">
+          <button type="button" class="btn btn-outline-secondary" (click)="prevStep()">Back</button>
+          <button type="submit" class="btn btn-success" (click)="onSubmit()">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

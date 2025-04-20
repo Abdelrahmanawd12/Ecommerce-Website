@@ -1,0 +1,133 @@
+<div *ngIf="isLoading" class="d-flex justify-content-center align-items-center vh-100">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<div *ngIf="!isLoading && wishlistData" class="wishlist-container">
+  <div class="row m-0 p-0">
+    <!-- Sidebar Categories - Hidden on mobile -->
+    <div class="col-lg-3 col-md-4 p-4 sidebar d-none d-md-block">
+      <div class="category-list bg-white p-4 rounded shadow-sm sticky-top">
+        <h5 class="text-muted mb-4">You may like products in</h5>
+        @for(c of CatList;track c.id){
+        <div class="mb-3">
+          <a class="category d-block p-2 rounded text-decoration-none text-dark hover-primary"
+             [routerLink]="['/shop', c.id]">
+             <i class="fas fa-chevron-right me-2"></i>{{c.name}}
+          </a>
+        </div>
+        }
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="col-lg-9 col-md-8 p-0 main-content">
+      <div class="p-3 p-md-4  bg-white shadow-sm">
+        <div class="d-flex justify-content-between align-items-center">
+          <h1 class="page-title m-0">
+            <i class="fas fa-heart text-danger me-2 me-md-3"></i>
+            <span class="d-none d-md-inline">{{ wishlistData?.customerName }}'s</span> Wishlist
+            <span *ngIf="wishlistData.wishlistItems.length > 0" class="badge bg-warning ms-2">
+              {{ wishlistData.wishlistItems.length }} items
+            </span>
+          </h1>
+          <button *ngIf="wishlistData.wishlistItems.length > 0"
+                  class="btn btn-outline-danger btn-sm"
+                  (click)="clearWishlist()">
+            <i class="fas fa-trash-alt me-1"></i> <span class="d-none d-sm-inline">Clear All</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Empty Wishlist State -->
+      <div *ngIf="wishlistData.wishlistItems.length === 0" class="empty-state">
+        <div class="container text-center py-5">
+          <div class="card shadow-sm py-5 border-0">
+            <div class="card-body">
+              <i class="fa-solid fa-heart-crack fa-4x text-muted mb-4"></i>
+              <h3 class="text-muted mb-3">Your Wishlist is empty!</h3>
+              <p class="text-muted mb-4">Save your favorite items here for later</p>
+              <button class="btn btn-warning btn-lg px-4" routerLink="/home">
+                <i class="fas fa-store me-2"></i>Start Shopping
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Wishlist Items -->
+      <div *ngIf="wishlistData.wishlistItems.length > 0" class="p-3 p-md-4">
+        <div class="row g-3">
+          <div *ngFor="let item of wishlistData.wishlistItems" class="col-12">
+            <div *ngFor="let product of item.products">
+              <div class="card product-card shadow-sm h-100">
+                <div class="card-body d-flex flex-column flex-md-row align-items-center">
+                  <div class="product-image me-md-4 mb-3 mb-md-0">
+                    <a routerLink="/details/{{ product.productId }}">
+                      <img src="{{imgbaseUrl+product.imageUrls[0] }}"
+                           alt="{{ product.name }}"
+                           class="img-fluid rounded-3" />
+                    </a>
+                  </div>
+                  <div class="product-info flex-grow-1 me-md-4 w-100">
+                    <div class="d-flex flex-column h-100">
+                      <div>
+                        <h5 class="product-title mb-2">{{ product.name }}</h5>
+                        <div class="price-container mb-3">
+                          <span class="current-price">
+                            ${{ product.price - product.discount | number:'1.2-2' }}
+                          </span>
+                          <span *ngIf="product.discount > 0" class="original-price text-muted text-decoration-line-through ms-2">
+                            ${{ product.price | number:'1.2-2' }}
+                          </span>
+                          <span *ngIf="product.discount > 0" class="discount-badge badge ms-2">
+                            Save {{ (product.discount / product.price * 100) | number:'1.0-0' }}%
+                          </span>
+                        </div>
+                      </div>
+                      <div class="product-actions d-flex flex-wrap gap-2 mt-auto">
+                        <button class="btn btn-warning flex-grow-1"
+                                (click)="addToCart(product)">
+                          <i class="fas fa-cart-plus me-2"></i><span class="d-none d-sm-inline">Add to Cart</span>
+                        </button>
+                        <button class="btn btn-outline-danger flex-grow-1"
+                                (click)="removeItem(product.productId)">
+                          <i class="fas fa-trash-alt me-2"></i><span class="d-none d-sm-inline">Remove</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="errorMessage" class="alert alert-danger mx-3 mx-md-4 my-3">
+  <i class="fas fa-exclamation-circle me-2"></i> {{ errorMessage }}
+</div>
+
+<!-- Toast Notification -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="cartToast"
+       class="toast align-items-center text-white border-0"
+       role="alert"
+       aria-live="assertive"
+       aria-atomic="true"
+       [ngClass]="toastClass">
+    <div class="d-flex">
+      <div class="toast-body">
+        <i class="fas fa-check-circle me-2"></i> {{ toastMessage }}
+      </div>
+      <button type="button"
+              class="btn-close btn-close-white me-2 m-auto"
+              data-bs-dismiss="toast"
+              aria-label="Close"></button>
+    </div>
+  </div>
+</div>
