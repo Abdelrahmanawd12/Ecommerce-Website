@@ -83,7 +83,6 @@ namespace Jumia_Api.Controllers
 
             return NoContent();
         }
-
         // Users Endpoints
         [HttpGet("users")]
         public async Task<IActionResult> GetAllUsers()
@@ -105,7 +104,7 @@ namespace Jumia_Api.Controllers
 
             if (user == null)
             {
-                return NotFound();
+                return NotFound(new { message = "User not found with the provided ID." });
             }
 
             return Ok(user);
@@ -154,7 +153,7 @@ namespace Jumia_Api.Controllers
 
             if (updatedUser == null)
             {
-                return NotFound("User not found.");
+                return NotFound(new { message = "User not found with the provided ID." });
             }
 
             return Ok(updatedUser);
