@@ -242,23 +242,37 @@ namespace Jumia_Api.Controllers
         }
 
         [HttpPost("categories")]
-        public async Task<IActionResult> AddCategoryWithSubCategory([FromBody] adminCategoryDTO? categoryDto)
+        public async Task<IActionResult> AddCategoryWithSubCategory([FromBody] adminCategoryDTO categoryDto)
         {
-            if (categoryDto == null)
+            try
             {
-                return BadRequest("Invalid data.");
+                if (categoryDto == null)
+                {
+                    return BadRequest(new { success = false, message = "Category data is required" });
+                }
+
+                var result = await _adminService.AddCategoryAsync(categoryDto);
+
+                return Ok(new
+                {
+                    success = true,
+                    message = "Category added successfully",
+                    data = result
+                });
             }
-
-            var result = await _adminService.AddCategoryAsync(categoryDto);
-
-            if (result == null)
+            catch (InvalidOperationException ex)
             {
-                return BadRequest("Failed to add category and subcategories.");
+                return Conflict(new { success = false, message = ex.Message });
             }
-
-            return Ok(new { message = "Category and SubCategory added successfully." });
+            catch (Exception ex)
+            {
+                
+                return StatusCode(500, new { success = false, message = "An error occurred while adding the category" });
+            }
         }
 
+       
+       
         [HttpPut("categories/{categoryId}")]
         public async Task<IActionResult> UpdateCategory(int categoryId, [FromBody] adminCategoryDTO categoryDto)
         {
@@ -290,6 +304,26 @@ namespace Jumia_Api.Controllers
             return NoContent();
         }
 
-       
+        [HttpPost("add-subcategory")]
+        public async Task<IActionResult> AddSubcategory([FromBody] SubCatDTO subCatDto)
+        {
+            if (subCatDto == null)
+                return BadRequest(new { message = "Invalid subcategory data." });
+
+             if (string.IsNullOrWhiteSpace(subCatDto.SubCatName))
+                return BadRequest(new { message = "Subcategory name is required."
+                });
+
+            if (string.IsNullOrWhiteSpace(subCatDto.CategoryName))
+                return BadRequest(new { message = "Category name is required." });
+
+            var result = await _adminService.AddSubcategoryAsync(subCatDto);
+
+            if (result)
+                return Ok(new { message = "Subcategory added successfully." });
+            else
+                return BadRequest(new { message = "Failed to add subcategory. The category may not exist, or the subcategory name is already used." });
+        }
+
     }
 }

@@ -412,20 +412,70 @@ namespace Jumia_Api.Services.Admin_Service
         }
         public async Task<adminCategoryDTO> AddCategoryAsync(adminCategoryDTO categoryDto)
         {
-            var category = new Category
+            if (categoryDto == null)
             {
-                CatName = categoryDto.Name,
-                SubCategories = categoryDto.Subcategory.Select(sc => new SubCategory
+                throw new ArgumentNullException(nameof(categoryDto));
+            }
+
+            bool categoryExists = await _context.Categories
+                .AnyAsync(c => c.CatName.ToLower() == categoryDto.Name.Trim().ToLower());
+
+            if (categoryExists)
+            {
+                throw new InvalidOperationException($"Category '{categoryDto.Name}' already exists.");
+            }
+
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                var category = new Category
                 {
-                    SubCatName = sc.SubCatName
-                }).ToList()
-            };
+                    CatName = categoryDto.Name.Trim(),
+                    SubCategories = new List<SubCategory>()
+                };
 
-            _context.Categories.Add(category);
-            await _context.SaveChangesAsync();
+                await _context.Categories.AddAsync(category);
+                await _context.SaveChangesAsync();
 
-            categoryDto.Id = category.CatId;
-            return categoryDto;
+                if (categoryDto.Subcategory != null && categoryDto.Subcategory.Any())
+                {
+                    foreach (var subCatDto in categoryDto.Subcategory)
+                    {
+                        if (string.IsNullOrWhiteSpace(subCatDto.SubCatName))
+                        {
+                            throw new ArgumentException("SubCategory name cannot be empty.");
+                        }
+
+                        category.SubCategories.Add(new SubCategory
+                        {
+                            SubCatName = subCatDto.SubCatName.Trim(),
+                            CatId = category.CatId
+                        });
+                    }
+
+                    await _context.SaveChangesAsync();
+                }
+
+                await transaction.CommitAsync();
+
+                categoryDto.Id = category.CatId;
+                categoryDto.Subcategory = category.SubCategories
+                    .Select(sc => new SubCatDTO
+                    {
+                        SubCatId = sc.SubCatId,
+                        SubCatName = sc.SubCatName,
+                        CategoryName = category.CatName
+                    }).ToList();
+
+                return categoryDto;
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+               
+                throw;
+            }
         }
 
 
@@ -528,16 +578,39 @@ namespace Jumia_Api.Services.Admin_Service
         }
 
 
+        public async Task<bool> AddSubcategoryAsync(SubCatDTO subCatDto)
+        {
+            if (subCatDto == null || string.IsNullOrWhiteSpace(subCatDto.SubCatName) || string.IsNullOrWhiteSpace(subCatDto.CategoryName))
+                return false;
+
+            var category = await _context.Categories
+                .FirstOrDefaultAsync(c => c.CatName.ToLower() == subCatDto.CategoryName.ToLower());
+
+            if (category == null)
+                return false;
+
+         
+            bool subCategoryExists = await _context.SubCategories
+                .AnyAsync(sc => sc.SubCatName.ToLower() == subCatDto.SubCatName.ToLower()
+                             && sc.CatId == category.CatId);
+
+            if (subCategoryExists)
+                return false;
+
+            var subCategory = new SubCategory
+            {
+                SubCatName = subCatDto.SubCatName,
+                CatId = category.CatId
+            };
+
+            _context.SubCategories.Add(subCategory);
+            var result = await _context.SaveChangesAsync();
+
+            return result > 0;
+        }
 
 
 
-
-
-
-
-
-
-       
 
     }
 }

@@ -1,69 +1,65 @@
-<div class="container mt-5">
-    <h3 class="text-warning mb-4">Update Category</h3>
-  
-    <form (ngSubmit)="onSave()" *ngIf="currentCategory">
-      <div class="row mb-3">
-        <div class="col-md-6">
-          <label for="categoryId" class="form-label">Category ID</label>
-          <input id="categoryId" class="form-control" [(ngModel)]="currentCategory.id"
-                 name="categoryId" readonly style="background-color: #f5f5f5;">
-        </div>
-        <div class="col-md-6">
-          <label for="categoryName" class="form-label">Category Name</label>
-          <input id="categoryName" class="form-control" [(ngModel)]="currentCategory.name"
-                 name="categoryName" required>
-        </div>
+<div class="container mt-4">
+  <div class="card border-0 shadow">
+      <div class="card-header bg-warning text-white">
+          <h3 class="mb-0">Update Category</h3>
       </div>
-  
-      <div class="subcategories-section mt-4">
-        <h5 class="mb-3 text-warning">Subcategories</h5>
-  
-        <div class="subcategory-card" *ngFor="let sub of currentCategory.subcategory; let i = index; trackBy: trackBySubCategory">
-          <div class="card mb-3 border-0 shadow-sm">
-            <div class="card-header bg-light">
-              <h6 class="card-title mb-0">Subcategory {{ i + 1 }}</h6>
-            </div>
-            <div class="card-body">
-              <div class="row g-3">
-                <div class="col-md-6">
-                  <label [for]="'subCatId'+i" class="form-label">Subcategory ID</label>
-                  <input [id]="'subCatId'+i" class="form-control" [(ngModel)]="sub.subCatId"
-                         [name]="'subCatId'+i" readonly style="background-color: #f5f5f5;">
-                </div>
-                <div class="col-md-6">
-                  <label [for]="'subCatName'+i" class="form-label">Subcategory Name</label>
-                  <input [id]="'subCatName'+i" class="form-control" [(ngModel)]="sub.subCatName"
-                         [name]="'subCatName'+i" required>
-                </div>
-               <div class="col-md-6">
-  <label [for]="'categoryName'+i" class="form-label">Category Name</label>
-  <input [id]="'categoryName'+i" class="form-control"  style="background-color: #f5f5f5;">
-</div>
-
-                <div class="col-md-6">
-                  <label [for]="'subCategoryId'+i" class="form-label">Category ID</label>
-                  <input [id]="'subCategoryId'+i" class="form-control" [(ngModel)]="sub.categoryId"
-                         [name]="'subCategoryId'+i" readonly style="background-color: #f5f5f5;">
-                </div>
+      
+      <div class="card-body">
+          <form (ngSubmit)="onSave()" *ngIf="currentCategory">
+              <!-- Category Section -->
+              <div class="mb-4 p-3 bg-light rounded">
+                  <h5 class="text-warning mb-3">Category Details</h5>
+                  <div class="row">
+                      <div class="col-md-12">
+                          <label for="categoryName" class="form-label fw-bold">Category Name</label>
+                          <input id="categoryName" class="form-control form-control-lg" 
+                                 [(ngModel)]="currentCategory.name" name="categoryName" required>
+                      </div>
+                  </div>
               </div>
-            </div>
+
+              <!-- Subcategories Section -->
+              <div class="subcategories-section mt-4">
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                      <h5 class="text-warning mb-0">Subcategories</h5>
+                  </div>
+
+                  <div class="subcategory-list">
+                      <div class="subcategory-item mb-3 p-3 bg-light rounded" 
+                           *ngFor="let sub of currentCategory.subcategory; let i = index; trackBy: trackBySubCategory">
+                          <div class="row g-3">
+                              <div class="col-md-12">
+                                  <label [for]="'subCatName'+i" class="form-label fw-bold">Subcategory Name #{{i + 1}}</label>
+                                  <input [id]="'subCatName'+i" class="form-control" 
+                                         [(ngModel)]="sub.subCatName" [name]="'subCatName'+i" required>
+                              </div>
+                              
+                              <!-- Hidden fields -->
+                              <input [id]="'subCatId'+i" class="d-none" [(ngModel)]="sub.subCatId" [name]="'subCatId'+i">
+                              <input [id]="'subCategoryId'+i" class="d-none" [(ngModel)]="sub.categoryId" [name]="'subCategoryId'+i">
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <!-- Error Message -->
+              <div *ngIf="errorMessage" class="alert alert-warning mt-3 mb-0 d-flex align-items-center">
+                  <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                  <span>{{ errorMessage }}</span>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="mt-4 text-end">
+                  <button type="submit" class="btn btn-warning text-white px-4 py-2">
+                      <i class="bi bi-save me-2"></i>Save Changes
+                  </button>
+              </div>
+          </form>
+
+          <!-- No Data Message -->
+          <div *ngIf="!currentCategory" class="alert alert-danger">
+              <i class="bi bi-exclamation-triangle-fill me-2"></i>Category data is not available.
           </div>
-        </div>
       </div>
-  
-      <div *ngIf="errorMessage" class="alert alert-warning mt-3 mb-0">
-        <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ errorMessage }}
-      </div>
-  
-      <div class="mt-4">
-        <button type="submit" class="btn btn-warning text-white">
-          <i class="bi bi-save me-2"></i>Save Changes
-        </button>
-      </div>
-    </form>
-  
-    <div *ngIf="!currentCategory" class="alert alert-danger">
-      <i class="bi bi-exclamation-triangle-fill me-2"></i>Category data is not available.
-    </div>
   </div>
-  
+</div>
