@@ -19,7 +19,7 @@ export interface Category {
 })
 export class AdminCategoryService {
   private baseUrl = 'https://localhost:7266/api/admin/categories';
-
+  private addSubcategoryUrl = 'https://localhost:7266/api/admin/add-subcategory';
   constructor(private http: HttpClient) {}
 
   getAllCategories(): Observable<Category[]> {
@@ -40,5 +40,9 @@ export class AdminCategoryService {
 
   deleteCategory(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
+
+  addSubcategory(subCategory: SubCategory): Observable<SubCategory> {
+    return this.http.post<SubCategory>(this.addSubcategoryUrl, subCategory);
   }
 }

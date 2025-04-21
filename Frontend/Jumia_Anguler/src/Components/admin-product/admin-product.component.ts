@@ -35,24 +35,7 @@ export class AdminProductComponent implements OnInit {
       }
     });
   }
-  staticProducts = [
-    {
-      name: 'Laptop',
-      description: 'High-performance laptop with 16GB RAM',
-      price: 1500
-    },
-    {
-      name: 'Smartphone',
-      description: 'Latest model with amazing camera',
-      price: 999
-    },
-    {
-      name: 'Headphones',
-      description: 'Noise-cancelling wireless headphones',
-      price: 199
-    }
-  ];
-  
+
  
 }
 
