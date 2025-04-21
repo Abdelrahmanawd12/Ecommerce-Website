@@ -3,7 +3,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 <!-- <app-navbar *ngIf="showHeader"></app-navbar> -->
 
-<<<<<<< HEAD
 <app-navbar *ngIf="showHeader"></app-navbar>
 
 <div class="main-content" [ngStyle]="{ 'margin-top': showMarginTop ? '150px' : '0' }">
@@ -11,15 +10,5 @@
     <router-outlet></router-outlet>
   </main>
 </div>
-<app-chat-bot-ai></app-chat-bot-ai>
+<app-chat-bot-ai *ngIf="showChatbotAI"></app-chat-bot-ai>
 <app-footer *ngIf="showFooter" class="jumia-footer"></app-footer>
-=======
-<div class="main-content ">
-<main>
-  <router-outlet></router-outlet>
-</main>
-</div>
-<app-chat-bot-ai></app-chat-bot-ai>
-<!-- <app-footer *ngIf="showFooter" class="jumia-footer"></app-footer> -->
-
->>>>>>> 47643ef0566ef1672cd887827def627914fc06b8
