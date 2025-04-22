@@ -12,16 +12,16 @@ import { AdminService } from '../../Services/admin.service';
   styleUrls: ['./admin-dashboard.component.css']
 })
 export class AdminDashboardComponent implements OnInit {
-  // متغيرات التحكم
+
   isRefreshing = false;
   showDateDropdown = false;
   selectedDateRange = 'Last 30 days';
   
-  // البيانات
+ 
   originalStats!: AdminDashboard;
   filteredStats!: AdminDashboard;
 
-  // خيارات الرسوم البيانية
+ 
   userGrowthChartOptions: any;
   inventoryChartOptions: any;
   salesChartOptions: any;
@@ -33,7 +33,7 @@ export class AdminDashboardComponent implements OnInit {
     this.loadInitialData();
   }
 
-  // تحميل البيانات الأولية
+
   loadInitialData(): void {
     this.isRefreshing = true;
     this.adminService.getDashboardStats().subscribe({
@@ -49,24 +49,23 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
-  // تطبيق الفلترة حسب الفترة الزمنية
   applyDateRangeFilter(): void {
-    // نسخ البيانات الأصلية
+ 
     this.filteredStats = {...this.originalStats};
     
-    // حساب معامل التصفية
+
     const filterFactor = this.calculateFilterFactor();
     
-    // تطبيق التصفية على البيانات المناسبة
+ 
     this.filteredStats.newUsersThisMonth = Math.round(this.originalStats.newUsersThisMonth * filterFactor.userFactor);
     this.filteredStats.totalSales = this.originalStats.totalSales * filterFactor.salesFactor;
     this.filteredStats.totalCommission = this.originalStats.totalCommission * filterFactor.salesFactor;
     
-    // تحديث الرسوم البيانية
+
     this.initAllCharts();
   }
 
-  // حساب معامل التصفية حسب الفترة
+
   private calculateFilterFactor(): { userFactor: number, salesFactor: number } {
     switch(this.selectedDateRange) {
       case 'Last 7 days':
@@ -82,7 +81,7 @@ export class AdminDashboardComponent implements OnInit {
     }
   }
 
-  // === دوال التحكم ===
+
   
   refreshData(): void {
     this.isRefreshing = true;
@@ -99,8 +98,7 @@ export class AdminDashboardComponent implements OnInit {
     this.showDateDropdown = !this.showDateDropdown;
   }
 
-  // === دوال الرسوم البيانية ===
-  
+
   private initAllCharts(): void {
     this.initUserGrowthChart();
     this.initInventoryChart();
