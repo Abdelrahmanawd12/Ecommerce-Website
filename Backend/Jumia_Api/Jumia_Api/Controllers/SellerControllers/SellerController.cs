@@ -224,7 +224,7 @@ namespace Jumia_Api.Controllers.SellerControllers
         public IActionResult GetAllSubCats(int categoryId)
         {
             var subCategories = unit.SubCategoryRepository.GetAll()
-                .Where(sc => sc.SubCatId == categoryId)
+                .Where(sc => sc.CatId == categoryId)
                 .Select(sc => new SubCategoryDTO
                 {
                     SubCatId = sc.SubCatId,
