@@ -1,87 +1,133 @@
-.user-form-container {
-    background-color: #f5f5f5;
-    padding: 30px 0;
-    min-height: 100vh;
+/* تحسينات للنسخة العربية */
+:root {
+  --jumia-orange: #FF6900;
+  --jumia-orange-dark: #E55D00;
+  --jumia-orange-light: #FF8C00;
+  --gray-light: #f4f4f4;
+  --gray-border: #ddd;
+  --dark-text: #222;
+  --white: #fff;
+  --error-red: #E74C3C;
+  --transition: all 0.3s ease;
+  --radius: 8px;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.jumia-form-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  background: var(--white);
+  border: 1px solid var(--gray-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  font-family: 'Tahoma', Arial, sans-serif;
+  padding: 2rem;
+  color: var(--dark-text);
+  direction: rtl;
+  text-align: right;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--dark-text);
+  font-size: 1.8rem;
+  font-weight: bold;
+  border-bottom: 2px solid var(--jumia-orange);
+  padding-bottom: 1rem;
+}
+
+.input-group label {
+  text-align: right;
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--dark-text);
+  font-weight: 500;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* تعديل وضع الأيقونات للنسخة العربية */
+.input-wrapper i {
+  position: absolute;
+  right: 1rem;
+  left: auto;
+  color: var(--gray-border);
+}
+
+.input-wrapper input {
+  padding-right: 3rem;
+  padding-left: 1rem;
+  text-align: right;
+}
+
+/* تعديل مكان زر إظهار/إخفاء كلمة المرور */
+.toggle-password {
+  left: 1rem;
+  right: auto;
+}
+
+/* تعديلات للأخطاء */
+.error-message {
+  text-align: right;
+}
+
+/* تعديلات للأزرار */
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.cancel-btn {
+  margin-right: 0;
+  margin-left: 1rem;
+}
+
+/* التأكيد على هوية جوميا */
+.submit-btn {
+  background: var(--jumia-orange);
+  color: var(--white);
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 4px 10px rgba(255, 105, 0, 0.3);
+}
+
+.submit-btn:hover {
+  background: var(--jumia-orange-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 105, 0, 0.4);
+}
+
+/* تأثيرات التركيز */
+input:focus, select:focus {
+  border-color: var(--jumia-orange) !important;
+  box-shadow: 0 0 0 3px rgba(255, 105, 0, 0.2) !important;
+}
+
+/* تعديلات للهواتف */
+@media (max-width: 600px) {
+  .jumia-form-container {
+    padding: 1rem;
+    margin: 1rem;
   }
   
-  .jumia-form-card {
-    max-width: 700px;
-    margin: 0 auto;
-    border-radius: 8px;
-    border: none;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    background: white;
+  .form-actions {
+    flex-direction: row-reverse;
   }
   
-  .form-title {
-    color: #FF9900;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 25px;
-    font-size: 24px;
+  .cancel-btn {
+    margin-left: 0;
+    margin-right: 1rem;
   }
-  
-  .jumia-form {
-    padding: 20px;
-  }
-  
-  .jumia-label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: #333;
-    font-size: 14px;
-  }
-  
-  .jumia-input, .jumia-select {
-    padding: 12px 15px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-    font-size: 14px;
-    transition: all 0.3s;
-  }
-  
-  .jumia-input:focus, .jumia-select:focus {
-    border-color: #FF9900;
-    box-shadow: 0 0 0 2px rgba(255, 153, 0, 0.2);
-  }
-  
-  .jumia-error {
-    color: #e53935;
-    font-size: 12px;
-    margin-top: 5px;
-    display: flex;
-    align-items: center;
-  }
-  
-  .jumia-error i {
-    margin-right: 5px;
-  }
-  
-  .jumia-submit-btn {
-    background-color: #FF9900;
-    color: white;
-    border: none;
-    padding: 12px;
-    width: 100%;
-    border-radius: 4px;
-    font-weight: 600;
-    margin-top: 15px;
-    transition: all 0.3s;
-  }
-  
-  .jumia-submit-btn:hover {
-    background-color: #e68a00;
-  }
-  
-  .jumia-submit-btn:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-  }
-  
-  .jumia-alert {
-    border-radius: 4px;
-    padding: 12px 15px;
-    margin-bottom: 20px;
-    font-size: 14px;
-  }
+}

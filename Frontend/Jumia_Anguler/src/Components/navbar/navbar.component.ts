@@ -16,6 +16,7 @@ declare var bootstrap: any;
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent implements OnInit {
+
   public totalItem: number = 0;
   get user(): string {
     return localStorage.getItem('userId') || '';
@@ -45,6 +46,11 @@ this.toggleAuth();
 
 
   constructor(private productService: ProductService, private router: Router,private auth:LoginService,private _CartService:CartService) { }
+
+  navigateToHelp(section: string) {
+    this.helpDropdownOpen = false;
+    this.router.navigate(['/help'], { fragment: section });
+  }
 
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;

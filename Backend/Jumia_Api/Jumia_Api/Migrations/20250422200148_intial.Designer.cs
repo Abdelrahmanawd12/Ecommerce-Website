@@ -12,9 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Jumia_Api.Migrations
 {
     [DbContext(typeof(JumiaDbContext))]
-
-    [Migration("20250416052902_inital")]
-    partial class inital
+    [Migration("20250422200148_intial")]
+    partial class intial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,6 +95,9 @@ namespace Jumia_Api.Migrations
                     b.Property<string>("Gender")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()

@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using Jumia_Api.MapperConfig;
 using Jumia_Api.Repository;
 using Jumia_Api.UnitOFWorks;
+using Jumia_Api.Services;
 
 
 namespace Jumia_Api
@@ -71,7 +72,7 @@ namespace Jumia_Api
             });
 
             builder.Services.AddScoped<IAdminService, AdminService>();
-
+         
             var app = builder.Build();
             app.UseStaticFiles();
 

@@ -17,7 +17,7 @@ namespace Jumia.Models
         public string Gender { get; set; }
         public DateTime DateOfBirth { get; set; }
         public DateTime CreatedAt { get; set; }
-
+        public bool IsDeleted { get; set; } = false;
         public virtual ICollection<Order>? Orders { get; set; }
         public virtual ICollection<Rating>? Ratings { get; set; }
         public virtual ICollection<Address>? Addresses { get; set; }

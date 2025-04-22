@@ -1,0 +1,18 @@
+/* .add-to-cart-btn {
+    background-color: #f68b1e;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-to-cart-btn:hover {
+    background-color: #e67b10;
+  }
+   */
+
+   .confirm-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px; /* adjust based on your layout */
+  }
+  
