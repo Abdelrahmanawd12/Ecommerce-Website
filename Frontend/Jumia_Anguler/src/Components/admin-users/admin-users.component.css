@@ -1,325 +1,136 @@
 
-  :root {
-    --jumia-gold: #FF7900;
-    --jumia-gold-light: #FF9A42;
-    --jumia-gold-lighter: #FFE5D2;
-    --jumia-dark: #2D2D2D;
-    --jumia-light: #F8F8F8;
-    --jumia-white: #FFFFFF;
-  }
+:root {
+  --jumia-orange: #FF7800;
+  --jumia-dark-orange: #E66A00;
+  --jumia-light-orange: #FF9200;
+  --jumia-bg: #FFF5EB;
+}
 
-  /* Card styling */
-  .jumia-gold-card {
-    border: none;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 5px 25px rgba(255, 121, 0, 0.1);
-    background: var(--jumia-white);
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  }
+.jumia-edit-btn {
+  background-color: white;
+  color: var(--jumia-orange);
+  border: 1px solid var(--jumia-orange);
+}
 
-  .jumia-gold-card:hover {
-    box-shadow: 0 8px 30px rgba(255, 121, 0, 0.15);
-  }
+.jumia-edit-btn:hover {
+  background-color: var(--jumia-orange);
+  color: rgb(196, 134, 20);
+}
 
-  /* Header styling */
-  .jumia-table-header {
-    background: linear-gradient(135deg, var(--jumia-gold) 0%, var(--jumia-gold-light) 100%);
-    color: white;
-    padding: 16px 20px;
-    border-bottom: 3px solid rgba(255, 255, 255, 0.1);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
+/* SweetAlert Custom Styles */
+.jumia-swal-popup {
+  border: 2px solid #FF7800;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(255, 120, 0, 0.2);
+}
 
-  .jumia-table-header h5 {
-    font-weight: 600;
-    font-size: 1.2rem;
-    display: flex;
-    align-items: center;
-    margin: 0;
-  }
+.jumia-swal-title {
+  color: #FF7800;
+  font-weight: 700;
+}
 
-  /* Search box styling */
-  .search-box {
-    position: relative;
-    width: 250px;
-  }
+.jumia-swal-confirm-btn {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 8px 20px;
+}
 
-  .search-box .bi {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--jumia-gold);
-  }
+.swal2-styled.swal2-confirm:focus {
+  box-shadow: 0 0 0 3px rgba(255, 146, 0, 0.5) !important;
+}
 
-  .jumia-search {
-    padding-left: 35px;
-    border-radius: 20px;
-    border: 1px solid #ddd;
-    height: 38px;
-    transition: all 0.3s;
-  }
+.jumia-delete-btn {
+  background-color: white;
+  color: #dc3545;
+  border: 1px solid #dc3545;
+}
 
-  .jumia-search:focus {
-    border-color: var(--jumia-gold);
-    box-shadow: 0 0 0 3px rgba(255, 121, 0, 0.1);
-  }
+.jumia-delete-btn:hover {
+  background-color: #dc3545;
+  color: white;
+}
 
-  /* Add user button */
-  .jumia-add-btn {
-    background-color: white;
-    color: var(--jumia-gold);
-    border: 1px solid var(--jumia-gold);
-    border-radius: 20px;
-    padding: 6px 12px;
-    font-weight: 500;
-    transition: all 0.3s;
-  }
 
-  .jumia-add-btn:hover {
-    background-color: var(--jumia-gold);
-    color: white;
-  }
+.jumia-active {
+  background-color: #28a745;
+  color: white;
+}
 
-  /* Table styling */
-  .jumia-premium-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-  }
+.jumia-inactive {
+  background-color: #6c757d;
+  color: white;
+}
 
-  .jumia-premium-table thead th {
-    background-color: var(--jumia-white);
-    color: var(--jumia-gold);
-    font-weight: 600;
-    padding: 16px 12px;
-    text-align: center;
-    border-bottom: 2px solid var(--jumia-gold-lighter);
-    font-size: 0.95rem;
-    vertical-align: middle;
-    cursor: pointer;
-    position: relative;
-    transition: all 0.2s;
-  }
+.jumia-add-btn:hover {
+  background-color: var(--jumia-dark-orange) !important;
+}
 
-  .jumia-premium-table thead th:hover {
-    background-color: var(--jumia-gold-lighter);
-  }
+/* Table Header Styles */
+thead th {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  border: none !important;
+  position: relative;
+}
 
-  .sort-icon {
-    margin-left: 5px;
-    font-size: 0.8rem;
-    opacity: 0.5;
-    transition: all 0.2s;
-  }
+thead th:after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 15%;
+  height: 70%;
+  width: 1px;
+  background-color: rgba(255,255,255,0.3);
+}
 
-  .jumia-premium-table thead th:hover .sort-icon {
-    opacity: 1;
-  }
+thead th:last-child:after {
+  display: none;
+}
 
-  /* Table body styling */
-  .jumia-premium-table tbody tr {
-    transition: all 0.25s ease;
-  }
+thead th:hover {
+  background: linear-gradient(to right, #FF6800, #FF8200) !important;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
 
-  .jumia-premium-table tbody tr.jumia-user-row:nth-child(even) {
-    background-color: var(--jumia-light);
-  }
+/* Sort Icons */
+.bi-arrow-up, .bi-arrow-down {
+  font-weight: bold;
+}
+.table th {
+  border-top: none;
+}
 
-  .jumia-premium-table tbody tr.jumia-user-row:hover {
-    background-color: var(--jumia-gold-lighter);
-  }
+.table td {
+  vertical-align: middle;
+}
+/* Tooltip styles for seller info */
+[tooltip] {
+  position: relative;
+}
 
-  .jumia-premium-table td {
-    padding: 14px 12px;
-    text-align: center;
-    vertical-align: middle;
-    border-bottom: 1px solid #f0f0f0;
-    color: var(--jumia-dark);
-    font-size: 0.92rem;
-    transition: all 0.2s ease;
-  }
+[tooltip]::after {
+  content: attr(tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  white-space: pre;
+  min-width: 200px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 10;
+}
 
-  /* User name and email styling */
-  .user-name {
-    font-weight: 500;
-    color: var(--jumia-dark);
-  }
-
-  .user-email {
-    max-width: 220px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: #666;
-    font-size: 0.9rem;
-  }
-
-  /* Role badge styling */
-  .jumia-role-pill {
-    display: inline-block;
-    padding: 6px 14px;
-    border-radius: 50px;
-    font-size: 0.82rem;
-    font-weight: 600;
-    background: rgba(255, 121, 0, 0.1);
-    color: var(--jumia-gold);
-    border: 1px solid rgba(255, 121, 0, 0.2);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  /* Status badge styling */
-  .jumia-status-badge {
-    padding: 6px 12px;
-    border-radius: 50px;
-    font-size: 0.8rem;
-    font-weight: 500;
-  }
-
-  .active-badge {
-    background-color: rgba(46, 204, 113, 0.1);
-    color: #2ecc71;
-    border: 1px solid rgba(46, 204, 113, 0.2);
-  }
-
-  .inactive-badge {
-    background-color: rgba(231, 76, 60, 0.1);
-    color: #e74c3c;
-    border: 1px solid rgba(231, 76, 60, 0.2);
-  }
-
-  /* Action buttons styling */
-  .action-buttons {
-    display: flex;
-    justify-content: center;
-  }
-
-  .jumia-edit-action {
-    background-color: transparent;
-    color: var(--jumia-gold);
-    border: 1px solid var(--jumia-gold);
-    border-radius: 6px;
-    padding: 8px 16px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .jumia-edit-action:hover {
-    background-color: var(--jumia-gold);
-    color: white;
-    box-shadow: 0 4px 12px rgba(255, 121, 0, 0.2);
-  }
-
-  .jumia-delete-action {
-    background-color: transparent;
-    color: #e74c3c;
-    border: 1px solid #e74c3c;
-    border-radius: 6px;
-    padding: 8px 16px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .jumia-delete-action:hover {
-    background-color: #e74c3c;
-    color: white;
-    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.2);
-  }
-
-  /* No results styling */
-  .no-results {
-    color: #666;
-    font-size: 0.95rem;
-    background-color: var(--jumia-light);
-  }
-
-  /* Pagination styling */
-  .jumia-pagination {
-    border-top: 1px solid #eee;
-    background-color: var(--jumia-light);
-  }
-
-  .showing-entries {
-    color: #666;
-    font-size: 0.9rem;
-  }
-
-  .pagination-controls {
-    display: flex;
-    align-items: center;
-  }
-
-  .jumia-select {
-    border-radius: 20px;
-    border: 1px solid #ddd;
-    padding: 6px 12px;
-    height: 38px;
-    width: 120px;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-
-  .jumia-select:focus {
-    border-color: var(--jumia-gold);
-    box-shadow: 0 0 0 3px rgba(255, 121, 0, 0.1);
-  }
-
-  .jumia-page-btn {
-    background-color: white;
-    color: var(--jumia-gold);
-    border: 1px solid var(--jumia-gold);
-    border-radius: 6px;
-    padding: 6px 12px;
-    margin: 0 5px;
-    font-size: 0.85rem;
-    transition: all 0.3s;
-  }
-
-  .jumia-page-btn:hover:not(:disabled) {
-    background-color: var(--jumia-gold);
-    color: white;
-  }
-
-  .jumia-page-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
-  .page-numbers {
-    display: flex;
-    margin: 0 10px;
-  }
-
-  .page-number {
-    padding: 6px 12px;
-    margin: 0 2px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-
-  .page-number:hover {
-    background-color: var(--jumia-gold-lighter);
-  }
-
-  .page-number.active {
-    background-color: var(--jumia-gold);
-    color: white;
-  }
-
-  /* Icons styling */
-  .bi {
-    font-size: 0.95rem;
-  }
+[tooltip]:hover::after {
+  visibility: visible;
+  opacity: 1;
+}
