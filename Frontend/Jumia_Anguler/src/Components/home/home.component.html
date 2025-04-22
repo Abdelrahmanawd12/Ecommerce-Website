@@ -1,4 +1,5 @@
 <!-- landing -->
+ <div class="container">
 <div class="container-fluid px-0 px-md-3 mt-4">
 
   <!-- Main Row - Categories, Carousel, Promotions -->
@@ -148,7 +149,7 @@
       @for (p of SixProducts; track p.productId) {
       <div class="col-6 col-md-4 col-lg-2 parent" style="cursor: pointer;" (click)="goToProductDetails(p.productId)">
         <div class="card proChild h-100">
-          <img src="{{ imgbaseUrl+p.imageUrls }}" class="imgproduct" alt="{{ p.name }}">
+          <img src="{{ imgbaseUrl+p.imageUrls[0] }}" class="imgproduct" alt="{{ p.name }}">
           <div class="card-body">
             <h6 class="product-name">{{ p.name }}</h6>
             <div class="priceAndcart d-flex justify-content-between">
@@ -184,7 +185,7 @@
       @for (p of TopCheapestItems; track p.productId) {
       <div class="col-6 col-md-4 col-lg-2 parent" style="cursor: pointer;" (click)="goToProductDetails(p.productId)">
         <div class="card proChild h-100">
-          <img src="{{imgbaseUrl+ p.imageUrls}}" class="imgproduct" alt="{{ p.name }}  ">
+          <img src="{{imgbaseUrl+ p.imageUrls[0] }}" class="imgproduct" alt="{{ p.name }}  ">
           <div class="card-body">
             <h6 class="product-name">{{ p.name }}</h6>
             <div class="priceAndcart d-flex justify-content-between ">
@@ -224,7 +225,7 @@
       @for (p of TopRatedProducts; track p.productId) {
       <div class="col-6 col-md-4 col-lg-2 parent" style="cursor: pointer;" (click)="goToProductDetails(p.productId)">
         <div class="card proChild h-100">
-          <img src="{{imgbaseUrl+p.imageUrls }}" class="imgproduct" alt="{{ p.name }}  ">
+          <img src="{{imgbaseUrl+p.imageUrls[0] }}" class="imgproduct" alt="{{ p.name }}  ">
           <div class="card-body">
             <h6 class="product-name">{{ p.name }}</h6>
             <div class="priceAndcart d-flex justify-content-between ">
@@ -261,7 +262,7 @@
       @for (p of randomProducts; track p.productId) {
       <div class="col-6 col-md-4 col-lg-2 parent" style="cursor: pointer;" (click)="goToProductDetails(p.productId)">
         <div class="card proChild h-100">
-          <img src="{{imgbaseUrl+p.imageUrls }}" class="imgproduct" alt="{{ p.name }}  ">
+          <img src="{{imgbaseUrl+p.imageUrls[0] }}" class="imgproduct" alt="{{ p.name }}  ">
           <div class="card-body">
             <h6 class="product-name">{{ p.name }}</h6>
             <div class="priceAndcart d-flex justify-content-between ">
@@ -297,7 +298,7 @@
       @for (p of HighstOffer; track p.productId) {
       <div class="col-6 col-md-4 col-lg-2 parent" style="cursor: pointer;" (click)="goToProductDetails(p.productId)">
         <div class="card proChild h-100">
-          <img src="{{imgbaseUrl+p.imageUrls }}" class="imgproduct" alt="{{ p.name }}  ">
+          <img src="{{imgbaseUrl+p.imageUrls[0] }}" class="imgproduct" alt="{{ p.name }}  ">
           <div class="card-body">
             <h6 class="product-name">{{ p.name }}</h6>
             <div class="priceAndcart d-flex justify-content-between ">
@@ -387,6 +388,7 @@
       <p>Cash on delivery, Mastercard, Visa & Fawry.
       </p>
     </div>
+  </div>
   </div>
   <!-- toast mess -->
   <div class="toast-container position-fixed bottom-0 end-0 p-3">

@@ -78,6 +78,7 @@ toastClass: string = 'bg-success';
 
 // onInit method
   ngOnInit(): void {
+  
 // get All Category
     this._catService.getAllCategories().subscribe({
       next: (data) => {
