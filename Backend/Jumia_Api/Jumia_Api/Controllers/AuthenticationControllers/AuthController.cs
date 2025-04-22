@@ -199,7 +199,7 @@ namespace Jumia_Api.Controllers.AuthenticationControllers
             if (ModelState.IsValid)
             {
                 ApplicationUser User = await userManager.FindByEmailAsync(login.Email);
-                if (User != null)
+                if (User != null && User.IsDeleted == false)
                 {
                    bool found = await userManager.CheckPasswordAsync(User,login.Password);
                     if (found)
@@ -253,7 +253,7 @@ namespace Jumia_Api.Controllers.AuthenticationControllers
                 .Where(u => u.Email == email)
                 .FirstOrDefaultAsync();
 
-            if (user == null)
+            if (user == null && user.IsDeleted == true)
             {
                 return NotFound("User not found");
             }

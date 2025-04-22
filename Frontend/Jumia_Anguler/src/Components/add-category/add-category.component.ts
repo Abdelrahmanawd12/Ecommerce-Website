@@ -19,10 +19,10 @@ import { CommonModule } from '@angular/common';
 })
 export class AddCategoryComponent implements OnInit {
 
-  
+  errorMessage: string = '';
     categoryForm!: FormGroup;
     currentStep: number = 1;
-  
+    isNameExist: boolean = false;
     constructor(
       private fb: FormBuilder,
       private categoryService: AdminCategoryService,
@@ -40,6 +40,8 @@ export class AddCategoryComponent implements OnInit {
           })
         ])
       });
+
+      
     }
   
     get subcategories() {
@@ -93,6 +95,9 @@ export class AddCategoryComponent implements OnInit {
     }
   
     onSubmit() {
+      if (this.isNameExist) {
+        return; 
+      }
       if (this.categoryForm.valid) {
         const raw = this.categoryForm.value;
   
@@ -119,7 +124,12 @@ export class AddCategoryComponent implements OnInit {
             this.router.navigate(['admin/categories']);
           },
           error: (err) => {
-            console.error('Error adding category:', err);
+            if (err.status === 409) { 
+              this.isNameExist = true;
+              this.errorMessage = err.error.message; 
+            } else {
+              this.snackBar.open('Error adding category', 'Close', { duration: 3000 });
+            }
           }
         });
       }

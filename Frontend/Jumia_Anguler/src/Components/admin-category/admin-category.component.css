@@ -526,6 +526,22 @@
   border-color: #2980b9;
 }
 
+.btn-outline-warning {
+  color: #ff6700;
+  border-color: #ff6700;
+}
+
+.btn-outline-warning:hover {
+  color: white;
+  background-color: #ff6700;
+  border-color: #ff6700;
+}
+
+.btn-outline-warning.always-dark:hover {
+  color: #212529; 
+  background-color: #ffd699; 
+  border-color: #ff6700;
+}
 .btn-outline-secondary {
   border-color: #ced4da;
 }

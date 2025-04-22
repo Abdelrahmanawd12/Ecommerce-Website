@@ -58,11 +58,10 @@ namespace Jumia_Api.Services.Admin_Service
             };
         }
 
-
         public async Task<IEnumerable<AdminDTO>> GetAllUsersAsync()
         {
             var users = await _context.Users
-                .Where(u => u.Role != null)
+                .Where(u => u.Role != null && !u.IsDeleted) 
                 .ToListAsync();
 
             return users.Select(u => new AdminDTO
@@ -75,11 +74,10 @@ namespace Jumia_Api.Services.Admin_Service
             }).ToList();
         }
 
-
         public async Task<AdminDTO> GetUserByIdAsync(string userId)
         {
             var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.Id == userId);
+                .FirstOrDefaultAsync(u => u.Id == userId && !u.IsDeleted); 
 
             if (user == null)
             {
@@ -96,19 +94,20 @@ namespace Jumia_Api.Services.Admin_Service
             };
         }
 
-
         public async Task<bool> DeleteUserAsync(string userId)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId && !u.IsDeleted);
             if (user == null)
             {
                 return false;
             }
 
-            _context.Users.Remove(user);
+            user.IsDeleted = true; 
+            _context.Users.Update(user);
             await _context.SaveChangesAsync();
             return true;
         }
+
         public async Task<AdminDTO> AddUserAsync(CreateUserDTO userDto)
         {
             if (userDto == null)
@@ -122,10 +121,10 @@ namespace Jumia_Api.Services.Admin_Service
                 LastName = userDto.LastName,
                 Email = userDto.Email,
                 Role = userDto.Role,
-                DateOfBirth = userDto.DateOfBirth.HasValue ? userDto.DateOfBirth.Value : DateTime.MinValue
-,
+                DateOfBirth = userDto.DateOfBirth ?? DateTime.MinValue,
                 CreatedAt = DateTime.Now,
-                Gender = userDto.Gender
+                Gender = userDto.Gender,
+                IsDeleted = false
             };
 
             _context.Users.Add(user);
@@ -146,21 +145,20 @@ namespace Jumia_Api.Services.Admin_Service
 
         public async Task<AdminDTO> UpdateUserAsync(AdminDTO userDto)
         {
-            var user = await _context.Users.FindAsync(userDto.Id);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userDto.Id && !u.IsDeleted);
             if (user == null)
             {
-                return null;  
+                return null;
             }
 
-           
             user.FirstName = userDto.FirstName;
             user.LastName = userDto.LastName;
             user.Email = userDto.Email;
-            user.Role = userDto.Role;  
+            user.Role = userDto.Role;
             user.Gender = userDto.Gender;
             user.DateOfBirth = userDto.DateOfBirth;
 
-            _context.Users.Update(user);  
+            _context.Users.Update(user);
             await _context.SaveChangesAsync();
 
             return new AdminDTO
@@ -174,8 +172,6 @@ namespace Jumia_Api.Services.Admin_Service
                 DateOfBirth = user.DateOfBirth
             };
         }
-
-
 
         public async Task<AdminDashboardDTO> GetDashboardStatsAsync()
         {
@@ -416,20 +412,70 @@ namespace Jumia_Api.Services.Admin_Service
         }
         public async Task<adminCategoryDTO> AddCategoryAsync(adminCategoryDTO categoryDto)
         {
-            var category = new Category
+            if (categoryDto == null)
             {
-                CatName = categoryDto.Name,
-                SubCategories = categoryDto.Subcategory.Select(sc => new SubCategory
+                throw new ArgumentNullException(nameof(categoryDto));
+            }
+
+            bool categoryExists = await _context.Categories
+                .AnyAsync(c => c.CatName.ToLower() == categoryDto.Name.Trim().ToLower());
+
+            if (categoryExists)
+            {
+                throw new InvalidOperationException($"Category '{categoryDto.Name}' already exists.");
+            }
+
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                var category = new Category
                 {
-                    SubCatName = sc.SubCatName
-                }).ToList()
-            };
+                    CatName = categoryDto.Name.Trim(),
+                    SubCategories = new List<SubCategory>()
+                };
 
-            _context.Categories.Add(category);
-            await _context.SaveChangesAsync();
+                await _context.Categories.AddAsync(category);
+                await _context.SaveChangesAsync();
 
-            categoryDto.Id = category.CatId;
-            return categoryDto;
+                if (categoryDto.Subcategory != null && categoryDto.Subcategory.Any())
+                {
+                    foreach (var subCatDto in categoryDto.Subcategory)
+                    {
+                        if (string.IsNullOrWhiteSpace(subCatDto.SubCatName))
+                        {
+                            throw new ArgumentException("SubCategory name cannot be empty.");
+                        }
+
+                        category.SubCategories.Add(new SubCategory
+                        {
+                            SubCatName = subCatDto.SubCatName.Trim(),
+                            CatId = category.CatId
+                        });
+                    }
+
+                    await _context.SaveChangesAsync();
+                }
+
+                await transaction.CommitAsync();
+
+                categoryDto.Id = category.CatId;
+                categoryDto.Subcategory = category.SubCategories
+                    .Select(sc => new SubCatDTO
+                    {
+                        SubCatId = sc.SubCatId,
+                        SubCatName = sc.SubCatName,
+                        CategoryName = category.CatName
+                    }).ToList();
+
+                return categoryDto;
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+               
+                throw;
+            }
         }
 
 
@@ -532,16 +578,39 @@ namespace Jumia_Api.Services.Admin_Service
         }
 
 
+        public async Task<bool> AddSubcategoryAsync(SubCatDTO subCatDto)
+        {
+            if (subCatDto == null || string.IsNullOrWhiteSpace(subCatDto.SubCatName) || string.IsNullOrWhiteSpace(subCatDto.CategoryName))
+                return false;
+
+            var category = await _context.Categories
+                .FirstOrDefaultAsync(c => c.CatName.ToLower() == subCatDto.CategoryName.ToLower());
+
+            if (category == null)
+                return false;
+
+         
+            bool subCategoryExists = await _context.SubCategories
+                .AnyAsync(sc => sc.SubCatName.ToLower() == subCatDto.SubCatName.ToLower()
+                             && sc.CatId == category.CatId);
+
+            if (subCategoryExists)
+                return false;
+
+            var subCategory = new SubCategory
+            {
+                SubCatName = subCatDto.SubCatName,
+                CatId = category.CatId
+            };
+
+            _context.SubCategories.Add(subCategory);
+            var result = await _context.SaveChangesAsync();
+
+            return result > 0;
+        }
 
 
 
-
-
-
-
-
-
-       
 
     }
 }

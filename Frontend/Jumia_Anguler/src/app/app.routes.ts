@@ -1,6 +1,6 @@
 import { ShopComponent } from '../Components/Cstomer/shop/shop.component';
 import { ProductDetailsComponent } from '../Components/product-details/product-details.component';
-import { OrderComponent } from '../Components/order/order.component'; 
+import { OrderComponent } from '../Components/order/order.component';
 import { Routes } from '@angular/router';
 import { AccountComponent } from '../Components/account/account.component';
 import { WishlistComponent } from '../Components/wishlist/wishlist.component';
@@ -41,6 +41,7 @@ export const routes: Routes = [
       { path: 'categories', loadComponent: () => import('../Components/admin-category/admin-category.component').then((m) => m.AdminCategoryComponent) },
       { path: 'addcategory', loadComponent: () => import('../Components/add-category/add-category.component').then((m) => m.AddCategoryComponent) },
       { path: 'updatecategory/:id', loadComponent: () => import('../Components/updatecategory/updatecategory.component').then((m) => m.UpdatecategoryComponent) },
+
       { path: 'reports', loadComponent: () => import('../Components/admin-report/admin-report.component').then((m) => m.AdminReportComponent) },
     ]
   },
@@ -104,7 +105,7 @@ export const routes: Routes = [
       }
     ]
   },
-  { path: 'help', loadComponent: () => import('../Components/help-center/help-center.component').then((m) => m.HelpCenterComponent)},
+  { path: 'help', loadComponent: () => import('../Components/help-center/help-center.component').then((m) => m.HelpCenterComponent) },
   { path: 'login', loadComponent: () => import('../Components/login/login.component').then((m) => m.LoginComponent) },
   { path: 'register', loadComponent: () => import('../Components/customer-register/customer-register.component').then(m => m.CustomerRegisterComponent) },
   //error routes

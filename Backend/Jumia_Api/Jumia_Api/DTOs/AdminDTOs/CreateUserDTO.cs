@@ -22,6 +22,9 @@ namespace Jumia_Api.DTOs.AdminDTOs
 
         [Required]
         public DateTime? DateOfBirth { get; set; }
+
+      
+        
     }
 
 }
