@@ -6,8 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Jumia_Api.Migrations
 {
     /// <inheritdoc />
-
-    public partial class inital : Migration
+    public partial class intial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -37,6 +36,7 @@ namespace Jumia_Api.Migrations
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     StoreName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ShippingZone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StoreAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -236,9 +236,7 @@ namespace Jumia_Api.Migrations
                     OrderTrackingNumber = table.Column<int>(type: "int", nullable: false),
                     CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     SellerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    AdminId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    SellerId1 = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                    
+                    AdminId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
