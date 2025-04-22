@@ -1,67 +1,52 @@
 import { ShopComponent } from '../Components/Cstomer/shop/shop.component';
-import { HomeComponent } from '../Components/home/home.component';
-import { CartComponent } from '../Components/cart/cart.component';
 import { ProductDetailsComponent } from '../Components/product-details/product-details.component';
-import { OrderComponent } from '../Components/order/order.component'; // Adjust this path as needed     ./components/order/order.component
+import { OrderComponent } from '../Components/order/order.component';
 import { Routes } from '@angular/router';
 import { AccountComponent } from '../Components/account/account.component';
 import { WishlistComponent } from '../Components/wishlist/wishlist.component';
-import { AdminLayoutComponent } from '../Components/admin-layout/admin-layout.component';
 import { CheckoutComponent } from '../Components/checkout/checkout.component';
-import { AwadWishListComponent } from '../Components/awad-wish-list/awad-wish-list.component';
 
 
 export const routes: Routes = [
-
-  { path: 'navbar', loadComponent: () => import('../Components/navbar/navbar.component').then((m) => m.NavbarComponent) },
-  { path: 'footer', loadComponent: () => import('../Components/footer/footer.component').then((m) => m.FooterComponent) },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
 
   //Abdelrahman
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  {path:'home' , loadComponent: () => import('../Components/home/home.component').then((m) => m.HomeComponent)},
-
-  {path:'shop' , loadComponent: () => import('../Components/Cstomer/shop/shop.component').then((m) => m.ShopComponent)},
-
-
-  {path:'cart' , loadComponent: () => import('../Components/cart/cart.component').then((m) => m.CartComponent)},
-
-  {path:'awadwishlist' , loadComponent: () => import('../Components/awad-wish-list/awad-wish-list.component').then((m) => m.AwadWishListComponent)},
-
-
-
-    //Ahmed
-    //{ path: 'order/:id', component: OrderComponent  },
-    { path: 'order', component: OrderComponent  },
-    { path: 'account', component: AccountComponent  },
-    { path: 'wishlist', component: WishlistComponent  },
-    { path: 'checkout', component: CheckoutComponent  },
-
-
-
-
+  { path: 'home', loadComponent: () => import('../Components/home/home.component').then((m) => m.HomeComponent) },
+  { path: 'shop', loadComponent: () => import('../Components/Cstomer/shop/shop.component').then((m) => m.ShopComponent) },
+  { path: 'cart', loadComponent: () => import('../Components/cart/cart.component').then((m) => m.CartComponent) },
+  { path: 'awadwishlist', loadComponent: () => import('../Components/awad-wish-list/awad-wish-list.component').then((m) => m.AwadWishListComponent) },
   { path: 'shop/:id', component: ShopComponent },
   { path: 'details/:id', component: ProductDetailsComponent },
+
+
+  //Ahmed
+  //{ path: 'order/:id', component: OrderComponent  },
+  { path: 'order', component: OrderComponent },
+  { path: 'account', component: AccountComponent },
+  { path: 'wishlist', component: WishlistComponent },
+  { path: 'checkout', component: CheckoutComponent },
   { path: 'order/:id', component: OrderComponent },
 
   //Alaa
   {
     path: 'admin',
-  loadComponent: () => import('../Components/admin-layout/admin-layout.component').then((m) => m.AdminLayoutComponent),
+    loadComponent: () => import('../Components/admin-layout/admin-layout.component').then((m) => m.AdminLayoutComponent),
     children: [
-  { path: 'dashboard', loadComponent: () => import('../Components/admin-dashboard/admin-dashboard.component').then((m) => m.AdminDashboardComponent) },
-  {path: 'products', loadComponent: () => import('../Components/admin-product/admin-product.component').then((m) => m.AdminProductComponent) },
-{ path: 'users', loadComponent: () => import('../Components/admin-users/admin-users.component').then((m) => m.AdminUsersComponent) },
- {path:'adduser', loadComponent: () => import('../Components/adduser/adduser.component').then((m) => m.AdduserComponent) },
-{ path: 'edit-user/:id', loadComponent: () => import('../Components/edituser/edituser.component').then((m) => m.EditUserComponent) },
-{path:'accountprofile', loadComponent: () => import('../Components/admin-accountprofile/admin-accountprofile.component').then((m) => m.AdminAccountprofileComponent) },
-{path:'categories', loadComponent: () => import('../Components/admin-category/admin-category.component').then((m) => m.AdminCategoryComponent) },
-{path:'addcategory', loadComponent: () => import('../Components/add-category/add-category.component').then((m) => m.AddCategoryComponent) },
-{path:'updatecategory/:id', loadComponent: () => import('../Components/updatecategory/updatecategory.component').then((m) => m.UpdatecategoryComponent) },
+      { path: 'dashboard', loadComponent: () => import('../Components/admin-dashboard/admin-dashboard.component').then((m) => m.AdminDashboardComponent) },
+      { path: 'products', loadComponent: () => import('../Components/admin-product/admin-product.component').then((m) => m.AdminProductComponent) },
+      { path: 'users', loadComponent: () => import('../Components/admin-users/admin-users.component').then((m) => m.AdminUsersComponent) },
+      { path: 'adduser', loadComponent: () => import('../Components/adduser/adduser.component').then((m) => m.AdduserComponent) },
+      { path: 'edit-user/:id', loadComponent: () => import('../Components/edituser/edituser.component').then((m) => m.EditUserComponent) },
+      { path: 'accountprofile', loadComponent: () => import('../Components/admin-accountprofile/admin-accountprofile.component').then((m) => m.AdminAccountprofileComponent) },
+      { path: 'categories', loadComponent: () => import('../Components/admin-category/admin-category.component').then((m) => m.AdminCategoryComponent) },
+      { path: 'addcategory', loadComponent: () => import('../Components/add-category/add-category.component').then((m) => m.AddCategoryComponent) },
+      { path: 'updatecategory/:id', loadComponent: () => import('../Components/updatecategory/updatecategory.component').then((m) => m.UpdatecategoryComponent) },
 
-{path:'reports', loadComponent: () => import('../Components/admin-report/admin-report.component').then((m) => m.AdminReportComponent) },
+      { path: 'reports', loadComponent: () => import('../Components/admin-report/admin-report.component').then((m) => m.AdminReportComponent) },
     ]
   },
-  //Rania
+
+  //Rania & Yasmine
   { path: 'sellerRegisteration', loadComponent: () => import('../Components/seller-register/seller-register.component').then((m) => m.SellerRegisterComponent) },
   { path: 'sellOnJumia', loadComponent: () => import('../Components/SellOnJumia/sell-on-jumia/sell-on-jumia.component').then((m) => m.SellOnJumiaComponent) },
   { path: 'intro', loadComponent: () => import('../Components/intro-seller-register/intro-seller-register.component').then((m) => m.IntroSellerRegisterComponent) },
@@ -120,12 +105,9 @@ export const routes: Routes = [
       }
     ]
   },
-
-
-  //Yasmine
+  { path: 'help', loadComponent: () => import('../Components/help-center/help-center.component').then((m) => m.HelpCenterComponent) },
   { path: 'login', loadComponent: () => import('../Components/login/login.component').then((m) => m.LoginComponent) },
   { path: 'register', loadComponent: () => import('../Components/customer-register/customer-register.component').then(m => m.CustomerRegisterComponent) },
-
   //error routes
   { path: '**', loadComponent: () => import('../Components/error/error.component').then(m => m.ErrorComponent) },
 ];

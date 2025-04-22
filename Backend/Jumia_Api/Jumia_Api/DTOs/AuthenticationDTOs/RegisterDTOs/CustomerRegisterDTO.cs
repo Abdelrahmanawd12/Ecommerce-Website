@@ -21,5 +21,7 @@ namespace Jumia_Api.DTOs.AuthenticationDTOs.RegisterDTOs
         public string Gender { get; set; }
         [Required]
         public DateTime DateOfBirth { get; set; }
+        [Required]
+        public bool IsDeleted = false;
     }
 }
