@@ -28,7 +28,7 @@ export class LoginService {
   login(email: string, password: string): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(this.baseUrl + '/auth/login', { email, password }).pipe(
       tap(response => {
-        this.setToken(response.token);  
+        this.setToken(response.token);
         this.isLoggedInSubject.next(true);
         this.isLogged = true;
       }),
