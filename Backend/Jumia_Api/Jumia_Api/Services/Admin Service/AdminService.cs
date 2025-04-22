@@ -3,19 +3,46 @@ using Jumia.Models;
 using Jumia_Api.DTOs.AdminDTOs;
 using Jumia_Api.DTOs.CustomerDTOs;
 using Jumia_Api.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace Jumia_Api.Services.Admin_Service
 {
     public class AdminService : IAdminService
     {
         private readonly JumiaDbContext _context;
-
-        public AdminService(JumiaDbContext context)
+        private readonly UserManager<ApplicationUser> userManager;
+        RoleManager<IdentityRole> roleManager;
+        public AdminService(JumiaDbContext context , UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _context = context;
+            this.userManager = userManager;
+            this.roleManager = roleManager;
         }
+        private AdminDTO MapToAdminDTO(ApplicationUser user, string role)
+        {
+            var adminDto = new AdminDTO
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Role = role,
+                Gender = user.Gender,
+                DateOfBirth = user.DateOfBirth,
+                CreatedAt = user.CreatedAt,
+                IsDeleted = user.IsDeleted
+            };
 
+            if (user is Seller seller)
+            {
+                adminDto.StoreName = seller.StoreName;
+                adminDto.StoreAddress = seller.StoreAddress;
+            }
+
+            return adminDto;
+        }
         public async Task<IEnumerable<AdminOrderDTO>> GetAllOrdersAsync()
         {
             var orders = await _context.Orders
@@ -58,78 +85,122 @@ namespace Jumia_Api.Services.Admin_Service
             };
         }
 
-
         public async Task<IEnumerable<AdminDTO>> GetAllUsersAsync()
         {
-            var users = await _context.Users
-                .Where(u => u.Role != null)
+            var users = await userManager.Users
+                .Where(u => !u.IsDeleted)
                 .ToListAsync();
 
-            return users.Select(u => new AdminDTO
+            var result = new List<AdminDTO>();
+
+            foreach (var user in users)
             {
-                Id = u.Id,
-                FirstName = u.FirstName,
-                LastName = u.LastName,
-                Email = u.Email,
-                Role = u.Role
-            }).ToList();
+                var roles = await userManager.GetRolesAsync(user);
+                var role = roles.FirstOrDefault();
+
+                result.Add(MapToAdminDTO(user, role));
+            }
+
+            return result;
         }
+
+
 
 
         public async Task<AdminDTO> GetUserByIdAsync(string userId)
         {
-            var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.Id == userId);
+        
+            var user = await userManager.Users
+                .OfType<ApplicationUser>()
+                .Where(u => u.Id == userId && !u.IsDeleted)
+                .Select(u => new
+                {
+                    User = u,
+                    IsSeller = u is Seller
+                })
+                .FirstOrDefaultAsync();
 
-            if (user == null)
+            if (user == null) return null;
+
+            var roles = await userManager.GetRolesAsync(user.User);
+
+            var adminDto = new AdminDTO
             {
-                return null;
+                Id = user.User.Id,
+                FirstName = user.User.FirstName,
+                LastName = user.User.LastName,
+                Email = user.User.Email,
+                Role = roles.FirstOrDefault(),
+                Gender = user.User.Gender,
+                DateOfBirth = user.User.DateOfBirth,
+                CreatedAt = user.User.CreatedAt,
+                IsDeleted = user.User.IsDeleted
+            };
+
+           
+            if (user.IsSeller)
+            {
+                var seller = (Seller)user.User;
+                adminDto.StoreName = seller.StoreName;
+                adminDto.StoreAddress = seller.StoreAddress;
             }
 
-            return new AdminDTO
-            {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                Role = user.Role
-            };
+            return adminDto;
         }
-
 
         public async Task<bool> DeleteUserAsync(string userId)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
-            if (user == null)
-            {
-                return false;
-            }
+            var user = await userManager.FindByIdAsync(userId);
 
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
-            return true;
+            if (user == null || user.IsDeleted)
+                return false;
+
+        
+            user.IsDeleted = true;
+
+            var result = await userManager.UpdateAsync(user);
+
+            return result.Succeeded;
         }
+
         public async Task<AdminDTO> AddUserAsync(CreateUserDTO userDto)
         {
-            if (userDto == null)
+            ApplicationUser user = userDto.Role switch
             {
-                return null;
-            }
-
-            var user = new ApplicationUser
-            {
-                FirstName = userDto.FirstName,
-                LastName = userDto.LastName,
-                Email = userDto.Email,
-                Role = userDto.Role,
-                DateOfBirth = userDto.DateOfBirth.HasValue ? userDto.DateOfBirth.Value : DateTime.MinValue
-,
-                CreatedAt = DateTime.Now,
-                Gender = userDto.Gender
+                "Seller" => new Seller
+                {
+                    StoreName = userDto.StoreName,
+                    StoreAddress = userDto.StoreAddress,
+                    Gender = userDto.Gender,
+                    DateOfBirth = userDto.DateOfBirth
+                },
+                "Admin" => new Admin
+                {
+                    Gender = userDto.Gender,
+                    DateOfBirth = userDto.DateOfBirth
+                },
+                _ => new Customer
+                {
+                    Gender = userDto.Gender,
+                    DateOfBirth = userDto.DateOfBirth
+                }
             };
 
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+        
+            user.UserName = userDto.Email;
+            user.Email = userDto.Email;
+            user.FirstName = userDto.FirstName;
+            user.LastName = userDto.LastName;
+
+            var result = await userManager.CreateAsync(user, userDto.Password);
+
+            if (!result.Succeeded)
+            {
+                throw new Exception(string.Join(", ", result.Errors.Select(e => e.Description)));
+            }
+
+          
+            await userManager.AddToRoleAsync(user, userDto.Role);
 
             return new AdminDTO
             {
@@ -137,57 +208,76 @@ namespace Jumia_Api.Services.Admin_Service
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
-                Role = user.Role,
+                Role = userDto.Role,
+                Gender = user.Gender,
                 DateOfBirth = user.DateOfBirth,
-                CreatedAt = user.CreatedAt,
-                Gender = user.Gender
+                CreatedAt = user.CreatedAt
             };
         }
 
         public async Task<AdminDTO> UpdateUserAsync(AdminDTO userDto)
         {
-            var user = await _context.Users.FindAsync(userDto.Id);
-            if (user == null)
+            try
             {
-                return null;  
+              
+                var user = await userManager.FindByIdAsync(userDto.Id);
+                if (user == null || user.IsDeleted)
+                    return null;
+
+                user.FirstName = userDto.FirstName;
+                user.LastName = userDto.LastName;
+                user.Email = userDto.Email;
+                user.UserName = userDto.Email;
+                user.Gender = userDto.Gender;
+                user.DateOfBirth = userDto.DateOfBirth;
+
+             
+                if (user is Seller seller)
+                {
+                    seller.StoreName = userDto.StoreName ?? seller.StoreName;
+                    seller.StoreAddress = userDto.StoreAddress ?? seller.StoreAddress;
+                }
+
+               
+                var updateResult = await userManager.UpdateAsync(user);
+                if (!updateResult.Succeeded)
+                    return null;
+
+             
+                var currentRoles = await userManager.GetRolesAsync(user);
+                if (!currentRoles.Contains(userDto.Role))
+                {
+                    await userManager.RemoveFromRolesAsync(user, currentRoles);
+                    await userManager.AddToRoleAsync(user, userDto.Role);
+                }
+
+          
+                var roles = await userManager.GetRolesAsync(user);
+                return MapToAdminDTO(user, roles.FirstOrDefault());
             }
-
-           
-            user.FirstName = userDto.FirstName;
-            user.LastName = userDto.LastName;
-            user.Email = userDto.Email;
-            user.Role = userDto.Role;  
-            user.Gender = userDto.Gender;
-            user.DateOfBirth = userDto.DateOfBirth;
-
-            _context.Users.Update(user);  
-            await _context.SaveChangesAsync();
-
-            return new AdminDTO
+            catch
             {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                Role = user.Role,
-                Gender = user.Gender,
-                DateOfBirth = user.DateOfBirth
-            };
+                return null; 
+            }
         }
-
-
 
         public async Task<AdminDashboardDTO> GetDashboardStatsAsync()
         {
             var totalCategories = await _context.Categories.CountAsync();
             var totalSubCategories = await _context.SubCategories.CountAsync();
-            var totalUsers = await _context.Users.CountAsync();
+
+            var totalUsers = await _context.Users.CountAsync(u => !u.IsDeleted);
+
             var newUsersThisMonth = await _context.Users
-                .CountAsync(u => u.CreatedAt.Month == DateTime.Now.Month && u.CreatedAt.Year == DateTime.Now.Year);
+                .CountAsync(u => !u.IsDeleted &&
+                                 u.CreatedAt.Month == DateTime.Now.Month &&
+                                 u.CreatedAt.Year == DateTime.Now.Year);
+
             var totalProducts = await _context.Products.CountAsync();
             var outOfStockProducts = await _context.Products.CountAsync(p => p.Quantity == 0);
+
             var totalSales = await _context.Orders.SumAsync(o => o.TotalAmount);
-            var totalCommission = totalSales * 0.1m; 
+            var totalCommission = totalSales * 0.1m;
 
             return new AdminDashboardDTO
             {
@@ -416,20 +506,70 @@ namespace Jumia_Api.Services.Admin_Service
         }
         public async Task<adminCategoryDTO> AddCategoryAsync(adminCategoryDTO categoryDto)
         {
-            var category = new Category
+            if (categoryDto == null)
             {
-                CatName = categoryDto.Name,
-                SubCategories = categoryDto.Subcategory.Select(sc => new SubCategory
+                throw new ArgumentNullException(nameof(categoryDto));
+            }
+
+            bool categoryExists = await _context.Categories
+                .AnyAsync(c => c.CatName.ToLower() == categoryDto.Name.Trim().ToLower());
+
+            if (categoryExists)
+            {
+                throw new InvalidOperationException($"Category '{categoryDto.Name}' already exists.");
+            }
+
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                var category = new Category
                 {
-                    SubCatName = sc.SubCatName
-                }).ToList()
-            };
+                    CatName = categoryDto.Name.Trim(),
+                    SubCategories = new List<SubCategory>()
+                };
 
-            _context.Categories.Add(category);
-            await _context.SaveChangesAsync();
+                await _context.Categories.AddAsync(category);
+                await _context.SaveChangesAsync();
 
-            categoryDto.Id = category.CatId;
-            return categoryDto;
+                if (categoryDto.Subcategory != null && categoryDto.Subcategory.Any())
+                {
+                    foreach (var subCatDto in categoryDto.Subcategory)
+                    {
+                        if (string.IsNullOrWhiteSpace(subCatDto.SubCatName))
+                        {
+                            throw new ArgumentException("SubCategory name cannot be empty.");
+                        }
+
+                        category.SubCategories.Add(new SubCategory
+                        {
+                            SubCatName = subCatDto.SubCatName.Trim(),
+                            CatId = category.CatId
+                        });
+                    }
+
+                    await _context.SaveChangesAsync();
+                }
+
+                await transaction.CommitAsync();
+
+                categoryDto.Id = category.CatId;
+                categoryDto.Subcategory = category.SubCategories
+                    .Select(sc => new SubCatDTO
+                    {
+                        SubCatId = sc.SubCatId,
+                        SubCatName = sc.SubCatName,
+                        CategoryName = category.CatName
+                    }).ToList();
+
+                return categoryDto;
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+               
+                throw;
+            }
         }
 
 
@@ -532,16 +672,39 @@ namespace Jumia_Api.Services.Admin_Service
         }
 
 
+        public async Task<bool> AddSubcategoryAsync(SubCatDTO subCatDto)
+        {
+            if (subCatDto == null || string.IsNullOrWhiteSpace(subCatDto.SubCatName) || string.IsNullOrWhiteSpace(subCatDto.CategoryName))
+                return false;
+
+            var category = await _context.Categories
+                .FirstOrDefaultAsync(c => c.CatName.ToLower() == subCatDto.CategoryName.ToLower());
+
+            if (category == null)
+                return false;
+
+         
+            bool subCategoryExists = await _context.SubCategories
+                .AnyAsync(sc => sc.SubCatName.ToLower() == subCatDto.SubCatName.ToLower()
+                             && sc.CatId == category.CatId);
+
+            if (subCategoryExists)
+                return false;
+
+            var subCategory = new SubCategory
+            {
+                SubCatName = subCatDto.SubCatName,
+                CatId = category.CatId
+            };
+
+            _context.SubCategories.Add(subCategory);
+            var result = await _context.SaveChangesAsync();
+
+            return result > 0;
+        }
 
 
 
-
-
-
-
-
-
-       
 
     }
 }

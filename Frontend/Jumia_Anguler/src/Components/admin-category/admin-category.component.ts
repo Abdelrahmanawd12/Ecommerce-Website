@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AdminCategoryService, Category, SubCategory } from '../../Services/admin-category.service';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admin-category',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule ,RouterModule,ReactiveFormsModule ],  
   templateUrl: './admin-category.component.html',
   styleUrls: ['./admin-category.component.css']
 })
@@ -19,13 +21,22 @@ export class AdminCategoryComponent implements OnInit {
   itemsPerPage: number = 5;
   totalPages: number = 1;
   showDeleteModal: boolean = false;
-  showUpdateModal: boolean = false;
+  showAddSubcategoryModal: boolean = false; 
   selectedCategoryId: number = 0;
+  selectedCategoryName: string = ''; 
   currentCategory: Category = this.createEmptyCategory();
   isLoading: boolean = false;
   errorMessage: string = '';
-
-  constructor(private categoryService: AdminCategoryService) {}
+  form: FormGroup;
+  constructor(  private fb: FormBuilder,
+    private adminCategoryService: AdminCategoryService,
+    private categoryService: AdminCategoryService) {
+      this.form = this.fb.group({
+        subCatName: ['', [Validators.required]],
+        subCatId: [0, [Validators.required]],
+        categoryName: ''
+      });
+    }
 
   ngOnInit(): void {
     this.loadCategories();
@@ -59,6 +70,26 @@ export class AdminCategoryComponent implements OnInit {
     });
   }
 
+
+  showAddSubcategory(categoryId: number, categoryName: string): void {
+    this.selectedCategoryId = categoryId;
+    this.selectedCategoryName = categoryName;
+  
+ 
+    this.form.patchValue({
+      
+      categoryName: categoryName 
+    });
+  
+    this.showAddSubcategoryModal = true;
+  }
+  
+
+  closeAddSubcategoryModal(): void {
+    this.showAddSubcategoryModal = false; 
+  }
+
+ 
   filterCategories(): void {
     let result = this.categories;
     
@@ -118,57 +149,64 @@ export class AdminCategoryComponent implements OnInit {
     if (this.currentPage < this.totalPages) this.currentPage++;
   }
 
-  openUpdateModal(category: Category): void {
-    this.currentCategory = {
-      id: category.id,
-      name: category.name,
-      subcategory: category.subcategory?.map(sub => ({
-        subCatId: sub.subCatId || 0,
-        subCatName: sub.subCatName || '',
-        categoryName: sub.categoryName || category.name,
-        categoryId: category.id   
-      })) || [{
-        subCatId: 0,
-        subCatName: '',
-        categoryName: category.name,
-        categoryId: category.id
-      }]
-    };
-    this.showUpdateModal = true;
-    this.errorMessage = '';
+  getMin(a: number, b: number): number {
+    return Math.min(a, b);
   }
 
-  saveCategory(): void {
-    if (!this.currentCategory?.name?.trim()) {
-      this.errorMessage = 'Category name is required';
-      return;
-    }
+
+  @Input() categoryId: number = 0; 
+  @Input() categoryName: string = ''; 
+  @Output() closeModal = new EventEmitter<void>(); 
+
+ 
+
+
+  submit(): void {
+    if (this.form.valid) {
+      const subCategory = {
+        subCatId: this.form.value.subCatId || 0,
+        subCatName: this.form.value.subCatName,
+        categoryName: this.selectedCategoryName
+      };
   
-    const categoryToUpdate: Category = {
-      id: this.currentCategory!.id,
-      name: this.currentCategory!.name,
-      subcategory: this.currentCategory.subcategory?.map(sub => ({
-        subCatId: sub.subCatId || 0,
-        subCatName: sub.subCatName || '',
-        categoryName: sub.categoryName || this.currentCategory!.name,
-        categoryId: this.currentCategory!.id
-      })) || []
-    };
-    
-    this.isLoading = true;
-    this.categoryService.updateCategory(this.currentCategory.id, categoryToUpdate)
-      .subscribe({
+      this.categoryService.addSubcategory(subCategory).subscribe({
         next: () => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: `"${subCategory.subCatName}" was added successfully`,
+            confirmButtonColor: '#ff6700',
+            timer: 3000
+          });
           this.loadCategories();
-          this.showUpdateModal = false;
-          this.isLoading = false;
+          this.closeAddSubcategoryModal();
         },
         error: (err) => {
-          this.errorMessage = 'Failed to update category';
-          this.isLoading = false;
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Failed to add subcategory',
+            confirmButtonColor: '#ff6700'
+          });
         }
       });
+    } else {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Missing Data',
+        text: 'Please fill all required fields',
+        confirmButtonColor: '#ff6700'
+      });
+    }
   }
+  
+
+  cancel() {
+    this.closeModal.emit();
+  }
+
+
+
 
   confirmDelete(id: number): void {
     this.selectedCategoryId = id;
@@ -197,5 +235,4 @@ export class AdminCategoryComponent implements OnInit {
   trackBySubCategory(index: number, sub: SubCategory): number {
     return sub.subCatId ?? 0; 
   }
-  
 }

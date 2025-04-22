@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Jumia.Models;
+using Jumia_Api.DTOs.AdminDTOs;
 using Jumia_Api.DTOs.CustomerDTOs;
 using Jumia_Api.DTOs.SellerDTOs;
 using Jumia_Api.Models;
@@ -196,6 +197,10 @@ namespace Jumia_Api.MapperConfig
                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                .ForMember(dest => dest.Brand, opt => opt.MapFrom(src => src.Brand))
                .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.ProductTags.Select(t => t.Tag).ToList()));
+
+
+
+            CreateMap<Admin, AdminDTO>();
         }
     }
 }

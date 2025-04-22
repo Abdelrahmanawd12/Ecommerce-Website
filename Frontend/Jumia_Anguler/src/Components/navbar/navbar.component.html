@@ -1,5 +1,5 @@
 <div class="top-bar">
-  <a>Sell on Jumia</a>
+  <a routerLink="/intro">Sell on Jumia</a>
   <div class="logo">
     <img src="assets/Jumia-Logo.png" alt="Jumia" />
   </div>
@@ -11,7 +11,7 @@
 
 <div class="navbar">
   <div class="logo">
-    <img src="assets/Jumia-Logo.png" alt="Jumia" />
+    <img src="assets/Jumia-Logo.png" alt="Jumia" routerLink="/home"/>
   </div>
   <div class="search-box position-relative">
     <!-- input field -->
@@ -73,14 +73,14 @@
 
 
       <div class="help-dropdown" (click)="toggleHelpDropdown()" [class.open]="helpDropdownOpen">
-        <a><i class="fa fa-question-circle"></i> Help <i class="fa fa-caret-down"></i></a>
+        <a><i class="fa fa-question-circle" routerLink="/help"></i> Help <i class="fa fa-caret-down"></i></a>
         <div class="help-menu" *ngIf="helpDropdownOpen">
-          <a><i class="fa fa-question-circle"></i> Help Center</a>
-          <a><i class="fa fa-cart-plus"></i> Place an Order</a>
-          <a><i class="fa fa-credit-card"></i> Pay for Your Order</a>
-          <a><i class="fa fa-map-marker-alt"></i> Track Your Order</a>
-          <a><i class="fa fa-times-circle"></i> Cancel an Order</a>
-          <a><i class="fa fa-undo"></i> Create a Return</a>
+          <a routerLink="/help" (click)="navigateToHelp('help-center')"><i class="fa fa-question-circle"></i> Help Center</a>
+          <a routerLink="/help" (click)="navigateToHelp('place-order')"><i class="fa fa-cart-plus"></i> Place an Order</a>
+          <a routerLink="/help" (click)="navigateToHelp('pay-order')"><i class="fa fa-credit-card"></i> Pay for Your Order</a>
+          <a routerLink="/help" (click)="navigateToHelp('track-order')"><i class="fa fa-map-marker-alt"></i> Track Your Order</a>
+          <a routerLink="/help" (click)="navigateToHelp('cancel-order')"><i class="fa fa-times-circle"></i> Cancel an Order</a>
+          <a routerLink="/help" (click)="navigateToHelp('create-return')"><i class="fa fa-undo"></i> Create a Return</a>
           <div class="divider"></div>
         </div>
       </div>

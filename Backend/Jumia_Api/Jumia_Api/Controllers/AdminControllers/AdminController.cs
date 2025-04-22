@@ -83,7 +83,6 @@ namespace Jumia_Api.Controllers
 
             return NoContent();
         }
-
         // Users Endpoints
         [HttpGet("users")]
         public async Task<IActionResult> GetAllUsers()
@@ -105,7 +104,7 @@ namespace Jumia_Api.Controllers
 
             if (user == null)
             {
-                return NotFound();
+                return NotFound(new { message = "User not found with the provided ID." });
             }
 
             return Ok(user);
@@ -127,21 +126,47 @@ namespace Jumia_Api.Controllers
         [HttpPost("add-user")]
         public async Task<IActionResult> AddUser([FromBody] CreateUserDTO userDto)
         {
-            if (userDto == null)
+           
+            if (!ModelState.IsValid)
             {
-                return BadRequest("User data is required.");
+                return BadRequest(ModelState);
             }
 
-            var addedUser = await _adminService.AddUserAsync(userDto);
-
-            if (addedUser == null)
+            try
             {
-                return BadRequest("Failed to add the user.");
-            }
+              
+                var addedUser = await _adminService.AddUserAsync(userDto);
 
-            return CreatedAtAction(nameof(GetUserById), new { userId = addedUser.Id }, addedUser);
+                if (addedUser == null)
+                {
+                    return BadRequest(new
+                    {
+                        Success = false,
+                        Message = "Failed to add the user. Please check the provided data."
+                    });
+                }
+
+                return CreatedAtAction(
+                    actionName: nameof(GetUserById),
+                    routeValues: new { userId = addedUser.Id },
+                    value: new
+                    {
+                        Success = true,
+                        UserId = addedUser.Id,
+                        Message = "User added successfully"
+                    });
+            }
+            catch (Exception ex)
+            {
+              
+                return StatusCode(500, new
+                {
+                    Success = false,
+                    Message = "An error occurred while adding the user",
+                    Error = ex.Message
+                });
+            }
         }
-
         [HttpPut("update-user")]
         public async Task<IActionResult> UpdateUser([FromBody] AdminDTO userDto)
         {
@@ -154,7 +179,7 @@ namespace Jumia_Api.Controllers
 
             if (updatedUser == null)
             {
-                return NotFound("User not found.");
+                return NotFound(new { message = "User not found with the provided ID." });
             }
 
             return Ok(updatedUser);
@@ -243,23 +268,37 @@ namespace Jumia_Api.Controllers
         }
 
         [HttpPost("categories")]
-        public async Task<IActionResult> AddCategoryWithSubCategory([FromBody] adminCategoryDTO? categoryDto)
+        public async Task<IActionResult> AddCategoryWithSubCategory([FromBody] adminCategoryDTO categoryDto)
         {
-            if (categoryDto == null)
+            try
             {
-                return BadRequest("Invalid data.");
+                if (categoryDto == null)
+                {
+                    return BadRequest(new { success = false, message = "Category data is required" });
+                }
+
+                var result = await _adminService.AddCategoryAsync(categoryDto);
+
+                return Ok(new
+                {
+                    success = true,
+                    message = "Category added successfully",
+                    data = result
+                });
             }
-
-            var result = await _adminService.AddCategoryAsync(categoryDto);
-
-            if (result == null)
+            catch (InvalidOperationException ex)
             {
-                return BadRequest("Failed to add category and subcategories.");
+                return Conflict(new { success = false, message = ex.Message });
             }
-
-            return Ok(new { message = "Category and SubCategory added successfully." });
+            catch (Exception ex)
+            {
+                
+                return StatusCode(500, new { success = false, message = "An error occurred while adding the category" });
+            }
         }
 
+       
+       
         [HttpPut("categories/{categoryId}")]
         public async Task<IActionResult> UpdateCategory(int categoryId, [FromBody] adminCategoryDTO categoryDto)
         {
@@ -291,6 +330,26 @@ namespace Jumia_Api.Controllers
             return NoContent();
         }
 
-       
+        [HttpPost("add-subcategory")]
+        public async Task<IActionResult> AddSubcategory([FromBody] SubCatDTO subCatDto)
+        {
+            if (subCatDto == null)
+                return BadRequest(new { message = "Invalid subcategory data." });
+
+             if (string.IsNullOrWhiteSpace(subCatDto.SubCatName))
+                return BadRequest(new { message = "Subcategory name is required."
+                });
+
+            if (string.IsNullOrWhiteSpace(subCatDto.CategoryName))
+                return BadRequest(new { message = "Category name is required." });
+
+            var result = await _adminService.AddSubcategoryAsync(subCatDto);
+
+            if (result)
+                return Ok(new { message = "Subcategory added successfully." });
+            else
+                return BadRequest(new { message = "Failed to add subcategory. The category may not exist, or the subcategory name is already used." });
+        }
+
     }
 }

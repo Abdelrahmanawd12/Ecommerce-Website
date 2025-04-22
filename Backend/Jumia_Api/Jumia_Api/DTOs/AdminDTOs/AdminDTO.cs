@@ -10,7 +10,14 @@
             public DateTime DateOfBirth { get; set; }
             public DateTime CreatedAt { get; set; }
             public string Gender { get; set; }
-        }
+        public bool IsDeleted { get; set; } = false;
+        
+        public string? StoreName { get; set; }
+        public string? StoreAddress { get; set; }
+
+      
+
+    }
 
     }
 

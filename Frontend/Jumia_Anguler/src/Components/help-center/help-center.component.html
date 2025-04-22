@@ -1,0 +1,451 @@
+<div class="jumia-help-container">
+    <!-- Fixed Sidebar -->
+    <div class="jumia-sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <i class="fas fa-question-circle"></i>
+          <h3>Help Center</h3>
+        </div>
+        <nav class="sidebar-menu">
+          <a (click)="setActive('help-center')" [class.active]="activeItem === 'help-center'">
+            <i class="fas fa-home"></i> Help Home
+          </a>
+          <a (click)="setActive('place-order')" [class.active]="activeItem === 'place-order'">
+            <i class="fas fa-shopping-cart"></i> Place an Order
+          </a>
+          <a (click)="setActive('pay-order')" [class.active]="activeItem === 'pay-order'">
+            <i class="fas fa-credit-card"></i> Payment Methods
+          </a>
+          <a (click)="setActive('track-order')" [class.active]="activeItem === 'track-order'">
+            <i class="fas fa-truck"></i> Track Order
+          </a>
+          <a (click)="setActive('cancel-order')" [class.active]="activeItem === 'cancel-order'">
+            <i class="fas fa-times-circle"></i> Cancel Order
+          </a>
+          <a (click)="setActive('create-return')" [class.active]="activeItem === 'create-return'">
+            <i class="fas fa-exchange-alt"></i> Returns & Refunds
+          </a>
+        </nav>
+      </div>
+
+    <!-- Main Content -->
+    <div class="jumia-help-content">
+        <!-- Help Center Section -->
+        <section id="help-center" class="jumia-section">
+            <div class="section-header">
+                <h2><i class="fas fa-home"></i> Help Center</h2>
+            </div>
+            <div class="section-body">
+                <div class="welcome-message">
+                    <img src="assets/Jumia-Logo.png" alt="Help Center" class="help-image">
+                    <div class="welcome-text">
+                        <h3>Welcome to Jumia Help Center</h3>
+                        <p>Find answers to all your questions about shopping on Jumia Egypt. Browse our help topics or
+                            contact our customer service team for further assistance.</p>
+                    </div>
+                </div>
+
+                <div class="quick-links-grid">
+                    <div class="quick-link-card" (click)="scrollTo('place-order')">
+                        <div class="card-icon orange">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <h4>How to Order</h4>
+                        <p>Step-by-step guide to place your order</p>
+                    </div>
+
+                    <div class="quick-link-card" (click)="scrollTo('pay-order')">
+                        <div class="card-icon blue">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <h4>Payment Options</h4>
+                        <p>All available payment methods</p>
+                    </div>
+
+                    <div class="quick-link-card" (click)="scrollTo('track-order')">
+                        <div class="card-icon green">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <h4>Track Your Order</h4>
+                        <p>Where is my package?</p>
+                    </div>
+
+                    <div class="quick-link-card" (click)="scrollTo('cancel-order')">
+                        <div class="card-icon red">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                        <h4>Cancel Order</h4>
+                        <p>How to cancel your order</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Place an Order Section -->
+        <section id="place-order" class="jumia-section">
+            <div class="section-header">
+                <h2><i class="fas fa-shopping-cart"></i> Place an Order</h2>
+            </div>
+            <div class="section-body">
+                <div class="order-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Browse Products</h4>
+                            <p>Search for products or browse through our categories to find what you need.</p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Add to Cart</h4>
+                            <p>Click "Add to Cart" for items you want to purchase. You can review your cart anytime.</p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Proceed to Checkout</h4>
+                            <p>When ready, click the cart icon and select "Proceed to Checkout".</p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Enter Shipping Details</h4>
+                            <p>Provide your delivery address and contact information.</p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>Select Payment Method</h4>
+                            <p>Choose from our secure payment options.</p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">6</div>
+                        <div class="step-content">
+                            <h4>Place Order</h4>
+                            <p>Review your order and click "Place Order" to complete your purchase.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Payment Methods Section -->
+        <section id="pay-order" class="jumia-section">
+            <div class="section-header">
+                <h2><i class="fas fa-credit-card"></i> Payment Methods</h2>
+            </div>
+            <div class="section-body">
+                <h3>Available Payment Options</h3>
+
+                <div class="payment-methods-grid">
+                    <div class="payment-method">
+                        <div class="payment-icon">
+                            <i class="fab fa-cc-visa"></i>
+                        </div>
+                        <h4>Visa</h4>
+                        <p>All Visa credit/debit cards</p>
+                    </div>
+
+                    <div class="payment-method">
+                        <div class="payment-icon">
+                            <i class="fab fa-cc-mastercard"></i>
+                        </div>
+                        <h4>Mastercard</h4>
+                        <p>All Mastercard credit/debit cards</p>
+                    </div>
+
+                    <div class="payment-method">
+                        <div class="payment-icon">
+                            <i class="fab fa-cc-paypal"></i>
+                        </div>
+                        <h4>PayPal</h4>
+                        <p>Secure online payments</p>
+                    </div>
+
+                    <div class="payment-method">
+                        <div class="payment-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h4>Mobile Wallets</h4>
+                        <p>Vodafone Cash, Orange Money, etc.</p>
+                    </div>
+
+                    <div class="payment-method">
+                        <div class="payment-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <h4>Cash on Delivery</h4>
+                        <p>Pay when you receive your order</p>
+                    </div>
+
+                    <div class="payment-method">
+                        <div class="payment-icon">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <h4>Jumia Gift Card</h4>
+                        <p>Redeem your gift card balance</p>
+                    </div>
+                </div>
+
+                <div class="payment-security">
+                    <div class="security-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="security-text">
+                        <h4>Secure Payments</h4>
+                        <p>All transactions are encrypted and secure. We never store your full payment details.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Track Order Section -->
+        <section id="track-order" class="jumia-section">
+            <div class="section-header">
+                <h2><i class="fas fa-truck"></i> Track Your Order</h2>
+            </div>
+            <div class="section-body">
+                <div class="tracking-container">
+                    <div class="tracking-steps">
+                        <div class="tracking-step active">
+                            <div class="step-icon">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <div class="step-info">
+                                <h5>Order Placed</h5>
+                                <p>We've received your order</p>
+                            </div>
+                        </div>
+
+                        <div class="tracking-step">
+                            <div class="step-icon">
+                                <i class="fas fa-cog"></i>
+                            </div>
+                            <div class="step-info">
+                                <h5>Processing</h5>
+                                <p>Preparing your items</p>
+                            </div>
+                        </div>
+
+                        <div class="tracking-step">
+                            <div class="step-icon">
+                                <i class="fas fa-box"></i>
+                            </div>
+                            <div class="step-info">
+                                <h5>Shipped</h5>
+                                <p>On its way to you</p>
+                            </div>
+                        </div>
+
+                        <div class="tracking-step">
+                            <div class="step-icon">
+                                <i class="fas fa-shipping-fast"></i>
+                            </div>
+                            <div class="step-info">
+                                <h5>In Transit</h5>
+                                <p>With delivery partner</p>
+                            </div>
+                        </div>
+
+                        <div class="tracking-step">
+                            <div class="step-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="step-info">
+                                <h5>Delivered</h5>
+                                <p>Successfully delivered</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tracking-info">
+                        <h3>How to Track Your Order</h3>
+                        <ol>
+                            <li>Log in to your Jumia account</li>
+                            <li>Go to "My Orders" section</li>
+                            <li>Find the order you want to track</li>
+                            <li>Click "Track Order" for detailed status</li>
+                        </ol>
+
+                        <div class="tracking-note">
+                            <i class="fas fa-info-circle"></i>
+                            <p>You'll receive email/SMS notifications at each important stage of your delivery.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cancel Order Section -->
+        <section id="cancel-order" class="jumia-section">
+            <div class="section-header">
+                <h2><i class="fas fa-times-circle"></i> Cancel Order</h2>
+            </div>
+            <div class="section-body">
+                <h3>How to Cancel Your Order</h3>
+
+                <div class="cancel-options">
+                    <div class="cancel-option">
+                        <div class="option-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="option-content">
+                            <h4>Before Processing</h4>
+                            <p>If your order hasn't entered processing, you can cancel it immediately from your account.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="cancel-option">
+                        <div class="option-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <div class="option-content">
+                            <h4>After Shipping</h4>
+                            <p>If your order has shipped, you can refuse delivery or request a return after receiving
+                                it.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cancel-steps">
+                    <h4>Cancellation Steps:</h4>
+                    <ol>
+                        <li>Go to "My Orders" in your account</li>
+                        <li>Find the order you want to cancel</li>
+                        <li>Click "Cancel Order" button</li>
+                        <li>Select your cancellation reason</li>
+                        <li>Confirm cancellation</li>
+                    </ol>
+                </div>
+
+                <div class="refund-info">
+                    <h4>Refund Information</h4>
+                    <div class="refund-details">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <div>
+                            <p><strong>Online Payments:</strong> Refund processed within 3-5 business days to original
+                                payment method</p>
+                            <p><strong>Cash on Delivery:</strong> Refund via bank transfer or mobile wallet within 5-7
+                                business days</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Returns & Refunds Section -->
+        <section id="create-return" class="jumia-section">
+            <div class="section-header">
+                <h2><i class="fas fa-exchange-alt"></i> Returns & Refunds</h2>
+            </div>
+            <div class="section-body">
+                <div class="return-policy">
+                    <h3>Return Policy</h3>
+                    <p>You can return most items within 14 days of delivery for a full refund or exchange, provided they
+                        are in original condition with all tags attached.</p>
+
+                    <div class="policy-highlights">
+                        <div class="highlight-item">
+                            <i class="fas fa-check-circle green"></i>
+                            <span>14-day return window</span>
+                        </div>
+                        <div class="highlight-item">
+                            <i class="fas fa-check-circle green"></i>
+                            <span>Free return pickup</span>
+                        </div>
+                        <div class="highlight-item">
+                            <i class="fas fa-check-circle green"></i>
+                            <span>Full refund guarantee</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="return-process">
+                    <h3>Return Process</h3>
+
+                    <div class="process-steps">
+                        <div class="process-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h5>Initiate Return</h5>
+                                <p>Go to "My Orders" and select "Return Item"</p>
+                            </div>
+                        </div>
+
+                        <div class="process-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h5>Select Reason</h5>
+                                <p>Choose why you're returning the item</p>
+                            </div>
+                        </div>
+
+                        <div class="process-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h5>Print Label</h5>
+                                <p>Download and print return label</p>
+                            </div>
+                        </div>
+
+                        <div class="process-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h5>Package Item</h5>
+                                <p>Pack item securely with original packaging</p>
+                            </div>
+                        </div>
+
+                        <div class="process-step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h5>Schedule Pickup</h5>
+                                <p>Arrange for pickup or drop off at location</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="refund-timeline">
+                    <h3>Refund Timeline</h3>
+
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-point"></div>
+                            <div class="timeline-content">
+                                <h5>Return Received</h5>
+                                <p>Within 2 days of dropping off</p>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-point"></div>
+                            <div class="timeline-content">
+                                <h5>Inspection</h5>
+                                <p>1-2 business days</p>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-point"></div>
+                            <div class="timeline-content">
+                                <h5>Refund Processed</h5>
+                                <p>3-5 business days</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

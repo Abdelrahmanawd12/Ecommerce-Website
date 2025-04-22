@@ -14,8 +14,9 @@ namespace Jumia_Api.Services.Admin_Service
             Task<AdminDTO> AddUserAsync(CreateUserDTO userDto);
             Task<AdminDTO> UpdateUserAsync(AdminDTO userDto);
 
-           
-            Task<IEnumerable<AdminOrderDTO>> GetAllOrdersAsync();
+        Task<bool> AddSubcategoryAsync(SubCatDTO subCatDto);
+
+        Task<IEnumerable<AdminOrderDTO>> GetAllOrdersAsync();
             Task<AdminOrderDTO> GetOrderByIdAsync(int orderId);
             Task<bool> UpdateOrderStatusAsync(int orderId, string newStatus);
             Task<AdminDashboardDTO> GetDashboardStatsAsync();
