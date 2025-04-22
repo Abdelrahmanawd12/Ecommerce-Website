@@ -32,21 +32,4 @@ export class HelpCenterComponent implements OnInit {
       element.scrollIntoView({ behavior: 'smooth' });
     }
   }
-  // scrollTo(section: string): void {
-  //   const element = document.getElementById(section);
-  //   if (element) {
-  //     document.querySelectorAll('.sidebar-menu a').forEach(el => {
-  //       el.classList.remove('active');
-  //     });
-      
-  //     document.querySelector(`.sidebar-menu a[onclick*="${section}"]`)?.classList.add('active');
-      
-  //     element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      
-  //     element.classList.add('highlight');
-  //     setTimeout(() => {
-  //       element.classList.remove('highlight');
-  //     }, 2000);
-  //   }
-  // }
-}
+  }

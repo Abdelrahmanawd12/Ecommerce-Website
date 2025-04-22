@@ -38,6 +38,9 @@
     overflow-y: auto;
     z-index: 100;
     transition: all 0.3s ease;
+    position: sticky;
+    height: fit-content;
+    overflow-y: auto;
   }
   
   .sidebar-header {
@@ -884,4 +887,30 @@
   
   .quick-link-card:hover .card-top-icon {
     transform: translateX(-50%) scale(1.1);
+  }
+  .help-center-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .help-center-content {
+    display: flex;
+    flex: 1;
+    position: relative;
+    gap: 0; 
+  }
+  
+  .jumia-sidebar {
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+    height: 100vh; 
+    overflow-y: auto; 
+  }
+  
+  .jumia-help-content {
+    flex: 1;
+    padding-left: 5px; 
+    margin-left: 5px; 
   }
