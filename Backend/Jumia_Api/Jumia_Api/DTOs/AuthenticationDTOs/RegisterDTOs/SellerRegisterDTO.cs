@@ -22,7 +22,7 @@ namespace Jumia_Api.DTOs.AuthenticationDTOs.RegisterDTOs
         public string StoreName { get; set; }
         public string ShippingZone { get; set; }
         public string StoreAddress { get; set; }
-
+        public bool IsDeleted = false;
 
     }
 }

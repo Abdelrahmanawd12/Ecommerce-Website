@@ -43,7 +43,37 @@ namespace Jumia_Api.Controllers.AuthenticationControllers
                 var existingUser = await userManager.FindByEmailAsync(cstDto.Email);
                 if (existingUser != null)
                 {
-                    return BadRequest("Username is already taken.");
+                    if (!existingUser.IsDeleted)
+                    {
+                        return BadRequest("Email is already taken.");
+                    }
+                    else
+                    {
+                        existingUser.FirstName = cstDto.FirstName;
+                        existingUser.LastName = cstDto.LastName;
+                        existingUser.PhoneNumber = cstDto.PhoneNumber;
+                        existingUser.DateOfBirth = cstDto.DateOfBirth;
+                        existingUser.Gender = cstDto.Gender;
+                        existingUser.UserName = cstDto.Email;
+                        existingUser.Role = "Customer";
+                        existingUser.IsDeleted = false;
+                        existingUser.CreatedAt = DateTime.Now;
+                        existingUser.PhoneNumberConfirmed = true;
+                        existingUser.EmailConfirmed = true;
+
+                        var token = await userManager.GeneratePasswordResetTokenAsync(existingUser);
+                        var existingUserResult = await userManager.ResetPasswordAsync(existingUser, token, cstDto.Password);
+
+                        if (existingUserResult.Succeeded)
+                        {
+                            await userManager.UpdateAsync(existingUser);
+                            return Ok("Account reactivated successfully.");
+                        }
+                        else
+                        {
+                            return BadRequest(existingUserResult.Errors.Select(e => e.Description));
+                        }
+                    }
                 }
                 ApplicationUser user = new ApplicationUser
                 {
@@ -56,6 +86,7 @@ namespace Jumia_Api.Controllers.AuthenticationControllers
                     UserName = cstDto.Email,
                     CreatedAt = DateTime.Now,
                     Role = "Customer",
+                    IsDeleted = cstDto.IsDeleted,
                     PhoneNumberConfirmed = true,
                     EmailConfirmed = true,
                 };
@@ -108,12 +139,58 @@ namespace Jumia_Api.Controllers.AuthenticationControllers
                 var existingUser = await userManager.FindByEmailAsync(selDto.Email);
                 if (existingUser != null)
                 {
-                    return BadRequest(new
+                    if (!existingUser.IsDeleted)
                     {
-                        success = false,
-                        message = "Registration failed",
-                        errors = new List<string> { "Email is already taken." }
-                    });
+                        return BadRequest(new
+                        {
+                            success = false,
+                            message = "Email is already taken"
+                        });
+                    }
+                    else
+                    {
+                        existingUser.FirstName = selDto.FirstName;
+                        existingUser.LastName = selDto.LastName;
+                        existingUser.PhoneNumber = selDto.PhoneNumber;
+                        existingUser.DateOfBirth = selDto.DateOfBirth;
+                        existingUser.Gender = selDto.Gender;
+                        existingUser.UserName = selDto.Email;
+                        existingUser.Role = "Seller";
+                        existingUser.IsDeleted = false;
+                        existingUser.CreatedAt = DateTime.Now;
+                        existingUser.PhoneNumberConfirmed = true;
+                        existingUser.EmailConfirmed = true;
+
+                        if (existingUser is Seller sellerUser)
+                        {
+                            sellerUser.StoreName = selDto.StoreName;
+                            sellerUser.ShippingZone = selDto.ShippingZone;
+                            sellerUser.StoreAddress = selDto.StoreAddress;
+                        }
+
+                        var token = await userManager.GeneratePasswordResetTokenAsync(existingUser);
+                        var existingUserResult = await userManager.ResetPasswordAsync(existingUser, token, selDto.Password);
+
+                        if (existingUserResult.Succeeded)
+                        {
+                            await userManager.UpdateAsync(existingUser);
+                            return Ok(new
+                            {
+                                success = true,
+                                message = "Seller account reactivated successfully",
+                                userId = existingUser.Id
+                            });
+                        }
+                        else
+                        {
+                            return BadRequest(new
+                            {
+                                success = false,
+                                message = "Reactivation failed",
+                                errors = existingUserResult.Errors.Select(e => e.Description).ToList()
+                            });
+                        }
+                    }
                 }
                 Seller user = new Seller()
                 {
@@ -181,9 +258,9 @@ namespace Jumia_Api.Controllers.AuthenticationControllers
             }
 
             var existingUser = await userManager.FindByEmailAsync(email);
-            if (existingUser != null)
+            if (existingUser != null && existingUser.IsDeleted == false)
             {
-                return BadRequest(new { success = false, message = "Email is already taken" });
+                return BadRequest(new { success = false, message = "Email is already taken and active" });
             }
 
             return Ok(new { success = true, message = "Email is available" });
@@ -201,7 +278,7 @@ namespace Jumia_Api.Controllers.AuthenticationControllers
                 ApplicationUser User = await userManager.FindByEmailAsync(login.Email);
                 if (User != null && User.IsDeleted == false)
                 {
-                   bool found = await userManager.CheckPasswordAsync(User,login.Password);
+                    bool found = await userManager.CheckPasswordAsync(User,login.Password);
                     if (found)
                     {
                         //Claims Token
@@ -253,7 +330,7 @@ namespace Jumia_Api.Controllers.AuthenticationControllers
                 .Where(u => u.Email == email)
                 .FirstOrDefaultAsync();
 
-            if (user == null && user.IsDeleted == true)
+            if (user == null || user.IsDeleted == true)
             {
                 return NotFound("User not found");
             }
