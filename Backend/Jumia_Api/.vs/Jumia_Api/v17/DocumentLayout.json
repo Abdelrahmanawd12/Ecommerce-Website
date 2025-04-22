@@ -7,6 +7,18 @@
       "RelativeMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|solutionrelative:jumia_api\\controllers\\authenticationcontrollers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|d:\\iti\\jumia_website\\ecommerce-website\\backend\\jumia_api\\jumia_api\\dtos\\authenticationdtos\\registerdtos\\sellerregisterdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|solutionrelative:jumia_api\\dtos\\authenticationdtos\\registerdtos\\sellerregisterdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|d:\\iti\\jumia_website\\ecommerce-website\\backend\\jumia_api\\jumia_api\\dtos\\authenticationdtos\\registerdtos\\customerregisterdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|solutionrelative:jumia_api\\dtos\\authenticationdtos\\registerdtos\\customerregisterdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|d:\\iti\\jumia_website\\ecommerce-website\\backend\\jumia_api\\jumia_api\\dtos\\sellerdtos\\addproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|solutionrelative:jumia_api\\dtos\\sellerdtos\\addproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|d:\\iti\\jumia_website\\ecommerce-website\\backend\\jumia_api\\jumia_api\\controllers\\customercontrollers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|solutionrelative:jumia_api\\controllers\\customercontrollers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -21,10 +33,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|d:\\iti\\jumia_website\\ecommerce-website\\backend\\jumia_api\\jumia_api\\dtos\\sellerdtos\\productssellerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|solutionrelative:jumia_api\\dtos\\sellerdtos\\productssellerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|d:\\iti\\jumia_website\\ecommerce-website\\backend\\jumia_api\\jumia_api\\dtos\\sellerdtos\\addproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|solutionrelative:jumia_api\\dtos\\sellerdtos\\addproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|d:\\iti\\jumia_website\\ecommerce-website\\backend\\jumia_api\\jumia_api\\migrations\\20250416052902_inital.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -105,10 +113,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|d:\\iti\\jumia_website\\ecommerce-website\\backend\\jumia_api\\jumia_api\\dtos\\sellerdtos\\shippingdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|solutionrelative:jumia_api\\dtos\\sellerdtos\\shippingdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|d:\\iti\\jumia_website\\ecommerce-website\\backend\\jumia_api\\jumia_api\\dtos\\authenticationdtos\\registerdtos\\sellerregisterdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B451301D-336B-4364-837A-41671DF1A673}|Jumia_Api\\Jumia_Api.csproj|solutionrelative:jumia_api\\dtos\\authenticationdtos\\registerdtos\\sellerregisterdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -118,7 +122,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -146,33 +150,32 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CustomerRegisterDTO.cs",
+              "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\DTOs\\AuthenticationDTOs\\RegisterDTOs\\CustomerRegisterDTO.cs",
+              "RelativeDocumentMoniker": "Jumia_Api\\DTOs\\AuthenticationDTOs\\RegisterDTOs\\CustomerRegisterDTO.cs",
+              "ToolTip": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\DTOs\\AuthenticationDTOs\\RegisterDTOs\\CustomerRegisterDTO.cs",
+              "RelativeToolTip": "Jumia_Api\\DTOs\\AuthenticationDTOs\\RegisterDTOs\\CustomerRegisterDTO.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAkwBsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T03:45:44.827Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "AuthController.cs",
               "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Controllers\\AuthenticationControllers\\AuthController.cs",
               "RelativeDocumentMoniker": "Jumia_Api\\Controllers\\AuthenticationControllers\\AuthController.cs",
               "ToolTip": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Controllers\\AuthenticationControllers\\AuthController.cs",
               "RelativeToolTip": "Jumia_Api\\Controllers\\AuthenticationControllers\\AuthController.cs",
-              "ViewState": "AgIAAKMAAAAAAAAAAAAowL8AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAI4AAAAAAAAAAAAuwJcAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-21T23:16:56.115Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "CartController.cs",
-              "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Controllers\\CustomerControllers\\CartController.cs",
-              "RelativeDocumentMoniker": "Jumia_Api\\Controllers\\CustomerControllers\\CartController.cs",
-              "ToolTip": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Controllers\\CustomerControllers\\CartController.cs",
-              "RelativeToolTip": "Jumia_Api\\Controllers\\CustomerControllers\\CartController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-19T23:52:31.292Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "UnitOfWork.cs",
               "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\UnitOFWorks\\UnitOfWork.cs",
               "RelativeDocumentMoniker": "Jumia_Api\\UnitOFWorks\\UnitOfWork.cs",
@@ -184,7 +187,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "SellerController.cs",
               "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Controllers\\SellerControllers\\SellerController.cs",
               "RelativeDocumentMoniker": "Jumia_Api\\Controllers\\SellerControllers\\SellerController.cs",
@@ -192,12 +195,11 @@
               "RelativeToolTip": "Jumia_Api\\Controllers\\SellerControllers\\SellerController.cs",
               "ViewState": "AgIAAKIAAAAAAAAAAAAAwOkAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T09:08:45.732Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-11T09:08:45.732Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 14,
               "Title": "ProductImgDTO.cs",
               "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\DTOs\\SellerDTOs\\ProductImgDTO.cs",
               "RelativeDocumentMoniker": "Jumia_Api\\DTOs\\SellerDTOs\\ProductImgDTO.cs",
@@ -209,7 +211,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "Product.cs",
               "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Models\\Product.cs",
               "RelativeDocumentMoniker": "Jumia_Api\\Models\\Product.cs",
@@ -221,7 +223,31 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 1,
+              "Title": "SellerRegisterDTO.cs",
+              "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\DTOs\\AuthenticationDTOs\\RegisterDTOs\\SellerRegisterDTO.cs",
+              "RelativeDocumentMoniker": "Jumia_Api\\DTOs\\AuthenticationDTOs\\RegisterDTOs\\SellerRegisterDTO.cs",
+              "ToolTip": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\DTOs\\AuthenticationDTOs\\RegisterDTOs\\SellerRegisterDTO.cs",
+              "RelativeToolTip": "Jumia_Api\\DTOs\\AuthenticationDTOs\\RegisterDTOs\\SellerRegisterDTO.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAA1wA4AAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T00:29:35.698Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CartController.cs",
+              "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Controllers\\CustomerControllers\\CartController.cs",
+              "RelativeDocumentMoniker": "Jumia_Api\\Controllers\\CustomerControllers\\CartController.cs",
+              "ToolTip": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Controllers\\CustomerControllers\\CartController.cs",
+              "RelativeToolTip": "Jumia_Api\\Controllers\\CustomerControllers\\CartController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-19T23:52:31.292Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "AddProduct.cs",
               "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\DTOs\\SellerDTOs\\AddProduct.cs",
               "RelativeDocumentMoniker": "Jumia_Api\\DTOs\\SellerDTOs\\AddProduct.cs",
@@ -233,7 +259,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "20250416052902_inital.cs",
               "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Migrations\\20250416052902_inital.cs",
               "RelativeDocumentMoniker": "Jumia_Api\\Migrations\\20250416052902_inital.cs",
@@ -245,7 +271,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "20250416052902_inital.Designer.cs",
               "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Migrations\\20250416052902_inital.Designer.cs",
               "RelativeDocumentMoniker": "Jumia_Api\\Migrations\\20250416052902_inital.Designer.cs",
@@ -257,7 +283,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "ProductsSellerDTO.cs",
               "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\DTOs\\SellerDTOs\\ProductsSellerDTO.cs",
               "RelativeDocumentMoniker": "Jumia_Api\\DTOs\\SellerDTOs\\ProductsSellerDTO.cs",
@@ -269,7 +295,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 15,
               "Title": "AddressDTO.cs",
               "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\DTOs\\SellerDTOs\\AddressDTO.cs",
               "RelativeDocumentMoniker": "Jumia_Api\\DTOs\\SellerDTOs\\AddressDTO.cs",
@@ -281,7 +307,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "UserDTO.cs",
               "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\DTOs\\SellerDTOs\\UserDTO.cs",
               "RelativeDocumentMoniker": "Jumia_Api\\DTOs\\SellerDTOs\\UserDTO.cs",
@@ -293,7 +319,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "Order.cs",
               "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Models\\Order.cs",
               "RelativeDocumentMoniker": "Jumia_Api\\Models\\Order.cs",
@@ -305,7 +331,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "GenericRepository.cs",
               "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Repository\\GenericRepository.cs",
               "RelativeDocumentMoniker": "Jumia_Api\\Repository\\GenericRepository.cs",
@@ -317,7 +343,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 16,
               "Title": "ProductsDTO.cs",
               "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\DTOs\\CustomerDTOs\\ProductsDTO.cs",
               "RelativeDocumentMoniker": "Jumia_Api\\DTOs\\CustomerDTOs\\ProductsDTO.cs",
@@ -329,7 +355,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 26,
               "Title": "OrderItem.cs",
               "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Models\\OrderItem.cs",
               "RelativeDocumentMoniker": "Jumia_Api\\Models\\OrderItem.cs",
@@ -341,7 +367,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 17,
               "Title": "CategoryDTO.cs",
               "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\DTOs\\CustomerDTOs\\CategoryDTO.cs",
               "RelativeDocumentMoniker": "Jumia_Api\\DTOs\\CustomerDTOs\\CategoryDTO.cs",
@@ -353,7 +379,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 18,
               "Title": "SubCategoryDTO.cs",
               "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\DTOs\\CustomerDTOs\\SubCategoryDTO.cs",
               "RelativeDocumentMoniker": "Jumia_Api\\DTOs\\CustomerDTOs\\SubCategoryDTO.cs",
@@ -365,7 +391,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 19,
               "Title": "JumiaDbContext.cs",
               "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Data\\JumiaDbContext.cs",
               "RelativeDocumentMoniker": "Jumia_Api\\Data\\JumiaDbContext.cs",
@@ -377,7 +403,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 20,
               "Title": "OrderDTO.cs",
               "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\DTOs\\SellerDTOs\\OrderDTO.cs",
               "RelativeDocumentMoniker": "Jumia_Api\\DTOs\\SellerDTOs\\OrderDTO.cs",
@@ -389,7 +415,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 21,
               "Title": "20250416051231_FixSellerIdRelation.cs",
               "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Migrations\\20250416051231_FixSellerIdRelation.cs",
               "RelativeDocumentMoniker": "Jumia_Api\\Migrations\\20250416051231_FixSellerIdRelation.cs",
@@ -401,7 +427,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 22,
               "Title": "AutoMapperConfig.cs",
               "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\MapperConfig\\AutoMapperConfig.cs",
               "RelativeDocumentMoniker": "Jumia_Api\\MapperConfig\\AutoMapperConfig.cs",
@@ -413,7 +439,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 24,
               "Title": "Customer.cs",
               "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Models\\Customer.cs",
               "RelativeDocumentMoniker": "Jumia_Api\\Models\\Customer.cs",
@@ -425,7 +451,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 23,
               "Title": "CategoryController.cs",
               "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Controllers\\CustomerControllers\\CategoryController.cs",
               "RelativeDocumentMoniker": "Jumia_Api\\Controllers\\CustomerControllers\\CategoryController.cs",
@@ -437,7 +463,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 27,
               "Title": "ShippingDTO.cs",
               "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\DTOs\\SellerDTOs\\ShippingDTO.cs",
               "RelativeDocumentMoniker": "Jumia_Api\\DTOs\\SellerDTOs\\ShippingDTO.cs",
@@ -449,7 +475,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 25,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Program.cs",
               "RelativeDocumentMoniker": "Jumia_Api\\Program.cs",
@@ -458,18 +484,6 @@
               "ViewState": "AgIAAFIAAAAAAAAAAAAQwEQAAAB7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-07T23:25:15.323Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 26,
-              "Title": "SellerRegisterDTO.cs",
-              "DocumentMoniker": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\DTOs\\AuthenticationDTOs\\RegisterDTOs\\SellerRegisterDTO.cs",
-              "RelativeDocumentMoniker": "Jumia_Api\\DTOs\\AuthenticationDTOs\\RegisterDTOs\\SellerRegisterDTO.cs",
-              "ToolTip": "D:\\ITI\\Jumia_Website\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\DTOs\\AuthenticationDTOs\\RegisterDTOs\\SellerRegisterDTO.cs",
-              "RelativeToolTip": "Jumia_Api\\DTOs\\AuthenticationDTOs\\RegisterDTOs\\SellerRegisterDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T00:29:35.698Z"
             }
           ]
         },
