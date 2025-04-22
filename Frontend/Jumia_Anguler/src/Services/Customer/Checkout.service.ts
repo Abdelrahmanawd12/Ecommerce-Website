@@ -33,8 +33,10 @@ export class CheckoutService {
       return this.http.get<AddressBook>(`${this.apiUrl}/address-book/${customerId}`);
     }
 
-
-    
+// Method to update the address book
+   updateAddressBook(customerId: string, addressBook: AddressBook): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/address-book/${customerId}`, addressBook);
+  }
   // getCartSummary(customerId: string): Observable<CartSummary> {
   //   return this.http.get<CartSummary>(`${this.apiUrl}/checkout/summary/${customerId}`);
   // }

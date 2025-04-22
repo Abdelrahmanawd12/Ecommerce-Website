@@ -119,71 +119,6 @@ namespace Jumia_Api.Controllers.CustomerControllers
 
 
 
-        //[HttpPost("confirm")]
-        //public async Task<IActionResult> ConfirmOrder([FromBody] OrderConfirmationDto dto)
-        //{
-        //    var cart = await _context.Carts
-        //        .Include(c => c.CartItems)
-        //        .ThenInclude(ci => ci.Product)
-        //        .FirstOrDefaultAsync(c => c.CustomerId == dto.CustomerId);
-
-        //    if (cart == null || !cart.CartItems.Any())
-        //        return BadRequest("Cart is empty or not found.");
-
-        //    var newOrder = new Order
-        //    {
-        //        CustomerId = dto.CustomerId,
-        //        SellerId = "user2", // تعيين قيمة ثابتة كـ string
-        //        OrderDate = DateTime.Now,
-        //        OrderStatus = "Pending",
-        //        PaymentMethod = "Cash on Delivery",
-        //        PaymentStatus = "Unpaid",
-        //        ShippingAddress = dto.ShippingAddress,
-        //        TotalAmount = cart.CartItems.Sum(i => i.Product.Price * i.Quantity),
-        //        OrderTrackingNumber = new Random().Next(100000, 999999),
-        //        OrderItems = new List<OrderItem>()
-        //    };
-
-        //    foreach (var item in cart.CartItems)
-        //    {
-        //        if (item.Product.Quantity < item.Quantity)
-        //            return BadRequest($"Not enough stock for product: {item.Product.Name}");
-
-        //        item.Product.Quantity -= item.Quantity;
-
-        //        newOrder.OrderItems.Add(new OrderItem
-        //        {
-        //            ProductId = item.ProductId,
-        //            Quantity = item.Quantity,
-        //            SubTotal = item.Quantity * item.Product.Price
-        //        });
-        //    }
-
-        //    _context.Orders.Add(newOrder);
-
-        //    var payment = new Payment
-        //    {
-        //        PaymentMethod = "Cash on Delivery",
-        //        Amount = newOrder.TotalAmount,
-        //        PaymentDate = DateTime.Now,
-        //        Status = "Pending",
-        //        TransactionId = Guid.NewGuid().ToString(),
-        //        Order = newOrder
-        //    };
-
-        //    _context.Payments.Add(payment);
-
-        //    _context.CartItems.RemoveRange(cart.CartItems);
-
-        //    await _context.SaveChangesAsync();
-
-        //    return Ok(new
-        //    {
-        //        message = "Order confirmed and payment record created.",
-        //        orderTrackingNumber = newOrder.OrderTrackingNumber,
-        //        orderId = newOrder.OrderId
-        //    });
-        //}
         [HttpPost("confirm")]
         public async Task<IActionResult> ConfirmOrder([FromBody] OrderConfirmationDto dto)
         {
@@ -255,66 +190,195 @@ namespace Jumia_Api.Controllers.CustomerControllers
             }
 
             await _context.SaveChangesAsync();
+
+
+            //    return Ok(new
+            //    {
+            //        message = "Orders confirmed and payments created.",
+            //        orders = createdOrders.Select(o => new
+            //        {
+            //            o.OrderTrackingNumber,
+            //            o.OrderId,
+            //            o.SellerId,
+            //            o.OrderDate,
+            //            o.OrderStatus,
+            //            o.PaymentMethod,
+            //            o.PaymentStatus,
+            //            o.ShippingAddress,
+            //            shippingInfo = o.ShippingInfo != null ? new
+            //            {
+            //                o.ShippingInfo.ShippingMethod,
+            //                o.ShippingInfo.ShippingAddress,
+            //                o.ShippingInfo.ShippingDate,
+            //                o.ShippingInfo.DeliveryDate,
+            //                o.ShippingInfo.TrackingNumber,
+            //                o.ShippingInfo.ShippingStatus,
+            //                o.ShippingInfo.ReceiverName,
+            //                o.ShippingInfo.ReceiverPhone,
+            //                o.ShippingInfo.ReceiverEmail
+            //            } : null, // Ensure ShippingInfo is not null
+            //            orderItems = o.OrderItems.Select(oi => new
+            //            {
+            //                oi.ProductId,
+            //                oi.Quantity,
+            //                oi.SubTotal,
+            //                oi.Product.Name,
+            //                oi.Product.Brand,
+            //                oi.Product.ProductImages,
+            //            }),
+            //            payment = new
+            //            {
+            //                o.Payment?.PaymentMethod,
+            //                o.Payment?.Status,
+            //                o.Payment?.TransactionId,
+            //                o.Payment?.PaymentDate,
+            //                o.Payment?.Amount
+            //            }
+            //        })
+            //    });
+            //}
             return Ok(new
             {
                 message = "Orders confirmed and payments created.",
                 orders = createdOrders.Select(o => new
                 {
-                    o.OrderTrackingNumber,
-                    o.OrderId,
-                    o.SellerId,
-                    o.OrderDate,
-                    o.OrderStatus,
-                    o.PaymentMethod,
-                    o.PaymentStatus,
-                    o.ShippingAddress,
-                    shippingInfo = o.ShippingInfo != null ? new
-                    {
-                        o.ShippingInfo.ShippingMethod,
-                        o.ShippingInfo.ShippingAddress,
-                        o.ShippingInfo.ShippingDate,
-                        o.ShippingInfo.DeliveryDate,
-                        o.ShippingInfo.TrackingNumber,
-                        o.ShippingInfo.ShippingStatus,
-                        o.ShippingInfo.ReceiverName,
-                        o.ShippingInfo.ReceiverPhone,
-                        o.ShippingInfo.ReceiverEmail
-                    } : null, // Ensure ShippingInfo is not null
-                    orderItems = o.OrderItems.Select(oi => new
-                    {
-                        oi.ProductId,
-                        oi.Quantity,
-                        oi.SubTotal,
-                        oi.Product.Name,
-                        oi.Product.Brand,
-                        oi.Product.ProductImages,
-                    }),
-                    payment = new
-                    {
-                        o.Payment?.PaymentMethod,
-                        o.Payment?.Status,
-                        o.Payment?.TransactionId,
-                        o.Payment?.PaymentDate,
-                        o.Payment?.Amount
-                    }
+                    orderTrackingNumber = o.OrderTrackingNumber,
+                    orderId = o.OrderId,
+                    sellerId = o.SellerId
                 })
             });
         }
+        //[HttpPost("confirm")]
+        //public async Task<IActionResult> ConfirmOrder([FromBody] OrderConfirmationDto dto)
+        //{
+        //    var cart = await _context.Carts
+        //        .Include(c => c.CartItems)
+        //        .ThenInclude(ci => ci.Product)
+        //        .FirstOrDefaultAsync(c => c.CustomerId == dto.CustomerId);
+
+        //    if (cart == null || !cart.CartItems.Any())
+        //        return BadRequest("Cart is empty or not found.");
+
+        //    var itemsBySeller = cart.CartItems
+        //        .GroupBy(ci => ci.Product.SellerId)
+        //        .ToList();
+
+        //    var createdOrders = new List<Order>();
+
+        //    foreach (var sellerGroup in itemsBySeller)
+        //    {
+        //        var sellerId = sellerGroup.Key;
+
+        //        var newOrder = new Order
+        //        {
+        //            CustomerId = dto.CustomerId,
+        //            SellerId = sellerId,
+        //            OrderDate = DateTime.Now,
+        //            OrderStatus = "Pending",
+        //            PaymentMethod = "Cash on Delivery",
+        //            PaymentStatus = "Unpaid",
+        //            ShippingAddress = dto.ShippingAddress,
+        //            TotalAmount = sellerGroup.Sum(i => i.Product.Price * i.Quantity),
+        //            OrderTrackingNumber = new Random().Next(100000, 999999),
+        //            OrderItems = new List<OrderItem>()
+        //        };
+
+        //        foreach (var item in sellerGroup)
+        //        {
+        //            if (item.Product.Quantity < item.Quantity)
+        //                return BadRequest($"Not enough stock for product: {item.Product.Name}");
+
+        //            item.Product.Quantity -= item.Quantity;
+
+        //            newOrder.OrderItems.Add(new OrderItem
+        //            {
+        //                ProductId = item.ProductId,
+        //                Quantity = item.Quantity,
+        //                SubTotal = item.Quantity * item.Product.Price
+        //            });
+
+        //            _context.CartItems.Remove(item);
+        //        }
+
+        //        _context.Orders.Add(newOrder);
+
+        //        var payment = new Payment
+        //        {
+        //            PaymentMethod = "Cash on Delivery",
+        //            Amount = newOrder.TotalAmount,
+        //            PaymentDate = DateTime.Now,
+        //            Status = "Pending",
+        //            TransactionId = Guid.NewGuid().ToString(),
+        //            Order = newOrder
+        //        };
+
+        //        _context.Payments.Add(payment);
+
+        //        // ✅ Add Shipping data using the existing Shipping table
+        //        var shipping = new Shipping
+        //        {
+        //            Order = newOrder,
+        //            ShippingMethod = dto.ShippingInfo.ShippingMethod,
+        //            ShippingAddress = dto.ShippingInfo.ShippingAddress,
+        //            ShippingDate = dto.ShippingInfo.ShippingDate.ToString("yyyy-MM-dd"),  // ensure this is expected format
+        //            DeliveryDate = dto.ShippingInfo.DeliveryDate.ToString("yyyy-MM-dd"),  // ensure this is expected format
+        //            TrackingNumber = dto.ShippingInfo.TrackingNumber.ToString(),
+        //            ShippingStatus = dto.ShippingInfo.ShippingStatus,
+        //            ReceiverName = dto.ShippingInfo.ReceiverName,
+        //            ReceiverPhone = dto.ShippingInfo.ReceiverPhone,
+        //            ReceiverEmail = dto.ShippingInfo.ReceiverEmail
+        //        };
+
+        //        _context.Shippings.Add(shipping);
+
+        //        createdOrders.Add(newOrder);
+        //    }
+
+        //    await _context.SaveChangesAsync();
+
+        //    return Ok(new
+        //    {
+        //        message = "Orders confirmed, shipping created, and payments recorded.",
+        //        orders = createdOrders.Select(o => new
+        //        {
+        //            orderTrackingNumber = o.OrderTrackingNumber,
+        //            orderId = o.OrderId,
+        //            sellerId = o.SellerId
+        //        })
+        //    });
+        //}
 
 
-    //    return Ok(new
-    //        {
-    //            message = "Orders confirmed and payments created.",
-    //            orders = createdOrders.Select(o => new
-    //            {
-    //                orderTrackingNumber = o.OrderTrackingNumber,
-    //                orderId = o.OrderId,
-    //                sellerId = o.SellerId
-    //})
-    //        });
 
+        [HttpPut("address-book/{customerId}")]
+        public async Task<IActionResult> UpdateAddressBook(string customerId, AddressBookDto dto)
+        {
+            var customer = await _context.Users.FirstOrDefaultAsync(c => c.Id == customerId);
+            if (customer == null)
+                return NotFound("User not found.");
 
+            // Update user info
+            customer.FirstName = dto.FirstName;
+            customer.LastName = dto.LastName;
+            customer.PhoneNumber = dto.PhoneNumber;
 
+            // Manually fetch the address using UserId
+            var address = await _context.Addresses.FirstOrDefaultAsync(a => a.UserId == customerId);
+            if (address != null)
+            {
+                address.Street = dto.Street;
+                address.City = dto.City;
+                address.Country = dto.Country;
+            }
+            else
+            {
+                return NotFound("No address found to update.");
+            }
+
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
 
 
 
