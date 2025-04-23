@@ -1,3 +1,16 @@
+import { Component, OnInit } from '@angular/core';
+import { AccountDetails, AddressBook } from '../../../Models/Account';
+import { AccountService } from '../../../Services/Customer/Account.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { number } from 'echarts';
+
+@Component({
+  selector: 'app-account-personal-information',
+  imports: [CommonModule,FormsModule],
+  templateUrl: './account-personal-information.component.html',
+  styleUrl: './account-personal-information.component.css'
+})
 // import { Component, OnInit } from '@angular/core';
 // import { AccountService } from '../../Services/Customer/Account.service';
 // import { AccountDetails } from '../../Models/Account';
@@ -55,21 +68,9 @@
 //   }
   
 // }
-import { Component, OnInit } from '@angular/core';
-import { AccountService } from '../../Services/Customer/Account.service';
-import { AccountDetails, AddressBook } from '../../Models/Account';
-import { CommonModule } from '@angular/common'; // ✅ Needed for *ngIf and *ngFor
-import { FormsModule } from '@angular/forms';
-
-@Component({
-  selector: 'app-account',
-  templateUrl: './account.component.html',
-  standalone: true, // ✅ Add this if you're using `imports` array
-  styleUrls: ['./account.component.css'],  // <-- لازم يكون موجود كده
-  imports: [CommonModule, FormsModule],
-})
-export class AccountComponent implements OnInit {
+export class AccountPersonalInformationComponent implements OnInit {
   accountDetails: AccountDetails | null = null;
+
   addressBook: AddressBook = {
     firstName: '',
     lastName: '',
@@ -79,47 +80,65 @@ export class AccountComponent implements OnInit {
     country: ''
   };
 
-  // Temporary variable to hold form values
   updatedAddressBook: AddressBook = { ...this.addressBook };
 
-  // Toggle for form visibility
   isEditing: boolean = false;
-  
 
-  //customerId = 'user1'; // Replace with your test user ID
-  customerId: string = localStorage.getItem('userId') ?? '';
+  customerId: string = localStorage.getItem('userId')?.trim() ?? '';
 
   constructor(private accountService: AccountService) {}
 
   ngOnInit(): void {
+    console.log('Customer ID:', this.customerId); // ✅ Debug log
+
     this.accountService.getAccountDetails(this.customerId).subscribe({
-      next: (data) => this.accountDetails = data,
+      next: (data) => {
+        console.log('Account Details loaded:', data);
+        this.accountDetails = data;
+      },
       error: (err) => console.error('Failed to load account details', err)
     });
 
-    this.accountService.getAddressBook(this.customerId).subscribe(data => {
-      this.addressBook = data;
-      // Create a copy of the addressBook to be used in the form
-      this.updatedAddressBook = { ...data };
-    });
+    this.accountService.getAddressBook(this.customerId).subscribe({
+      next: (data) => {
+        console.log('Address book loaded:', data);
+        this.addressBook = data;
+        this.updatedAddressBook = { ...data };
+      },
+      error: (err) => {
+        console.error('Error loading address book:', err); // ✅ Log actual error
+        if (err.status === 404 && err.error === "No address found.") {
+          console.warn('No address found for this user. Initializing empty address book.');
+          this.addressBook = {
+            firstName: '',
+            lastName: '',
+            phoneNumber: '',
+            street: '',
+            city: '',
+            country: ''
+          };
+          this.updatedAddressBook = { ...this.addressBook };
+        }
+      }
+    });    
+  }
+
+  openEditModal() {
+    this.isEditing = true;
   }
 
   updateAddressBook(): void {
-    // Only update addressBook when button is clicked
     this.accountService.updateAddressBook(this.customerId, this.updatedAddressBook).subscribe({
       next: () => {
         console.log('Address Book updated successfully');
         this.addressBook = { ...this.updatedAddressBook };
 
-        // ✅ Update Account Details if name changed
         if (this.accountDetails) {
           this.accountDetails.firstName = this.updatedAddressBook.firstName;
           this.accountDetails.lastName = this.updatedAddressBook.lastName;
         }
+
         this.isEditing = false;
-        // Optionally, update the addressBook with the latest data from updatedAddressBook
-        // this.addressBook = { ...this.updatedAddressBook };
-        // this.isEditing = false; // Hide the form after update
       },
       error: (err) => {
         console.error('Error updating Address Book', err);
@@ -127,16 +146,15 @@ export class AccountComponent implements OnInit {
     });
   }
 
-
   isAddressValid(): boolean {
-    const a = this.addressBook;
-    return a.firstName && a.lastName && a.phoneNumber && a.street && a.city && a.country ? true : false;
+    const a = this.updatedAddressBook;
+    return !!(a.firstName && a.lastName && a.phoneNumber && a.street && a.city && a.country);
   }
-  
 
   toggleEdit(): void {
-    this.isEditing = !this.isEditing; // Toggle the visibility of the form
+    this.isEditing = !this.isEditing;
+    if (this.isEditing) {
+      this.updatedAddressBook = { ...this.addressBook };
+    }
   }
 }
-
-

@@ -1,9 +1,6 @@
 import { ShopComponent } from '../Components/Cstomer/shop/shop.component';
 import { ProductDetailsComponent } from '../Components/product-details/product-details.component';
-import { OrderComponent } from '../Components/order/order.component';
 import { Routes } from '@angular/router';
-import { AccountComponent } from '../Components/account/account.component';
-import { WishlistComponent } from '../Components/wishlist/wishlist.component';
 import { CheckoutComponent } from '../Components/checkout/checkout.component';
 
 
@@ -21,11 +18,10 @@ export const routes: Routes = [
 
   //Ahmed
   //{ path: 'order/:id', component: OrderComponent  },
-  { path: 'order', component: OrderComponent },
-  { path: 'account', component: AccountComponent },
-  { path: 'wishlist', component: WishlistComponent },
+  // { path: 'order', component: OrderComponent },
+  // { path: 'wishlist', component: WishlistComponent },
   { path: 'checkout', component: CheckoutComponent },
-  { path: 'order/:id', component: OrderComponent },
+  // { path: 'order/:id', component: OrderComponent },
 
   //Alaa
   {
@@ -105,6 +101,43 @@ export const routes: Routes = [
       }
     ]
   },
+  {
+    path: 'account',
+    loadComponent: () =>
+      import('../Components/Account_Component/account/account.component')
+        .then((m) => m.AccountComponent),    
+    children: [
+      {
+        path: '',
+        redirectTo: 'personalInformation',
+        pathMatch: 'full'
+      },
+      {
+        path: 'personalInformation',
+        loadComponent: () => 
+          import('../Components/Account_Component/account-personal-information/account-personal-information.component')
+             .then((m) => m.AccountPersonalInformationComponent)
+      },
+      {
+        path: 'order',
+        loadComponent: () => 
+          import('../Components/Account_Component/order/order.component')
+             .then((m) => m.OrderComponent)
+      },
+      {
+        path: 'order/:id',
+        loadComponent: () => 
+          import('../Components/Account_Component/order/order.component')
+             .then((m) => m.OrderComponent)
+      },
+      {
+        path: 'wishlist',
+        loadComponent: () => 
+          import('../Components/Account_Component/wishlist/wishlist.component')
+             .then((m) => m.WishlistComponent)
+      }
+    ]
+    },
   { path: 'help', loadComponent: () => import('../Components/help-center/help-center.component').then((m) => m.HelpCenterComponent) },
   { path: 'login', loadComponent: () => import('../Components/login/login.component').then((m) => m.LoginComponent) },
   { path: 'register', loadComponent: () => import('../Components/customer-register/customer-register.component').then(m => m.CustomerRegisterComponent) },

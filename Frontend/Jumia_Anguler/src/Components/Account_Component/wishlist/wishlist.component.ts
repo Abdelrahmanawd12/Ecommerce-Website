@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { WishlistService } from '../../Services/Customer/Wishlist.service';
-import { WishlistItem } from '../../Models/Wishlist';
 import { CommonModule } from '@angular/common'; // ✅ Needed for *ngIf and *ngFor
 import { FormsModule } from '@angular/forms';
+import { WishlistItem } from '../../../Models/Wishlist';
+import { WishlistService } from '../../../Services/Customer/Wishlist.service';
 
 @Component({
   selector: 'app-wishlist',
