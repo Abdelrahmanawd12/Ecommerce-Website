@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { OrderDetailsDto, OrderListDto } from '../../../Models/order.model';
 import { OrderService } from '../../../Services/Customer/order.service';
 import { environment } from '../../../Environment/Environment.prod';
+import { CreateShipmentService } from '../../../Services/Shipment/create-shipment.service';
 
 @Component({
   selector: 'app-order',
@@ -28,7 +29,7 @@ export class OrderComponent implements OnInit {
   customerId: string = localStorage.getItem('userId') ?? '';
 
 
-  constructor(private orderService: OrderService, private route: ActivatedRoute) {}
+  constructor(private orderService: OrderService, private route: ActivatedRoute ,private createShipmentService: CreateShipmentService) {}
 
   ngOnInit(): void {
     this.loadOrdersByCategory();
@@ -60,16 +61,7 @@ export class OrderComponent implements OnInit {
       error: (err) => console.error('Failed to fetch order details:', err)
     });
   }
-
-  showOrderDetails(orderId: number): void {
-    this.orderService.getOrderDetails(orderId).subscribe({
-      next: (data) => this.selectedOrder = data,
-      error: (err) => {
-        console.error('Failed to load order details:', err);
-        alert('Failed to load order details.');
-      }
-    });
-  }
+  
 
   hideOrderDetails(): void {
     this.selectedOrder = null;
@@ -144,5 +136,35 @@ export class OrderComponent implements OnInit {
   setTab(tab: string): void {
     this.activeTab = tab;
     this.selectedOrder = null;
+  }
+
+  //-------------------------------------------------------------------------
+  //Shipment
+
+  createShipmentForOrder(order: OrderDetailsDto): void {
+    this.createShipmentService.createShipment(order).subscribe({
+      next: (response) => {
+        order['shippingDetails'] = response;
+        console.log('Shipment created:', response);
+      },
+      error: (err) => {
+        console.error('Failed to create shipment:', err);
+        alert('Failed to create shipment.');
+      }
+    });
+  }
+  
+  
+  showOrderDetails(orderId: number): void {
+    this.orderService.getOrderDetails(orderId).subscribe({
+      next: (data) => {
+        this.selectedOrder = data;
+        this.createShipmentForOrder(data); 
+      },
+      error: (err) => {
+        console.error('Failed to load order details:', err);
+        alert('Failed to load order details.');
+      }
+    });
   }
 }
