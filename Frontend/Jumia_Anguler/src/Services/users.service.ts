@@ -8,9 +8,33 @@ export interface AdminDTO {
   lastName: string;
   email: string;
   role: string;
-  gender?: string;
-  dateOfBirth?: Date;
+  gender: string;
+  dateOfBirth: Date;
+  createdAt: Date;
+  isDeleted: boolean;
+  storeName?: string;
+  storeAddress?: string;
 }
+
+export interface CreateUserDTO {
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string;
+  dateOfBirth?: string; 
+  gender: string;
+  password: string;
+  storeName?: string;
+  storeAddress?: string;
+}
+
+
+export enum Roles {
+  Admin = 'Admin',
+  Seller = 'Seller',
+  Customer = 'Customer'
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -32,10 +56,12 @@ export class UsersService {
     return this.http.delete(`${this.baseUrl}/${id}`);
   }
 
-  addUser(user: AdminDTO): Observable<AdminDTO> {
+ 
+  addUser(user: CreateUserDTO): Observable<AdminDTO>  {
     const url = 'https://localhost:7266/api/admin/add-user';
     return this.http.post<AdminDTO>(url, user);
   }
+  
 
   updateUser(user: AdminDTO): Observable<any> {
     const url = 'https://localhost:7266/api/admin/update-user';

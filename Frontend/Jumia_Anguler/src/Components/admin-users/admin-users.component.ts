@@ -4,59 +4,117 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-admin-users',
   standalone: true,
   imports: [CommonModule, RouterLink, FormsModule, DatePipe],
   templateUrl: './admin-users.component.html',
-  styleUrls: ['./admin-users.component.css']
+  styleUrls: ['./admin-users.component.css'],
+  providers: [DatePipe]
 })
 export class AdminUsersComponent implements OnInit {
   users: AdminDTO[] = [];
   filteredUsers: AdminDTO[] = [];
   pagedUsers: AdminDTO[] = [];
-  
+  groupedUsers: { [role: string]: AdminDTO[] } = {};
   // Pagination
+  displayedGroupedUsers: { [role: string]: AdminDTO[] } = {};
   currentPage: number = 1;
   itemsPerPage: number = 10;
   totalPages: number = 1;
   searchQuery: string = '';
-  
+  objectKeys = Object.keys;
+
+  expandedRoles: { [role: string]: boolean } = {};
+
+
   // Sorting
   sortColumn: keyof AdminDTO = 'firstName';
   sortDirection: 'asc' | 'desc' = 'asc';
+  isLoading!: boolean;
 
-  constructor(private usersService: UsersService) {}
+  constructor(private usersService: UsersService ,   private datePipe: DatePipe) {}
 
   ngOnInit(): void {
     this.loadUsers();
   }
 
   loadUsers(): void {
+    this.isLoading = true;
     this.usersService.getAllUsers().subscribe({
       next: (data) => {
         this.users = data;
-        this.filteredUsers = [...this.users];
-        this.updatePagination();
-        this.sortData();
+        this.applyFilter();
+        this.isLoading = false;
       },
-      error: (err) => console.error('Error loading users:', err)
+      error: (err) => {
+        console.error('Error loading users:', err);
+        this.isLoading = false;
+      }
     });
   }
 
-  deleteUser(id: string): void {
-    if (confirm('Are you sure you want to delete this user?')) {
-      this.usersService.deleteUser(id).subscribe({
-        next: () => {
-          this.users = this.users.filter(u => u.id !== id);
-          this.applyFilter();
-        },
-        error: (err) => console.error('Error deleting user:', err)
-      });
-    }
+  groupByRole(users: AdminDTO[]): { [role: string]: AdminDTO[] } {
+    return users.reduce((groups, user) => {
+      const role = user.role || 'Other';
+      groups[role] = groups[role] || [];
+      groups[role].push(user);
+      return groups;
+    }, {} as { [role: string]: AdminDTO[] });
   }
 
+  deleteUser(id: string, userName: string): void {
+    Swal.fire({
+      title: 'Delete User',
+      html: `Are you sure you want to delete <strong>${userName}</strong>?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#FF7800', 
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel',
+      background: '#FFF5EB', 
+      iconColor: '#FF7800',
+      customClass: {
+        popup: 'jumia-swal-popup',
+        title: 'jumia-swal-title',
+        confirmButton: 'jumia-swal-confirm-btn'
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.usersService.deleteUser(id).subscribe({
+          next: () => {
+            Swal.fire({
+              title: 'Deleted!',
+              text: 'User has been deleted.',
+              icon: 'success',
+              confirmButtonColor: '#FF7800',
+              timer: 2000,
+              timerProgressBar: true
+            });
+            this.loadUsers(); 
+          },
+          error: (err) => {
+            Swal.fire({
+              title: 'Error!',
+              text: 'Failed to delete user.',
+              icon: 'error',
+              confirmButtonColor: '#FF7800'
+            });
+            console.error('Error deleting user:', err);
+          }
+        });
+      }
+    })
+  }
+  toggleRole(role: string) {
+    this.expandedRoles[role] = !this.expandedRoles[role];
+  }
+  
+  isRoleExpanded(role: string): boolean {
+    return this.expandedRoles[role] !== false; // Default to true
+  }
   applyFilter(): void {
     if (!this.searchQuery.trim()) {
       this.filteredUsers = [...this.users];
@@ -66,17 +124,25 @@ export class AdminUsersComponent implements OnInit {
         this.searchInUser(user, query)
       );
     }
+    this.sortData();
+
+
+    this.groupedUsers = this.groupByRole(this.filteredUsers);
+
     this.currentPage = 1;
     this.updatePagination();
   }
-
   private searchInUser(user: AdminDTO, query: string): boolean {
     return [
       user.firstName?.toLowerCase(),
       user.lastName?.toLowerCase(),
       user.email?.toLowerCase(),
       user.role?.toLowerCase(),
-      user.gender?.toLowerCase()
+      user.gender?.toLowerCase(),
+      user.storeName?.toLowerCase(),
+      user.storeAddress?.toLowerCase(),
+      this.formatDate(user.createdAt)?.toLowerCase(),
+      this.formatDate(user.dateOfBirth)?.toLowerCase()
     ].some(value => value?.includes(query));
   }
 
@@ -115,7 +181,12 @@ export class AdminUsersComponent implements OnInit {
     
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
-    this.pagedUsers = this.filteredUsers.slice(startIndex, endIndex);
+    
+    // Get paginated users
+    const pagedUsers = this.filteredUsers.slice(startIndex, endIndex);
+    
+    // Group only the paginated users for display
+    this.displayedGroupedUsers = this.groupByRole(pagedUsers);
   }
 
   onItemsPerPageChange(): void {
@@ -178,6 +249,16 @@ export class AdminUsersComponent implements OnInit {
   }
 
   formatDate(date?: Date): string | null {
-    return date ? new DatePipe('en-US').transform(date, 'mediumDate') : null;
+    if (!date) return null;
+    return this.datePipe.transform(date, 'mediumDate');
   }
+
+ 
+  getSellerTooltip(user: AdminDTO): string {
+    if (user.role === 'Seller') {
+      return `Store: ${user.storeName}\nAddress: ${user.storeAddress}`;
+    }
+    return '';
+  }
+
 }

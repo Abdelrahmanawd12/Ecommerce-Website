@@ -23,14 +23,15 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._CartService.getCart(this.user).subscribe(cart => {
+      this._CartService.updateCartCount(cart.items.length);
+    });
 // cart counter
 this._CartService.cartItemCount$.subscribe(count => {
   this.totalItem = count;
 });
 
-this._CartService.getCart(this.user).subscribe(cart => {
-  this._CartService.updateCartCount(cart.items.length);
-});
+
 
 this.toggleAuth();
 
@@ -89,7 +90,7 @@ this.toggleAuth();
     if (typeof queryOrProduct === 'string') {
       this.router.navigate(['/search'], { queryParams: { q: queryOrProduct } });
     } else {
-      this.router.navigate(['shop/', queryOrProduct.productId]);
+      this.router.navigate(['details/', queryOrProduct.productId]);   // awad change route from shop to details
     }
     this.searchResults = [];
   }

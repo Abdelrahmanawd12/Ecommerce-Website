@@ -1,18 +1,15 @@
-/* تثبيت السايد بار مع مراعاة النافبار والفوتر */
 .sidebar-container {
     position: sticky;
-    top: 80px; /* ارتفاع النافبار */
-    height: calc(100vh - 160px); /* ارتفاع الصفحة ناقص النافبار والفوتر */
+    top: 80px; 
+    height: calc(100vh - 160px);
     overflow-y: auto;
     z-index: 100;
   }
   
-  /* تجنب التداخل مع الفوتر */
   .content-area {
-    min-height: calc(100vh - 160px); /* نفس ارتفاع السايد بار */
+    min-height: calc(100vh - 160px);
   }
   
-  /* تجنب التداخل مع النافبار */
   body {
-    padding-top: 80px; /* ارتفاع النافبار */
+    padding-top: 80px; 
   }
