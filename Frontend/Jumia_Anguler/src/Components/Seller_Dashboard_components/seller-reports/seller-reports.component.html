@@ -1,0 +1,144 @@
+<!-- Top Selling Products Chart -->
+<div class="report-card m-3">
+    <h5 class="report-title">Top Selling Products</h5>
+    <div echarts [options]="topSellingChartOptions" style="height: 400px;"></div>
+  </div>
+<!-- Enhanced Orders Summary -->
+<div class="row g-4 m-3">
+    <!-- Today's Orders -->
+    <div class="col-md-4">
+      <div class="stat-card today-card">
+        <div class="stat-icon">
+          <i class="bi bi-calendar-day"></i>
+        </div>
+        <div class="stat-content">
+          <h6 class="stat-label">Today</h6>
+          <h3 class="stat-value">{{ ordersSummary?.today }}</h3>
+          <div class="stat-trend">
+            <span class="badge trend-badge">
+              <i class="bi bi-arrow-up"></i>
+              <span class="trend-text">Daily orders</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Weekly Orders -->
+    <div class="col-md-4">
+      <div class="stat-card weekly-card">
+        <div class="stat-icon">
+          <i class="bi bi-calendar-week"></i>
+        </div>
+        <div class="stat-content">
+          <h6 class="stat-label">Weekly</h6>
+          <h3 class="stat-value">{{ ordersSummary?.weekly }}</h3>
+          <div class="stat-trend">
+            <span class="badge trend-badge">
+              <i class="bi bi-graph-up-arrow"></i>
+              <span class="trend-text">Weekly trend</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Monthly Orders -->
+    <div class="col-md-4">
+      <div class="stat-card monthly-card">
+        <div class="stat-icon">
+          <i class="bi bi-calendar-month"></i>
+        </div>
+        <div class="stat-content">
+          <h6 class="stat-label">Monthly</h6>
+          <h3 class="stat-value">{{ ordersSummary?.monthly }}</h3>
+          <div class="stat-trend">
+            <span class="badge trend-badge">
+              <i class="bi bi-bar-chart-line"></i>
+              <span class="trend-text">Monthly overview</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Revenue Pie Chart -->
+  <div class="report-card m-4">
+    <h5 class="report-title">Revenue Report</h5>
+    <div echarts [options]="revenueChartOptions" style="height: 300px;"></div>
+  </div>
+  
+ <!-- Enhanced Customer Insights -->
+<div class="insights-card m-4">
+  <div class="card-header">
+    <div class="header-icon">
+      <i class="bi bi-people-fill"></i>
+    </div>
+    <h5 class="card-title">Customer Insights</h5>
+    <span class="total-badge">{{ customerInsights?.totalCustomers }} Total</span>
+  </div>
+
+  <div class="card-body">
+    <div class="customer-stats">
+      <div class="stat-item">
+        <i class="bi bi-star-fill"></i>
+        <div>
+          <span class="stat-label">Top Customers</span>
+          <span class="stat-value">{{ customerInsights?.topCustomers?.length || 0 }}</span>
+        </div>
+      </div>
+      <div class="stat-item">
+        <i class="bi bi-cart-check-fill"></i>
+        <div>
+          <span class="stat-label">Avg. Orders</span>
+          <span class="stat-value"><li class="list-group-item d-flex justify-content-between align-items-center"
+            *ngFor="let c of customerInsights?.topCustomers">
+          <span>{{ c.customerFirstName }} {{ c.customerLastName }}</span>
+          <span class="badge bg-info">{{ c.ordersCount }} orders</span>
+        </li></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="top-customers">
+      <h6 class="section-title">Most Active Customers</h6>
+      <div class="customer-list">
+        <div class="customer-item" *ngFor="let c of customerInsights?.topCustomers">
+          <div class="customer-avatar">
+            {{ c.customerFirstName.charAt(0) }}{{ c.customerLastName.charAt(0) }}
+          </div>
+          <div class="customer-info">
+            <span class="customer-name">{{ c.customerFirstName }} {{ c.customerLastName }}</span>
+            <span class="customer-orders">
+              <i class="bi bi-bag-check"></i>
+              {{ c.ordersCount }} orders
+            </span>
+          </div>
+          <div class="customer-badge">
+            <span class="badge" [ngClass]="{
+              'gold': $index === 0,
+              'silver': $index === 1,
+              'bronze': $index === 2
+            }">
+              #{{ $index + 1 }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <!-- Top Returned Products -->
+  <div class="report-card m-4">
+    <h5 class="report-title">Top Returned Products</h5>
+    <div echarts [options]="returnChartOptions" style="height: 400px;"></div>
+  </div>
+  
+  <!-- Best Selling Times -->
+  <div class="report-card m-4">
+    <h5 class="report-title">Best Selling Times</h5>
+    <div echarts [options]="bestSellingTimesOptions" style="height: 400px;"></div>
+  </div>
+  

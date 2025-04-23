@@ -1,0 +1,307 @@
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h2>ORDERS</h2>
+        <div class="status-filters">
+            <div class="status-label">Status: </div>
+            <div *ngFor="let filter of filters" class="status-filter"
+                [ngClass]="{ 'active': activeFilter === filter.value }" (click)="setActiveFilter(filter.value)">
+                {{ filter.label }}
+            </div>
+        </div>
+
+        <div class="action-bar">
+            <div class="filters-section">
+                <div class="date-range-picker">
+                    <div class="date-filter">
+                        <div class="filter-label">START DATE</div>
+                        <input type="date" class="date-input" [(ngModel)]="startDate" [max]="today"
+                            (change)="filterByDate()">
+                    </div>
+
+                    <div class="date-filter">
+                        <div class="filter-label">END DATE</div>
+                        <input type="date" class="date-input" [(ngModel)]="endDate" [max]="today" [min]="startDate"
+                            (change)="filterByDate()">
+                    </div>
+                </div>
+                <div class="search-container">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search by order number" [(ngModel)]="orderId"
+                            [(ngModel)]="search" (keydown.enter)="SearchById($event)">
+                        <svg class="search-icon" viewBox="0 0 24 24" (click)="SearchById()">
+                            <path fill="currentColor"
+                                d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 0 0 1.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 0 0-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 0 0 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+                        </svg>
+                    </div>
+                </div>
+                <button class="clear-btn" (click)="clearFilters()">
+                    <svg class="clear-icon" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                            d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
+                    </svg>
+                    Clear
+                </button>
+            </div>
+        </div>
+
+        <div class="orders-table">
+            <div class="table-header">
+                <div class="header-cell">#</div>
+                <div class="header-cell">Order Number</div>
+                <div class="header-cell">Order Date</div>
+                <div class="header-cell">Payment Status</div>
+                <div class="header-cell">Payment Method</div>
+                <div class="header-cell">Deleviry Status</div>
+                <div class="header-cell">Price</div>
+                <div class="header-cell">Actions</div>
+            </div>
+
+            <div class="table-body ">
+                <div class="no-orders" *ngIf="orders.length === 0">
+                    Oops! No orders to display!
+                </div>
+                <div class="table-row" *ngFor="let order of orders; let i = index">
+                    <div class="table-cell">{{i + 1}}</div>
+                    <div class="table-cell">{{order.orderId}}</div>
+                    <div class="table-cell">{{ order.orderDate | date:'dd/MM/yyyy' }}</div>
+                    <div class="table-cell">{{order.payment.paymentMethod}}</div>
+                    <div class="table-cell">
+                        <span class="status-badge" [class]="getPayStatusClass(order.payment.status)">
+                            {{order.payment.status}}
+                        </span>
+                    </div>
+                    <div class="table-cell">
+                        <span class="status-badge" [class]="getStatusClass(order.orderStatus)">
+                            {{order.orderStatus}}
+                        </span>
+                    </div>
+                    <div class="table-cell">{{order.totalAmount | currency:'$':'symbol':'1.2-2'}}</div>
+                    <div class="table-cell actions-cell">
+                        <button class="action-btn view-btn" (click)="openOrderModal(order)">
+                            <svg class="action-icon" viewBox="0 0 24 24">
+                                <path fill="currentColor"
+                                    d="M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9M12,4.5C17,4.5 21.27,7.61 23,12C21.27,16.39 17,19.5 12,19.5C7,19.5 2.73,16.39 1,12C2.73,7.61 7,4.5 12,4.5M3.18,12C4.83,15.36 8.24,17.5 12,17.5C15.76,17.5 19.17,15.36 20.82,12C19.17,8.64 15.76,6.5 12,6.5C8.24,6.5 4.83,8.64 3.18,12Z" />
+                            </svg>
+                            View
+                        </button>
+
+                        <div class="jumia-modal-overlay" *ngIf="showModal" (click)="closeModal()">
+                            <div class="jumia-modal" (click)="$event.stopPropagation()">
+                                <div class="modal-header">
+                                    <h3>
+                                        <svg class="jumia-icon" viewBox="0 0 24 24">
+                                            <path fill="#FF7900"
+                                                d="M12,2L4,7v10l8,5l8-5V7L12,2z M12,16.5L6,12.5v-5l6-3.5l6,3.5v5L12,16.5z" />
+                                        </svg>
+                                        Order Details #{{selectedOrder?.id}}
+                                    </h3>
+                                    <button class="close-btn" (click)="closeModal()">
+                                        <svg viewBox="0 0 24 24" width="24" height="24">
+                                            <path fill="#777"
+                                                d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <div class="modal-body">
+                                    <!-- Customer Information (Simple Layout) -->
+                                    <div class="customer-info">
+                                        <h4 class="section-title">
+                                            <i class="bi bi-person-badge"></i> Customer Information
+                                        </h4>
+                                        <div class="customer-details">
+                                            <div class="detail-row">
+                                                <i class="bi bi-person icon"></i>
+                                                <div class="detail-content">
+                                                    <span class="detail-label">Name:</span>
+                                                    <span
+                                                        class="detail-value">{{selectedOrder.shippingInfo.receiverName}}</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="detail-row">
+                                                <i class="bi bi-envelope icon"></i>
+                                                <div class="detail-content">
+                                                    <span class="detail-label">Email:</span>
+                                                    <span
+                                                        class="detail-value">{{selectedOrder.shippingInfo.receiverEmail}}</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="detail-row">
+                                                <i class="bi bi-telephone icon"></i>
+                                                <div class="detail-content">
+                                                    <span class="detail-label">Phone:</span>
+                                                    <span
+                                                        class="detail-value">{{selectedOrder.shippingInfo?.receiverPhone}}</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="detail-row">
+                                                <i class="bi bi-geo-alt icon"></i>
+                                                <div class="detail-content">
+                                                    <span class="detail-label">Address:</span>
+                                                    <span
+                                                        class="detail-value">{{selectedOrder.shippingInfo.shippingAddress}}</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="detail-row">
+                                                <i class="bi bi-currency-dollar icon"></i>
+                                                <div class="detail-content">
+                                                    <span class="detail-label">Total Price:</span>
+                                                    <span class="detail-value">{{selectedOrder.totalAmount |
+                                                        currency:'$':'symbol':'1.2-2'}}</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="detail-row">
+                                                <i class="bi bi-clipboard-check icon"></i>
+                                                <div class="detail-content">
+                                                    <span class="detail-label">Order Status:</span>
+                                                    <span class="status-badge"
+                                                        [class]="getStatusClass(selectedOrder.orderStatus)">
+                                                        {{selectedOrder.orderStatus}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Products Table -->
+                                    <div class="products-table">
+                                        <h4>Order Items</h4>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Image</th>
+                                                    <th>Product Name</th>
+                                                    <th>Brand</th>
+                                                    <th>Price</th>
+                                                    <th>Quantity</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let orderItem of selectedOrder?.orderItems">
+                                                    <td style="width: 110px; height: 110px; overflow: hidden;">
+                                                        <img [src]="imageBaseUrl + orderItem.productImages[0]?.imgUrl || 'assets/default-product.png'"
+                                                            class="product-img"
+                                                            style="width: 100%; height: 100%; object-fit: cover;">
+                                                    </td>
+                                                    <td>{{orderItem.productName}}</td>
+                                                    <td>{{orderItem.brand}}</td>
+                                                    <td>{{orderItem.subTotal | currency:'$':'symbol':'1.2-2'}}</td>
+                                                    <td>{{orderItem.quantity}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="jumia-btn secondary" (click)="closeModal()">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!----------------------------------------------------------------------------------------------------------------->
+                        <button class="action-btn update-btn" (click)="openUpdateStatusModal(order)">
+                            <svg class="action-icon" viewBox="0 0 24 24">
+                                <path fill="currentColor"
+                                    d="M21.7,13.35L20.7,14.35L18.65,12.3L19.65,11.3C19.86,11.09 20.21,11.09 20.42,11.3L21.7,12.58C21.91,12.79 21.91,13.14 21.7,13.35M12,18.94L18.06,12.88L20.11,14.93L14.06,21H12V18.94M12,14C7.58,14 4,15.79 4,18V20H10V18.11L14,14.11C13.34,14.03 12.67,14 12,14M12,4A4,4 0 0,0 8,8A4,4 0 0,0 12,12A4,4 0 0,0 16,8A4,4 0 0,0 12,4Z" />
+                            </svg>
+                            Update
+                        </button>
+                        <!----------------------------------------------------------------------------------------------------------------->
+                        <div class="status-modal-overlay fade-in-animation" *ngIf="showUpdateStatusModal">
+                            <div class="status-modal slide-in-animation">
+                                <div class="modal-header">
+                                    <h3>
+                                        <svg class="update-icon" viewBox="0 0 24 24">
+                                            <path fill="#F68B1E"
+                                                d="M21.7,13.35L20.7,14.35L18.65,12.3L19.65,11.3C19.86,11.09 20.21,11.09 20.42,11.3L21.7,12.58C21.91,12.79 21.91,13.14 21.7,13.35M12,18.94L18.06,12.88L20.11,14.93L14.06,21H12V18.94M12,14C7.58,14 4,15.79 4,18V20H10V18.11L14,14.11C13.34,14.03 12.67,14 12,14M12,4A4,4 0 0,0 8,8A4,4 0 0,0 12,12A4,4 0 0,0 16,8A4,4 0 0,0 12,4Z" />
+                                        </svg>
+                                        Update Order Status
+                                    </h3>
+                                    <button class="close-btn hover-scale-animation" (click)="closeUpdateStatusModal()">
+                                        <svg viewBox="0 0 24 24" width="24" height="24">
+                                            <path fill="#777"
+                                                d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <div class="modal-body">
+                                    <div class="current-status-container">
+                                        <span>Current Status:</span>
+                                        <span class="current-status"
+                                            [ngClass]="getStatusClass(selectedOrder?.orderStatus)">
+                                            {{selectedOrder?.orderStatus}}
+                                        </span>
+                                    </div>
+
+                                    <div class="status-options">
+                                        <div *ngFor="let status of statusOptions"
+                                            class="status-option hover-scale-animation"
+                                            [class.selected]="selectedStatus === status.value"
+                                            (click)="selectStatus(status.value)">
+                                            <span class="status-badge" [ngClass]="getStatusClass(status.value)">
+                                                {{status.label}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button class="btn-cancel hover-scale-animation" (click)="closeUpdateStatusModal()">
+                                        Cancel
+                                    </button>
+                                    <button class="btn-confirm hover-scale-animation" (click)="confirmStatusUpdate()">
+                                        Confirm Update
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!------------------------------------------------------------------------------------------>
+                        <button class="action-btn delete-btn" (click)="deleteOrder(order)">
+                            <svg class="action-icon" viewBox="0 0 24 24">
+                                <path fill="currentColor"
+                                    d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
+                            </svg>
+                            Delete
+                        </button>
+                        <!-- Delete Confirmation Popup -->
+                        <div class="confirmation-overlay" *ngIf="showDeletePopup">
+                            <div class="popup-container">
+                                <div class="popup-header">
+                                    <svg class="warning-icon" viewBox="0 0 24 24">
+                                        <path fill="#F68B1E" d="M12 2L1 21h22L12 2zm0 3.5L19.5 19h-15L12 5.5z" />
+                                    </svg>
+                                    <h3>Confirm Deletion</h3>
+                                </div>
+                                <div class="popup-body">
+                                    <p>Are you sure you want to delete order
+                                        <strong>#{{selectedOrder?.orderId}}</strong>?
+                                    </p>
+                                    <p class="notice-text">This action cannot be undone</p>
+                                </div>
+                                <div class="popup-actions">
+                                    <button class="action-btn cancel-btn" (click)="cancelDelete()">Cancel</button>
+                                    <button class="action-btn confirm-btn" (click)="confirmDelete()">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- Toast Notification -->
+        <div class="toast-notification" *ngIf="showToast" [ngClass]="{
+  'toast-success': toastType === 'success',
+  'toast-error': toastType === 'error'
+}">
+            <div class="toast-message">
+                {{toastMessage}}
+            </div>
+            <button class="toast-close" (click)="hideToast()">×</button>
+        </div>
+    </div>

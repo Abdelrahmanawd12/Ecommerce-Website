@@ -1,0 +1,138 @@
+<!-- 
+   <div class="container mt-4">
+    <h4 class="mb-4">My Wishlist</h4>
+  
+    <div *ngIf="wishlistItems.length > 0; else noWishlistItems">
+      <div *ngFor="let item of wishlistItems" class="card mb-4 p-4 shadow-lg">
+  
+         Item Layout: Image + Details 
+        <div class="d-flex align-items-start">
+           Product Image 
+          <img 
+            [src]="item.imageUrl" 
+            alt="{{ item.productName }}" 
+            class="img-fluid rounded border me-3"
+            style="width: 30%; max-width: 180px;"
+          />
+  
+           Product Info 
+          <div>
+            <h5 class="mb-2">{{ item.productName }}</h5>
+            <p class="mb-1"><strong>Price:</strong> ${{ item.price }}</p>
+            <p class="mb-1"><strong>Discount:</strong> {{ item.discount }}%</p>
+            <p class="mb-3"><strong>Brand:</strong> {{ item.brand }}</p>
+  
+            Buttons 
+            <button (click)="addToCart(item.wishlistItemId)" class="btn btn-primary me-2">
+              Add to Cart
+            </button>
+  
+            <button (click)="deleteItem(item.wishlistItemId)" class="btn btn-outline-danger">
+              Remove from Wishlist
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    No items message
+    <ng-template #noWishlistItems>
+      <p class="text-muted">Your wishlist is empty.</p>
+    </ng-template>
+  </div>
+   -->
+<!-- -------------------------------------------------------------------------------------------------------------------- -->
+
+<div class="container py-4">
+  <div class="mx-auto" style="max-width: 2000px;">
+    <div class="wishlist-header mb-5">
+      <div class="d-flex justify-content-between align-items-end border-bottom pb-3">
+        <h2 class="mb-0 fw-bold text-uppercase position-relative header-title">
+          <span class="header-icon"><i class="bi bi-heart-fill"></i></span>
+         My Wishlist
+        </h2>
+        <span class="item-count-badge">
+          {{ wishlistItems.length }} {{ wishlistItems.length === 1 ? 'item' : 'items' }}
+        </span>
+      </div>
+    </div>
+    <div *ngIf="wishlistItems.length > 0; else noWishlistItems" class="row">
+      <div *ngFor="let item of wishlistItems" class="col-md-4 col-lg-3 mb-4">
+        <div class="card h-100 border-0 shadow-sm hover-card">
+          <div class="card-img-top position-relative overflow-hidden" style="height: 200px;">
+            <img [src]="imgBase+item.imageUrl" alt="{{ item.productName }}"
+              class="img-fluid w-100 h-100 object-fit-contain p-3">
+            <div class="quick-view-btn" (click)="navigateToDetails(item.productId)">
+              QUICK VIEW
+            </div>
+            <div class="wishlist-actions">
+              <button (click)="deleteItem(item.wishlistItemId)" class="btn btn-link text-danger p-0">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <h5 class="card-title text-uppercase mb-1" style="font-size: 0.9rem;">{{ item.productName }}</h5>
+            <p class="fw-bold mb-2">${{ item.price | number:'1.2-2' }}</p>
+            <span class="badge bg-light text-dark small">{{ item.brand }}</span>
+          </div>
+
+          <div class="card-footer bg-transparent border-0">
+            <button (click)="addToCart(item.wishlistItemId)" class="btn btn-warning w-100 text-uppercase fw-bold"
+              style="letter-spacing: 1px;">
+              Add To Cart
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty Wishlist -->
+    <ng-template #noWishlistItems>
+      <div class="text-center py-5">
+        <div class="mb-4">
+          <i class="bi bi-heart text-muted" style="font-size: 5rem; opacity: 0.3;"></i>
+        </div>
+        <h5 class="mb-3">Your wishlist is empty</h5>
+        <p class="text-muted mb-4">Start adding items you love to keep them here</p>
+        <button class="btn btn-warning px-4" (click)="goToHome()">
+          Continue Shopping
+        </button>
+
+      </div>
+    </ng-template>
+  </div>
+</div>
+<!-- Toast Message for add to cart or delete item -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1055">
+  <div #toastElement class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        <!-- هنا سنقوم بتغيير النص من خلال الـ TypeScript -->
+        {{ toastMessage }}
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" (click)="showToast = false"></button>
+    </div>
+  </div>
+</div>
+<!-- Modal To Delete Item  -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmModalLabel">Confirm Removal</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to remove this item from your wishlist?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="confirmDelete()">Yes, remove it</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

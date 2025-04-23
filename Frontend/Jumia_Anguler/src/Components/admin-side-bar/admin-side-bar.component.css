@@ -1,0 +1,160 @@
+
+.sidebar {
+  width: 250px;
+  background-color: #f8f9fa;
+  border-right: 1px solid #eaeaea;
+  transition: width 0.3s ease;
+}
+
+.sidebar.collapsed {
+  width: 70px;
+}
+
+/* ==================== */
+/* NAVIGATION LINKS */
+/* ==================== */
+.nav-link {
+  padding: 12px 15px;
+  margin: 2px 10px;
+  color: #495057 !important;
+  transition: all 0.3s ease;
+  border-radius: 0;
+}
+
+.nav-link:hover {
+  background-color: #e9ecef;
+  color: #d6951b !important;
+}
+
+.nav-link.active {
+  background-color: #e9ecef;
+  color: #d6951b !important;
+  font-weight: 500;
+  border-left: 3px solid #d6951b;
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  left: 15px;
+  right: 15px;
+  bottom: 8px;
+  height: 2px;
+  background-color: #d6951b;
+}
+
+/* ==================== */
+/* SUBMENU ITEMS */
+/* ==================== */
+.submenu-item,
+.submenu-link {
+  display: block;
+  padding: 8px 15px;
+  margin-left: 15px;
+  color: #495057 !important;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border-left: 3px solid transparent;
+}
+
+.submenu-item:hover,
+.submenu-link:hover {
+  color: #d6951b !important;
+  background-color: #f1f3f5;
+  border-left: 3px solid #d6951b;
+}
+
+.submenu-item.active,
+.submenu-link.active {
+  color: #d6951b !important;
+  font-weight: 500;
+  background-color: #f1f3f5;
+  border-left: 3px solid #d6951b;
+}
+
+/* ==================== */
+/* ICONS */
+/* ==================== */
+.bi {
+  color: #6c757d;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover .bi,
+.nav-link.active .bi,
+.submenu-item:hover .bi,
+.submenu-item.active .bi,
+.submenu-link:hover .bi,
+.submenu-link.active .bi {
+  color: #d6951b;
+}
+
+/* ==================== */
+/* TOGGLE BUTTON */
+/* ==================== */
+.sidebar-toggle-inner {
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #495057;
+  transition: all 0.3s ease;
+}
+
+.sidebar-toggle-inner:hover {
+  background-color: #e67e22;
+  color: white;
+  border-color: #e67e22;
+}
+
+/* ==================== */
+/* MODAL STYLES */
+/* ==================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-dialog {
+  max-width: 400px;
+  width: 90%;
+  animation: fadeIn 0.3s;
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+  overflow: hidden;
+}
+
+.btn-orange {
+  background-color: #d6951b;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: all 0.3s;
+}
+
+.btn-orange:hover {
+  background-color: #c08517;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

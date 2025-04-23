@@ -1,0 +1,12 @@
+bin/
+obj/
+<<<<<<< HEAD
+.vs/
+=======
+.vs/
+*.user
+*.suo
+*.cache
+*.pdb
+*.dll
+>>>>>>> adfdb4917d3665bb03ec61627c08f1b9fc155993

@@ -1,0 +1,397 @@
+/* Jumia Color Scheme */
+:root {
+  --jumia-orange: #FF7900;
+  --jumia-dark: #2D2D2D;
+  --jumia-light: #F7F7F7;
+  --jumia-secondary: #6C757D;
+  --jumia-success: #28A745;
+  --jumia-danger: #DC3545;
+}
+
+/* Reset and Base Styles */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--jumia-light);
+  color: var(--jumia-dark);
+}
+
+.dashboard-container {
+  padding: 20px;
+  min-height: 100vh;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Header Styles */
+.header {
+  margin-bottom: 30px;
+}
+
+.header h1 {
+  color: var(--jumia-dark);
+  font-weight: 700;
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  font-size: 28px;
+}
+
+.header h1::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 50px;
+  height: 3px;
+  background-color: var(--jumia-orange);
+  transition: width 0.3s ease;
+}
+
+.header h1:hover::after {
+  width: 100%;
+}
+
+/* Grid Layout */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -15px;
+}
+
+.col-md-4, .col-md-8, .col-12, .col-sm-6, .col-lg-4, .col-lg-8 {
+  padding: 0 15px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* Card Styles */
+.card {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  background: white;
+}
+
+.card-header {
+  background-color: white;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 15px 20px;
+}
+
+.card-header h3 {
+  color: var(--jumia-dark);
+  font-weight: 600;
+  margin: 0;
+  font-size: 18px;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+/* Stat Cards */
+.stat-card {
+  height: 100%;
+}
+
+.stat-card .card-title {
+  color: var(--jumia-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.stat-card .card-value {
+  color: var(--jumia-dark);
+  font-weight: 700;
+  margin-bottom: 5px;
+  font-size: 24px;
+}
+
+.trend {
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+}
+
+.trend.positive {
+  color: var(--jumia-success);
+}
+
+.trend.negative {
+  color: var(--jumia-danger);
+}
+
+.trend i {
+  margin-right: 5px;
+}
+
+/* Chart Styles */
+.chart-container {
+  position: relative;
+  height: 250px;
+  width: 100%;
+}
+
+.chart-legend {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin: 0 10px;
+  font-size: 13px;
+  color: var(--jumia-secondary);
+}
+
+.color-box {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  margin-right: 5px;
+}
+
+.color-box.primary {
+  background-color: var(--jumia-orange);
+}
+
+.color-box.secondary {
+  background-color: rgba(255, 121, 0, 0.3);
+}
+
+/* Products List */
+.product-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.product-item {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.product-item:last-child {
+  border-bottom: none;
+}
+
+.product-info {
+  margin-bottom: 5px;
+}
+
+.product-info h4 {
+  font-size: 15px;
+  color: var(--jumia-dark);
+  margin: 0;
+  font-weight: 600;
+}
+
+.product-info .price {
+  font-size: 14px;
+  color: var(--jumia-orange);
+  font-weight: 600;
+}
+
+.product-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-stats .sold {
+  font-size: 12px;
+  color: var(--jumia-secondary);
+}
+
+.product-stats .trend {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.product-stats .trend.positive {
+  color: var(--jumia-success);
+}
+
+.product-stats .trend.negative {
+  color: var(--jumia-danger);
+}
+
+/* Transactions Table */
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+.table thead th {
+  border-top: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  color: var(--jumia-secondary);
+  font-weight: 500;
+  font-size: 13px;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 12px 15px;
+}
+
+.table tbody tr {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.table tbody td {
+  vertical-align: middle;
+  color: var(--jumia-dark);
+  font-size: 14px;
+  padding: 12px 15px;
+}
+
+.badge {
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 12px;
+  color: white;
+}
+
+.bg-success {
+  background-color: var(--jumia-success);
+}
+
+/* Animations */
+.hover-animate {
+  transition: all 0.3s ease;
+}
+
+.hover-animate:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.slide-in-left {
+  animation: slideInLeft 0.5s ease-out;
+}
+
+.slide-in-right {
+  animation: slideInRight 0.5s ease-out;
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Responsive Breakpoints */
+@media (min-width: 576px) {
+  .col-sm-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+@media (min-width: 768px) {
+  .col-md-4 {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+  }
+  
+  .col-md-8 {
+    flex: 0 0 66.666667%;
+    max-width: 66.666667%;
+  }
+}
+
+@media (min-width: 992px) {
+  .col-lg-4 {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+  }
+  
+  .col-lg-8 {
+    flex: 0 0 66.666667%;
+    max-width: 66.666667%;
+  }
+}
+
+/* Keyframes */
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-block;
+  text-align: center;
+  min-width: 70px;
+}
+
+
+.paid-status {
+  background-color: #e6f7ee;
+  color: #10b981;
+  border: 1px solid #10b981;
+}
+
+.pending-status {
+  background-color: #fff8e6;
+  color: #f59e0b;
+  border: 1px solid #f59e0b;
+}
+
+.canceled-status {
+  background-color: #feecec;
+  color: #ef4444;
+  border: 1px solid #ef4444;
+}
+
+.default-status {
+  background-color: #f3f4f6;
+  color: #6b7280;
+  border: 1px solid #d1d5db;
+}
+

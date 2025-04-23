@@ -1,0 +1,194 @@
+<div class="container py-4">
+  <div class="card shadow-sm border-0">
+    <div class="card-header bg-white border-0 pb-0">
+      <div class="text-center mb-3">
+        <i class="fas fa-user-plus fa-3x text-warning"></i>
+        <h2 class="mt-3 mb-1 fw-bold">Create New User Account</h2>
+        <p class="text-muted">Complete all fields to register a new system user</p>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <!-- Personal Information Section -->
+        <div class="mb-4 p-3 border rounded">
+          <div class="d-flex align-items-center mb-3">
+            <i class="fas fa-id-card me-2 text-warning"></i>
+            <h4 class="m-0 fw-bold">Personal Information</h4>
+          </div>
+          
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="firstName" class="form-label">First Name</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                <input type="text" class="form-control" id="firstName" formControlName="firstName" placeholder="John">
+              </div>
+              <div *ngIf="userForm.get('firstName')?.invalid && userForm.get('firstName')?.touched" class="text-danger small mt-1">
+                <i class="fas fa-exclamation-circle me-1"></i>
+                {{ userForm.get('firstName')?.hasError('required') ? 'This field is required' : 'Maximum 50 characters allowed' }}
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="lastName" class="form-label">Last Name</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="Doe">
+              </div>
+              <div *ngIf="userForm.get('lastName')?.invalid && userForm.get('lastName')?.touched" class="text-danger small mt-1">
+                <i class="fas fa-exclamation-circle me-1"></i>
+                {{ userForm.get('lastName')?.hasError('required') ? 'This field is required' : 'Maximum 50 characters allowed' }}
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="dateOfBirth" class="form-label">Date of Birth</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-calendar-day"></i></span>
+                <input type="date" class="form-control" id="dateOfBirth" formControlName="dateOfBirth"
+                       [max]="maxDate | date:'yyyy-MM-dd'"
+                       [min]="minDate | date:'yyyy-MM-dd'">
+              </div>
+              <div *ngIf="userForm.get('dateOfBirth')?.invalid && userForm.get('dateOfBirth')?.touched" class="text-danger small mt-1">
+                <i class="fas fa-exclamation-circle me-1"></i>
+                <span *ngIf="userForm.get('dateOfBirth')?.hasError('required')">Date of birth is required</span>
+                <span *ngIf="userForm.get('dateOfBirth')?.hasError('matDatepickerMin')">You must be at least 18 years old</span>
+                <span *ngIf="userForm.get('dateOfBirth')?.hasError('matDatepickerMax')">Invalid date</span>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="gender" class="form-label">Gender</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-venus-mars"></i></span>
+                <select class="form-select" id="gender" formControlName="gender">
+                  <option value="" disabled selected>Select your gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+              <div *ngIf="userForm.get('gender')?.invalid && userForm.get('gender')?.touched" class="text-danger small mt-1">
+                <i class="fas fa-exclamation-circle me-1"></i>
+                Please select your gender
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Account Information Section -->
+        <div class="mb-4 p-3 border rounded">
+          <div class="d-flex align-items-center mb-3">
+            <i class="fas fa-user-cog me-2 text-warning"></i>
+            <h4 class="m-0 fw-bold">Account Information</h4>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="email" class="form-label">Email Address</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                <input type="email" class="form-control" id="email" formControlName="email" placeholder="example@domain.com">
+              </div>
+              <div *ngIf="(userForm.get('email')?.invalid && userForm.get('email')?.touched) || emailServerError" class="text-danger small mt-1">
+                <i class="fas fa-exclamation-circle me-1"></i>
+                <span *ngIf="userForm.get('email')?.hasError('required')">Email is required</span>
+                <span *ngIf="userForm.get('email')?.hasError('email') && !emailServerError">Invalid email format</span>
+                <span *ngIf="emailServerError">{{emailServerError}}</span>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="role" class="form-label">User Role</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+                <select class="form-select" id="role" formControlName="role">
+                  <option value="" disabled selected>Select account type</option>
+                  <option *ngFor="let role of roles" [value]="role">{{role}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Security Section -->
+        <div class="mb-4 p-3 border rounded">
+          <div class="d-flex align-items-center mb-3">
+            <i class="fas fa-lock me-2 text-warning"></i>
+            <h4 class="m-0 fw-bold">Security</h4>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="password" class="form-label">Password</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                <input [type]="hidePassword ? 'password' : 'text'" class="form-control" id="password" formControlName="password" placeholder="Create password">
+                <button type="button" class="btn btn-outline-secondary" (click)="hidePassword = !hidePassword">
+                  <i [class]="hidePassword ? 'far fa-eye' : 'far fa-eye-slash'"></i>
+                </button>
+              </div>
+              <div *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched" class="text-danger small mt-1">
+                <i class="fas fa-exclamation-circle me-1"></i>
+                Password doesn't meet requirements
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="confirmPassword" class="form-label">Confirm Password</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                <input [type]="hideConfirmPassword ? 'password' : 'text'" class="form-control" id="confirmPassword" formControlName="confirmPassword" placeholder="Re-enter password">
+                <button type="button" class="btn btn-outline-secondary" (click)="hideConfirmPassword = !hideConfirmPassword">
+                  <i [class]="hideConfirmPassword ? 'far fa-eye' : 'far fa-eye-slash'"></i>
+                </button>
+              </div>
+              <div *ngIf="userForm.hasError('notSame') && userForm.get('confirmPassword')?.touched" class="text-danger small mt-1">
+                <i class="fas fa-exclamation-circle me-1"></i>
+                Passwords do not match
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Seller Fields (Conditional) -->
+        <div *ngIf="showStoreFields" class="mb-4 p-3 border rounded">
+          <div class="d-flex align-items-center mb-3">
+            <i class="fas fa-store me-2 text-warning"></i>
+            <h4 class="m-0 fw-bold">Store Information</h4>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-12">
+              <label for="storeName" class="form-label">Store Name</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-signature"></i></span>
+                <input type="text" class="form-control" id="storeName" formControlName="storeName" placeholder="Your store name">
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="storeAddress" class="form-label">Store Address</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-map-marked-alt"></i></span>
+                <input type="text" class="form-control" id="storeAddress" formControlName="storeAddress" placeholder="Physical store location">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="d-flex justify-content-between mt-4">
+          <button type="button" class="btn btn-outline-secondary" routerLink="/admin/users">
+            <i class="fas fa-arrow-left me-2"></i>Back to Users
+          </button>
+          <button type="submit" class="btn btn-warning text-white fw-bold" [disabled]="isLoading || userForm.invalid">
+            <span *ngIf="!isLoading">Create User Account</span>
+            <span *ngIf="isLoading">Processing...</span>
+            <span *ngIf="isLoading" class="ms-2"><i class="fas fa-spinner fa-spin"></i></span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

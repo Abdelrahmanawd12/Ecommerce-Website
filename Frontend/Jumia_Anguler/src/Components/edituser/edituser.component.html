@@ -1,0 +1,133 @@
+<div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center bg-light bg-gradient">
+  <div class="w-100" style="max-width: 1200px;">
+    <div class="card shadow-lg border-0 professional-card" style="border-radius: 15px; overflow: hidden;">
+      <div class="card-header  text-white py-3">
+        <h2 class="text-center mb-0 fw-bold">
+          <i class="bi bi-person-gear me-2"></i>Update User Profile
+        </h2>
+      </div>
+      <div class="card-body p-4 p-md-5">
+        <!-- Alert Messages -->
+        <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show d-flex align-items-center">
+          <i class="bi bi-check-circle-fill me-2"></i>
+          <div>{{ successMessage }}</div>
+      
+        </div>
+        <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show d-flex align-items-center">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i>
+          <div>{{ errorMessage }}</div>
+       
+        </div>
+
+        <!-- Update Form -->
+        <form [formGroup]="updateUserForm" (ngSubmit)="onSubmit()">
+          <div class="row g-3 gx-4">
+            <!-- First Name -->
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input type="text" class="form-control professional-input" 
+                       id="firstName" formControlName="firstName" 
+                       placeholder="First Name" [ngClass]="{'is-invalid': updateUserForm.get('firstName')?.invalid && updateUserForm.get('firstName')?.touched}">
+                <label for="firstName">First Name</label>
+                <div *ngIf="updateUserForm.get('firstName')?.invalid && updateUserForm.get('firstName')?.touched" 
+                     class="invalid-feedback d-flex align-items-center">
+                  <i class="bi bi-exclamation-circle me-2"></i>
+                  First Name is required
+                </div>
+              </div>
+            </div>
+
+            <!-- Last Name -->
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input type="text" class="form-control professional-input" 
+                       id="lastName" formControlName="lastName" 
+                       placeholder="Last Name" [ngClass]="{'is-invalid': updateUserForm.get('lastName')?.invalid && updateUserForm.get('lastName')?.touched}">
+                <label for="lastName">Last Name</label>
+                <div *ngIf="updateUserForm.get('lastName')?.invalid && updateUserForm.get('lastName')?.touched" 
+                     class="invalid-feedback d-flex align-items-center">
+                  <i class="bi bi-exclamation-circle me-2"></i>
+                  Last Name is required
+                </div>
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="col-12">
+              <div class="form-floating">
+                <input type="email" class="form-control professional-input" 
+                       id="email" formControlName="email" 
+                       placeholder="Email Address" [ngClass]="{'is-invalid': updateUserForm.get('email')?.invalid && updateUserForm.get('email')?.touched}">
+                <label for="email">Email Address</label>
+                <div *ngIf="updateUserForm.get('email')?.invalid && updateUserForm.get('email')?.touched" 
+                     class="invalid-feedback d-flex align-items-center">
+                  <i class="bi bi-exclamation-circle me-2"></i>
+                  Valid email is required
+                </div>
+              </div>
+            </div>
+
+            <!-- Role -->
+            <div >
+              <div class="form-floating">
+                <select class="form-select professional-input" 
+                        id="role" formControlName="role" hidden
+                        [ngClass]="{'is-invalid': updateUserForm.get('role')?.invalid && updateUserForm.get('role')?.touched}">
+                  <option value="" disabled selected>-- Select Role --</option>
+                  <option value="admin">Admin</option>
+                  <option value="user">Customer</option>
+                  <option value="manager">Seller</option>
+                </select>
+              
+                <div *ngIf="updateUserForm.get('role')?.invalid && updateUserForm.get('role')?.touched" 
+                     class="invalid-feedback d-flex align-items-center">
+                  <i class="bi bi-exclamation-circle me-2"></i>
+                  Role is required
+                </div>
+              </div>
+            </div>
+
+            <!-- Gender -->
+            <div class="col-md-12">
+              <div class="form-floating">
+                <select class="form-select professional-input" 
+                        id="gender" formControlName="gender">
+                  <option value="" disabled selected>-- Select Gender --</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+                <label for="gender">Gender</label>
+              </div>
+            </div>
+
+            <!-- Date of Birth -->
+            <div class="col-12">
+              <div class="form-floating">
+                <input type="date" class="form-control professional-input" 
+                       id="dob" formControlName="dateOfBirth"
+                       [ngClass]="{'is-invalid': updateUserForm.get('dateOfBirth')?.invalid && updateUserForm.get('dateOfBirth')?.touched}">
+                <label for="dob">Date of Birth</label>
+                <div *ngIf="updateUserForm.get('dateOfBirth')?.invalid && updateUserForm.get('dateOfBirth')?.touched" 
+                     class="invalid-feedback d-flex align-items-center">
+                  <i class="bi bi-exclamation-circle me-2"></i>
+                  Valid date of birth is required
+                </div>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="col-12 mt-4">
+              <button class="btn btn-primary w-100 py-3 professional-btn" 
+                      [disabled]="updateUserForm.invalid"
+                      [ngClass]="{'btn-disabled': updateUserForm.invalid}">
+                <i class="bi bi-save-fill me-2"></i>
+                Update Profile
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

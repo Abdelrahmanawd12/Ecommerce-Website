@@ -1,0 +1,219 @@
+.bg-light {
+    background-color: #f8f9fa !important;
+}
+
+.text-dark {
+    color: #343a40 !important;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding-left: 15px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+}
+
+.nav-link:hover {
+    background-color: white;
+    color: orange !important;
+}
+
+
+.collapse {
+    transition: height 0.3s ease;
+}
+
+.collapse.show {
+    display: block !important;
+}
+
+.dropdown-menu {
+    background-color: white;
+    border: 1px solid #ddd;
+}
+
+.dropdown-menu .dropdown-item:hover {
+    background-color: orange;
+    color: white;
+    cursor: pointer;
+}
+
+/*--------------------------------------------------------------------*/
+
+/* Sidebar styles */
+#sidebar {
+    width: 250px;
+    transition: all 0.3s ease;
+}
+
+.sidebar {
+    position: fixed;  
+    top: 0;          
+    left: 0;
+    height: 100vh;   
+    /* z-index: 1000;      */
+    overflow-y: auto;
+  }
+  
+
+#sidebar.collapsed {
+    width: 80px;
+}
+
+.sidebar-text {
+    transition: opacity 0.3s ease;
+}
+
+#sidebar.collapsed .sidebar-text {
+    opacity: 0;
+}
+
+/* Chevron icon rotation */
+.bi-chevron-up,
+.bi-chevron-down {
+    transition: transform 0.3s ease;
+}
+
+#sidebar.collapsed .bi-chevron-down {
+    transform: rotate(180deg);
+}
+
+#sidebar.collapsed .bi-chevron-up {
+    transform: rotate(0deg);
+}
+
+/* Profile dropdown styles */
+.dropdown-menu {
+    min-width: 200px;
+}
+
+.dropdown-menu .dropdown-item {
+    padding: 10px 20px;
+}
+
+.collapse {
+    transition: height 0.3s ease;
+}
+
+.collapse.show {
+    height: auto;
+}
+
+
+#profileMenu .nav-link {
+    background-color: transparent;
+    color: #343a40;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+#profileMenu .nav-link:hover {
+    background-color: white;
+    color: white;
+    cursor: pointer;
+}
+
+#profileMenu .dropdown-divider {
+    border-color: #ddd;
+}
+
+#manageProductsMenu .nav-link {
+    background-color: transparent;
+    color: #343a40;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+#manageProductsMenu .nav-link:hover {
+    background-color: white;
+    color: orange;
+    cursor: pointer;
+}
+
+.nav-link:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.nav-link.active {
+    background-color: rgba(255, 165, 0, 0.2);
+    color: #ff8c00 !important;
+    font-weight: 500;
+    position: relative;
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: #ff8c00;
+    border-radius: 3px 0 0 3px;
+}
+
+.collapse .nav-link.active {
+    background-color: rgba(255, 165, 0, 0.15);
+    color: #ff8c00 !important;
+}
+
+.collapse .nav-link {
+    padding-left: 1.5rem !important;
+}
+
+/* Overlay for modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  /* Modal content styling */
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .modal-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .modal-actions button {
+    margin: 0 10px;
+  }
+  
+/* .modal {
+    z-index: 1050 !important; 
+  }
+  
+  .modal-backdrop {
+    z-index: 1040 !important; 
+  } */
+  
+  .sidebar {
+    width: 250px;
+    transition: width 0.3s;
+  }
+  
+  .sidebar.collapsed {
+    width: 70px;
+  }
+  
+  .main-content {
+    flex-grow: 1;
+    transition: margin-left 0.3s;
+  }
+  
