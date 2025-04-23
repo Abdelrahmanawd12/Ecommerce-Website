@@ -1,30 +1,24 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
-
-
-
 import { Component } from '@angular/core';
 import { CheckoutService } from '../../Services/Customer/Checkout.service';
 import { Address, AddressBook, CheckoutProduct } from '../../Models/Checkout';
+import { environment } from '../../Environment/Environment.prod';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
-  imports: [
-    CommonModule,   // Required for *ngIf, *ngFor, etc.
-    FormsModule,    // Required for template-driven forms [(ngModel)]
-    // NgModule,
-  ],
-  styleUrls: ['./checkout.component.css'] // ✅ Import style here
+  imports: [CommonModule,FormsModule,],
+  styleUrls: ['./checkout.component.css'] 
 })
+
 export class CheckoutComponent {
-  address: Address = {
-    
+  address: Address = {  
     street: '',
     city: '',
-    country: '',
-    userId: '' // هنحطها من الكود مش من الفورم
+    country: 'Egypt',
+    userId: '' 
   };
   addressBook: AddressBook = {
     firstName: '',
@@ -34,28 +28,24 @@ export class CheckoutComponent {
     city: '',
     country: ''
   };
-  
 
-  //customerId = 'user4'; // اختبار بس، لحد ما نعمل Login بعدين
+
+  readonly imgbaseUrl=environment.imageBaseUrl;
+  showAddAddressButton: boolean = true; 
+  isEditing: boolean = false;
+  //customerId = 'user1'; 
   customerId: string = localStorage.getItem('userId') ?? '';
-
+  readonly imageBaseUrl = environment.imageBaseUrl;
   message = '';
 
  // 🟢 الكود الجديد هنا
  cartProducts: CheckoutProduct[] = [];
  grandTotal: number = 0;
  showForm: boolean = false;  // Flag to toggle address form display
-
-
-
  isLoading: boolean = false; // 🔄 عشان نمنع الضغط مرتين ونظهر لودينج
 
-//  paymentMethod: string = 'visa';
-// paymentMessage: string = '';
-// paymentSuccess: boolean = false;
 
-
-  constructor(private checkoutService: CheckoutService) {}
+  constructor(private checkoutService: CheckoutService,   private router: Router) {}
 
   ngOnInit(): void {
     // 🟢 تحميل المنتجات الخاصة بالكارت
@@ -63,8 +53,6 @@ export class CheckoutComponent {
       next: (data) => {
         this.cartProducts = data.products;
         this.grandTotal = data.grandTotal;
-        // this.cartProducts = data.Products;       // ✅ Capital P
-        // this.grandTotal = data.TotalCartPrice;   // ✅ Capital T, C, P
         console.log('Total:', this.grandTotal);  // 🟢 اطبعها للتأكد
       },
       error: (err) => {
@@ -78,12 +66,11 @@ export class CheckoutComponent {
     });
   }
 
-
   // Method to show the form when clicking "Add Address"
   addAddress(): void {
+    this.showAddAddressButton = false; // Hide the button after clicking
     this.showForm = true; // Show the form when button is clicked
   }
-
   
   onSubmit() {
     this.address.userId = this.customerId; // 🟢 أهي النقطة اللي تهمنا
@@ -93,49 +80,22 @@ export class CheckoutComponent {
         this.message = 'Address added successfully!';
         console.log(res);
 
-
-
         setTimeout(() => {
           location.reload();
-        }, 100); // small delay to make sure message shows or just feels smooth
+        }, 10); // small delay to make sure message shows or just feels smooth
       },
-
-
-
       error: (err) => {
         this.message = 'Error adding address';
         console.error(err);
       }
     });
-    
-
-    
   }
 
-  // confirmOrder() {
-  //   this.isLoading = true;
-
-    
-
-  //   const orderPayload = {
-  //     customerId: this.customerId,
-  //     shippingAddress: `${this.address.street}, ${this.address.city}, ${this.address.country}`
-  //   };
-  //   this.checkoutService.confirmOrder(orderPayload).subscribe({
-  //     next: (res: any) => {
-  //       this.message = res.message || 'Order confirmed!';
-  //       this.cartProducts = [];
-  //       this.grandTotal = 0;
-  //       this.isLoading = false;
-  //     },
-  //     error: (err) => {
-  //       this.message = 'Error confirming order';
-  //       console.error(err);
-  //       this.isLoading = false;
-  //     }
-  //   });
-  // }
   confirmOrder() {
+    // const confirmed = window.confirm('Are you sure to confirm order?');
+    // if (!confirmed) {
+    //   return; // المستخدم لغى، فبنخرج من الميثود
+    // }
     this.isLoading = true;
   
     // Choose the address source: form or saved address book
@@ -156,6 +116,9 @@ export class CheckoutComponent {
         this.cartProducts = [];
         this.grandTotal = 0;
         this.isLoading = false;
+
+      // Navigate to the 'order' page after the order is confirmed
+      this.router.navigate(['/order'], { state: { showThankYou: true } });
       },
       error: (err) => {
         this.message = 'Error confirming order';
@@ -165,62 +128,26 @@ export class CheckoutComponent {
     });
   }
   
+// Temp editable object
+updatedAddressBook: AddressBook = { ...this.addressBook };
 
-
+toggleEdit(): void {
+  this.isEditing = !this.isEditing;
+  this.updatedAddressBook = { ...this.addressBook };
+}
+updateAddressBook(): void {
+  this.checkoutService.updateAddressBook(this.customerId, this.updatedAddressBook).subscribe({
+    next: () => {
+      this.addressBook = { ...this.updatedAddressBook };
+      this.isEditing = false;
+      this.showForm = false;
+      // this.toggleEdit(); // غلق الفورم بعد التحديث
+    },
+    error: err => console.error('Update failed', err)
+  });
+}
   isAddressValid(): boolean {
     const a = this.addressBook;
     return a.firstName && a.lastName && a.phoneNumber && a.street && a.city && a.country ? true : false;
   }
-
-
-
-
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-   // ✅ دالة تنفيذ الدفع
-  //  processPayment() {
-  //   if (this.paymentMethod === 'visa') {
-  //     this.paymentMessage = 'Payment processed successfully with Visa!';
-  //     this.paymentSuccess = true;
-  //   } else if (this.paymentMethod === 'cod') {
-  //     this.paymentMessage = 'Order placed. You will pay Cash on Delivery.';
-  //     this.paymentSuccess = true;
-  //   } else if (this.paymentMethod === 'vodafone') {
-  //     this.paymentMessage = 'Please send payment to Vodafone Cash number: 010XXXXXXX';
-  //     this.paymentSuccess = true;
-  //   } else {
-  //     this.paymentMessage = 'Invalid payment method selected.';
-  //     this.paymentSuccess = false;
-  //   }
-  // }
-  //أو دي
-  // selectedPaymentMethod: string = 'visa';  // Default is 'visa'
-  // visaCardNumber: string = '';
-  // isValidVisaCard: boolean = true;  // Initially set to true so button is enabled (if valid)
-
-  // // Function to validate Visa card number
-  // validateVisaCardNumber() {
-  //   // Visa card is usually 16 digits and starts with 4 (if it's Visa)
-  //   const visaPattern = /^4\d{15}$/;  // A Visa card number starts with 4 and is 16 digits long
-  //   this.isValidVisaCard = visaPattern.test(this.visaCardNumber);
-  // }
-
-  // // Simulate the "Pay Now" action
-  // payNow() {
-  //   console.log("Payment Processed for card: ", this.visaCardNumber);
-  //   alert('Payment processed successfully!');
-  // }
 }

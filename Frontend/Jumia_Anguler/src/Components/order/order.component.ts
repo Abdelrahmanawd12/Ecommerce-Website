@@ -1,193 +1,9 @@
-
-// app/components/order/order.component.ts
-
-// import { Component, OnInit } from '@angular/core';
-
-// import { OrderDetailsDto } from '../../Models/order.model';
-// import { OrderListDto } from '../../Models/order.model';  // Adjust path if needed
-// import { CommonModule } from '@angular/common';
-// import { ActivatedRoute } from '@angular/router';
-// import { OrderService } from '../../Services/Customer/order.service';
-
-// @Component({
-
-
-//   selector: 'app-order',
-//   standalone: true,  // Ensure this line is here since it's a standalone component
-//   imports: [CommonModule], // <- this is necessary
-//   templateUrl: './order.component.html'
-// })
-// export class OrderComponent implements OnInit {
-
-//   order: OrderDetailsDto | null = null;
-//   orders: OrderListDto[] = [];
-//   orderId = 1; // Replace this with dynamic value later if needed
-//   cancellationMessage: string ='';
-//   selectedOrder: OrderDetailsDto | null = null;
-
-//   constructor(private orderService: OrderService, private route: ActivatedRoute) {}
-
-//   ngOnInit(): void {
-//     this.loadOrderDetails();
-//     this.loadOrdersByCategory();
-//     // Check if 'id' exists in the route and convert it to a number
-//     const id = this.route.snapshot.paramMap.get('id');
-//     if (id) {
-//       this.orderId = +id;  // Convert string to number
-//     } else {
-//       console.error('Order ID not found in the URL.');
-//     }
-//   }
-
-//   loadOrderDetails(): void {
-//     this.orderService.getOrderDetails(this.orderId).subscribe({
-//       next: (data) => this.order = data,
-//       error: (err) => console.error('Failed to fetch order details:', err)
-//     });
-//   }
-
-//   showOrderDetails(orderId: number): void {
-//     this.orderService.getOrderDetails(orderId).subscribe({
-//       next: (data) => {
-//         this.selectedOrder = data;
-//       },
-//       error: (err) => {
-//         console.error('Failed to load order details:', err);
-//         alert('Failed to load order details.');
-//       }
-//     });
-//   }
-//   hideOrderDetails(): void {
-//     this.selectedOrder = null;
-//   }
-  
-
-//   loadOrdersByCategory() {
-//     const customerId = 'user1'; // You might get this from AuthService or route param
-//     const category = 'current'; // or 'past'
-  
-//     this.orderService.getOrdersByStatusCategory(customerId, category)
-//       .subscribe({
-//         next: (data) => this.orders = data,
-//         error: (err) => console.error('Failed to load orders:', err)
-//       });
-//   }
-
-//   // Cancel order function
-//   cancelOrder(id: number) {
-//     this.orderService.cancelOrder(id).subscribe({
-//       next: (response) => {
-//         console.log('Order cancelled', response);
-//         // Optionally update UI or show a success message
-//       },
-//       error: (error) => {
-//         console.error('Failed to cancel order', error);
-//       }
-//     });
-//   }
-// }  
-
-  
-
-
-// import { Component, OnInit } from '@angular/core';
-// import { OrderDetailsDto, OrderListDto } from '../../Models/order.model';
-// import { CommonModule } from '@angular/common';
-// import { ActivatedRoute } from '@angular/router';
-// import { OrderService } from '../../Services/Customer/order.service';
-
-// @Component({
-//   selector: 'app-order',
-//   standalone: true,
-//   imports: [CommonModule],
-//   templateUrl: './order.component.html'
-// })
-// export class OrderComponent implements OnInit {
-//   order: OrderDetailsDto | null = null;
-//   orders: OrderListDto[] = [];
-//   orderId = 1;
-//   cancellationMessage: string = '';
-//   selectedOrder: OrderDetailsDto | null = null;
-//   selectedTab: 'current' | 'past' = 'current';
-//   expandedOrderId: number | null = null;
-//   canceledCount: number = 0;
-
-//   constructor(private orderService: OrderService, private route: ActivatedRoute) {}
-
-//   ngOnInit(): void {
-//     const id = this.route.snapshot.paramMap.get('id');
-//     if (id) this.orderId = +id;
-
-//     this.loadOrdersByCategory('current');
-//     this.countCanceledOrders();
-//   }
-
-//   loadOrderDetails(): void {
-//     this.orderService.getOrderDetails(this.orderId).subscribe({
-//       next: (data) => this.order = data,
-//       error: (err) => console.error('Failed to fetch order details:', err)
-//     });
-//   }
-
-//   showOrderDetails(orderId: number): void {
-//     this.orderService.getOrderDetails(orderId).subscribe({
-//       next: (data) => this.selectedOrder = data,
-//       error: (err) => {
-//         console.error('Failed to load order details:', err);
-//         alert('Failed to load order details.');
-//       }
-//     });
-//   }
-
-//   hideOrderDetails(): void {
-//     this.selectedOrder = null;
-//   }
-
-//   loadOrdersByCategory(category: 'current' | 'past') {
-//     this.selectedTab = category;
-//     const customerId = 'user1';
-//     this.orderService.getOrdersByStatusCategory(customerId, category).subscribe({
-//       next: (data) => this.orders = data,
-//       error: (err) => console.error('Failed to load orders:', err)
-//     });
-//   }
-
-//   countCanceledOrders(): void {
-//     const customerId = 'user1';
-//     this.orderService.getOrdersByStatusCategory(customerId, 'past').subscribe({
-//       next: (data) => this.canceledCount = data.length,
-//       error: (err) => console.error('Failed to count canceled orders:', err)
-//     });
-//   }
-
-//   toggleDetails(orderId: number): void {
-//     if (this.expandedOrderId === orderId) {
-//       this.expandedOrderId = null;
-//       this.selectedOrder = null;
-//     } else {
-//       this.expandedOrderId = orderId;
-//       this.showOrderDetails(orderId);
-//     }
-//   }
-
-//   cancelOrder(id: number) {
-//     this.orderService.cancelOrder(id).subscribe({
-//       next: (response) => {
-//         console.log('Order cancelled', response);
-//         this.loadOrdersByCategory(this.selectedTab);
-//         this.countCanceledOrders();
-//       },
-//       error: (error) => console.error('Failed to cancel order', error)
-//     });
-//   }
-// }
-
-
 import { Component, OnInit } from '@angular/core';
 import { OrderDetailsDto, OrderListDto } from '../../Models/order.model';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { OrderService } from '../../Services/Customer/order.service';
+import { environment } from '../../Environment/Environment.prod';
 
 @Component({
   selector: 'app-order',
@@ -204,7 +20,10 @@ export class OrderComponent implements OnInit {
   selectedOrder: OrderDetailsDto | null = null;
   activeTab: string = 'ongoing'; // Default tab
 
+  showThankYou = false;
+
   
+  readonly imgbaseUrl=environment.imageBaseUrl;
   //customerId = 'user1';
   customerId: string = localStorage.getItem('userId') ?? '';
 
@@ -219,6 +38,20 @@ export class OrderComponent implements OnInit {
       const orderId = +id;
       this.loadOrderDetails(orderId);
     }
+
+    const state = history.state as { showThankYou?: boolean };
+
+  if (state?.showThankYou) {
+    this.showThankYou = true;
+
+    setTimeout(() => {
+      this.showThankYou = false;
+      // تحميل البيانات لو محتاج
+    }, 3000);
+  } else {
+    this.showThankYou = false;
+    // تحميل البيانات لو محتاج
+  }
   }
 
   loadOrderDetails(orderId: number): void {

@@ -5,7 +5,9 @@ import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '../../Services/Customer/cart.service';
 import { environment } from '../../Environment/Environment.prod';
+import { Modal } from 'bootstrap';
 
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-cart',
@@ -22,6 +24,11 @@ export class CartComponent implements  OnInit {
     customerName: '',
     items: []
   };
+  //confirm modal
+  confirmMessage: string = '';
+  private confirmCallback!: () => void;
+  private modalRef: any;
+  //image base url
   readonly imgbaseUrl=environment.imageBaseUrl;
 
   constructor(private cartService: CartService) {}
@@ -61,32 +68,53 @@ export class CartComponent implements  OnInit {
       }, 0);
   }
 
-//clear item from cart
-  removeItem(item: any) {
-    const confirmed = window.confirm(`Are you sure you want to remove "${item.productName}" from the cart?`);
-    if (!confirmed) return;
 
+  // Show modal with dynamic message and callback
+  showConfirmation(message: string, callback: () => void) {
+    this.confirmMessage = message;
+    this.confirmCallback = callback;
+
+    const modalElement = document.getElementById('confirmModal');
+    this.modalRef = new bootstrap.Modal(modalElement);
+    this.modalRef.show();
+  }
+
+  confirmAction() {
+    if (this.confirmCallback) {
+      this.confirmCallback();
+    }
+    this.modalRef.hide();
+  }
+
+
+
+//clear item from cart
+removeItem(item: any) {
+  this.showConfirmation(`Are you sure you want to remove "${item.productName}" from the cart?`, () => {
     this.cartService.removeItemFromBackend(this.customerId, item.productId).subscribe({
       next: () => {
         this.cartData.items = this.cartData.items.filter(p => p.productId !== item.productId);
         this.calculateTotal();
         this.loadCart();
+        this.cartService.updateCartCount(this.cartData.items.length);// Update cart count in the service
+
       },
       error: err => console.error(err)
     });
-  }
+  });
+}
 
-//clear cart
-  clearCart() {
-    const confirmed = window.confirm('Are you sure you want to clear the entire cart?');
-    if (!confirmed) return;
-
+//  clearCart
+clearCart() {
+  this.showConfirmation('Are you sure you want to clear the entire cart?', () => {
     this.cartService.clearCart(this.customerId).subscribe(() => {
       this.cartData.items = [];
       this.calculateTotal();
       this.loadCart();
+      this.cartService.updateCartCount(this.cartData.items.length); // Update cart count in the service
     });
-  }
+  });
+}
 
 //decrease quantity
   decrease(item: any) {
