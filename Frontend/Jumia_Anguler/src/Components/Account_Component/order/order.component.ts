@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { OrderDetailsDto, OrderListDto } from '../../Models/order.model';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { OrderService } from '../../Services/Customer/order.service';
-import { environment } from '../../Environment/Environment.prod';
+import { OrderDetailsDto, OrderListDto } from '../../../Models/order.model';
+import { OrderService } from '../../../Services/Customer/order.service';
+import { environment } from '../../../Environment/Environment.prod';
 
 @Component({
   selector: 'app-order',
