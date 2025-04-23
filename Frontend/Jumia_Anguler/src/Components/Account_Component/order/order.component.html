@@ -65,7 +65,14 @@
           </div>
         </div>
         
-        
+         <!-- Shipping Details -->
+         <div *ngIf="order.shippingDetails" class="mt-4">
+          <h5>Shipping Details</h5>
+          <p><strong>Tracking Number:</strong> {{ order.shippingDetails.trackingNumber }}</p>
+          <p><strong>Status:</strong> {{ order.shippingDetails.status }}</p>
+          <p><strong>Estimated Delivery:</strong> {{ order.shippingDetails.estimatedDelivery }}</p>
+          <p><strong>Carrier:</strong> {{ order.shippingDetails.carrier }}</p>
+        </div>
 
         
 
