@@ -128,13 +128,44 @@ namespace Jumia_Api.Controllers
         [HttpPost("add-user")]
         public async Task<IActionResult> AddUser([FromBody] CreateUserDTO userDto)
         {
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+//            try
+//            {
+              
+//                var addedUser = await _adminService.AddUserAsync(userDto);
+
+//                if (addedUser == null)
+//                {
+//                    return BadRequest(new
+//                    {
+//                        Success = false,
+//                        Message = "Failed to add the user. Please check the provided data."
+//                    });
+//                }
+
+//                return CreatedAtAction(
+//                    actionName: nameof(GetUserById),
+//                    routeValues: new { userId = addedUser.Id },
+//                    value: new
+//                    {
+//                        Success = true,
+//                        UserId = addedUser.Id,
+//                        Message = "User added successfully"
+//                    });
+//            }
+//            catch (Exception ex)
+//            {
+              
+//                return StatusCode(500, new
+//                {
+//                    Success = false,
+//                    Message = "An error occurred while adding the user",
            
-         
 
             try
             {

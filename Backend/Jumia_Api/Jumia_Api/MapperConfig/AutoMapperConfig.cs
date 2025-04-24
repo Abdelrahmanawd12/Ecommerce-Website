@@ -182,6 +182,8 @@ namespace Jumia_Api.MapperConfig
             // Mapping from Address to AddressDTO
             CreateMap<Address, AddressDTO>()
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId));
+            CreateMap<AddressDTO, Address>();    
+
 
             //Mapping from Seller To SellerDTO
             CreateMap<Seller, sellerDTO>()

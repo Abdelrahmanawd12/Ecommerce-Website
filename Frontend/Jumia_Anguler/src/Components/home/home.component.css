@@ -315,3 +315,12 @@
 
   padding: 10px;
 }
+.btn-addTocart {
+  background-color: #f68b1e;
+  color: white;
+}
+.btn-addTocart:hover {
+  background-color: white;
+  color: #f68b1e;
+  border: 1px solid #f68b1e;
+}

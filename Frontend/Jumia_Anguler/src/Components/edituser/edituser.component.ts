@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
-import { AdminDTO, UsersService } from '../../Services/users.service';
+import { AdminDTO, UsersService } from '../../Services/SellerServ/users.service';
  import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 @Component({

@@ -11,7 +11,7 @@
 
 <div class="navbar">
   <div class="logo">
-    <img src="assets/Jumia-Logo.png" alt="Jumia" routerLink="/home"/>
+    <img src="assets/Jumia-Logo.png" alt="Jumia" routerLink="/home" />
   </div>
   <div class="search-box position-relative">
     <!-- input field -->
@@ -85,23 +85,15 @@
         </div>
       </div>
 
-      <button class="btn" routerLink="/cart" >
-        <i class="fa-solid fa-cart-shopping" style="font-size: 30px;"></i>
-        <span class="badge bg-warning">{{totalItem}}</span>
+      <button class="btn" routerLink="/cart">
+        <i class="fa-solid fa-cart-shopping" style="font-size: 23px;"></i>
+        <span class="badge" style="background-color: #f68b1e;">{{totalItem}}</span>
       </button>
-        </div>
-  </div>
-  <!-- <div class="toast-container position-fixed bottom-0 end-0 p-3" *ngIf="showToast" style="z-index: 1100;">
-    <div class="toast show align-items-center text-white bg-success border-0" role="alert">
-      <div class="d-flex">
-        <div class="toast-body">
-          Logged out successfully ✅
-        </div>
-        <button type="button" class="btn-close btn-close-white me-2 m-auto" (click)="showToast = false"></button>
-      </div>
     </div>
-  </div> -->
+  </div>
 </div>
+
+
 <!-- Logout Confirmation Modal -->
 <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
   <div class="modal-dialog">

@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AdminDTO, Roles, UsersService } from '../../Services/users.service';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CreateUserDTO } from '../../Services/users.service';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,6 +13,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatError } from '@angular/material/form-field';
 import { DatePipe } from '@angular/common';
+import { Roles, UsersService, CreateUserDTO } from '../../Services/SellerServ/users.service';
 @Component({
   selector: 'app-adduser',
   standalone: true,

@@ -18,7 +18,7 @@ export class SellerDashboardSidebarComponent implements OnInit {
   isManageProductsOpen = false;
   isProfileMenuOpen = false;
   activeLink: string = 'home';
-  constructor(private logout: LogoutService, private router: Router,private modalService: NgbModal) { }
+  constructor(private logout: LogoutService, private router: Router, private modalService: NgbModal) { }
 
 
   @Input() isCollapsed: boolean = false;
@@ -28,12 +28,12 @@ export class SellerDashboardSidebarComponent implements OnInit {
   ngOnInit(): void {
     const modalElement = document.getElementById('logoutModal');
     if (modalElement) {
-        modalElement.addEventListener('hidden.bs.modal', () => {
-            document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
-        });
+      modalElement.addEventListener('hidden.bs.modal', () => {
+        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+      });
     }
     // const savedState = localStorage.getItem('sidebarCollapsed');
-    this.isCollapsed  = false;
+    this.isCollapsed = false;
 
     if (this.isCollapsed) {
       this.isManageProductsOpen = false;
@@ -44,15 +44,14 @@ export class SellerDashboardSidebarComponent implements OnInit {
   toggleSidebar(): void {
     this.isCollapsed = !this.isCollapsed;
     // localStorage.setItem('sidebarCollapsed', this.isCollapsed.toString());
-  
     if (this.isCollapsed) {
       this.isManageProductsOpen = false;
       this.isProfileMenuOpen = false;
     }
-  
+
     this.toggle.emit(this.isCollapsed);
   }
-  
+
   @ViewChild('logoutModal') logoutModal!: ElementRef;
 
   isLogoutConfirmationOpen = false;
@@ -73,30 +72,30 @@ export class SellerDashboardSidebarComponent implements OnInit {
   }
 
   toggleManageProductsMenu(): void {
-    this.isCollapsed = !this.isCollapsed;
     if (this.isCollapsed) {
       this.isCollapsed = false;
       setTimeout(() => {
         this.isManageProductsOpen = true;
       }, 300);
+      this.toggle.emit(this.isCollapsed); 
     } else {
       this.isManageProductsOpen = !this.isManageProductsOpen;
     }
-    this.toggle.emit(this.isCollapsed);
   }
+  
 
   toggleProfileMenu(): void {
-    this.isCollapsed = !this.isCollapsed;
     if (this.isCollapsed) {
       this.isCollapsed = false;
       setTimeout(() => {
         this.isProfileMenuOpen = true;
       }, 300);
+      this.toggle.emit(this.isCollapsed); 
     } else {
       this.isProfileMenuOpen = !this.isProfileMenuOpen;
     }
-    this.toggle.emit(this.isCollapsed);
   }
+  
   setActive(linkName: string) {
     this.activeLink = linkName;
   }

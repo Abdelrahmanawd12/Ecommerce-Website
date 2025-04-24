@@ -2,16 +2,26 @@ import { ShopComponent } from '../Components/Cstomer/shop/shop.component';
 import { ProductDetailsComponent } from '../Components/product-details/product-details.component';
 import { Routes } from '@angular/router';
 import { CheckoutComponent } from '../Components/checkout/checkout.component';
+import { SuccessComponent } from '../Components/success/success.component';
+import { CancelComponent } from '../Components/cancel/cancel.component';
+import { OrderSuccessComponent } from '../Components/order-success/order-success.component';
 
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
 
   //Abdelrahman
-  { path: 'home', loadComponent: () => import('../Components/home/home.component').then((m) => m.HomeComponent) },
-  { path: 'shop', loadComponent: () => import('../Components/Cstomer/shop/shop.component').then((m) => m.ShopComponent) },
-  { path: 'cart', loadComponent: () => import('../Components/cart/cart.component').then((m) => m.CartComponent) },
-  { path: 'awadwishlist', loadComponent: () => import('../Components/awad-wish-list/awad-wish-list.component').then((m) => m.AwadWishListComponent) },
+  {path:'home' , loadComponent: () => import('../Components/home/home.component').then((m) => m.HomeComponent)},
+
+  {path:'shop' , loadComponent: () => import('../Components/Cstomer/shop/shop.component').then((m) => m.ShopComponent)},
+
+
+  {path:'cart' , loadComponent: () => import('../Components/cart/cart.component').then((m) => m.CartComponent)},
+
+  {path:'awadWishlist' , loadComponent: () => import('../Components/awad-wish-list/awad-wish-list.component').then((m) => m.AwadWishListComponent)},
+
+
+
   { path: 'shop/:id', component: ShopComponent },
   { path: 'details/:id', component: ProductDetailsComponent },
 
@@ -101,6 +111,10 @@ export const routes: Routes = [
       }
     ]
   },
+  { path: 'order-success', component: OrderSuccessComponent },
+
+  { path: 'success', component: SuccessComponent },
+  { path: 'cancel', component: CancelComponent },
   {
     path: 'account',
     loadComponent: () =>

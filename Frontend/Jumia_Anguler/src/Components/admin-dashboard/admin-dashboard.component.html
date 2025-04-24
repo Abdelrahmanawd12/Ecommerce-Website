@@ -32,11 +32,11 @@
         </div>
         <div class="stat-content">
           <h6 class="stat-label">TOTAL USERS</h6>
-          <h3 class="stat-value">{{ filteredStats?.totalUsers | number }}</h3>
+          <h3 class="stat-value">{{ filteredStats.totalUsers | number }}</h3>
           <div class="stat-trend">
             <span class="badge trend-badge success">
               <i class="bi bi-arrow-up"></i>
-              <span class="trend-text">{{ filteredStats?.newUsersThisMonth | number }} new this month</span>
+              <span class="trend-text">{{ filteredStats.newUsersThisMonth | number }} new this month</span>
             </span>
           </div>
         </div>
@@ -51,11 +51,11 @@
         </div>
         <div class="stat-content">
           <h6 class="stat-label">TOTAL PRODUCTS</h6>
-          <h3 class="stat-value">{{ filteredStats?.totalProducts | number }}</h3>
+          <h3 class="stat-value">{{ filteredStats.totalProducts | number }}</h3>
           <div class="stat-trend">
             <span class="badge trend-badge warning">
               <i class="bi bi-exclamation-triangle"></i>
-              <span class="trend-text">{{ filteredStats?.outOfStockProducts | number }} out of stock</span>
+              <span class="trend-text">{{ filteredStats.outOfStockProducts | number }} out of stock</span>
             </span>
           </div>
         </div>
@@ -70,11 +70,11 @@
         </div>
         <div class="stat-content">
           <h6 class="stat-label">TOTAL SALES</h6>
-          <h3 class="stat-value">{{ filteredStats?.totalSales | currency:'USD':'symbol':'1.2-2' }}</h3>
+          <h3 class="stat-value">{{ filteredStats.totalSales | currency:'USD':'symbol':'1.2-2' }}</h3>
           <div class="stat-trend">
             <span class="badge trend-badge info">
               <i class="bi bi-graph-up"></i>
-              <span class="trend-text">{{ filteredStats?.totalCommission | currency:'USD':'symbol':'1.2-2' }} commission</span>
+              <span class="trend-text">{{ filteredStats.totalCommission | currency:'USD':'symbol':'1.2-2' }} commission</span>
             </span>
           </div>
         </div>

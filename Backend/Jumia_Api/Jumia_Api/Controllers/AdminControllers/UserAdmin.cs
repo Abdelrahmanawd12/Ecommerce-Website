@@ -32,13 +32,13 @@ namespace Jumia_Api.Controllers.AdminControllers
                 return NotFound("Admin not found.");
             }
 
-        
+
             admin.FirstName = adminDto.FirstName;
             admin.LastName = adminDto.LastName;
             admin.DateOfBirth = adminDto.DateOfBirth;
             admin.Gender = adminDto.Gender;
 
-          
+
             if (admin.Email != adminDto.Email)
             {
                 var emailExists = await _userManager.FindByEmailAsync(adminDto.Email);

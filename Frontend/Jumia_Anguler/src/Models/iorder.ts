@@ -1,6 +1,9 @@
 export interface IOrder {
-    orderId: number;
-    productId: number;
+    sellerId?:string;
+    customerId?:string;
+    cartItems?:[];
+    orderId?: number;
+    productId?: number;
     quantity: number;
     totalAmount: number;
     orderDate: Date;
