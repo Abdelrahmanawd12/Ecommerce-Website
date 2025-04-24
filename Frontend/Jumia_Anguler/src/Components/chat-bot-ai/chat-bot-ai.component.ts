@@ -29,7 +29,6 @@ export class ChatBotAiComponent implements OnDestroy {
     if (this.typingInterval) clearInterval(this.typingInterval);
   }
 
-
   toggleChatbot() {
     this.isChatbotVisible = !this.isChatbotVisible;
   }

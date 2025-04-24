@@ -10,7 +10,7 @@ import { environment } from '../../../Environment/Environment.prod';
 import { EditProductPopupComponent } from '../edit-product-popup/edit-product-popup.component';
 
 @Component({
-  imports: [CurrencyPipe, CommonModule, FormsModule, MatDialogModule],
+  imports: [CurrencyPipe, CommonModule, FormsModule, SellerDashboardSidebarComponent, MatDialogModule],
   templateUrl: './manage-product.component.html',
   styleUrl: './manage-product.component.css'
 })

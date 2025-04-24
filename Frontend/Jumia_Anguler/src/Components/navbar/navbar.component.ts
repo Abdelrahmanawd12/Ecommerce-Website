@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CartService } from '../../Services/Customer/cart.service';
-import { ProductService } from '../../Services/AdminServ/product.service';
+import { ProductService } from '../../Services/product.service';
 import { FormsModule } from '@angular/forms';
 import { SearchResponse } from '../../Models/search-response';
 import { LoginService } from '../../Services/Auth/LoginServ/login.service';
@@ -10,7 +10,7 @@ declare var bootstrap: any;
 
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, RouterLinkActive, FormsModule],
   standalone: true,
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'

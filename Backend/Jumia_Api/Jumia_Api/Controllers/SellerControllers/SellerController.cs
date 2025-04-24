@@ -416,7 +416,7 @@ namespace Jumia_Api.Controllers.SellerControllers
         }
 
         //-------------------------------------------------------------------------------------
-        //Get All Orders By Seller Id and date
+        //Get All Orders By Seller Id and data
         [HttpGet("/ordersByDate/{sellerId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
@@ -705,6 +705,7 @@ namespace Jumia_Api.Controllers.SellerControllers
 
             return Ok("Product status updated successfully");
         }
+
 
     }
 }

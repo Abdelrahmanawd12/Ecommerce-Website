@@ -112,16 +112,22 @@
     </div>
   </div>
 </div>
-
-
 <!-- Toast -->
-<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1055" *ngIf="showToast">
+<div
+  class="toast-container position-fixed bottom-0 end-0 p-3"
+  style="z-index: 1055"
+  *ngIf="showToast"
+>
   <div class="toast show text-white bg-success border-0">
     <div class="d-flex">
       <div class="toast-body">
         Logged out successfully ✅
       </div>
-      <button type="button" class="btn-close btn-close-white me-2 m-auto" (click)="showToast = false"></button>
+      <button
+        type="button"
+        class="btn-close btn-close-white me-2 m-auto"
+        (click)="showToast = false"
+      ></button>
     </div>
   </div>
 </div>

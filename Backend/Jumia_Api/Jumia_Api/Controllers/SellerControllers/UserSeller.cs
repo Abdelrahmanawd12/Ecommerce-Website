@@ -137,5 +137,6 @@ namespace Jumia_Api.Controllers.SellerControllers
             }
         }
 
+
     }
 }

@@ -1,12 +1,20 @@
 /* Wishlist Custom Styling */
+<<<<<<< HEAD
 /* .add-to-cart-btn {
+=======
+.add-to-cart-btn {
+>>>>>>> bf3dd297e005f10a561a4237c04793a149eb5612
     background-color: #f68b1e;
     border: none;
     transition: background-color 0.3s ease;
   }
   
   .add-to-cart-btn:hover {
+<<<<<<< HEAD
     background-color: #e67b10; 
+=======
+    background-color: #e67b10; /* أغمق شويه */
+>>>>>>> bf3dd297e005f10a561a4237c04793a149eb5612
   }
   
   .remove-btn {
@@ -31,7 +39,11 @@
     color: #999;
     font-weight: normal;
   }
+<<<<<<< HEAD
      */
+=======
+    
+>>>>>>> bf3dd297e005f10a561a4237c04793a149eb5612
 /* 
   .discounted-price {
     text-decoration: line-through;
@@ -47,6 +59,7 @@
   filter: brightness(1.1);
   transform: scale(1.02);
 } */
+<<<<<<< HEAD
 /* ----------------------------------------------------------------------------------------------------- */
 /* header style */
 .wishlist-header {
@@ -180,3 +193,5 @@
       max-width: 100%;
   }
 }
+=======
+>>>>>>> bf3dd297e005f10a561a4237c04793a149eb5612

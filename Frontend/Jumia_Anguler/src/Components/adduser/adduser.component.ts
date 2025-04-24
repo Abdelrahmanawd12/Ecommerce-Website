@@ -26,6 +26,8 @@ import { Roles, UsersService, CreateUserDTO } from '../../Services/SellerServ/us
     MatDatepickerModule,
     MatNativeDateModule,
     DatePipe,
+  
+    MatError,
     HttpClientModule, RouterModule, CommonModule],
   templateUrl: './adduser.component.html',
   styleUrl: './adduser.component.css'
@@ -111,8 +113,9 @@ export class AdduserComponent implements OnInit {
       }
   
       this.isLoading = true;
-      this.emailServerError = ''; // Reset previous error
-  
+      this.emailServerError = '';
+    
+      
       const dateString = this.userForm.get('dateOfBirth')?.value;
       const isoDate = dateString ? `${dateString}T00:00:00Z` : undefined;
   
@@ -127,8 +130,8 @@ export class AdduserComponent implements OnInit {
         },
         error: (err) => {
           this.isLoading = false;
-          if (err.status === 409) { 
-            this.emailServerError = 'This email is already registered';
+          if (err.status === 500) { 
+            this.emailServerError = 'This email is already Taken.';
             this.userForm.get('email')?.setErrors({ serverError: true });
           } else {
             console.error('Error creating user:', err);

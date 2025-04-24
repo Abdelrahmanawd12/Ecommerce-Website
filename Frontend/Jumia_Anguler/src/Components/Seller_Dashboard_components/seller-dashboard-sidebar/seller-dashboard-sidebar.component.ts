@@ -44,7 +44,6 @@ export class SellerDashboardSidebarComponent implements OnInit {
   toggleSidebar(): void {
     this.isCollapsed = !this.isCollapsed;
     // localStorage.setItem('sidebarCollapsed', this.isCollapsed.toString());
-
     if (this.isCollapsed) {
       this.isManageProductsOpen = false;
       this.isProfileMenuOpen = false;

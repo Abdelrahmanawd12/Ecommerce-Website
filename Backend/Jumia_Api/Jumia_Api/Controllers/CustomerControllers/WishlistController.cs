@@ -148,6 +148,7 @@ namespace Jumia_Api.Controllers.CustomerControllers
             _context.WishlistItems.Add(newItem);
             await _context.SaveChangesAsync();
 
+            // هات بيانات المنتج بالكامل
             var product = await _context.Products
                 .Include(p => p.ProductImages)
                 .FirstOrDefaultAsync(p => p.ProductId == dto.ProductId);

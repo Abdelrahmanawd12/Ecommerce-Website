@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Jumia_Api.DTOs.SellerDTOs
-{
+namespace Jumia_Api.DTOs.SellerDTOs;
+
     public class AddressDTO
     {
         public int AddressId { get; set; }
@@ -18,5 +18,6 @@ namespace Jumia_Api.DTOs.SellerDTOs
         public string UserId { get; set; }
 
 
+
     }
-}
+

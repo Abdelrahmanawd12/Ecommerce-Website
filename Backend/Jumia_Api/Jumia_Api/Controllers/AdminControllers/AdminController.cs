@@ -2,6 +2,7 @@
 using Jumia_Api.DTOs.AdminDTOs;
 using Jumia_Api.DTOs.CustomerDTOs;
 using Jumia_Api.Services.Admin_Service;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,10 +13,11 @@ namespace Jumia_Api.Controllers
     public class AdminController : ControllerBase
     {
         private readonly IAdminService _adminService;
-
-        public AdminController(IAdminService adminService)
+        private readonly UserManager<ApplicationUser> _userManager;
+        public AdminController(IAdminService adminService, UserManager<ApplicationUser> userManager)
         {
             _adminService = adminService;
+            _userManager = userManager;
         }
 
         // Orders Endpoints
@@ -126,43 +128,56 @@ namespace Jumia_Api.Controllers
         [HttpPost("add-user")]
         public async Task<IActionResult> AddUser([FromBody] CreateUserDTO userDto)
         {
-           
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+//            try
+//            {
+              
+//                var addedUser = await _adminService.AddUserAsync(userDto);
+
+//                if (addedUser == null)
+//                {
+//                    return BadRequest(new
+//                    {
+//                        Success = false,
+//                        Message = "Failed to add the user. Please check the provided data."
+//                    });
+//                }
+
+//                return CreatedAtAction(
+//                    actionName: nameof(GetUserById),
+//                    routeValues: new { userId = addedUser.Id },
+//                    value: new
+//                    {
+//                        Success = true,
+//                        UserId = addedUser.Id,
+//                        Message = "User added successfully"
+//                    });
+//            }
+//            catch (Exception ex)
+//            {
+              
+//                return StatusCode(500, new
+//                {
+//                    Success = false,
+//                    Message = "An error occurred while adding the user",
+           
+
             try
             {
-              
                 var addedUser = await _adminService.AddUserAsync(userDto);
-
-                if (addedUser == null)
-                {
-                    return BadRequest(new
-                    {
-                        Success = false,
-                        Message = "Failed to add the user. Please check the provided data."
-                    });
-                }
-
-                return CreatedAtAction(
-                    actionName: nameof(GetUserById),
-                    routeValues: new { userId = addedUser.Id },
-                    value: new
-                    {
-                        Success = true,
-                        UserId = addedUser.Id,
-                        Message = "User added successfully"
-                    });
+                return CreatedAtAction(nameof(GetUserById), new { userId = addedUser.Id }, addedUser);
             }
             catch (Exception ex)
             {
-              
                 return StatusCode(500, new
                 {
                     Success = false,
-                    Message = "An error occurred while adding the user",
+                    Message = "An error occurred while adding the user.",
                     Error = ex.Message
                 });
             }

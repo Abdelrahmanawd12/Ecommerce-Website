@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AdminCategoryService, Category, SubCategory } from '../../Services/AdminServ/admin-category.service';
+import { AdminCategoryService, Category, SubCategory } from '../../Services/admin-category.service';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';

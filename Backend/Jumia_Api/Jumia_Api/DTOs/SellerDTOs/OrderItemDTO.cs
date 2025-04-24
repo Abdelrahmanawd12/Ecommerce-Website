@@ -16,6 +16,7 @@ namespace Jumia_Api.DTOs.SellerDTOs
         public ProductsDTO Product { get; set; } 
 
 
+
         public List<ProductImgDTO> ProductImages { get; set; }
     }
 

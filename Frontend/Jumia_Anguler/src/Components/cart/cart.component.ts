@@ -89,35 +89,35 @@ export class CartComponent implements OnInit {
 
 
 
-  //clear item from cart
-  removeItem(item: any) {
-    this.showConfirmation(`Are you sure you want to remove "${item.productName}" from the cart?`, () => {
-      this.cartService.removeItemFromBackend(this.customerId, item.productId).subscribe({
-        next: () => {
-          this.cartData.items = this.cartData.items.filter(p => p.productId !== item.productId);
-          this.calculateTotal();
-          this.loadCart();
-          this.cartService.updateCartCount(this.cartData.items.length);// Update cart count in the service
-
-        },
-        error: err => console.error(err)
-      });
-    });
-  }
-
-  //  clearCart
-  clearCart() {
-    this.showConfirmation('Are you sure you want to clear the entire cart?', () => {
-      this.cartService.clearCart(this.customerId).subscribe(() => {
-        this.cartData.items = [];
+//clear item from cart
+removeItem(item: any) {
+  this.showConfirmation(`Are you sure you want to remove "${item.productName}" from the cart?`, () => {
+    this.cartService.removeItemFromBackend(this.customerId, item.productId).subscribe({
+      next: () => {
+        this.cartData.items = this.cartData.items.filter(p => p.productId !== item.productId);
         this.calculateTotal();
         this.loadCart();
-        this.cartService.updateCartCount(this.cartData.items.length); // Update cart count in the service
-      });
-    });
-  }
+        this.cartService.updateCartCount(this.cartData.items.length);// Update cart count in the service
 
-  //decrease quantity
+      },
+      error: err => console.error(err)
+    });
+  });
+}
+
+//  clearCart
+clearCart() {
+  this.showConfirmation('Are you sure you want to clear the entire cart?', () => {
+    this.cartService.clearCart(this.customerId).subscribe(() => {
+      this.cartData.items = [];
+      this.calculateTotal();
+      this.loadCart();
+      this.cartService.updateCartCount(this.cartData.items.length); // Update cart count in the service
+    });
+  });
+}
+
+//decrease quantity
   decrease(item: any) {
     if (item.quantity > 1) {
       item.quantity -= 1;
@@ -127,8 +127,8 @@ export class CartComponent implements OnInit {
       });
     }
   }
-  //increase quantity
-  increase(item: any, stock: number) {
+//increase quantity
+  increase(item: any,stock: number) {
     console.log('Stock available:', stock);  // Debugging line
 
     if (item.quantity < stock) {
@@ -137,7 +137,7 @@ export class CartComponent implements OnInit {
         next: () => this.calculateTotal(),
         error: err => console.error(err)
       });
-    } else {
+    }else {
       alert(`Only ${stock} items available in stock`);
     }
   }

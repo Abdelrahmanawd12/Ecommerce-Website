@@ -201,6 +201,7 @@ namespace Jumia_Api.MapperConfig
                .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.ProductTags.Select(t => t.Tag).ToList()));
 
 
+
             CreateMap<Admin, AdminDTO>();
         }
     }
