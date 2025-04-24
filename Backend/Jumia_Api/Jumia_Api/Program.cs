@@ -37,9 +37,15 @@ namespace Jumia_Api
             //builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
             //   .AddEntityFrameworkStores<JumiaDbContext>();
 
-            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<JumiaDbContext>()
-                .AddDefaultTokenProviders();
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.User.RequireUniqueEmail = false;
+            })
+       .AddEntityFrameworkStores<JumiaDbContext>()
+       .AddDefaultTokenProviders()
+       .AddUserValidator<CustomUserValidator<ApplicationUser>>();
+
+
 
             builder.Services.AddCors(options =>
             {
