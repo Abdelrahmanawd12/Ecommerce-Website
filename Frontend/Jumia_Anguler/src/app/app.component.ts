@@ -60,9 +60,29 @@ export class AppComponent implements OnInit {
           this.showMarginTop = true;
           this.showChatbotAI = true;
         }
+        if (currentRoute === '/admin' || currentRoute === '/admin/dashboard' || currentRoute === '/admin/products' || currentRoute === '/admin/adduser' || currentRoute === '/sellerDashboard' || currentRoute === '/intro' || currentRoute === '/sellOnJumia' || currentRoute === '/dashboard' || currentRoute == '/sellerDashboard/homeseller' || currentRoute == '/sellerDashboard/orderMangement' || currentRoute == '/sellerDashboard/manageProduct' || currentRoute == '/sellerDashboard/prductSales' ||currentRoute == '/sellerDashboard/accountprofile'||currentRoute == '/sellerDashboard/reports'|| currentRoute == '/sellerDashboard/addproduct' || currentRoute=='/sellerDashboard/sales') {
+          this.showHeader = false;
+          this.showMarginTop = false;
+          this.showChatbotAI = false;
+       
+        } else {
+          this.showHeader = true;
+          this.showMarginTop = true;
+          this.showChatbotAI = true;
+        }
 
         // Optionally, you can also hide the footer for certain pages
         if (currentRoute === '/login' || currentRoute === '/error' || currentRoute === '/register' || currentRoute === '/sellerRegisteration' || currentRoute === '/sellerDashboard' || currentRoute === '/intro' || currentRoute === '/sellOnJumia' || currentRoute === '/dashboard' ||currentRoute == '/sellerDashboard/homeseller' || currentRoute == '/sellerDashboard/orderMangement' || currentRoute == '/sellerDashboard/manageProduct' || currentRoute == '/sellerDashboard/prductSales' ||currentRoute == '/sellerDashboard/accountprofile'||currentRoute == '/sellerDashboard/reports' || currentRoute == '/sellerDashboard/addproduct' || currentRoute == '/sellerDashboard/sales' ) {
+          this.showFooter = false;
+          this.showMarginTop = false;
+          this.showChatbotAI = false;
+        } else {
+          this.showFooter = true;
+          this.showMarginTop = true;
+          this.showChatbotAI = true;
+        }
+
+        if (currentRoute === '/admin' || currentRoute === '/admin/dashboard' || currentRoute === '/register' || currentRoute === '/sellerRegisteration' || currentRoute === '/sellerDashboard' || currentRoute === '/intro' || currentRoute === '/sellOnJumia' || currentRoute === '/dashboard' ||currentRoute == '/sellerDashboard/homeseller' || currentRoute == '/sellerDashboard/orderMangement' || currentRoute == '/sellerDashboard/manageProduct' || currentRoute == '/sellerDashboard/prductSales' ||currentRoute == '/sellerDashboard/accountprofile'||currentRoute == '/sellerDashboard/reports' || currentRoute == '/sellerDashboard/addproduct' || currentRoute == '/sellerDashboard/sales' ) {
           this.showFooter = false;
           this.showMarginTop = false;
           this.showChatbotAI = false;

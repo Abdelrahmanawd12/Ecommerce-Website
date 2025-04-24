@@ -165,7 +165,64 @@ namespace Jumia_Api.Services.Admin_Service
 
         public async Task<AdminDTO> AddUserAsync(CreateUserDTO userDto)
         {
-            ApplicationUser user = userDto.Role switch
+          
+            var existingUser = await userManager.FindByEmailAsync(userDto.Email);
+
+            if (existingUser != null && !existingUser.IsDeleted)
+            {
+                throw new Exception("Email is already exist");
+            }
+
+       
+            if (existingUser != null && existingUser.IsDeleted)
+            {
+             
+                existingUser.IsDeleted = false;
+                existingUser.UserName = userDto.Email;
+                existingUser.Email = userDto.Email;
+                existingUser.FirstName = userDto.FirstName;
+                existingUser.LastName = userDto.LastName;
+
+              
+                var resetToken = await userManager.GeneratePasswordResetTokenAsync(existingUser);
+                var resetResult = await userManager.ResetPasswordAsync(existingUser, resetToken, userDto.Password);
+
+                if (!resetResult.Succeeded)
+                {
+                    throw new Exception("Failed to update Password: " +
+                        string.Join(", ", resetResult.Errors.Select(e => e.Description)));
+                }
+
+                if (existingUser is Seller seller)
+                {
+                    seller.StoreName = userDto.StoreName;
+                    seller.StoreAddress = userDto.StoreAddress;
+                }
+
+                await userManager.UpdateAsync(existingUser);
+
+             
+                var currentRoles = await userManager.GetRolesAsync(existingUser);
+                if (!currentRoles.Contains(userDto.Role))
+                {
+                    await userManager.RemoveFromRolesAsync(existingUser, currentRoles);
+                    await userManager.AddToRoleAsync(existingUser, userDto.Role);
+                }
+
+                return new AdminDTO
+                {
+                    Id = existingUser.Id,
+                    FirstName = existingUser.FirstName,
+                    LastName = existingUser.LastName,
+                    Email = existingUser.Email,
+                    Role = userDto.Role,
+                    Gender = existingUser.Gender,
+                    DateOfBirth = existingUser.DateOfBirth,
+                    CreatedAt = existingUser.CreatedAt
+                };
+            }
+
+            ApplicationUser newUser = userDto.Role switch
             {
                 "Seller" => new Seller
                 {
@@ -186,32 +243,31 @@ namespace Jumia_Api.Services.Admin_Service
                 }
             };
 
-        
-            user.UserName = userDto.Email;
-            user.Email = userDto.Email;
-            user.FirstName = userDto.FirstName;
-            user.LastName = userDto.LastName;
+            newUser.UserName = userDto.Email;
+            newUser.Email = userDto.Email;
+            newUser.FirstName = userDto.FirstName;
+            newUser.LastName = userDto.LastName;
 
-            var result = await userManager.CreateAsync(user, userDto.Password);
+            var createResult = await userManager.CreateAsync(newUser, userDto.Password);
 
-            if (!result.Succeeded)
+            if (!createResult.Succeeded)
             {
-                throw new Exception(string.Join(", ", result.Errors.Select(e => e.Description)));
+                throw new Exception("Failed in Add user " +
+                    string.Join(", ", createResult.Errors.Select(e => e.Description)));
             }
 
-          
-            await userManager.AddToRoleAsync(user, userDto.Role);
+            await userManager.AddToRoleAsync(newUser, userDto.Role);
 
             return new AdminDTO
             {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
+                Id = newUser.Id,
+                FirstName = newUser.FirstName,
+                LastName = newUser.LastName,
+                Email = newUser.Email,
                 Role = userDto.Role,
-                Gender = user.Gender,
-                DateOfBirth = user.DateOfBirth,
-                CreatedAt = user.CreatedAt
+                Gender = newUser.Gender,
+                DateOfBirth = newUser.DateOfBirth,
+                CreatedAt = DateTime.UtcNow
             };
         }
 

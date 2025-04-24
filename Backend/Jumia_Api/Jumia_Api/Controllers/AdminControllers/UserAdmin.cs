@@ -2,9 +2,6 @@
 using Jumia.Data;
 using Jumia.Models;
 using Jumia_Api.DTOs.AdminDTOs;
-using Jumia_Api.DTOs.SellerDTOs;
-using Jumia_Api.UnitOFWorks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,121 +12,116 @@ namespace Jumia_Api.Controllers.AdminControllers
     [ApiController]
     public class UserAdmin : ControllerBase
     {
-
-
-            private readonly IMapper mapper;
-            private readonly UserManager<ApplicationUser> userManager;
-
-       
+        private readonly IMapper _mapper;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly JumiaDbContext _context;
 
-      
-        public UserAdmin(IMapper _mapper, UserManager<ApplicationUser> _userManager, JumiaDbContext context)
+        public UserAdmin(IMapper mapper, UserManager<ApplicationUser> userManager, JumiaDbContext context)
         {
-            this.mapper = _mapper;
-            this.userManager = _userManager;
+            _mapper = mapper;
+            _userManager = userManager;
             _context = context;
         }
 
-      
-        [HttpPut("editAdmin")]
+        [HttpPut("editAdmin/{id}")]
         public async Task<IActionResult> EditAdmin(string id, [FromBody] AdminDTO adminDto)
         {
-            var admin = await _context.Users.FindAsync(id);
-
-            if (admin == null)
+            var admin = await _userManager.FindByIdAsync(id);
+            if (admin == null || admin.Role != "Admin")
             {
                 return NotFound("Admin not found.");
             }
 
-         
+        
             admin.FirstName = adminDto.FirstName;
             admin.LastName = adminDto.LastName;
-            admin.Role = adminDto.Role;
-            admin.Email = adminDto.Email;
             admin.DateOfBirth = adminDto.DateOfBirth;
             admin.Gender = adminDto.Gender;
 
-            _context.Users.Update(admin);
-            await _context.SaveChangesAsync();
-
-            var updatedDto = mapper.Map<AdminDTO>(admin);
-            return Ok(updatedDto);
-        }
-
-
-        [HttpPut("editAdminEmail")]
-        public async Task<IActionResult> EditAdminEmail(string id, [FromBody] UpdateAdminEmailDTO emailDto)
-        {
-            var admin = await _context.Users.FindAsync(id);
-
-            if (admin == null)
+          
+            if (admin.Email != adminDto.Email)
             {
-                return NotFound("Admin not found.");
+                var emailExists = await _userManager.FindByEmailAsync(adminDto.Email);
+                if (emailExists != null && emailExists.Id != id)
+                {
+                    return BadRequest("Email is already in use.");
+                }
+
+                admin.Email = adminDto.Email;
+                admin.UserName = adminDto.Email;
+                admin.NormalizedEmail = adminDto.Email.ToUpper();
+                admin.NormalizedUserName = adminDto.Email.ToUpper();
             }
 
-         
-            var existingEmail = await _context.Users.FirstOrDefaultAsync(u => u.Email == emailDto.Email && u.Id != id);
-            if (existingEmail != null)
+            var result = await _userManager.UpdateAsync(admin);
+            if (!result.Succeeded)
             {
-                return BadRequest("This email is already in use.");
+                return BadRequest(result.Errors);
             }
 
-            admin.Email = emailDto.Email;
-
-            _context.Users.Update(admin);
-            await _context.SaveChangesAsync();
-
-            return Ok(new { Email = admin.Email });
+            return Ok(_mapper.Map<AdminDTO>(admin));
         }
-        [HttpPut("changePassword")]
+
+        [HttpPut("changePassword/{id}")]
         public async Task<IActionResult> ChangePassword(string id, [FromBody] ChangePasswordDTO passwordDto)
         {
-            var admin = await _context.Users.FindAsync(id);
-
-            if (admin == null)
+            var admin = await _userManager.FindByIdAsync(id);
+            if (admin == null || admin.Role != "Admin")
             {
                 return NotFound("Admin not found.");
             }
 
-            if (string.IsNullOrEmpty(admin.PasswordHash))
+            var result = await _userManager.ChangePasswordAsync(admin, passwordDto.OldPassword, passwordDto.NewPassword);
+            if (!result.Succeeded)
             {
-                return BadRequest("This admin does not have a password set.");
+                return BadRequest(result.Errors);
             }
 
-            var passwordHasher = new PasswordHasher<ApplicationUser>();
-            var verificationResult = passwordHasher.VerifyHashedPassword(admin, admin.PasswordHash, passwordDto.OldPassword);
-
-            if (verificationResult == PasswordVerificationResult.Failed)
-            {
-                return BadRequest("Old password is incorrect.");
-            }
-
-            admin.PasswordHash = passwordHasher.HashPassword(admin, passwordDto.NewPassword);
-
-            _context.Users.Update(admin);
-            await _context.SaveChangesAsync();
-
-            return Ok("Password changed successfully.");
+            return Ok(new { Message = "Password changed successfully." });
         }
-
 
         [HttpGet("getAdminById/{id}")]
         public async Task<IActionResult> GetAdminById(string id)
         {
-            var admin = await _context.Users.FindAsync(id);
+            var admin = await _context.Users
+                .AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Id == id && u.Role == "Admin");
 
             if (admin == null)
             {
                 return NotFound("Admin not found.");
             }
 
-            var adminDto = mapper.Map<AdminDTO>(admin);
-            return Ok(adminDto);
+            return Ok(_mapper.Map<AdminDTO>(admin));
         }
 
+        [HttpGet("getAllAdmins")]
+        public async Task<IActionResult> GetAllAdmins()
+        {
+            var admins = await _context.Users
+                .AsNoTracking()
+                .Where(u => u.Role == "Admin")
+                .ToListAsync();
 
+            return Ok(_mapper.Map<List<AdminDTO>>(admins));
+        }
+
+        [HttpDelete("deleteAdmin/{id}")]
+        public async Task<IActionResult> DeleteAdmin(string id)
+        {
+            var admin = await _userManager.FindByIdAsync(id);
+            if (admin == null || admin.Role != "Admin")
+            {
+                return NotFound("Admin not found.");
+            }
+
+            var result = await _userManager.DeleteAsync(admin);
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+
+            return Ok(new { Message = "Admin deleted successfully." });
+        }
     }
 }
-
-
