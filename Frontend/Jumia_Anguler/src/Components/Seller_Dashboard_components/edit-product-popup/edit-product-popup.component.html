@@ -20,7 +20,8 @@
 
                     <div class="form-group">
                         <label class="form-label">Description</label>
-                        <textarea class="form-control" rows="2" [(ngModel)]="updatedProduct.description" name="description"></textarea>
+                        <textarea class="form-control" rows="2" [(ngModel)]="updatedProduct.description"
+                            name="description"></textarea>
                     </div>
                 </div>
 
@@ -41,11 +42,13 @@
 
                     <div class="form-group">
                         <label class="form-label">Weight (kg)</label>
-                        <input type="number" step="0.01" class="form-control" [(ngModel)]="updatedProduct.weight" name="weight">
+                        <input type="number" step="0.01" class="form-control" [(ngModel)]="updatedProduct.weight"
+                            name="weight">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Discount %</label>
-                        <input type="number" step="0.01" class="form-control" [(ngModel)]="updatedProduct.discount" name="discount">
+                        <input type="number" step="0.01" class="form-control" [(ngModel)]="updatedProduct.discount"
+                            name="discount">
                     </div>
                 </div>
             </div>
@@ -68,6 +71,24 @@
                             {{ subcategory.subCatName }}
                         </option>
                     </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Current Images</label>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        Current Images
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li *ngFor="let imageUrl of updatedProduct.imageUrls">
+                            <a class="dropdown-item d-flex align-items-center"
+                                (click)="selectExistingImage(imgBase+imageUrl)">
+                                <img [src]="imgBase+imageUrl" alt="Image" width="50" height="50" class="me-2 rounded" />
+                                <span class="text-truncate">{{ imageUrl }}</span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
 

@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { IProduct, Isubcategory } from '../../../Models/Category';
 import { IProductSell } from '../../../Models/iproduct-sell';
 import { SellerService } from '../../../Services/SellerServ/seller.service';
+import { environment } from '../../../Environment/Environment.prod';
 
 @Component({
   selector: 'app-edit-product-popup',
@@ -20,6 +21,7 @@ export class EditProductPopupComponent implements OnInit {
 selectedSubcategoryId: number | null = null;
 selectedSubcategoryName: string | null = null;
 readonly sellerId = localStorage.getItem('userId');
+readonly imgBase = environment.imageBaseUrl;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: IProductSell,
@@ -35,6 +37,12 @@ readonly sellerId = localStorage.getItem('userId');
   }
   ngOnInit(): void {
     this.loadSubcategories();
+    if (this.updatedProduct.imageUrls?.length && (!this.selectedImages || this.selectedImages.length === 0)) {
+      this.selectedImages = [];
+      this.updatedProduct.imageUrls.forEach(url => {
+        this.selectedImages.push(url);
+      });
+    }
   }
 
   onImageSelected(event: any) {
@@ -58,14 +66,15 @@ readonly sellerId = localStorage.getItem('userId');
     const tagsArray = this.tagsInput.split(',').map(tag => tag.trim()).filter(t => t);
     tagsArray.forEach(tag => formData.append('Tags', tag));
   
-    if (this.selectedImages.length === 0 && this.updatedProduct.imageUrls?.length) {
-      this.updatedProduct.imageUrls.forEach(url => {
-        formData.append('ImageUrls', url);  
+    if (this.selectedImages.length > 0) {
+      this.selectedImages.forEach(img => {
+        if (typeof img === 'string') {
+          formData.append('ImageUrls', img);
+        } else {
+          formData.append('ImageUrls', img);
+        }
       });
-    } else {
-      this.selectedImages.forEach(file => formData.append('ImageUrls', file));
     }
-  
     this.sellerService.updateProduct(this.updatedProduct.productId, formData).subscribe({
       next: (response) => {
         console.log('Product updated successfully', response);
@@ -124,5 +133,15 @@ readonly sellerId = localStorage.getItem('userId');
     console.log('Selected ID:', this.selectedSubcategoryId);
     console.log('Selected Name:', this.selectedSubcategoryName);
   }
+  selectedExistingImage: string | null = null;
+
+  selectExistingImage(url: string) {
+    this.selectedExistingImage = url;
+    FormData.append(this.selectedExistingImage)
+    console.log('Selected image:', url);
+  }
+  getImageUrl(image: string | File): string {
+    return image instanceof File ? URL.createObjectURL(image) : image;
+}
   
 }

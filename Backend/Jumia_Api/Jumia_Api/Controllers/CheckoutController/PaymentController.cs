@@ -222,7 +222,7 @@ namespace Jumia_Api.Controllers.CheckoutController
             return Ok(addressDtos);
         }
         //----------------------------------------------------------
-        [HttpPost("address")]
+        [HttpPost("/address")]
         public IActionResult AddAddress(AddressDTO dto)
         {
             if (!ModelState.IsValid)

@@ -120,6 +120,13 @@ this.toggleAuth();
   isLoggedIn: boolean = false;
 
 
+  navigateWithAuth(path: string) {
+    if (this.isLoggedIn) {
+      this.router.navigate([path]);
+    } else {
+      this.router.navigate(['/login']);
+    }
+  }
 
   toggleAuth() {
     const token = localStorage.getItem('token');
