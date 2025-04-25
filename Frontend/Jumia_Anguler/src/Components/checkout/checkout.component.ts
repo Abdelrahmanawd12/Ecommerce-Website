@@ -11,6 +11,7 @@ import { Icheckout } from '../../Models/icheckout';
 import { Router } from '@angular/router';
 import { CartService } from '../../Services/Customer/cart.service';
 import { AddressService } from '../../Services/AddressService/address.service';
+import { PaypalService } from '../../Services/paypal.service';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class CheckoutComponent implements OnInit {
   card: any;
   elements: any;
   stripeLoading: boolean = false;
+  paypalLoading: boolean = false;
   cardErrors: string | null = null;
   shipping: number = 65;
   readonly imgBase = environment.imageBaseUrl;
@@ -37,6 +39,7 @@ export class CheckoutComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private paymentService: PaymentService,
+    private paypalService: PaypalService, 
     private checkoutService: CheckoutService,
     private cartService: CartService,
     private addressService: AddressService,
@@ -174,11 +177,23 @@ export class CheckoutComponent implements OnInit {
       });
     }
 
-    if (this.paymentMethod === 'cod') {
-      this.processCashOnDelivery(orderData);
-    } else if (this.paymentMethod === 'stripe') {
-      await this.processStripePayment(orderData);
+   
+    switch (this.paymentMethod) {
+      case 'cod':
+        this.processCashOnDelivery(orderData);
+        break;
+      case 'stripe':
+        await this.processStripePayment(orderData);
+        break;
+      case 'paypal':
+        await this.processPayPalPayment(orderData);
+        break;
     }
+    // if (this.paymentMethod === 'cod') {
+    //   this.processCashOnDelivery(orderData);
+    // } else if (this.paymentMethod === 'stripe') {
+    //   await this.processStripePayment(orderData);
+    // }
   }
   async prepareOrderData(): Promise<Icheckout> {
     const formValue = this.checkoutForm.value;
@@ -314,4 +329,41 @@ export class CheckoutComponent implements OnInit {
       });
     }
   }
+
+
+  async processPayPalPayment(orderData: Icheckout) {
+    this.paypalLoading = true;
+    
+    try {
+      const successUrl = `${window.location.origin}/order-success`;
+      const cancelUrl = `${window.location.origin}/checkout`;
+
+      // Create PayPal order
+      const paypalOrder = await this.paypalService.createOrder(
+        this.calculateTotal(),
+        successUrl,
+        cancelUrl
+      ).toPromise();
+
+      // Redirect to PayPal
+      if (paypalOrder && (paypalOrder as any).orderId) {
+        window.location.href = `https://www.sandbox.paypal.com/checkoutnow?token=${(paypalOrder as any).orderId}`;
+        
+        // Save the order in background
+        this.checkoutService.checkout(orderData).subscribe({
+          next: () => {
+            localStorage.removeItem('order');
+            this.clearCartFromDatabase();
+          },
+          error: err => console.error('Error saving order:', err)
+        });
+      }
+    } catch (err) {
+      console.error('PayPal error:', err);
+      // Handle error (show message to user)
+    } finally {
+      this.paypalLoading = false;
+    }
+  }
+
 }

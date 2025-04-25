@@ -1,0 +1,12 @@
+<button 
+  (click)="payWithPayPal()" 
+  [disabled]="isLoading"
+  class="paypal-button"
+>
+  <span *ngIf="!isLoading">
+    <i class="fab fa-paypal"></i> payment with PayPal
+  </span>
+  <span *ngIf="isLoading">
+    <i class="fa fa-spinner fa-spin"></i> loading...
+  </span>
+</button>
