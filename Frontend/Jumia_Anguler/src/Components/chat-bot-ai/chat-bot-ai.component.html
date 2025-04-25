@@ -1,0 +1,56 @@
+<button class="chatbot-toggle-btn" (click)="toggleChatbot()">
+  <i class="fas fa-comment-dots"></i>
+  <span class="pulse-animation"></span>
+</button>
+
+<div class="chatbot-container" [class.visible]="isChatbotVisible">
+  <div class="chatbot-header">
+    <div class="logo">
+      <i class="fas fa-robot"></i>
+      <h3>Jumia AI Assistant</h3>
+    </div>
+    <button class="close-btn" (click)="toggleChatbot()">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+  <div class="chatbot-messages">
+    <div class="welcome-message" *ngIf="messages.length === 0">
+      <div class="bot-avatar">
+        <i class="fas fa-robot"></i>
+      </div>
+      <div class="message-content">
+        <p>Hello! 👋 I'm Jumia AI Assistant. How can I help you today?</p>
+        <div class="quick-replies">
+          <button (click)="newMessage = 'Track my order'; sendMessage()">Track Order</button>
+          <button (click)="newMessage = 'Return policy'; sendMessage()">Return Policy</button>
+          <button (click)="newMessage = 'Payment options'; sendMessage()">Payment Options</button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngFor="let msg of messages" class="message" [class.user]="msg.sender === 'user'" [class.bot]="msg.sender === 'bot'">
+      <div class="avatar" *ngIf="msg.sender === 'bot'">
+        <i class="fas fa-robot"></i>
+      </div>
+      <div class="content">
+        {{msg.text}}
+      </div>
+      <div class="avatar user-avatar" *ngIf="msg.sender === 'user'">
+        <i class="fas fa-user"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="chatbot-input">
+    <input
+      type="text"
+      [(ngModel)]="newMessage"
+      placeholder="Type your message..."
+      (keyup.enter)="sendMessage()"
+    >
+    <button (click)="sendMessage()">
+      <i class="fas fa-paper-plane"></i>
+    </button>
+  </div>
+</div>

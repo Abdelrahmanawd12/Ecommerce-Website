@@ -1,0 +1,240 @@
+.admin-account-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+
+.col-lg-6 {
+  display: flex;
+  flex-direction: column;
+}
+
+.card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #FFE0B2;
+}
+
+.card-body {
+  flex: 1;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  flex-grow: 1; 
+}
+
+.card-body .section-header {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #FFE0B2;
+}
+
+/* Avatar styling */
+.admin-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #FFF3E0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  font-size: 3rem;
+  color: #FF6D00;
+}
+
+/* Header section with title and button */
+.section-header {
+  border-bottom: 1px solid #FFE0B2;
+  padding-bottom: 0.75rem;
+}
+
+.section-title {
+  color: #E65100;
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+/* Edit button styles */
+.btn-edit {
+  background-color: transparent;
+  color: #FF6D00;
+  border: 1px solid #FF6D00;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+}
+
+.btn-edit:hover {
+  background-color: #FFF3E0;
+}
+
+/* Grid for displaying information in cards */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.info-item {
+  background: white;
+  padding: 1rem;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  border-left: 3px solid #FFE0B2;
+}
+
+.info-label {
+  display: block;
+  font-size: 0.875rem;
+  color: #6c757d;
+  margin-bottom: 0.25rem;
+}
+
+.info-value {
+  font-weight: 500;
+  color: #212529;
+}
+
+/* Orange button styles */
+.btn-orange {
+  background-color: #FF6D00;
+  color: white;
+  border-color: #FF6D00;
+}
+
+.btn-orange:hover {
+  background-color: #E65100;
+  border-color: #E65100;
+  color: white;
+}
+
+.btn-outline-orange {
+  color: #FF6D00;
+  border-color: #FF6D00;
+}
+
+.btn-outline-orange:hover {
+  background-color: #FF6D00;
+  color: white;
+}
+
+/* Security button styles */
+.btn-security {
+  background-color: #FFF3E0;
+  border: 1px solid #FFE0B2;
+  color: #E65100;
+  padding: 0.5rem 1rem;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-security:hover {
+  background-color: #FFE0B2;
+  border-color: #FF6D00;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .info-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Button hover effects */
+.btn-orange:hover {
+  box-shadow: 0 4px 8px rgba(230, 81, 0, 0.2);
+}
+
+/* Fade-in animation for content */
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.fade-in {
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Security options button hover effect */
+.security-options .btn {
+  transition: all 0.3s ease-in-out;
+}
+
+.security-options .btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(255, 109, 0, 0.1);
+}
+
+/* Alert Styles */
+.custom-alert {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  min-width: 300px;
+  max-width: 90%;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  transform: translateX(100%);
+  opacity: 0;
+  transition: all 0.3s ease;
+  background-color: #f8f9fa;
+  border-left: 4px solid #FF6D00;
+  color: #E65100;
+}
+
+.custom-alert.fade-in {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.custom-alert.fade-out {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.alert-icon {
+  background-color: rgba(255, 109, 0, 0.2);
+  color: #FF6D00;
+}
+
+/* Badge styles */
+.badge.bg-orange {
+  background-color: #FF6D00 !important;
+  color: white;
+}
+
+.badge.bg-orange-light {
+  background-color: #FFF3E0 !important;
+  color: #E65100;
+}
+
+/* Text colors */
+.text-orange {
+  color: #FF6D00 !important;
+}
+
+.text-orange-dark {
+  color: #E65100 !important;
+}
+
+/* Background colors */
+.bg-orange-light {
+  background-color: #FFF3E0 !important;
+}

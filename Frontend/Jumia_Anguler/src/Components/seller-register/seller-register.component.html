@@ -1,0 +1,36 @@
+<div class="container d-flex justify-content-center align-items-center vh-100 vw-100 ">
+    <div class="card shadow-lg  d-flex flex-row" style="max-width: 900px;">
+      
+      <!-- Left Side - Form -->
+      <div class="col-md-6 p-4 d-flex flex-column justify-content-center">
+        <div class="text-center mb-4">
+          <img src="assets/vendorControl.png" alt="Logo" style="max-width: 150px;" />
+          <h5 class="mt-2"><span class="text-dark"><img src="assets/Jumia-Logo.png" style="width: 60px; height: 60px;"></span><span style="color: orange;">VendorCenter</span></h5>
+        </div>
+  
+        <button class="btn  mb-3 d-flex align-items-center justify-content-center">
+            <img src="assets/google.png" style="width: 25px; height: 25px;" class="me-2" />
+            Sign in with Google
+        </button>
+  
+        <button class="btn  mb-3 d-flex align-items-center justify-content-center">
+          <img  src="assets/email.png" style="width: 25px; height: 25px;" class="me-2 email" />
+          Sign in with Email
+        </button>
+  
+        <button class="btn  mb-4 d-flex align-items-center justify-content-center" routerLink="/login">
+            <img src="assets/star.png" style="width:25px; height: 25px;"  class="me-2" />
+            Sign in with JUMIA
+        </button>
+  
+        <a class="btn custom-btn" [routerLink]="['/sellOnJumia']" routerLinkActive="router-link-active"  >Sell on Jumia</a>
+      </div>
+  
+      <!-- Right Side - Illustration -->
+      <div class="col-md-6 d-none d-md-block">
+        <img src="assets/jumia_register.png" class="img-fluid" style="height: 500px;" alt="Illustration" />
+      </div>
+  
+    </div>
+  </div>
+  

@@ -1,0 +1,170 @@
+<!-- toast mess -->
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div class="toast align-items-center text-white border-0" id="cartToast" role="alert" aria-live="assertive"
+    aria-atomic="true" [ngClass]="toastClass">
+    <div class="d-flex">
+      <div class="toast-body">
+        {{ toastMessage }}
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+        aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+
+<!-- toast mess -->
+
+<div class="container">
+<!-- product details -->
+<div class="container py-5">
+  <div class="row align-items-start gy-4">
+    <!-- Product Images -->
+    <div class="col-12 col-lg-6">
+      <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
+
+        <!-- Indicators -->
+        <div class="carousel-indicators" *ngIf="product.imageUrls.length > 1">
+          <button *ngFor="let image of product.imageUrls; let i = index" type="button"
+            [attr.data-bs-target]="'#carouselExampleIndicators'" [attr.data-bs-slide-to]="i" [class.active]="i === 0"
+            [attr.aria-current]="i === 0 ? 'true' : null" [attr.aria-label]="'Slide ' + (i + 1)">
+          </button>
+        </div>
+
+        <!-- Carousel Items -->
+        <div class="carousel-inner rounded shadow-sm">
+          <div *ngFor="let image of product.imageUrls; let i = index" class="carousel-item" [class.active]="i === 0">
+            <img [src]="imgbaseUrl+image" class="d-block w-100 object-fit-contain" style="height: 400px;" alt="Product Image">
+          </div>
+        </div>
+
+        <!-- Previous Button -->
+        <button *ngIf="product.imageUrls.length > 1" class="carousel-control-prev" type="button"
+          data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+
+        <!-- Next Button -->
+        <button *ngIf="product.imageUrls.length > 1" class="carousel-control-next" type="button"
+          data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Product Info -->
+    <div class="col-12 col-lg-6">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <h3 class="card-title fw-bold mb-3">{{ product.name }}</h3>
+            <!-- wishlist toggle  -->
+            <a  (click)="toggleWishlist(product.productId)"> <i
+              [class.fa-solid]="isInWishlist(product.productId)"
+              [class.fa-regular]="!isInWishlist(product.productId)"
+              class="fa-heart"
+                      style="font-size: 25px; cursor: pointer;"></i> </a>
+
+          </div>
+
+
+          @if(product.discount>0){
+          <h4 class="text-success fw-semibold mb-2">${{ product.price-product.discount }}</h4>
+          <span class="text-decoration-line-through" style="color: gray;">${{ product.price }}</span>
+          }@else {
+          <h4 class="text-success fw-semibold mb-2">${{ product.price }}</h4>
+          }
+
+          <p class="mb-1"><strong>Brand:</strong> {{ product.brand }}</p>
+
+          <!-- Rating -->
+          <div class="mb-2 d-flex align-items-center gap-1">
+            <span *ngFor="let star of [].constructor(fullStars)">
+              <i class="bi bi-star-fill text-warning"></i>
+            </span>
+            <span *ngIf="halfStars">
+              <i class="bi bi-star-half text-warning"></i>
+            </span>
+            <span *ngFor="let star of [].constructor(emptyStars)">
+              <i class="bi bi-star text-muted"></i>
+            </span>
+            <small class="text-muted ms-2">({{ averageRating | number: '1.1-1' }} / 5)</small>
+          </div>
+
+          <!-- Description -->
+          <p class="text-muted mt-3">{{ product.description }}</p>
+
+          <!-- Quantity Input -->
+          <div class="mb-3">
+            <label for="quantity" class="form-label fw-medium">Quantity:</label>
+            <input type="number" [(ngModel)]="selectedQuantity" min="1" [max]="maxAvailableQuantity"
+              class="form-control w-50" id="quantity" (input)="checkQuantity()">
+            <div *ngIf="selectedQuantity > maxAvailableQuantity" class="form-text text-danger">
+              Quantity exceeds available stock!
+            </div>
+          </div>
+
+          <!-- Add to Cart Button -->
+          <button class="btn btn-warning px-4" (click)="addToCart(product)"
+            [disabled]="selectedQuantity <= 0 || selectedQuantity > maxAvailableQuantity">
+            <i class="bi bi-cart-plus me-1"></i> Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- product details -->
+
+<!-- related items like this item -->
+<div class="product-section mb-5">
+  <h4 class="section-title mb-4 position-relative">
+    <span class="section-title-text bg-white ps-2 pe-3">You May Also Like</span>
+    <span class="section-title-line"></span>
+  </h4>
+  <div class="row g-3">
+    @for (p of relatedProducts; track p.productId) {
+    <div class="col-6 col-md-4 col-lg-3 col-xl-2 product-card">
+      <div class=" h-100 shadow-sm rounded-3 overflow-hidden"
+           (click)="goToProductDetails(p.productId)">
+        <div class="product-image-container">
+          <img [src]="imgbaseUrl+p.imageUrls[0]" class="product-image" alt="{{ p.name }}" loading="lazy">
+          <div class="product-badge" *ngIf="p.discount > 0">-{{ (p.discount/p.price)*100| number:'1.2-2'  }}%</div>
+        </div>
+        <div class="product-body p-3">
+          <div class="d-flex justify-content-between">
+            <h6 class="product-name mb-2">{{ p.name }}</h6>
+
+              <!-- wishlist toggle  -->
+              <a  (click)="toggleWishlist(p.productId);$event.stopPropagation() "> <i
+                [class.fa-solid]="isInWishlist(p.productId)"
+                [class.fa-regular]="!isInWishlist(p.productId)"
+                class="fa-heart"
+                        style="font-size: 25px; cursor: pointer;"></i> </a>
+
+
+
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <p class="product-price mb-0" [class.discounted]="p.discount > 0">
+                ${{ (p.price-p.discount) | number:'1.2-2' }}
+              </p>
+              <p class="product-original-price mb-0 text-muted text-decoration-line-through"
+                 *ngIf="p.discount > 0">
+                ${{ (p.price )| number:'1.2-2' }}
+              </p>
+            </div>
+            <button class="btn btn-sm btn-outline-warning rounded-circle p-2"
+                    (click)="addToCartFromRelated(p); $event.stopPropagation()">
+              <i class="fas fa-shopping-cart"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</div>
+</div>

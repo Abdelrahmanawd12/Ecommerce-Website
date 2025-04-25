@@ -1,0 +1,5 @@
+.footer a:hover {
+    text-decoration: underline;
+    color: #f0ad4e; /* Optional hover color like orange */
+  }
+  

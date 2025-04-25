@@ -1,0 +1,135 @@
+<div>
+  <div class="row">
+    <!-- Right Content Area -->
+    <div>
+      <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="fw-bold text-jumia m-0">
+              <i class="bi bi-person-lines-fill me-2"></i>Personal Information
+            </h4>
+            <div>
+              <div class="badge bg-jumia-light text-jumia p-2 me-2">
+                <i class="bi bi-shield-check me-1"></i>Verified Account
+              </div>
+              <button class="btn btn-sm btn-jumia" (click)="toggleEdit()" title="Edit">
+                <i class="bi bi-pencil-fill"></i>
+              </button>
+            </div>
+          </div>
+          
+          <!-- View Mode -->
+          <div *ngIf="!isEditing && accountDetails" class="view-mode">
+            <div class="row mb-4">
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-semibold text-secondary">First Name</label>
+                <p class="form-control-plaintext fs-5">{{ accountDetails?.firstName }}</p>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-semibold text-secondary">Last Name</label>
+                <p class="form-control-plaintext fs-5">{{ accountDetails?.lastName }}</p>
+              </div>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-semibold text-secondary">Email Address</label>
+                <p class="form-control-plaintext fs-5">
+                  {{ accountDetails?.email }}
+                  <span class="badge bg-success bg-opacity-10 text-success ms-2">
+                    <i class="bi bi-check-circle-fill me-1"></i>Verified
+                  </span>
+                </p>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-semibold text-secondary">Phone Number</label>
+                <p class="form-control-plaintext fs-5">{{ addressBook.phoneNumber }}</p>
+              </div>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-md-12">
+                <label class="form-label fw-semibold text-secondary">Default Delivery Address</label>
+                <div class="card bg-light border-0 p-3">
+                  <p class="m-0 fs-5">
+                    <i class="bi bi-house-door-fill text-jumia me-2"></i>
+                    {{ addressBook.street }}, {{ addressBook.city }}, {{ addressBook.country }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Edit Mode -->
+          <form *ngIf="isEditing" (ngSubmit)="updateAddressBook()" class="edit-mode">
+            <div class="row mb-4">
+              <div class="col-md-6 mb-3">
+                <label for="firstName" class="form-label fw-semibold">First Name</label>
+                <input type="text" class="form-control form-control-lg" id="firstName" 
+                       [(ngModel)]="updatedAddressBook.firstName" name="firstName" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="lastName" class="form-label fw-semibold">Last Name</label>
+                <input type="text" class="form-control form-control-lg" id="lastName" 
+                       [(ngModel)]="updatedAddressBook.lastName" name="lastName" required>
+              </div>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-semibold">Email Address</label>
+                <div class="input-group">
+                  <input type="email" class="form-control form-control-lg" value="{{ accountDetails?.email }}" readonly>
+                  <span class="input-group-text bg-success bg-opacity-10 text-success">
+                    <i class="bi bi-check-circle-fill me-1"></i>Verified
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="phone" class="form-label fw-semibold">Phone Number</label>
+                <input type="tel" class="form-control form-control-lg" id="phone" 
+                       [(ngModel)]="updatedAddressBook.phoneNumber" name="phoneNumber" required>
+              </div>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-md-12 mb-3">
+                <label for="street" class="form-label fw-semibold">Street Address</label>
+                <input type="text" class="form-control form-control-lg" id="street" 
+                       [(ngModel)]="updatedAddressBook.street" name="street" required>
+              </div>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-md-6 mb-3">
+                <label for="city" class="form-label fw-semibold">City</label>
+                <input type="text" class="form-control form-control-lg" id="city" 
+                       [(ngModel)]="updatedAddressBook.city" name="city" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="country" class="form-label fw-semibold">Country</label>
+                <select class="form-select form-select-lg" id="country" 
+                        [(ngModel)]="updatedAddressBook.country" name="country" required>
+                  <option value="">Select Country</option>
+                  <option value="Egypt">Egypt</option>
+                  <option value="Nigeria">Nigeria</option>
+                  <option value="Kenya">Kenya</option>
+                  <option value="Ghana">Ghana</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-end mt-4">
+              <button type="button" class="btn btn-outline-secondary me-3 px-4" (click)="toggleEdit()">
+                <i class="bi bi-x-lg me-2"></i>Cancel
+              </button>
+              <button type="submit" class="btn btn-jumia px-4" [disabled]="!isAddressValid()">
+                <i class="bi bi-check-lg me-2"></i>Save Changes
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

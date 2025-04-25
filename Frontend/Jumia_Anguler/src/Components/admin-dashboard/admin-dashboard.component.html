@@ -1,0 +1,182 @@
+<!-- Admin Dashboard HTML Template -->
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h4 class="dashboard-title">Dashboard Overview</h4>
+   
+    <div class="dashboard-actions">
+      <button class="refresh-btn" (click)="refreshData()">
+        <i class="bi bi-arrow-clockwise" [class.spin]="isRefreshing"></i> 
+        {{ isRefreshing ? 'Refreshing...' : 'Refresh' }}
+      </button>
+      <div class="date-selector" (click)="toggleDateDropdown()">
+        <i class="bi bi-calendar"></i>
+        <span>{{ selectedDateRange }}</span>
+        <i class="bi bi-chevron-down"></i>
+        <div class="date-dropdown" [class.show]="showDateDropdown">
+          <div class="dropdown-item" (click)="changeDateRange('Last 7 days')">Last 7 days</div>
+          <div class="dropdown-item" (click)="changeDateRange('Last 30 days')">Last 30 days</div>
+          <div class="dropdown-item" (click)="changeDateRange('Last 90 days')">Last 90 days</div>
+          <div class="dropdown-item" (click)="changeDateRange('This Year')">This Year</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary Stats Row -->
+  <div class="row stats-row">
+    <!-- Total Users Card -->
+    <div class="col-md-4">
+      <div class="stat-card users-card">
+        <div class="stat-icon">
+          <i class="bi bi-people-fill"></i>
+        </div>
+        <div class="stat-content">
+          <h6 class="stat-label">TOTAL USERS</h6>
+          <h3 class="stat-value">{{ filteredStats.totalUsers | number }}</h3>
+          <div class="stat-trend">
+            <span class="badge trend-badge success">
+              <i class="bi bi-arrow-up"></i>
+              <span class="trend-text">{{ filteredStats.newUsersThisMonth | number }} new this month</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Products Card -->
+    <div class="col-md-4">
+      <div class="stat-card products-card">
+        <div class="stat-icon">
+          <i class="bi bi-box-seam"></i>
+        </div>
+        <div class="stat-content">
+          <h6 class="stat-label">TOTAL PRODUCTS</h6>
+          <h3 class="stat-value">{{ filteredStats.totalProducts | number }}</h3>
+          <div class="stat-trend">
+            <span class="badge trend-badge warning">
+              <i class="bi bi-exclamation-triangle"></i>
+              <span class="trend-text">{{ filteredStats.outOfStockProducts | number }} out of stock</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sales Card -->
+    <div class="col-md-4">
+      <div class="stat-card sales-card">
+        <div class="stat-icon">
+          <i class="bi bi-currency-dollar"></i>
+        </div>
+        <div class="stat-content">
+          <h6 class="stat-label">TOTAL SALES</h6>
+          <h3 class="stat-value">{{ filteredStats.totalSales | currency:'USD':'symbol':'1.2-2' }}</h3>
+          <div class="stat-trend">
+            <span class="badge trend-badge info">
+              <i class="bi bi-graph-up"></i>
+              <span class="trend-text">{{ filteredStats.totalCommission | currency:'USD':'symbol':'1.2-2' }} commission</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts Row 1 -->
+  <div class="row charts-row">
+    <!-- User Growth Chart -->
+    <div class="col-md-6">
+      <div class="report-card">
+        <div class="report-header">
+          <div>
+            <h5 class="report-title">User Growth</h5>
+            <p class="report-subtitle">Monthly user acquisition trends</p>
+          </div>
+          <div class="report-actions">
+            <div class="dropdown">
+              <button class="btn-action dropdown-toggle" data-bs-toggle="dropdown">
+                <i class="bi bi-calendar"></i> This Year
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">This Year</a></li>
+                <li><a class="dropdown-item" href="#">Last Year</a></li>
+                <li><a class="dropdown-item" href="#">All Time</a></li>
+              </ul>
+            </div>
+            <button class="btn-action"><i class="bi bi-download"></i></button>
+          </div>
+        </div>
+        <div echarts [options]="userGrowthChartOptions" style="height: 350px;"></div>
+      </div>
+    </div>
+
+    <!-- Inventory Chart -->
+    <div class="col-md-6">
+      <div class="report-card">
+        <div class="report-header">
+          <div>
+            <h5 class="report-title">Inventory Overview</h5>
+            <p class="report-subtitle">Stock levels and product status</p>
+          </div>
+          <div class="report-actions">
+            <div class="dropdown">
+              <button class="btn-action dropdown-toggle" data-bs-toggle="dropdown">
+                <i class="bi bi-filter"></i> Filter
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">All Products</a></li>
+                <li><a class="dropdown-item" href="#">In Stock Only</a></li>
+                <li><a class="dropdown-item" href="#">Out of Stock</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div echarts [options]="inventoryChartOptions" style="height: 350px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts Row 2 -->
+  <div class="row charts-row">
+    <!-- Sales Chart -->
+    <div class="col-md-6">
+      <div class="report-card">
+        <div class="report-header">
+          <div>
+            <h5 class="report-title">Sales & Commission</h5>
+            <p class="report-subtitle">Revenue and earnings analysis</p>
+          </div>
+          <div class="report-actions">
+            <div class="dropdown">
+              <button class="btn-action dropdown-toggle" data-bs-toggle="dropdown">
+                <i class="bi bi-calendar"></i> This Month
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">This Month</a></li>
+                <li><a class="dropdown-item" href="#">Last Month</a></li>
+                <li><a class="dropdown-item" href="#">Quarterly</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div echarts [options]="salesChartOptions" style="height: 350px;"></div>
+      </div>
+    </div>
+
+    <!-- Categories Chart -->
+    <div class="col-md-6">
+      <div class="report-card">
+        <div class="report-header">
+          <div>
+            <h5 class="report-title">Categories Breakdown</h5>
+            <p class="report-subtitle">Product distribution by category</p>
+          </div>
+          <div class="report-actions">
+            <button class="btn-action"><i class="bi bi-pie-chart"></i> View All</button>
+          </div>
+        </div>
+        <div echarts [options]="categoriesChartOptions" style="height: 350px;"></div>
+      </div>
+    </div>
+  </div>
+</div>

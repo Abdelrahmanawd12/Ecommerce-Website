@@ -1,0 +1,151 @@
+/* General layout styles */
+.container-fluid {
+  display: flex;
+  padding-left: 0;
+  padding-right: 0;
+  width: 100%; 
+  height: 100vh;
+}
+
+.row {
+  display: flex;
+  width: 100%;
+}
+
+/* Sidebar styles */
+#sidebar {
+  width: 250px;
+  transition: all 0.3s ease;
+  background-color: #f8f9fa;
+  height: 100vh;
+  position: relative;
+}
+
+#sidebar.collapsed {
+  width: 80px;
+}
+
+.sidebar .nav-item .nav-link {
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.sidebar .nav-item .nav-link:hover {
+  background-color: #e2e6ea;
+  color: #0056b3;
+}
+
+.sidebar .nav-item i {
+  font-size: 1.3rem;
+}
+
+.sidebar.collapsed .nav-item .nav-link i {
+  font-size: 1.2rem;
+}
+
+.sidebar .sidebar-text {
+  font-size: 16px;
+  font-weight: 600;
+  color: #495057;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar.collapsed .sidebar-text {
+  opacity: 0;
+}
+
+/* Chevron icon rotation */
+.bi-chevron-left,
+.bi-chevron-right {
+  transition: transform 0.3s ease;
+}
+
+
+
+
+/* Main content styles */
+.main-content {
+  width: calc(100% - 250px);
+  padding: 20px;
+  transition: width 0.3s ease;
+}
+
+.main-content.collapsed {
+  width: calc(100% - 80px);
+}
+
+/* Profile dropdown and logout modal styles */
+.dropdown-menu {
+  background-color: white;
+  border: 1px solid #ddd;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  background-color: orange;
+  color: white;
+}
+
+.logout-modal {
+  background: #fff;
+  padding: 16px 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.3s ease;
+  max-width: 260px;
+  width: 90%;
+}
+
+/* Adjust dropdown and logout modal button styles */
+.modal-actions {
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-actions button {
+  font-size: 13px;
+  padding: 5px 14px;
+  border-radius: 6px;
+}
+
+.modal-actions .btn-cancel {
+  background-color: #f1f1f1;
+  color: #333;
+  border: none;
+}
+
+.modal-actions .btn-confirm {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1050;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  min-width: 300px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  z-index: 1060;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

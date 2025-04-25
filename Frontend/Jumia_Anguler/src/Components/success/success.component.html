@@ -1,0 +1,39 @@
+<div class="payment-success-container">
+  <div class="payment-success-card">
+    <div class="success-animation">
+      <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+        <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+        <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+      </svg>
+    </div>
+
+    <h1 class="payment-success-title">Payment Successful!</h1>
+    
+    <p class="payment-success-message">
+      Your payment of <strong>${{amount}}</strong> has been processed successfully.
+      A confirmation email has been sent to {{email}}.
+    </p>
+    
+    <div class="payment-details">
+      <div class="detail-row">
+        <span>Transaction ID:</span>
+        <strong>{{transactionId}}</strong>
+      </div>
+      <div class="detail-row">
+        <span>Date:</span>
+        <strong>{{transactionDate | date}}</strong>
+      </div>
+    </div>
+
+    <button class="payment-confirm-btn" (click)="confirmPayment()">
+      <span>Confirm & Return Home</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14M12 5l7 7-7 7"></path>
+      </svg>
+    </button>
+
+    <div class="payment-help-text">
+      Need help? <a href="/contact">Contact support</a>
+    </div>
+  </div>
+</div>

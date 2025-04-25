@@ -1,0 +1,62 @@
+:root {
+    --jumia-orange: #f68b1e;
+    --jumia-orange-dark: #e07e1b;
+    --jumia-orange-light: #fff5eb;
+    --jumia-gray: #f5f5f5;
+    --jumia-dark: #333;
+  }
+  
+  .text-jumia {
+    color: var(--jumia-orange);
+  }
+  
+  .bg-jumia-light {
+    background-color: var(--jumia-orange-light);
+  }
+  
+  .btn-jumia {
+    background-color: var(--jumia-orange);
+    color: white;
+    border-color: var(--jumia-orange);
+    font-weight: 500;
+  }
+  
+  .btn-jumia:hover, .btn-jumia:focus {
+    background-color: var(--jumia-orange-dark);
+    border-color: var(--jumia-orange-dark);
+    color: white;
+  }
+  
+  .nav-link.active {
+    color: var(--jumia-orange) !important;
+    font-weight: 600;
+    border-left: 3px solid var(--jumia-orange);
+    background-color: rgba(246, 139, 30, 0.1);
+  }
+  
+  .nav-link {
+    color: var(--jumia-dark);
+    transition: all 0.2s;
+  }
+  
+  .nav-link:hover {
+    color: var(--jumia-orange);
+    background-color: var(--jumia-orange-light);
+  }
+  
+  .form-control:focus, .form-select:focus {
+    border-color: var(--jumia-orange);
+    box-shadow: 0 0 0 0.25rem rgba(246, 139, 30, 0.25);
+  }
+  
+  .form-control-lg {
+    padding: 0.75rem 1rem;
+  }
+  
+  .card {
+    transition: transform 0.2s;
+  }
+  
+  .card:hover {
+    transform: translateY(-2px);
+  }
