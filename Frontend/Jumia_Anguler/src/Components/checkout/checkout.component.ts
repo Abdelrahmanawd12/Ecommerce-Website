@@ -13,6 +13,7 @@ import { CartService } from '../../Services/Customer/cart.service';
 import { AddressService } from '../../Services/AddressService/address.service';
 import { PaypalService } from '../../Services/paypal.service';
 
+
 @Component({
   selector: 'app-checkout',
   imports: [DatePipe, ReactiveFormsModule, CommonModule,FormsModule],
@@ -188,6 +189,11 @@ export class CheckoutComponent implements OnInit {
         await this.processPayPalPayment(orderData);
         break;
     }
+    // if (this.paymentMethod === 'cod') {
+    //   this.processCashOnDelivery(orderData);
+    // } else if (this.paymentMethod === 'stripe') {
+    //   await this.processStripePayment(orderData);
+    // }
   }
   async prepareOrderData(): Promise<Icheckout> {
     const formValue = this.checkoutForm.value;

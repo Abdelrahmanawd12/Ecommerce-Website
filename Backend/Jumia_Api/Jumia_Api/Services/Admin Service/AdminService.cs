@@ -326,6 +326,7 @@ namespace Jumia_Api.Services.Admin_Service
 
          
 
+
             var totalCategories = await _context.Categories.CountAsync();
             var totalSubCategories = await _context.SubCategories.CountAsync();
 
@@ -333,6 +334,9 @@ namespace Jumia_Api.Services.Admin_Service
 
 
             var newUsersThisMonth = await _context.Users.CountAsync(u => !u.IsDeleted);
+
+      
+
 
             var totalProducts = await _context.Products.CountAsync();
             var outOfStockProducts = await _context.Products.CountAsync(p => p.Quantity == 0);

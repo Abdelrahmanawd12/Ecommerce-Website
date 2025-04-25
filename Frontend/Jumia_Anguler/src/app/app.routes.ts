@@ -47,6 +47,7 @@ export const routes: Routes = [
       { path: 'categories', loadComponent: () => import('../Components/admin-category/admin-category.component').then((m) => m.AdminCategoryComponent) },
       { path: 'addcategory', loadComponent: () => import('../Components/add-category/add-category.component').then((m) => m.AddCategoryComponent) },
       { path: 'updatecategory/:id', loadComponent: () => import('../Components/updatecategory/updatecategory.component').then((m) => m.UpdatecategoryComponent) },
+
       { path: 'reports', loadComponent: () => import('../Components/admin-report/admin-report.component').then((m) => m.AdminReportComponent) },
     ]
   },

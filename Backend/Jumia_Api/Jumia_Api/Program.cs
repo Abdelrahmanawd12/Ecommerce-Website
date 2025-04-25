@@ -11,8 +11,10 @@ using Jumia_Api.Repository;
 using Jumia_Api.UnitOFWorks;
 using Jumia_Api.Services.StripeService;
 using Jumia_Api.Services;
+
 using PayPalCheckoutSdk.Core;
 using Jumia_Api.Services.PayPalService;
+
 
 namespace Jumia_Api
 {
@@ -33,7 +35,7 @@ namespace Jumia_Api
             builder.Services.AddAutoMapper(typeof(AutoMapperConfig));
             builder.Services.AddScoped<UnitOFWork>();
             builder.Services.AddScoped<StripeService>();
-           
+
             // Configure Identity only once
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
@@ -76,6 +78,7 @@ namespace Jumia_Api
 
             builder.Services.AddScoped<IAdminService, AdminService>();
 
+
             builder.Services.AddScoped<PayPalService>();
             builder.Services.AddSingleton<PayPalHttpClient>(provider =>
             {
@@ -86,6 +89,8 @@ namespace Jumia_Api
                 );
                 return new PayPalHttpClient(environment);
             });
+
+
 
 
             var app = builder.Build();
