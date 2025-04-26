@@ -35,49 +35,56 @@ namespace Jumia_Api.Controllers.CheckoutController
                 _payPalClient = new PayPalHttpClient(environment);
             }
 
-            [HttpPost("/paypal-create-order")]
-            public async Task<IActionResult> CreatePayPalOrder([FromBody] PaymentRequestDto request)
+        [HttpPost("/paypal-create-order")]
+        public async Task<IActionResult> CreatePayPalOrder([FromBody] PaymentRequestDto request)
+        {
+            try
             {
-                try
+                var orderRequest = new OrdersCreateRequest();
+                orderRequest.Prefer("return=representation");
+                orderRequest.RequestBody(new OrderRequest()
                 {
-                    var orderRequest = new OrdersCreateRequest();
-                    orderRequest.Prefer("return=representation");
-                    orderRequest.RequestBody(new OrderRequest()
+                    CheckoutPaymentIntent = "CAPTURE",
+                    PurchaseUnits = new List<PurchaseUnitRequest>()
+            {
+                new PurchaseUnitRequest()
+                {
+                    AmountWithBreakdown = new AmountWithBreakdown()
                     {
-                        CheckoutPaymentIntent = "CAPTURE",
-                        PurchaseUnits = new List<PurchaseUnitRequest>()
-                    {
-                        new PurchaseUnitRequest()
-                        {
-                            AmountWithBreakdown = new AmountWithBreakdown()
-                            {
-                                CurrencyCode = "USD",
-                                Value = request.Amount.ToString("0.00")
-                            },
-                            Description = "Order Payment"
-                        }
+                        CurrencyCode = "USD",
+                        Value = request.Amount.ToString("0.00")
                     },
-                        ApplicationContext = new ApplicationContext()
-                        {
-                            ReturnUrl = request.SuccessUrl,
-                            CancelUrl = request.CancelUrl,
-                            BrandName = "Your Brand Name",
-                            UserAction = "PAY_NOW"
-                        }
-                    });
-
-                    var response = await _payPalClient.Execute(orderRequest);
-                    var result = response.Result<Jumia.Models.Order>();
-
-                    return Ok(new { orderId = result.OrderId });
+                    Description = "Order Payment"
                 }
-                catch (Exception ex)
+            },
+                    ApplicationContext = new ApplicationContext()
+                    {
+                        ReturnUrl = request.SuccessUrl,
+                        CancelUrl = request.CancelUrl,
+                        BrandName = "Your Brand Name",
+                        UserAction = "PAY_NOW",
+                        Locale = "en-US"
+                    }
+                });
+
+                var response = await _payPalClient.Execute(orderRequest);
+                var result = response.Result<PayPalCheckoutSdk.Orders.Order>();
+
+                return Ok(new
                 {
-                    return StatusCode(500, ex.Message);
-                }
+                    orderId = result.Id,
+                    status = result.Status,
+                    links = result.Links
+                });
             }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
 
-            [HttpPost("/paypal-capture-order")]
+
+        [HttpPost("/paypal-capture-order")]
             public async Task<IActionResult> CapturePayPalOrder([FromBody] string orderId)
             {
                 try
