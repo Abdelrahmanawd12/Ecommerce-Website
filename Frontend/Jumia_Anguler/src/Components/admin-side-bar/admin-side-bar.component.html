@@ -1,6 +1,6 @@
 <div [class.collapsed]="isCollapsed" id="sidebar"
-     class="sidebar d-flex flex-column flex-shrink-0 bg-light text-dark"
-     style="height: 100vh; transition: width 0.3s;">
+     class="sidebar d-flex flex-column flex-shrink-0 bg-light text-dark position-fixed top-0 start-0 h-100"
+     style="transition: width 0.3s; z-index: 1000; overflow-y: auto;">
   
     <div class="toggle-wrapper d-flex justify-content-end">
       <button class="sidebar-toggle-inner" (click)="toggleSidebar()">
