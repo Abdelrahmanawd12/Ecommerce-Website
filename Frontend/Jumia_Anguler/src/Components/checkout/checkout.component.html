@@ -88,7 +88,6 @@
             </div>
           </div>
 
-<<<<<<< HEAD
           <!-- Payment Method -->
 
 <div class="payment-method">
@@ -115,9 +114,8 @@
 </div>
 
 
-=======
-          <!-- Payment -->
-          <div class="mb-4">
+          Payment
+          <!-- <div class="mb-4">
             <h4>Payment Method</h4>
 
             <div class="form-check mb-2">
@@ -138,8 +136,7 @@
               <div id="card-element" class="form-control p-2 border"></div>
               <div *ngIf="cardErrors" class="text-danger mt-2">{{ cardErrors }}</div>
             </div>
-          </div>
->>>>>>> 3261aa9808a6eb5e2541c516a79b0f67676a241a
+          </div> -->
 
           <button type="submit" [disabled]="checkoutForm.invalid || stripeLoading" class="btn btn-primary w-100">
             {{ stripeLoading ? 'Processing...' : 'Place Order' }}
