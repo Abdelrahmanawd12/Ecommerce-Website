@@ -18,10 +18,13 @@ export class EditProductPopupComponent implements OnInit {
   tagsInput: string = '';
   selectedImages: File[] = [];
   subcategories: Isubcategory[] = [];
-selectedSubcategoryId: number | null = null;
-selectedSubcategoryName: string | null = null;
-readonly sellerId = localStorage.getItem('userId');
-readonly imgBase = environment.imageBaseUrl;
+  selectedSubcategoryId: number | null = null;
+  selectedSubcategoryName: string | null = null;
+  readonly sellerId = localStorage.getItem('userId');
+  readonly imgBase = environment.imageBaseUrl;
+  existingImages: string[] = [];
+  selectedExistingImage: string | null = null;
+
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: IProductSell,
@@ -29,9 +32,9 @@ readonly imgBase = environment.imageBaseUrl;
     private dialogRef: MatDialogRef<EditProductPopupComponent>,
     private sellerService: SellerService
   ) {
-    this.updatedProduct = { 
-      ...data, 
-      subCategoryName: data.subCategoryName || '' 
+    this.updatedProduct = {
+      ...data,
+      subCategoryName: data.subCategoryName || ''
     };
     this.tagsInput = (data.tags || []).join(', ');
   }
@@ -43,6 +46,12 @@ readonly imgBase = environment.imageBaseUrl;
         this.selectedImages.push(url);
       });
     }
+    this.existingImages = [];
+    this.updatedProduct.imageUrls?.forEach(image => {
+      if (typeof image === 'string') {
+        this.existingImages.push(image);
+      }
+    });
   }
 
   onImageSelected(event: any) {
@@ -59,31 +68,47 @@ readonly imgBase = environment.imageBaseUrl;
     formData.append('Discount', this.updatedProduct.discount.toString());
     formData.append('Weight', this.updatedProduct.weight.toString());
     formData.append('SubCategoryId', this.selectedSubcategoryId?.toString() || '');
-    formData.append('SubCategoryName', this.selectedSubcategoryName || '');
+    formData.append('SubCategoryName', this.selectedSubcategoryName?.toString() || '');
     formData.append('SellerId', this.sellerId ? this.sellerId.toString() : '');
   
-    // Tags
-    const tagsArray = this.tagsInput.split(',').map(tag => tag.trim()).filter(t => t);
-    tagsArray.forEach(tag => formData.append('Tags', tag));
+    const tagsArray = this.tagsInput.split(',')
+      .map(tag => tag.trim())
+      .filter(tag => tag.length > 0);
   
+    tagsArray.forEach((tag, index) => {
+      formData.append(`Tags[${index}]`, tag);
+    });
+  
+    let imageUrls: (File | string)[] = [];
+  
+    // لو المستخدم اختار صور جديدة
     if (this.selectedImages.length > 0) {
-      this.selectedImages.forEach(img => {
-        if (typeof img === 'string') {
-          formData.append('ImageUrls', img);
-        } else {
-          formData.append('ImageUrls', img);
-        }
-      });
+      imageUrls = [...this.selectedImages];
     }
+    // لو لأ، نستخدم الصور القديمة
+    else if (this.existingImages.length > 0) {
+      imageUrls = [...this.existingImages];
+    }
+  
+    // نحط الصور لو موجودة
+    imageUrls.forEach((img) => {
+      if (img instanceof File) {
+        formData.append('ImageUrls', img);
+      } else if (typeof img === 'string') {
+        formData.append('ImageUrls', img);
+      }
+    });
+  
+    // بعدين نعمل الريكوست
     this.sellerService.updateProduct(this.updatedProduct.productId, formData).subscribe({
       next: (response) => {
         console.log('Product updated successfully', response);
-        this.showSuccessToast();  
-        this.dialogRef.close(true);  
+        this.showSuccessToast();
+        this.dialogRef.close(true);
       },
       error: (error) => {
         console.error('Update failed', error);
-        this.showErrorToast();  
+        this.showErrorToast();
       }
     });
   
@@ -92,7 +117,7 @@ readonly imgBase = environment.imageBaseUrl;
     });
   }
   
-  
+
 
   showSuccessToast() {
     const toast = document.getElementById('successToast');
@@ -118,6 +143,14 @@ readonly imgBase = environment.imageBaseUrl;
     this.sellerService.getAllSubcategories().subscribe({
       next: (data) => {
         this.subcategories = Array.isArray(data) ? data : [data];
+
+        if (this.updatedProduct.subCategoryId) {
+          const selected = this.subcategories.find(s => s.subCatId === this.updatedProduct.subCategoryId);
+          if (selected) {
+            this.selectedSubcategoryId = selected.subCatId;
+            this.selectedSubcategoryName = selected.subCatName;
+          }
+        }
       },
       error: (err) => {
         console.error('Error loading subcategories:', err);
@@ -129,19 +162,17 @@ readonly imgBase = environment.imageBaseUrl;
     this.selectedSubcategoryId = selectedId;
     const selected = this.subcategories.find(s => s.subCatId === selectedId);
     this.selectedSubcategoryName = selected?.subCatName || null;
-  
+
     console.log('Selected ID:', this.selectedSubcategoryId);
     console.log('Selected Name:', this.selectedSubcategoryName);
   }
-  selectedExistingImage: string | null = null;
 
   selectExistingImage(url: string) {
     this.selectedExistingImage = url;
-    FormData.append(this.selectedExistingImage)
     console.log('Selected image:', url);
   }
   getImageUrl(image: string | File): string {
     return image instanceof File ? URL.createObjectURL(image) : image;
-}
-  
+  }
+
 }

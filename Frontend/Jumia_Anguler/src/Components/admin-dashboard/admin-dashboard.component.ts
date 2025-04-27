@@ -38,6 +38,7 @@ export class AdminDashboardComponent implements OnInit {
     this.isRefreshing = true;
     this.adminService.getDashboardStats().subscribe({
       next: (data) => {
+        console.log('API Response:', data);
         this.originalStats = data;
         this.applyDateRangeFilter();
         this.isRefreshing = false;

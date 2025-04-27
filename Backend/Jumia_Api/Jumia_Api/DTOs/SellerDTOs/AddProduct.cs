@@ -28,7 +28,6 @@ namespace Jumia_Api.DTOs.SellerDTOs
         public string SellerId { get; set; }
 
 
-        [Required]
         public List<IFormFile> ImageUrls { get; set; }
 
         [Required]

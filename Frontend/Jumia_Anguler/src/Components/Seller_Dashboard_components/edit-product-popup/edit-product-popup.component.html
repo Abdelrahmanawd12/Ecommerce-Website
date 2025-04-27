@@ -83,7 +83,7 @@
                     <ul class="dropdown-menu">
                         <li *ngFor="let imageUrl of updatedProduct.imageUrls">
                             <a class="dropdown-item d-flex align-items-center"
-                                (click)="selectExistingImage(imgBase+imageUrl)">
+                                (click)="selectExistingImage(imgBase + imageUrl)">
                                 <img [src]="imgBase+imageUrl" alt="Image" width="50" height="50" class="me-2 rounded" />
                                 <span class="text-truncate">{{ imageUrl }}</span>
                             </a>

@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
 import { CartService } from '../../Services/Customer/cart.service';
 import { AddressService } from '../../Services/AddressService/address.service';
 import { IAddress } from '../../Models/iaddress';
+import { PaypalService } from '../../Services/paypal.service';
+
 
 @Component({
   selector: 'app-checkout',
@@ -26,6 +28,7 @@ export class CheckoutComponent implements OnInit {
   card: any;
   elements: any;
   stripeLoading: boolean = false;
+  paypalLoading: boolean = false;
   cardErrors: string | null = null;
   shipping: number = 65;
   readonly imgBase = environment.imageBaseUrl;
@@ -39,6 +42,7 @@ export class CheckoutComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private paymentService: PaymentService,
+    private paypalService: PaypalService,
     private checkoutService: CheckoutService,
     private cartService: CartService,
     private addressService: AddressService,
@@ -166,17 +170,36 @@ export class CheckoutComponent implements OnInit {
       const orderData = await this.prepareOrderData();
       const selectedPaymentMethod = this.checkoutForm.get('paymentMethod')?.value;
 
-      if (selectedPaymentMethod === 'cod') {
-        this.processCashOnDelivery(orderData);
-      } else if (selectedPaymentMethod === 'stripe') {
-        await this.processStripePayment(orderData);
+      //   if (selectedPaymentMethod === 'cod') {
+      //     this.processCashOnDelivery(orderData);
+      //   } else if (selectedPaymentMethod === 'stripe') {
+      //     await this.processStripePayment(orderData);
+      //   }
+      // } catch (error) {
+      //   console.error('Checkout error:', error);
+      //   this.cardErrors = 'An error occurred during checkout';
+
+      switch (this.paymentMethod) {
+        case 'cod':
+          this.processCashOnDelivery(orderData);
+          break;
+        case 'stripe':
+          await this.processStripePayment(orderData);
+          break;
+        case 'paypal':
+          await this.processPayPalPayment(orderData);
+          break;
       }
-    } catch (error) {
+      // if (this.paymentMethod === 'cod') {
+      //   this.processCashOnDelivery(orderData);
+      // } else if (this.paymentMethod === 'stripe') {
+      //   await this.processStripePayment(orderData);
+      // }
+    }catch(error: any) {
       console.error('Checkout error:', error);
       this.cardErrors = 'An error occurred during checkout';
     }
-  }
-
+  } 
   async prepareOrderData(): Promise<Icheckout> {
     const formValue = this.checkoutForm.value;
     const now = new Date();
@@ -257,6 +280,8 @@ export class CheckoutComponent implements OnInit {
         this.router.navigate(['/order-success']),
           localStorage.removeItem('order');
         this.clearCartFromDatabase();
+        this.updateStock(orderData.items);
+
       },
       error: err => console.error('Checkout error:', err)
     });
@@ -283,6 +308,7 @@ export class CheckoutComponent implements OnInit {
         next: () => {
           localStorage.removeItem('order');
           this.clearCartFromDatabase();
+          this.updateStock(orderData.items);
         },
         error: err => console.error('Error saving order:', err)
       });
@@ -291,8 +317,8 @@ export class CheckoutComponent implements OnInit {
       this.cardErrors = 'An error occurred while processing your payment.';
     } finally {
       this.stripeLoading = false;
-    }
-  }
+    }
+  }
 
   calculateSubtotal(): number {
     return this.order.items.reduce((sum: number, item: { price: number; quantity: number; }) => sum + (item.price * item.quantity), 0);
@@ -329,13 +355,13 @@ export class CheckoutComponent implements OnInit {
   onAddressSelect(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
     const addressId = selectElement.value;
-  
+
     console.log("Address ID selected:", addressId);
-  
+
     if (addressId) {
       const selectedAddress = this.addresses.find(addr => addr.addressId?.toString() === addressId);
       console.log("Selected Address:", selectedAddress);
-  
+
       if (selectedAddress) {
         const shippingGroup = this.checkoutForm.get('shipping');
         if (shippingGroup) {
@@ -349,7 +375,7 @@ export class CheckoutComponent implements OnInit {
       }
     }
   }
-  
+
 
 
   saveAddress() {
@@ -431,4 +457,49 @@ export class CheckoutComponent implements OnInit {
       toast.remove();
     }, 3000);
   }
+  async processPayPalPayment(orderData: Icheckout) {
+    this.paypalLoading = true;
+
+    try {
+      const successUrl = `${window.location.origin}/order-success`;
+      const cancelUrl = `${window.location.origin}/checkout`;
+
+      // Create PayPal order
+      const paypalOrder = await this.paypalService.createOrder(
+        this.calculateTotal(),
+        successUrl,
+        cancelUrl
+      ).toPromise();
+
+      // Redirect to PayPal
+      if (paypalOrder && (paypalOrder as any).orderId) {
+        window.location.href = `https://www.sandbox.paypal.com/checkoutnow?token=${(paypalOrder as any).orderId}`;
+
+        // Save the order in background
+        this.checkoutService.checkout(orderData).subscribe({
+          next: () => {
+            localStorage.removeItem('order');
+            this.clearCartFromDatabase();
+            this.updateStock(orderData.items);
+          },
+          error: err => console.error('Error saving order:', err)
+        });
+      }
+    } catch (err) {
+      console.error('PayPal error:', err);
+      // Handle error (show message to user)
+    } finally {
+      this.paypalLoading = false;
+    }
+  }
+
+  updateStock(items: any[]) {
+    items.forEach(item => {
+      this.cartService.updateItem(this.userId,item.productId, item.quantity).subscribe({
+        next: () => console.log(`Stock updated for product ${item.productId}`),
+        error: err => console.error(`Error updating stock for product ${item.productId}`, err)
+      });
+    });
+  }
+  
 }

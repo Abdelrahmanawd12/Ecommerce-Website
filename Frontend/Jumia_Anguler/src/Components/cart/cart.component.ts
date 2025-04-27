@@ -144,16 +144,13 @@ clearCart() {
 
   checkout() {
     this.cartService.getCart(this.customerId).subscribe(order => {
-      console.log("Order Before Clean: ", order);
-
       const cleanOrder = JSON.parse(JSON.stringify(order));
       console.log("Clean Order: ", cleanOrder);
 
       localStorage.setItem('order', JSON.stringify(cleanOrder));
-      const total = this.grandTotal.toString();
-      localStorage.setItem('total', total);
       this.router.navigate(['/checkout']);
     });
+    
   }
 
 }

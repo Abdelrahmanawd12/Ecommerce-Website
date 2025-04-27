@@ -1,70 +1,106 @@
 <div class="container py-4">
-  <h2 class="mb-4">Add Category</h2>
+  <div class="card border-0 shadow">
+    <div class="card-header bg-orange text-white py-3">
+      <h2 class="mb-0">Add New Category</h2>
+    </div>
+    
+    <div class="card-body p-4">
+      <!-- Error alert for duplicate name -->
+      <div *ngIf="isNameExist" class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        This category name already exists! Please use a different name.
+        <button type="button" class="btn-close" (click)="isNameExist = false"></button>
+      </div>
 
-  <!-- Error alert for duplicate name -->
-  <div *ngIf="isNameExist" class="alert alert-danger alert-dismissible fade show" role="alert">
-    This category name already exists! Please use a different name.
-    <button type="button" class="btn-close" (click)="isNameExist = false"></button>
-  </div>
-
-  <div class="row">
-    <!-- Stepper -->
-    <div class="col-md-4">
-      <div class="list-group">
-        <div class="list-group-item" [ngClass]="{'active': currentStep === 1}">
-          <strong>Step 1:</strong> Category Info
+      <div class="row">
+        <!-- Stepper -->
+        <div class="col-md-3">
+          <div class="jumia-stepper">
+            <div class="step" [ngClass]="{'active': currentStep === 1}">
+              <div class="step-number">1</div>
+              <div class="step-info">
+                <div class="step-title">Category Info</div>
+                <div class="step-desc">Basic details</div>
+              </div>
+            </div>
+            <div class="step" [ngClass]="{'active': currentStep === 2}">
+              <div class="step-number">2</div>
+              <div class="step-info">
+                <div class="step-title">Subcategories</div>
+                <div class="step-desc">Add child categories</div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="list-group-item" [ngClass]="{'active': currentStep === 2}">
-          <strong>Step 2:</strong> Subcategories
+
+        <!-- Form Steps -->
+        <div class="col-md-9">
+          <!-- Step 1 -->
+          <form *ngIf="currentStep === 1" [formGroup]="categoryForm" class="jumia-form">
+            <div class="mb-3">
+              <input type="number" id="id" class="form-control" formControlName="id" readonly hidden>
+            </div>
+            <div class="mb-4">
+              <label for="categoryName" class="form-label fw-bold">Category Name <span class="text-danger">*</span></label>
+              <input type="text" id="categoryName" class="form-control form-control-lg" 
+                     formControlName="name" placeholder="Enter category name"
+                     [ngClass]="{'is-invalid': isNameExist}">
+              <div *ngIf="isNameExist" class="invalid-feedback d-flex align-items-center">
+                <i class="bi bi-exclamation-circle me-2"></i>
+                Category name already exists
+              </div>
+            </div>
+            <div class="d-flex justify-content-end">
+              <button type="button" class="btn btn-orange btn-lg px-4" (click)="nextStep()" 
+                      [disabled]="isNameExist || !categoryForm.get('name')?.valid">
+                Continue <i class="bi bi-arrow-right ms-2"></i>
+              </button>
+            </div>
+          </form>
+
+          <!-- Step 2 -->
+          <form *ngIf="currentStep === 2" [formGroup]="categoryForm" class="jumia-form">
+            <h4 class="mb-4 fw-bold text-dark">Add Subcategories</h4>
+            <p class="text-muted mb-4">Add all the subcategories that belong to this category.</p>
+            
+            <div formArrayName="subcategories" class="mb-4">
+              <div *ngFor="let subCat of subcategories.controls; let i = index" [formGroupName]="i" 
+                   class="subcategory-item mb-3 p-3 bg-light rounded">
+                <div class="row g-3 align-items-center">
+                  <div class="col-md-1">
+                    <input type="number" class="form-control" formControlName="subCatId" readonly hidden>
+                  </div>
+                  <div class="col-md-5">
+                    <input type="text" class="form-control" formControlName="subCatName" 
+                           placeholder="Enter subcategory name">
+                  </div>
+                  <div class="col-md-5">
+                    <input type="text" class="form-control" formControlName="categoryName" readonly>
+                  </div>
+                  <div class="col-md-1">
+                    <button type="button" class="btn btn-outline-danger btn-sm" (click)="removeSubCategory(i)">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <button type="button" class="btn btn-outline-orange mb-4" (click)="addSubCategory()">
+              <i class="bi bi-plus-circle me-2"></i> Add Subcategory
+            </button>
+            
+            <div class="d-flex justify-content-between border-top pt-4">
+              <button type="button" class="btn btn-outline-secondary px-4" (click)="prevStep()">
+                <i class="bi bi-arrow-left me-2"></i> Back
+              </button>
+              <button type="submit" class="btn btn-orange px-4" (click)="onSubmit()" [disabled]="isNameExist">
+                Submit <i class="bi bi-check-circle ms-2"></i>
+              </button>
+            </div>
+          </form>
         </div>
       </div>
-    </div>
-
-    <!-- Form Steps -->
-    <div class="col-md-8">
-      <!-- Step 1 -->
-      <form *ngIf="currentStep === 1" [formGroup]="categoryForm" class="border p-4 rounded shadow-sm bg-light">
-        <div class="mb-3">
-          <input type="number" id="id" class="form-control" formControlName="id" readonly hidden>
-        </div>
-        <div class="mb-3">
-          <label for="categoryName" class="form-label">Category Name *</label>
-          <input type="text" id="categoryName" class="form-control" formControlName="name"
-                 [ngClass]="{'is-invalid': isNameExist}">
-          <div *ngIf="isNameExist" class="invalid-feedback">
-            Category name already exists
-          </div>
-        </div>
-        <div class="d-flex justify-content-end">
-          <button type="button" class="btn btn-primary" (click)="nextStep()" 
-                  [disabled]="isNameExist || !categoryForm.get('name')?.valid">
-            Continue
-          </button>
-        </div>
-      </form>
-
-      <!-- Step 2 -->
-      <form *ngIf="currentStep === 2" [formGroup]="categoryForm" class="border p-4 rounded shadow-sm bg-light">
-        <h5 class="mb-3">Subcategories</h5>
-        <div formArrayName="subcategories">
-          <div *ngFor="let subCat of subcategories.controls; let i = index" [formGroupName]="i" 
-               class="mb-3 d-flex align-items-center gap-2">
-            <input type="number" class="form-control" formControlName="subCatId" readonly hidden>
-            <input type="text" class="form-control" formControlName="subCatName" placeholder="Subcategory Name">
-            <input type="text" class="form-control" formControlName="categoryName" readonly>
-            <button type="button" class="btn btn-danger btn-sm" (click)="removeSubCategory(i)">×</button>
-          </div>
-        </div>
-        <button type="button" class="btn btn-secondary btn-sm mb-3" (click)="addSubCategory()">
-          + Add Subcategory
-        </button>
-        <div class="d-flex justify-content-between">
-          <button type="button" class="btn btn-outline-secondary" (click)="prevStep()">Back</button>
-          <button type="submit" class="btn btn-success" (click)="onSubmit()" [disabled]="isNameExist">
-            Submit
-          </button>
-        </div>
-      </form>
     </div>
   </div>
 </div>

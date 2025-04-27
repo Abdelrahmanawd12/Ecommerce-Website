@@ -1,3 +1,4 @@
+
 /* Add to your stylesheet */
 :root {
   --orange: #FF7800;
@@ -212,6 +213,71 @@
 .btn-order{
   background-color: #e56b00;
   color: white;
+
+}
+/* .add-to-cart-btn {
+    background-color: #f68b1e;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-to-cart-btn:hover {
+    background-color: #e67b10;
+  }
+   */
+/* 
+   .confirm-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+  } */
+
+
+
+
+
+
+  
+  .add-address-btn {
+    background-color: #f68b1e;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-address-btn:hover {
+    background-color: #e67b10; 
+  }
+
+  input.form-control:focus {
+    border-color: #ffc003 !important;
+    box-shadow: 0 0 0 0.2rem rgba(255, 192, 3, 0.5) !important;
+  }
+
+
+
+
+  .confirm-btn {
+    background-color: #f68b1e;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .confirm-btn:hover {
+    background-color: #e67b10; 
+  }
+
+  select.form-select:focus {
+    border-color: #ffc003 !important;
+    box-shadow: 0 0 0 0.2rem rgba(255, 192, 3, 0.5) !important;
+  }
+  
+
+
+  /* 1. شكل الـ input لما يـ focus عليه */
+input.form-control:focus {
+  border-color: #ffc003 !important;
+  box-shadow: 0 0 0 0.2rem rgba(255, 192, 3, 0.5) !important;
 }
 .btn-order:hover{
   background-color: white;
@@ -238,3 +304,15 @@
   background-color: orange !important;
   color: white !important;
 }
+
+/* Popup */
+.popup {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 600px;
+}
+
+
