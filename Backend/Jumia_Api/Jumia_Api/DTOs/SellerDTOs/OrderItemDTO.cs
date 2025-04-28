@@ -13,6 +13,9 @@ namespace Jumia_Api.DTOs.SellerDTOs
         public string Brand { get; set; }
         public int Quantity { get; set; }
         public decimal SubTotal { get; set; }
+        public ProductsDTO Product { get; set; } 
+
+
 
         public List<ProductImgDTO> ProductImages { get; set; }
     }

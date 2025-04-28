@@ -9,6 +9,7 @@ import { FooterComponent } from '../Components/footer/footer.component';
 import { FormsModule } from '@angular/forms';
 import { NGX_ECHARTS_CONFIG, NgxEchartsModule } from 'ngx-echarts';
 import { ChatBotAiComponent } from "../Components/chat-bot-ai/chat-bot-ai.component";
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -40,18 +41,43 @@ export class AppComponent implements OnInit {
 
   showHeader: boolean = true; // Flag to control header visibility
   showFooter: boolean = true; // Flag to control footer visibility
+  showChatBot = false;
   showMarginTop: boolean = true; // Flag to control margin
   showChatbotAI: boolean = true; //Flag to control ChatbotAI
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
+    this.router.events
+    .pipe(filter(event => event instanceof NavigationEnd))
+    .subscribe((event: NavigationEnd) => {
+      const url = event.urlAfterRedirects;
+
+      const pagesWithChatBot = [
+        '/home',
+        '/cart',
+        '/wishlist','/intro','/order','/account','/shop/:id',
+        '/details/:id','/shop','/order/:id'
+      ];
+
+      this.showChatBot = pagesWithChatBot.some(path => url.startsWith(path));
+    });
+
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         // Hide header for Seller Dashboard, Admin Dashboard, and Login pages
         const currentRoute = this.router.url;
 
-        if (currentRoute === '/login' || currentRoute === '/error' || currentRoute === '/register' || currentRoute === '/sellerRegisteration' || currentRoute === '/sellerDashboard' || currentRoute === '/intro' || currentRoute === '/sellOnJumia' || currentRoute === '/dashboard' || currentRoute == '/sellerDashboard/homeseller' || currentRoute == '/sellerDashboard/orderMangement' || currentRoute == '/sellerDashboard/manageProduct' || currentRoute == '/sellerDashboard/prductSales' ||currentRoute == '/sellerDashboard/accountprofile'||currentRoute == '/sellerDashboard/reports'|| currentRoute == '/sellerDashboard/addproduct' || currentRoute=='/sellerDashboard/sales') {
+        if (currentRoute === '/login' || currentRoute === '/error' || currentRoute === '/register'
+          || currentRoute === '/sellerRegisteration' || currentRoute === '/sellerDashboard' || currentRoute === '/intro'
+          || currentRoute === '/sellOnJumia' || currentRoute === '/dashboard' || currentRoute == '/sellerDashboard/homeseller'
+          || currentRoute == '/sellerDashboard/orderMangement' || currentRoute == '/sellerDashboard/manageProduct'
+          || currentRoute == '/sellerDashboard/prductSales' || currentRoute == '/sellerDashboard/accountprofile'
+          || currentRoute == '/sellerDashboard/reports' || currentRoute == '/sellerDashboard/addproduct'
+          || currentRoute == '/sellerDashboard/sales' || currentRoute == '/admin' || currentRoute == '/admin/dashboard' || currentRoute == '/admin/products'
+          || currentRoute == '/admin/users' ||currentRoute == '/admin/adduser'|| currentRoute == '/admin/edit-user/:id' || currentRoute == '/admin/accountprofile' || currentRoute == '/admin/categories'
+          || currentRoute == '/admin/addcategory'|| currentRoute == '/admin/reports'|| currentRoute == '/checkout'||currentRoute=='/order-success'||currentRoute=='/success'||currentRoute=='/cancel'
+        ) {
           this.showHeader = false;
           this.showMarginTop = false;
           this.showChatbotAI = false;
@@ -62,7 +88,18 @@ export class AppComponent implements OnInit {
         }
 
         // Optionally, you can also hide the footer for certain pages
-        if (currentRoute === '/login' || currentRoute === '/error' || currentRoute === '/register' || currentRoute === '/sellerRegisteration' || currentRoute === '/sellerDashboard' || currentRoute === '/intro' || currentRoute === '/sellOnJumia' || currentRoute === '/dashboard' ||currentRoute == '/sellerDashboard/homeseller' || currentRoute == '/sellerDashboard/orderMangement' || currentRoute == '/sellerDashboard/manageProduct' || currentRoute == '/sellerDashboard/prductSales' ||currentRoute == '/sellerDashboard/accountprofile'||currentRoute == '/sellerDashboard/reports' || currentRoute == '/sellerDashboard/addproduct' || currentRoute == '/sellerDashboard/sales' ) {
+        if (currentRoute === '/login' || currentRoute === '/error' || currentRoute === '/register'
+          || currentRoute === '/sellerRegisteration' || currentRoute === '/sellerDashboard' || currentRoute === '/intro'
+          || currentRoute === '/sellOnJumia' || currentRoute === '/dashboard' || currentRoute == '/sellerDashboard/homeseller'
+          || currentRoute == '/sellerDashboard/orderMangement' || currentRoute == '/sellerDashboard/manageProduct'
+          || currentRoute == '/sellerDashboard/prductSales' || currentRoute == '/sellerDashboard/accountprofile'
+          || currentRoute == '/sellerDashboard/reports' || currentRoute == '/sellerDashboard/addproduct'
+          || currentRoute == '/sellerDashboard/sales' || currentRoute == '/admin' || currentRoute == '/admin/dashboard' 
+          || currentRoute == '/admin/products'
+          || currentRoute == '/admin/users' || currentRoute == '/admin/adduser'|| currentRoute == '/admin/edit-user/:id' || currentRoute == '/admin/accountprofile' 
+          || currentRoute == '/admin/categories'
+          || currentRoute == '/admin/addcategory'|| currentRoute == '/admin/reports'|| currentRoute == '/checkout'||currentRoute=='/order-success'||currentRoute=='/success'||currentRoute=='/cancel'
+        ) {
           this.showFooter = false;
           this.showMarginTop = false;
           this.showChatbotAI = false;

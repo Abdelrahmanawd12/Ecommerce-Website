@@ -1,0 +1,14 @@
+/* .btn-outline-primary {
+  background-color: #f68b1e;
+  border-color: #f68b1e;
+  color: white;
+}
+.btn-outline-primary:hover {
+background-color: #e67b10;
+} */
+
+.button-container {
+    display: flex;
+    gap: 10px; /* إضافة مسافة بين الأزرار */
+  }
+  

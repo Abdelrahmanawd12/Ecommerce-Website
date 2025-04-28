@@ -100,10 +100,10 @@
               <i class="fas fa-broom me-2"></i>Clear Cart
             </button>
             <div class="text-end">
-              <h4 class="mb-0">Total: <span class="text-warning">{{ grandTotal | currency }}</span></h4>
+              <h4 class="mb-0">Total: <span class="text-total">{{ grandTotal | currency }}</span></h4>
               <small class="text-muted">Including all discounts</small>
             </div>
-            <button class="btn btn-warning button-checkout responsive-btn" routerLink="/checkout">
+            <button class="btn  button-checkout responsive-btn" (click)="checkout()">
               <i class="fas fa-credit-card me-2"></i>Checkout
             </button>
           </div>

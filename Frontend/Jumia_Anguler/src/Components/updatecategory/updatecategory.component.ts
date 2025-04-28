@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Category, AdminCategoryService } from '../../Services/admin-category.service';
+import { Category, AdminCategoryService } from '../../Services/AdminServ/admin-category.service';
 
 @Component({
   selector: 'app-updatecategory',

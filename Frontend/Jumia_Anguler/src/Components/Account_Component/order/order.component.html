@@ -65,21 +65,29 @@
           </div>
         </div>
         
-        
+         <!-- Shipping Details -->
+         <div *ngIf="order.shippingDetails" class="mt-4">
+          <h5>Shipping Details</h5>
+          <p><strong>Tracking Number:</strong> {{ order.shippingDetails.trackingNumber }}</p>
+          <p><strong>Status:</strong> {{ order.shippingDetails.status }}</p>
+          <p><strong>Estimated Delivery:</strong> {{ order.shippingDetails.estimatedDelivery }}</p>
+          <p><strong>Carrier:</strong> {{ order.shippingDetails.carrier }}</p>
+        </div>
 
         
 
         <!-- <p class="text-muted">Date: {{ order.orderDate | date }}</p> -->
 
-        <button (click)="showOrderDetails(order.orderId)" class="btn btn-outline-primary me-2">See Details</button>
+        <div class="button-container" class="text-end">
+          <button (click)="showOrderDetails(order.orderId)" class="btn btn-outline-primary me-2">See Details</button>
 
-        <button 
-          *ngIf="order.orderStatus.trim().toLowerCase() === 'pending'" 
-          class="btn btn-danger"
-          (click)="confirmCancel(order.orderId)">
-          Cancel Order
-        </button>
-
+          <button 
+            *ngIf="order.orderStatus.trim().toLowerCase() === 'pending'" 
+            class="btn btn-danger "
+            (click)="confirmCancel(order.orderId)">
+            Cancel Order
+          </button>
+        </div>
         <!-- Show selected order details directly under the order -->
         <div *ngIf="selectedOrder?.orderId === order.orderId" class="card p-4 mt-4 shadow-sm bg-light">
           <h4 class="mb-3">Order {{ selectedOrder?.orderId }}</h4>
@@ -130,7 +138,9 @@
           </div>
         </div>
         
+        <div class="button-container" class="text-end">
         <button (click)="showOrderDetails(order.orderId)" class="btn btn-outline-primary">See Details</button>
+        </div>
 
         <!-- Show selected order details directly under the order -->
         <div *ngIf="selectedOrder?.orderId === order.orderId" class="card p-4 mt-4 shadow-sm bg-light">

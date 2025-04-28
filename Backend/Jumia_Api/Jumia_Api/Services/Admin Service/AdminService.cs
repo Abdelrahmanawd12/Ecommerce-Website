@@ -14,7 +14,7 @@ namespace Jumia_Api.Services.Admin_Service
         private readonly JumiaDbContext _context;
         private readonly UserManager<ApplicationUser> userManager;
         RoleManager<IdentityRole> roleManager;
-        public AdminService(JumiaDbContext context , UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public AdminService(JumiaDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _context = context;
             this.userManager = userManager;
@@ -109,7 +109,7 @@ namespace Jumia_Api.Services.Admin_Service
 
         public async Task<AdminDTO> GetUserByIdAsync(string userId)
         {
-        
+
             var user = await userManager.Users
                 .OfType<ApplicationUser>()
                 .Where(u => u.Id == userId && !u.IsDeleted)
@@ -137,7 +137,7 @@ namespace Jumia_Api.Services.Admin_Service
                 IsDeleted = user.User.IsDeleted
             };
 
-           
+
             if (user.IsSeller)
             {
                 var seller = (Seller)user.User;
@@ -155,7 +155,7 @@ namespace Jumia_Api.Services.Admin_Service
             if (user == null || user.IsDeleted)
                 return false;
 
-        
+
             user.IsDeleted = true;
 
             var result = await userManager.UpdateAsync(user);
@@ -165,7 +165,64 @@ namespace Jumia_Api.Services.Admin_Service
 
         public async Task<AdminDTO> AddUserAsync(CreateUserDTO userDto)
         {
-            ApplicationUser user = userDto.Role switch
+
+            var existingUser = await userManager.FindByEmailAsync(userDto.Email);
+
+            if (existingUser != null && !existingUser.IsDeleted)
+            {
+                throw new Exception("Email is already exist");
+            }
+
+
+            if (existingUser != null && existingUser.IsDeleted)
+            {
+
+                existingUser.IsDeleted = false;
+                existingUser.UserName = userDto.Email;
+                existingUser.Email = userDto.Email;
+                existingUser.FirstName = userDto.FirstName;
+                existingUser.LastName = userDto.LastName;
+
+
+                var resetToken = await userManager.GeneratePasswordResetTokenAsync(existingUser);
+                var resetResult = await userManager.ResetPasswordAsync(existingUser, resetToken, userDto.Password);
+
+                if (!resetResult.Succeeded)
+                {
+                    throw new Exception("Failed to update Password: " +
+                        string.Join(", ", resetResult.Errors.Select(e => e.Description)));
+                }
+
+                if (existingUser is Seller seller)
+                {
+                    seller.StoreName = userDto.StoreName;
+                    seller.StoreAddress = userDto.StoreAddress;
+                }
+
+                await userManager.UpdateAsync(existingUser);
+
+
+                var currentRoles = await userManager.GetRolesAsync(existingUser);
+                if (!currentRoles.Contains(userDto.Role))
+                {
+                    await userManager.RemoveFromRolesAsync(existingUser, currentRoles);
+                    await userManager.AddToRoleAsync(existingUser, userDto.Role);
+                }
+
+                return new AdminDTO
+                {
+                    Id = existingUser.Id,
+                    FirstName = existingUser.FirstName,
+                    LastName = existingUser.LastName,
+                    Email = existingUser.Email,
+                    Role = userDto.Role,
+                    Gender = existingUser.Gender,
+                    DateOfBirth = existingUser.DateOfBirth,
+                    CreatedAt = existingUser.CreatedAt
+                };
+            }
+
+            ApplicationUser newUser = userDto.Role switch
             {
                 "Seller" => new Seller
                 {
@@ -186,32 +243,31 @@ namespace Jumia_Api.Services.Admin_Service
                 }
             };
 
-        
-            user.UserName = userDto.Email;
-            user.Email = userDto.Email;
-            user.FirstName = userDto.FirstName;
-            user.LastName = userDto.LastName;
+            newUser.UserName = userDto.Email;
+            newUser.Email = userDto.Email;
+            newUser.FirstName = userDto.FirstName;
+            newUser.LastName = userDto.LastName;
 
-            var result = await userManager.CreateAsync(user, userDto.Password);
+            var createResult = await userManager.CreateAsync(newUser, userDto.Password);
 
-            if (!result.Succeeded)
+            if (!createResult.Succeeded)
             {
-                throw new Exception(string.Join(", ", result.Errors.Select(e => e.Description)));
+                throw new Exception("Failed in Add user " +
+                    string.Join(", ", createResult.Errors.Select(e => e.Description)));
             }
 
-          
-            await userManager.AddToRoleAsync(user, userDto.Role);
+            await userManager.AddToRoleAsync(newUser, userDto.Role);
 
             return new AdminDTO
             {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
+                Id = newUser.Id,
+                FirstName = newUser.FirstName,
+                LastName = newUser.LastName,
+                Email = newUser.Email,
                 Role = userDto.Role,
-                Gender = user.Gender,
-                DateOfBirth = user.DateOfBirth,
-                CreatedAt = user.CreatedAt
+                Gender = newUser.Gender,
+                DateOfBirth = newUser.DateOfBirth,
+                CreatedAt = DateTime.UtcNow
             };
         }
 
@@ -219,7 +275,7 @@ namespace Jumia_Api.Services.Admin_Service
         {
             try
             {
-              
+
                 var user = await userManager.FindByIdAsync(userDto.Id);
                 if (user == null || user.IsDeleted)
                     return null;
@@ -231,19 +287,19 @@ namespace Jumia_Api.Services.Admin_Service
                 user.Gender = userDto.Gender;
                 user.DateOfBirth = userDto.DateOfBirth;
 
-             
+
                 if (user is Seller seller)
                 {
                     seller.StoreName = userDto.StoreName ?? seller.StoreName;
                     seller.StoreAddress = userDto.StoreAddress ?? seller.StoreAddress;
                 }
 
-               
+
                 var updateResult = await userManager.UpdateAsync(user);
                 if (!updateResult.Succeeded)
                     return null;
 
-             
+
                 var currentRoles = await userManager.GetRolesAsync(user);
                 if (!currentRoles.Contains(userDto.Role))
                 {
@@ -251,27 +307,36 @@ namespace Jumia_Api.Services.Admin_Service
                     await userManager.AddToRoleAsync(user, userDto.Role);
                 }
 
-          
+
                 var roles = await userManager.GetRolesAsync(user);
                 return MapToAdminDTO(user, roles.FirstOrDefault());
             }
             catch
             {
-                return null; 
+                return null;
             }
         }
 
         public async Task<AdminDashboardDTO> GetDashboardStatsAsync()
         {
+            var now = DateTime.Now;
+            var today = DateTime.Today;
+            var firstDayOfMonth = new DateTime(today.Year, today.Month, 1);
+            var nextMonth = firstDayOfMonth.AddMonths(1);
+
+         
+
+
             var totalCategories = await _context.Categories.CountAsync();
             var totalSubCategories = await _context.SubCategories.CountAsync();
 
             var totalUsers = await _context.Users.CountAsync(u => !u.IsDeleted);
 
-            var newUsersThisMonth = await _context.Users
-                .CountAsync(u => !u.IsDeleted &&
-                                 u.CreatedAt.Month == DateTime.Now.Month &&
-                                 u.CreatedAt.Year == DateTime.Now.Year);
+
+            var newUsersThisMonth = await _context.Users.CountAsync(u => !u.IsDeleted);
+
+      
+
 
             var totalProducts = await _context.Products.CountAsync();
             var outOfStockProducts = await _context.Products.CountAsync(p => p.Quantity == 0);
@@ -567,7 +632,7 @@ namespace Jumia_Api.Services.Admin_Service
             catch
             {
                 await transaction.RollbackAsync();
-               
+
                 throw;
             }
         }
@@ -622,10 +687,10 @@ namespace Jumia_Api.Services.Admin_Service
                 return false;
             }
 
-            
+
             _context.SubCategories.RemoveRange(category.SubCategories);
 
-          
+
             _context.Categories.Remove(category);
             await _context.SaveChangesAsync();
             return true;
@@ -683,7 +748,7 @@ namespace Jumia_Api.Services.Admin_Service
             if (category == null)
                 return false;
 
-         
+
             bool subCategoryExists = await _context.SubCategories
                 .AnyAsync(sc => sc.SubCatName.ToLower() == subCatDto.SubCatName.ToLower()
                              && sc.CatId == category.CatId);
@@ -708,5 +773,3 @@ namespace Jumia_Api.Services.Admin_Service
 
     }
 }
-    
-

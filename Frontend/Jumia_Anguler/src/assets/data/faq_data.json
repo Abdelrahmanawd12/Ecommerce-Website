@@ -1,0 +1,86 @@
+[
+    {
+        "question_ar": "فين الطلب بتاعي؟",
+        "question_en": "Where is my order?",
+        "answer_ar": "تقدري تتابعي حالة طلبك من خلال صفحة الطلبات في حسابك 😊",
+        "answer_en": "You can track your order status from the orders page in your account 😊"
+    },
+    {
+        "question_ar": "ازاي أرجع منتج؟",
+        "question_en": "How do I return a product?",
+        "answer_ar": "بتقدري تطلبي استرجاع من خلال صفحة الطلبات، هنساعدك خطوة بخطوة 🙌",
+        "answer_en": "You can request a return from your orders page. We'll guide you step by step 🙌"
+    },
+    {
+        "question_ar": "في شحن مجاني؟",
+        "question_en": "Is there free shipping?",
+        "answer_ar": "أيوه، الشحن مجاني على الطلبات اللي فوق 500 جنيه 🚚✨",
+        "answer_en": "Yes, we offer free shipping for orders over 500 EGP 🚚✨"
+    },
+    {
+        "question_ar": "ازاي أعدل عنوان الشحن؟",
+        "question_en": "How can I change the shipping address?",
+        "answer_ar": "ادخلي على إعدادات الحساب وعدلي العنوان في قسم العناوين 🏠",
+        "answer_en": "Go to your account settings and update your address under the 'Addresses' section 🏠"
+    },
+    {
+        "question_ar": "طرق الدفع إيه؟",
+        "question_en": "What are the payment methods?",
+        "answer_ar": "بنقبل الدفع عند الاستلام، فيزا، وماستر كارد 💳",
+        "answer_en": "We accept cash on delivery, Visa, and MasterCard 💳"
+    },
+    {
+        "question_ar": "ممكن أغير الطلب بعد ما أطلبه؟",
+        "question_en": "Can I change my order after placing it?",
+        "answer_ar": "لو الطلب لسه ما اتشحنش، ممكن نعدله لك! تواصلي معانا بسرعة 😉",
+        "answer_en": "If the order hasn't shipped yet, we can help you change it! Contact us quickly 😉"
+    },
+    {
+        "question_ar": "فين أقرب نقطة استلام؟",
+        "question_en": "Where is the nearest pickup point?",
+        "answer_ar": "ممكن تشوفي أقرب نقطة من خلال الخريطة أثناء اختيار طريقة الشحن 📍",
+        "answer_en": "You can check the nearest point on the map when selecting your shipping method 📍"
+    },
+    {
+        "question_ar": "هل المنتجات أصلية؟",
+        "question_en": "Are the products authentic?",
+        "answer_ar": "أكيد! كل منتجاتنا أصلية 100% وبيتم فحصها قبل الشحن 🛡️",
+        "answer_en": "Absolutely! All our products are 100% authentic and checked before shipping 🛡️"
+    },
+    {
+        "question_ar": "فين كوبونات الخصم؟",
+        "question_en": "Where can I find discount coupons?",
+        "answer_ar": "هتلاقي الكوبونات في الصفحة الرئيسية أو في الإيميل لو مشتركة 🧡",
+        "answer_en": "You can find coupons on the homepage or in your email if you’re subscribed 🧡"
+    },
+    {
+        "question_ar": "إمتى يوصلني الطلب؟",
+        "question_en": "When will I receive my order?",
+        "answer_ar": "عادة التوصيل بيكون في خلال 2-5 أيام عمل 🚚",
+        "answer_en": "Delivery usually takes 2-5 working days 🚚"
+    },
+    {
+        "question_ar": "ليه الشحنة اتأخرت؟",
+        "question_en": "Why is my shipment delayed?",
+        "answer_ar": "ممكن يكون بسبب ضغط على شركة الشحن، تابع من صفحة الطلبات أو كلمنا 📦",
+        "answer_en": "It might be due to courier delays. Track it from your orders page or reach out to us 📦"
+    },
+    {
+        "question_ar": "ممكن أكلم خدمة العملاء؟",
+        "question_en": "Can I talk to customer service?",
+        "answer_ar": "أكيد، فريقنا جاهز يساعدك! تقدرِ تتواصلي معانا من خلال الشات أو الاتصال المباشر 💬",
+        "answer_en": "Of course! Our team is here to help. You can chat with us or call us directly 💬"
+    },
+    {
+        "question_ar": "أنا مش فاهم/فاهمة",
+        "question_en": "I don’t understand",
+        "answer_ar": "ولا يهمك! ممكن توضّح/توضّحي أكتر عشان أقدر أساعدك 😊",
+        "answer_en": "No worries! Could you please clarify a bit more so I can help you better? 😊"
+    },
+    {
+        "question_ar": "؟",
+        "question_en": "?",
+        "answer_ar": "معذرة، مش فهمت السؤال. ممكن تحاول تكتبه بطريقة تانية؟ 🤔",
+        "answer_en": "Sorry, I didn’t get that. Could you try rephrasing the question? 🤔"
+    }
+]

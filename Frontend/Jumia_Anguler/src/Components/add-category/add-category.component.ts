@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormArray, FormsModule, ReactiveFor
 import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
-import { AdminCategoryService } from '../../Services/admin-category.service';
+import { AdminCategoryService } from '../../Services/AdminServ/admin-category.service';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';

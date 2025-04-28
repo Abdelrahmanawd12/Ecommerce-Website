@@ -28,7 +28,7 @@ namespace Jumia_Api.MapperConfig
                     SubCatName = s.SubCatName,
                     CategoryName = src.CatName.ToString(),
 
-                    Products = s.Products.Where(p => p.Status == "accepted" && p.IsDeleted == false).Select(p => new ProductsDTO
+                    Products = s.Products.Where(p => p.Status == "Accepted" && p.IsDeleted == false).Select(p => new ProductsDTO
                     {
                         ProductId = p.ProductId,
                         Name = p.Name,
@@ -91,7 +91,7 @@ namespace Jumia_Api.MapperConfig
                 dest.SubCatName = src.SubCatName;
                 dest.SubCatId = src.SubCatId;
                 dest.CategoryName = src.Category?.CatName ?? "Unknown";
-                dest.Products = src.Products.Where(p => p.Status == "accepted" && p.IsDeleted == false).Select(p => new ProductsDTO
+                dest.Products = src.Products.Where(p => p.Status == "Accepted" && p.IsDeleted == false).Select(p => new ProductsDTO
                 {
                     ProductId = p.ProductId,
                     Name = p.Name,
@@ -182,6 +182,8 @@ namespace Jumia_Api.MapperConfig
             // Mapping from Address to AddressDTO
             CreateMap<Address, AddressDTO>()
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId));
+            CreateMap<AddressDTO, Address>();    
+
 
             //Mapping from Seller To SellerDTO
             CreateMap<Seller, sellerDTO>()

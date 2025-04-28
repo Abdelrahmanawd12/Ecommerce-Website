@@ -31,6 +31,7 @@
   // Models/order.models.ts
 //id 
 export interface OrderDetailsDto {
+  [x: string]: any;
   orderId: number;
   orderDate: string; // ISO string
   orderStatus: string;
@@ -68,6 +69,7 @@ export interface OrderItemSummaryDto {
 }
 
 export interface OrderListDto {
+shippingDetails: any;
   orderId: number;
   orderDate: string;
   orderStatus: string;
