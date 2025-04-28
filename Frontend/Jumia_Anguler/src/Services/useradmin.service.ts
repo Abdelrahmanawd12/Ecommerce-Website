@@ -21,13 +21,14 @@ export interface UpdateAdminEmailDTO {
 export interface ChangePasswordDTO {
   oldPassword: string;
   newPassword: string;
+  confirmPassword: string;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdminUserService {
-  private baseUrl = 'https://localhost:port/api/UserAdmin'; 
+  private baseUrl = 'https://localhost:7266/api/UserAdmin'; 
 
   constructor(private http: HttpClient) {}
 
@@ -36,14 +37,20 @@ export class AdminUserService {
   }
 
   editAdmin(id: string, adminDto: AdminDTO): Observable<AdminDTO> {
-    return this.http.put<AdminDTO>(`${this.baseUrl}/editAdmin?id=${id}`, adminDto);
-  }
 
-  updateAdminEmail(id: string, emailDto: UpdateAdminEmailDTO): Observable<any> {
-    return this.http.put(`${this.baseUrl}/editAdminEmail?id=${id}`, emailDto);
+    return this.http.put<AdminDTO>(`${this.baseUrl}/editAdmin/${id}`, adminDto);
   }
+  
 
-  changePassword(id: string, passwordDto: ChangePasswordDTO): Observable<any> {
-    return this.http.put(`${this.baseUrl}/changePassword?id=${id}`, passwordDto);
-  }
+
+changePassword(id: string, dto: ChangePasswordDTO): Observable<any> {
+  return this.http.put(
+    `${this.baseUrl}/changePassword/${id}`, 
+    dto,
+    {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    }
+  )
+}
+
 }

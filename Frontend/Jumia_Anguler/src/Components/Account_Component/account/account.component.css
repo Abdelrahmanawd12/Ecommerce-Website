@@ -1,0 +1,15 @@
+.sidebar-container {
+    position: sticky;
+    top: 80px; 
+    height: calc(100vh - 160px);
+    overflow-y: auto;
+    z-index: 100;
+  }
+  
+  .content-area {
+    min-height: calc(100vh - 160px);
+  }
+  
+  body {
+    padding-top: 80px; 
+  }

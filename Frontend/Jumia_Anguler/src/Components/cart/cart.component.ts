@@ -6,18 +6,19 @@ import { FormsModule } from '@angular/forms';
 import { CartService } from '../../Services/Customer/cart.service';
 import { environment } from '../../Environment/Environment.prod';
 import { Modal } from 'bootstrap';
+import { Router } from '@angular/router';
 
 declare var bootstrap: any;
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [RouterLink, CommonModule , FormsModule],
+  imports: [RouterLink, CommonModule, FormsModule],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
 })
-export class CartComponent implements  OnInit {
-  customerId= localStorage.getItem('userId') || '';
+export class CartComponent implements OnInit {
+  customerId = localStorage.getItem('userId') || '';
   grandTotal: number = 0;
   cartData: CartDTO = {
     cartId: 0,
@@ -29,9 +30,9 @@ export class CartComponent implements  OnInit {
   private confirmCallback!: () => void;
   private modalRef: any;
   //image base url
-  readonly imgbaseUrl=environment.imageBaseUrl;
+  readonly imgbaseUrl = environment.imageBaseUrl;
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService, private router: Router) { }
 
 
   ngOnInit(): void {
@@ -39,7 +40,7 @@ export class CartComponent implements  OnInit {
     this.loadCart();
     this.calculateTotal();
   }
-//load
+  //load
   loadCart() {
     this.cartService.getCart(this.customerId).subscribe({
       next: (res) => {
@@ -53,7 +54,7 @@ export class CartComponent implements  OnInit {
       }
     });
   }
-//calculate total after discount
+  //calculate total after discount
   calculateTotal() {
     if (!this.cartData?.items?.length) {
       this.grandTotal = 0;
@@ -64,7 +65,7 @@ export class CartComponent implements  OnInit {
       .filter(item => item.productStock > 0)
       .reduce((total, item) => {
         const validQuantity = Math.min(item.quantity, item.productStock);
-      return total + (item.price - item.discount) * validQuantity;
+        return total + (item.price - item.discount) * validQuantity;
       }, 0);
   }
 
@@ -141,8 +142,20 @@ clearCart() {
     }
   }
 
+  checkout() {
+    this.cartService.getCart(this.customerId).subscribe(order => {
+      console.log("Order Before Clean: ", order);
 
+      const cleanOrder = JSON.parse(JSON.stringify(order));
+      console.log("Clean Order: ", cleanOrder);
 
+      localStorage.setItem('order', JSON.stringify(cleanOrder));
+      const total = this.grandTotal.toString();
+      localStorage.setItem('total', total);
+      this.router.navigate(['/checkout']);
+    });
   }
+
+}
 
 

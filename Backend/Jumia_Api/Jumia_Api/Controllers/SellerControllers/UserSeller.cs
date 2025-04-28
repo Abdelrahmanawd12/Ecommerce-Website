@@ -103,6 +103,40 @@ namespace Jumia_Api.Controllers.SellerControllers
             return Ok(new { success = true, message = "Password updated successfully." });
         }
 
+        //---------------------------------------------------------------------------------------
+        //Get Seller Id , Name for ProductRequests 
+        [HttpGet("/sellerName")]
+        [ProducesResponseType(200, Type = typeof(void))]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [ProducesErrorResponseType(typeof(void))]
+        [EndpointSummary("Get Seller Name")]
+        [EndpointDescription("Get Seller Name By product Id For Admin Dashboard")]
+
+        public IActionResult GetSeller(int productId)
+        {
+            try
+            {
+                var product = unit.ProductsRepository.GetById(productId);
+                if (product == null)
+                {
+                    return NotFound("Product not found.");
+                }
+
+                var seller = unit.SellerRepository.GetSellerById(product.SellerId);
+                if (seller == null)
+                {
+                    return NotFound("Seller not found.");
+                }
+
+                return Ok(seller.FirstName+" "+seller.LastName); 
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error: {ex.Message}");
+            }
+        }
+
 
     }
 }

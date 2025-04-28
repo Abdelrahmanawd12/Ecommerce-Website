@@ -9,7 +9,11 @@ using Microsoft.IdentityModel.Tokens;
 using Jumia_Api.MapperConfig;
 using Jumia_Api.Repository;
 using Jumia_Api.UnitOFWorks;
+using Jumia_Api.Services.StripeService;
 using Jumia_Api.Services;
+
+using PayPalCheckoutSdk.Core;
+using Jumia_Api.Services.PayPalService;
 
 
 namespace Jumia_Api
@@ -30,16 +34,16 @@ namespace Jumia_Api
                 options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("con1")));
             builder.Services.AddAutoMapper(typeof(AutoMapperConfig));
             builder.Services.AddScoped<UnitOFWork>();
+            builder.Services.AddScoped<StripeService>();
 
-
-
-
-            //builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-            //   .AddEntityFrameworkStores<JumiaDbContext>();
-
-            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<JumiaDbContext>()
-                .AddDefaultTokenProviders();
+            // Configure Identity only once
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.User.RequireUniqueEmail = false;
+            })
+            .AddEntityFrameworkStores<JumiaDbContext>()
+            .AddDefaultTokenProviders()
+            .AddUserValidator<CustomUserValidator<ApplicationUser>>();
 
             builder.Services.AddCors(options =>
             {
@@ -50,7 +54,8 @@ namespace Jumia_Api
                     builder.AllowAnyHeader();
                 });
             });
-            //[authorize] check using JWT token
+
+            // Configure JWT Authentication
             builder.Services.AddAuthentication(option =>
             {
                 option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -64,7 +69,7 @@ namespace Jumia_Api
                     ValidateIssuer = true,
                     ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
                     ValidateAudience = true,
-                    ValidateLifetime = true, 
+                    ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
                     ValidAudience = builder.Configuration["JWT:ValidAudience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:SecretKey"]))
@@ -72,7 +77,22 @@ namespace Jumia_Api
             });
 
             builder.Services.AddScoped<IAdminService, AdminService>();
-         
+
+
+            builder.Services.AddScoped<PayPalService>();
+            builder.Services.AddSingleton<PayPalHttpClient>(provider =>
+            {
+                var config = provider.GetRequiredService<IConfiguration>();
+                var environment = new SandboxEnvironment(
+                    config["PayPal:ClientId"],
+                    config["PayPal:SecretKey"]
+                );
+                return new PayPalHttpClient(environment);
+            });
+
+
+
+
             var app = builder.Build();
             app.UseStaticFiles();
 
@@ -86,13 +106,11 @@ namespace Jumia_Api
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
-
             app.UseAuthorization();
 
             app.UseCors(txt);
             app.MapControllers();
-            app.UseStaticFiles(); 
-
+            app.UseStaticFiles();
 
             app.Run();
         }

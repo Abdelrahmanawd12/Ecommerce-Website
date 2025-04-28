@@ -652,6 +652,60 @@ namespace Jumia_Api.Controllers.SellerControllers
             return Ok(new { message = $"Order with ID {orderId} has been deleted." });
         }
 
+        //----------------------------------------------------------------------------------------
+        //Products Requests For Admin 
+        [HttpGet("/request")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [ProducesErrorResponseType(typeof(void))]
+        [EndpointSummary("Requset Product For Admin Dashboard")]
+        [EndpointDescription("When Seller Add Product it will go to Admin to Accept or Reject it")]
+
+        public IActionResult RequestProducts()
+        {
+            var products = unit.ProductsRepository.GetAll()
+                .Where(p => p.Status == "Pending" || p.Status == "pending").ToList();
+            if (products == null || !products.Any())
+            {
+                return NotFound("No Pending products found ");
+            }
+
+            var dto = mapper.Map<List<ProductsSellerDTO>>(products);
+
+            return Ok(dto);
+        }
+        //----------------------------------------------------------------------------------
+        //Change Product Satus 
+        [HttpPatch("/changeStatus")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [ProducesErrorResponseType(typeof(void))]
+        [EndpointSummary("Change Product Status From Admin Dashboard")]
+        [EndpointDescription("Change Product Status from Admin Dashboard")]
+        public IActionResult ChangeProductStatus(int productId, [FromBody] string newStatus)
+        {
+            var product = unit.ProductsRepository.GetById(productId);
+            if (product == null)
+            {
+                return NotFound("Product not found");
+            }
+
+            var validStatuses = new List<string> { "Pending", "Accepted", "Rejected" };
+            if (!validStatuses.Contains(newStatus, StringComparer.OrdinalIgnoreCase))
+            {
+                return BadRequest("Invalid status");
+            }
+
+            product.Status = newStatus;
+
+            unit.ProductsRepository.Update(product);
+            unit.Save();
+
+            return Ok("Product status updated successfully");
+        }
+
 
     }
 }

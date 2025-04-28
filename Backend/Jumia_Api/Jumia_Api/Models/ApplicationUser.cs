@@ -22,5 +22,6 @@ namespace Jumia.Models
         public virtual ICollection<Rating>? Ratings { get; set; }
         public virtual ICollection<Address>? Addresses { get; set; }
 
+
     }
 }

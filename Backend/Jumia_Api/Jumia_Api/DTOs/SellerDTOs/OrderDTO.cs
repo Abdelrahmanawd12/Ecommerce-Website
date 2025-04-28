@@ -11,6 +11,7 @@
         public decimal TotalAmount { get; set; }
         public int OrderTrackingNumber { get; set; }
         public string CustomerId { get; set; }
+        public string SellerId { get; set; }
 
         // Lists
         public List<OrderItemDTO> OrderItems { get; set; }

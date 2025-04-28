@@ -103,7 +103,7 @@ export class LoginComponent {
     } else if (rolesArray.includes('Seller')) {
       this.router.navigate(['/sellerDashboard']);
     } else if (rolesArray.includes('Customer')) {
-      this.router.navigate(['/home']);
+      window.location.href = '/home';      
     }
   }
   

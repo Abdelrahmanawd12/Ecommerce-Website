@@ -3,7 +3,7 @@ import { EChartsOption } from 'echarts';
 import { CommonModule } from '@angular/common';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { AdminDashboard } from '../interfaces/dashboard-stats';
-import { AdminService } from '../../Services/admin.service';
+import { AdminService } from '../../Services/AdminServ/admin.service';
 
 @Component({
   selector: 'app-admin-report',

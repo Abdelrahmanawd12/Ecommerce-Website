@@ -45,76 +45,78 @@
                 </div>
 
                 <!-- Edit Form -->
-                <form *ngIf="isEditing" (ngSubmit)="updateAddressBook()" #addressForm="ngForm" novalidate>
-                  <!-- First Name -->
-                  <div class="form-group mb-2">
-                    <label>First Name</label>
-                    <input type="text" class="form-control custom-input" name="firstName"
-                           [(ngModel)]="updatedAddressBook.firstName"
-                           required pattern="^[A-Za-z\s]+$" #firstName="ngModel">
-                    <small *ngIf="firstName.invalid && firstName.touched" class="text-danger">
-                      First name is required and must contain only English letters.
-                    </small>
-                  </div>
+<form *ngIf="isEditing" (ngSubmit)="updateAddressBook()" #addressForm="ngForm" novalidate>
 
-                  <!-- Last Name -->
-                  <div class="form-group mb-2">
-                    <label>Last Name</label>
-                    <input type="text" class="form-control custom-input" name="lastName"
-                           [(ngModel)]="updatedAddressBook.lastName"
-                           required pattern="^[A-Za-z\s]+$" #lastName="ngModel">
-                    <small *ngIf="lastName.invalid && lastName.touched" class="text-danger">
-                      Last name is required and must contain only English letters.
-                    </small>
-                  </div>
+  <!-- First Name -->
+  <div class="form-group mb-2">
+    <label>First Name</label>
+    <input type="text" class="form-control custom-input" name="firstName"
+           [(ngModel)]="updatedAddressBook.firstName"
+           required pattern="^[A-Za-z\s]+$" #firstName="ngModel">
+    <small *ngIf="firstName.invalid && firstName.touched" class="text-danger">
+      First name is required and must contain only English letters.
+    </small>
+  </div>
 
-                  <!-- Phone Number -->
-                  <div class="form-group mb-2">
-                    <label>Phone Number</label>
-                    <input type="text" class="form-control custom-input" name="phoneNumber"
-                           [(ngModel)]="updatedAddressBook.phoneNumber"
-                           required pattern="^[0-9]{11}$" #phoneNumber="ngModel">
-                    <small *ngIf="phoneNumber.invalid && phoneNumber.touched" class="text-danger">
-                      Phone number must be exactly 11 digits.
-                    </small>
-                  </div>
+  <!-- Last Name -->
+  <div class="form-group mb-2">
+    <label>Last Name</label>
+    <input type="text" class="form-control custom-input" name="lastName"
+           [(ngModel)]="updatedAddressBook.lastName"
+           required pattern="^[A-Za-z\s]+$" #lastName="ngModel">
+    <small *ngIf="lastName.invalid && lastName.touched" class="text-danger">
+      Last name is required and must contain only English letters.
+    </small>
+  </div>
 
-                  <!-- Street -->
-                  <div class="form-group mb-2">
-                    <label>Street</label>
-                    <input type="text" class="form-control custom-input" name="street"
-                           [(ngModel)]="updatedAddressBook.street"
-                           required #street="ngModel">
-                    <small *ngIf="street.invalid && street.touched" class="text-danger">
-                      Street is required.
-                    </small>
-                  </div>
+  <!-- Phone Number -->
+  <div class="form-group mb-2">
+    <label>Phone Number</label>
+    <input type="text" class="form-control custom-input" name="phoneNumber"
+           [(ngModel)]="updatedAddressBook.phoneNumber"
+           required pattern="^[0-9]{11}$" #phoneNumber="ngModel">
+    <small *ngIf="phoneNumber.invalid && phoneNumber.touched" class="text-danger">
+      Phone number must be exactly 11 digits.
+    </small>
+  </div>
 
-                  <!-- City -->
-                  <div class="form-group mb-2">
-                    <label>City</label>
-                    <input type="text" class="form-control custom-input" name="city"
-                           [(ngModel)]="updatedAddressBook.city"
-                           required #city="ngModel">
-                    <small *ngIf="city.invalid && city.touched" class="text-danger">
-                      City is required.
-                    </small>
-                  </div>
+  <!-- Street -->
+  <div class="form-group mb-2">
+    <label>Street</label>
+    <input type="text" class="form-control custom-input" name="street"
+           [(ngModel)]="updatedAddressBook.street"
+           required #street="ngModel">
+    <small *ngIf="street.invalid && street.touched" class="text-danger">
+      Street is required.
+    </small>
+  </div>
 
-                  <!-- Country (Read-Only) -->
-                  <div class="form-group mb-2">
-                    <label>Country</label>
-                    <input type="text" class="form-control custom-input" name="country"
-                           [(ngModel)]="updatedAddressBook.country" readonly>
-                  </div>
+  <!-- City -->
+  <div class="form-group mb-2">
+    <label>City</label>
+    <input type="text" class="form-control custom-input" name="city"
+           [(ngModel)]="updatedAddressBook.city"
+           required #city="ngModel">
+    <small *ngIf="city.invalid && city.touched" class="text-danger">
+      City is required.
+    </small>
+  </div>
 
-                  <!-- Submit -->
-                  <div class="text-end">
-                    <button type="submit" class="btn custom-btn mt-2 px-4" [disabled]="addressForm.invalid">
-                      Save
-                    </button>
-                  </div>
-                </form>
+  <!-- Country (Read-Only) -->
+  <div class="form-group mb-2">
+    <label>Country</label>
+    <input type="text" class="form-control custom-input" name="country"
+           [(ngModel)]="updatedAddressBook.country" readonly>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="text-end">
+    <button type="submit" class="btn custom-btn mt-2 px-4" [disabled]="addressForm.invalid">
+      Save
+    </button>
+  </div>
+</form>
+
               </div>
             </ng-container>
 

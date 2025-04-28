@@ -27,7 +27,8 @@ namespace Jumia_Api.Controllers.CustomerControllers
         [HttpGet]
         public IActionResult GetAllProducts()
         {
-            var products = unit.ProductsRepository.GetAll().Where(p=>p.Status=="accepted"&&p.IsDeleted==false); 
+            var products = unit.ProductsRepository.GetAll().Where(p=>p.Status=="Accepted"&&p.IsDeleted==false); 
+
             var product = mapper.Map<List<ProductsDTO>>(products);
             return Ok(product);
         }

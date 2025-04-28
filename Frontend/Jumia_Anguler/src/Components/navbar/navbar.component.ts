@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CartService } from '../../Services/Customer/cart.service';
 import { ProductService } from '../../Services/product.service';
@@ -54,10 +54,28 @@ this.toggleAuth();
 
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
+    if (this.dropdownOpen) this.helpDropdownOpen = false;
   }
 
   toggleHelpDropdown() {
     this.helpDropdownOpen = !this.helpDropdownOpen;
+    if (this.helpDropdownOpen) this.dropdownOpen = false;
+  }
+
+  // Close dropdowns when clicking outside
+  @HostListener('document:click', ['$event'])
+  handleClickOutside(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    const clickedInsideDropdown = target.closest('.dropdown');
+    const clickedInsideHelp = target.closest('.help-dropdown');
+    
+    if (!clickedInsideDropdown) {
+      this.dropdownOpen = false;
+    }
+
+    if (!clickedInsideHelp) {
+      this.helpDropdownOpen = false;
+    }
   }
 
   closeDropdown(event: Event) {
