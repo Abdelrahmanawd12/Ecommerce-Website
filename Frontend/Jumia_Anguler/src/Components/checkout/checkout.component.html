@@ -88,8 +88,34 @@
             </div>
           </div>
 
-          <!-- Payment -->
-          <div class="mb-4">
+          <!-- Payment Method -->
+
+<div class="payment-method">
+  <label>
+    <input type="radio" formControlName="paymentMethod" value="cod" (change)="paymentMethod = 'cod'">
+    Cash on Delivery
+  </label>
+  <label>
+    <input type="radio" formControlName="paymentMethod" value="stripe" (change)="paymentMethod = 'stripe'">
+    Credit Card (Stripe)
+  </label>
+  <label>
+    <input type="radio" formControlName="paymentMethod" value="paypal" (change)="paymentMethod = 'paypal'">
+    PayPal
+  </label>
+</div>
+
+<!-- Show PayPal loading state -->
+<div *ngIf="paypalLoading" class="loading-overlay">
+  <div class="loading-content">
+    <div class="spinner"></div>
+    <p>Redirecting to PayPal...</p>
+  </div>
+</div>
+
+
+          Payment
+          <!-- <div class="mb-4">
             <h4>Payment Method</h4>
 
             <div class="form-check mb-2">
@@ -110,7 +136,7 @@
               <div id="card-element" class="form-control p-2 border"></div>
               <div *ngIf="cardErrors" class="text-danger mt-2">{{ cardErrors }}</div>
             </div>
-          </div>
+          </div> -->
 
           <button type="submit" [disabled]="checkoutForm.invalid || stripeLoading" class="btn btn-primary w-100">
             {{ stripeLoading ? 'Processing...' : 'Place Order' }}

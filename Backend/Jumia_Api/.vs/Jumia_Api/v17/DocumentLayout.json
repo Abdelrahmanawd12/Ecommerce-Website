@@ -34,8 +34,7 @@
               "RelativeToolTip": "Jumia_Api\\Controllers\\CustomerControllers\\CheckoutController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-28T11:11:19.639Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-28T11:11:19.639Z"
             },
             {
               "$type": "Document",
@@ -45,7 +44,7 @@
               "RelativeDocumentMoniker": "Jumia_Api\\Controllers\\CustomerControllers\\OrdersController.cs",
               "ToolTip": "D:\\data\\iti4months\\data\\GraduationProject\\Jumia\\Ecommerce-Website\\Backend\\Jumia_Api\\Jumia_Api\\Controllers\\CustomerControllers\\OrdersController.cs",
               "RelativeToolTip": "Jumia_Api\\Controllers\\CustomerControllers\\OrdersController.cs",
-              "ViewState": "AgIAAF8AAAAAAAAAAAAuwGkAAAAhAAAAAAAAAA==",
+              "ViewState": "AgIAAF8AAAAAAAAAAAAuwHQAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-28T02:19:04.55Z",
               "EditorCaption": ""
@@ -60,8 +59,7 @@
               "RelativeToolTip": "Jumia_Api\\Controllers\\CustomerControllers\\WishlistController.cs",
               "ViewState": "AgIAAA4AAAAAAAAAAAAAwG4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-28T11:11:01.416Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-28T11:11:01.416Z"
             }
           ]
         }
