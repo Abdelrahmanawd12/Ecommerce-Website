@@ -1,16 +1,13 @@
 <!-- toast message -->
 <div class="toast-container position-fixed bottom-0 end-0 p-3">
-  <div class="toast align-items-center text-white border-0"
-       id="cartToast"
-       role="alert"
-       aria-live="assertive"
-       aria-atomic="true"
-       [ngClass]="toastClass">
+  <div class="toast align-items-center text-white border-0" id="cartToast" role="alert" aria-live="assertive"
+    aria-atomic="true" [ngClass]="toastClass">
     <div class="d-flex">
       <div class="toast-body">
         <i class="fas fa-check-circle me-2"></i> {{ toastMessage }}
       </div>
-      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+        aria-label="Close"></button>
     </div>
   </div>
 </div>
@@ -28,33 +25,32 @@
           @for(c of category.subcategory; track c.subCatId) {
           <div class="mb-2">
             <label class="category-checkbox-label d-flex align-items-center py-2 px-3 rounded-2"
-                   [class.active]="selectedSubCatIds.includes(c.subCatId)">
+              [class.active]="selectedSubCatIds.includes(c.subCatId)">
               <input type="checkbox" class="me-2" [value]="c.subCatId"
-              [checked]="selectedSubCatIds.includes(c.subCatId)"
-              (change)="onSubCatCheckboxChange($event, c.subCatId)"
-              />
-              <span>{{ c.subCatName }}</span>
+                [checked]="selectedSubCatIds.includes(c.subCatId)"
+                (change)="onSubCatCheckboxChange($event, c.subCatId)" />
+              <span style="text-transform: capitalize;">{{ c.subCatName }}</span>
             </label>
           </div>
           }
         </div>
-
+        <!-- brands -->
         <div class="brands-filter">
           <h5 class="sidebar-title mb-3 ">Brands</h5>
           <div class="brand-list">
             @for(brand of brands; track brand) {
             <div class="mb-2">
               <label class="brand-checkbox-label d-flex align-items-center py-2 px-3 rounded-2"
-                     [class.active]="selectedBrands.includes(brand)">
-                <input type="checkbox" class="me-2" [value]="brand"
-                       (change)="onBrandCheckboxChange($event, brand)"
-                       [checked]="selectedBrands.includes(brand)" />
-                <span>{{ brand }}</span>
+                [class.active]="selectedBrands.includes(brand)">
+                <input type="checkbox" class="me-2" [value]="brand" (change)="onBrandCheckboxChange($event, brand)"
+                  [checked]="selectedBrands.includes(brand)" />
+                <span style="text-transform: capitalize;">{{ brand }}</span>
               </label>
             </div>
             }
           </div>
         </div>
+        <button class="btn clearfilter w-100 mt-3" (click)="clearAllFilters()">Clear Filters</button>
       </div>
     </div>
 
@@ -71,22 +67,19 @@
         <div class="row g-3">
           @for(p of filteredProducts; track p.productId) {
           <div class="col-6 col-md-4 col-lg-3 col-xl-2 product-card">
-            <div class=" h-100 shadow-sm rounded-3 overflow-hidden"
-                 (click)="goToProductDetails(p.productId)">
+            <div class=" h-100 shadow-sm rounded-3 overflow-hidden" (click)="goToProductDetails(p.productId)">
               <div class="product-image-container">
                 <img [src]="imgbaseUrl+p.imageUrls[0]" class="product-image" alt="{{ p.name }}" loading="lazy">
-                <div class="product-badge" *ngIf="p.discount > 0">-{{ (p.discount/p.price)*100| number:'1.2-2'  }}%</div>
+                <div class="product-badge" *ngIf="p.discount > 0">-{{ (p.discount/p.price)*100| number:'1.2-2' }}%</div>
               </div>
               <div class="product-body p-3">
 
                 <div class="d-flex justify-content-between">
                   <h6 class="product-name mb-2">{{ p.name }}</h6>
 
-                  <a  (click)="toggleWishlist(p.productId);$event.stopPropagation() "> <i
-                                  [class.fa-solid]="isInWishlist(p.productId)"
-                                  [class.fa-regular]="!isInWishlist(p.productId)"
-                                  class="fa-heart"
-                                          style="font-size: 25px; cursor: pointer;"></i> </a>
+                  <a (click)="toggleWishlist(p.productId);$event.stopPropagation() "> <i
+                      [class.fa-solid]="isInWishlist(p.productId)" [class.fa-regular]="!isInWishlist(p.productId)"
+                      class="fa-heart" style="font-size: 25px; cursor: pointer;"></i> </a>
 
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
@@ -95,12 +88,12 @@
                       ${{ (p.price-p.discount)| number:'1.2-2' }}
                     </p>
                     <p class="product-original-price mb-0 text-muted text-decoration-line-through"
-                       *ngIf="p.discount > 0">
-                      ${{ p.price  | number:'1.2-2' }}
+                      *ngIf="p.discount > 0">
+                      ${{ p.price | number:'1.2-2' }}
                     </p>
                   </div>
                   <button class="btn btn-sm btn-outline-warning rounded-circle p-2"
-                          (click)="addToCart(p); $event.stopPropagation()">
+                    (click)="addToCart(p); $event.stopPropagation()">
                     <i class="fas fa-shopping-cart"></i>
                   </button>
                 </div>
@@ -114,106 +107,100 @@
 
       <!-- Products by subcategory -->
       @if (selectedSubCatIds.length > 0) {
-        @for (subcategory of category.subcategory; track subcategory.subCatId) {
-          @if (selectedSubCatIds.includes(subcategory.subCatId)) {
-            <div class="product-section mb-5">
-              <h4 class="section-title mb-4 position-relative">
-                <span class="section-title-text bg-white ps-2 pe-3">{{ subcategory.subCatName }}</span>
-                <span class="section-title-line"></span>
-              </h4>
-              <div class="row g-3">
-                @for (p of subcategory.products; track p.productId) {
-                <div class="col-6 col-md-4 col-lg-3 col-xl-2 product-card">
-                  <div class=" h-100 shadow-sm rounded-3 overflow-hidden"
-                       (click)="goToProductDetails(p.productId)">
-                    <div class="product-image-container">
-                      <img [src]="imgbaseUrl+p.imageUrls[0]" class="product-image" alt="{{ p.name }}" loading="lazy">
-                      <div class="product-badge" *ngIf="p.discount > 0">-{{ (p.discount/p.price)*100| number:'1.2-2'  }}%</div>
-                    </div>
-                    <div class="product-body p-3">
-                      <div class="d-flex justify-content-between">
-                        <h6 class="product-name mb-2">{{ p.name }}</h6>
-                        <a  (click)="toggleWishlist(p.productId);$event.stopPropagation() "> <i
-                          [class.fa-solid]="isInWishlist(p.productId)"
-                          [class.fa-regular]="!isInWishlist(p.productId)"
-                          class="fa-heart"
-                                  style="font-size: 25px; cursor: pointer;"></i> </a>
-
-                                </div>
-                      <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                          <p class="product-price mb-0" [class.discounted]="p.discount > 0">
-                            ${{ (p.price-p.discount) | number:'1.2-2' }}
-                          </p>
-                          <p class="product-original-price mb-0 text-muted text-decoration-line-through"
-                             *ngIf="p.discount > 0">
-                            ${{ p.price  | number:'1.2-2' }}
-                          </p>
-                        </div>
-                        <button class="btn btn-sm btn-outline-warning rounded-circle p-2"
-                                (click)="addToCart(p); $event.stopPropagation()">
-                          <i class="fas fa-shopping-cart"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                }
+      @for (subcategory of category.subcategory; track subcategory.subCatId) {
+      @if (selectedSubCatIds.includes(subcategory.subCatId)) {
+      <div class="product-section mb-5">
+        <h4 class="section-title mb-4 position-relative">
+          <span class="section-title-text bg-white ps-2 pe-3">{{ subcategory.subCatName }}</span>
+          <span class="section-title-line"></span>
+        </h4>
+        <div class="row g-3">
+          @for (p of subcategory.products; track p.productId) {
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 product-card">
+            <div class=" h-100 shadow-sm rounded-3 overflow-hidden" (click)="goToProductDetails(p.productId)">
+              <div class="product-image-container">
+                <img [src]="imgbaseUrl+p.imageUrls[0]" class="product-image" alt="{{ p.name }}" loading="lazy">
+                <div class="product-badge" *ngIf="p.discount > 0">-{{ (p.discount/p.price)*100| number:'1.2-2' }}%</div>
               </div>
-            </div>
-          }
-        }
-      }
-      @else {
-        <!-- Show all subcategories by default -->
-        @for (subcategory of category.subcategory; track subcategory.subCatId) {
-          <div class="product-section mb-5">
-            <h4 class="section-title mb-4 position-relative">
-              <span class="section-title-text bg-white ps-2 pe-3">{{ subcategory.subCatName }}</span>
-              <span class="section-title-line"></span>
-            </h4>
-            <div class="row g-3">
-              @for (p of subcategory.products; track p.productId) {
-              <div class="col-6 col-md-4 col-lg-3 col-xl-2 product-card">
-                <div class=" h-100 shadow-sm rounded-3 overflow-hidden"
-                     (click)="goToProductDetails(p.productId)">
-                  <div class="product-image-container">
-                    <img [src]="imgbaseUrl+p.imageUrls[0]" class="product-image" alt="{{ p.name }}" loading="lazy">
-                    <div class="product-badge" *ngIf="p.discount > 0">-{{ (p.discount/p.price)*100| number:'1.2-2'  }}%</div>
-                  </div>
-                  <div class="product-body p-3">
-                    <div class="d-flex justify-content-between">
-                      <h6 class="product-name mb-2">{{ p.name }}</h6>
-                      <a  (click)="toggleWishlist(p.productId);$event.stopPropagation() "> <i
-                        [class.fa-solid]="isInWishlist(p.productId)"
-                        [class.fa-regular]="!isInWishlist(p.productId)"
-                        class="fa-heart"
-                                style="font-size: 25px; cursor: pointer;"></i> </a>
+              <div class="product-body p-3">
+                <div class="d-flex justify-content-between">
+                  <h6 class="product-name mb-2">{{ p.name }}</h6>
+                  <a (click)="toggleWishlist(p.productId);$event.stopPropagation() "> <i
+                      [class.fa-solid]="isInWishlist(p.productId)" [class.fa-regular]="!isInWishlist(p.productId)"
+                      class="fa-heart" style="font-size: 25px; cursor: pointer;"></i> </a>
 
-                            </div>
-
-                    <div class="d-flex justify-content-between align-items-center">
-                      <div>
-                        <p class="product-price mb-0" [class.discounted]="p.discount > 0">
-                          ${{ (p.price-p.discount) | number:'1.2-2' }}
-                        </p>
-                        <p class="product-original-price mb-0 text-muted text-decoration-line-through"
-                           *ngIf="p.discount > 0">
-                          ${{ (p.price ) | number:'1.2-2' }}
-                        </p>
-                      </div>
-                      <button class="btn btn-sm btn-outline-warning rounded-circle p-2"
-                              (click)="addToCart(p); $event.stopPropagation()">
-                        <i class="fas fa-shopping-cart"></i>
-                      </button>
-                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <p class="product-price mb-0" [class.discounted]="p.discount > 0">
+                      ${{ (p.price-p.discount) | number:'1.2-2' }}
+                    </p>
+                    <p class="product-original-price mb-0 text-muted text-decoration-line-through"
+                      *ngIf="p.discount > 0">
+                      ${{ p.price | number:'1.2-2' }}
+                    </p>
                   </div>
+                  <button class="btn btn-sm btn-outline-warning rounded-circle p-2"
+                    (click)="addToCart(p); $event.stopPropagation()">
+                    <i class="fas fa-shopping-cart"></i>
+                  </button>
                 </div>
               </div>
-              }
             </div>
           </div>
-        }
+          }
+        </div>
+      </div>
+      }
+      }
+      }
+      @else {
+      <!-- Show all subcategories by default -->
+      @for (subcategory of category.subcategory; track subcategory.subCatId) {
+      <div class="product-section mb-5">
+        <h4 class="section-title mb-4 position-relative">
+          <span class="section-title-text bg-white ps-2 pe-3">{{ subcategory.subCatName }}</span>
+          <span class="section-title-line"></span>
+        </h4>
+        <div class="row g-3">
+          @for (p of subcategory.products; track p.productId) {
+          <div class="col-6 col-md-4 col-lg-3 col-xl-2 product-card">
+            <div class=" h-100 shadow-sm rounded-3 overflow-hidden" (click)="goToProductDetails(p.productId)">
+              <div class="product-image-container">
+                <img [src]="imgbaseUrl+p.imageUrls[0]" class="product-image" alt="{{ p.name }}" loading="lazy">
+                <div class="product-badge" *ngIf="p.discount > 0">-{{ (p.discount/p.price)*100| number:'1.2-2' }}%</div>
+              </div>
+              <div class="product-body p-3">
+                <div class="d-flex justify-content-between">
+                  <h6 class="product-name mb-2">{{ p.name }}</h6>
+                  <a (click)="toggleWishlist(p.productId);$event.stopPropagation() "> <i
+                      [class.fa-solid]="isInWishlist(p.productId)" [class.fa-regular]="!isInWishlist(p.productId)"
+                      class="fa-heart" style="font-size: 25px; cursor: pointer;"></i> </a>
+
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <p class="product-price mb-0" [class.discounted]="p.discount > 0">
+                      ${{ (p.price-p.discount) | number:'1.2-2' }}
+                    </p>
+                    <p class="product-original-price mb-0 text-muted text-decoration-line-through"
+                      *ngIf="p.discount > 0">
+                      ${{ (p.price ) | number:'1.2-2' }}
+                    </p>
+                  </div>
+                  <button class="btn btn-sm btn-outline-warning rounded-circle p-2"
+                    (click)="addToCart(p); $event.stopPropagation()">
+                    <i class="fas fa-shopping-cart"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+      }
       }
     </div>
   </div>

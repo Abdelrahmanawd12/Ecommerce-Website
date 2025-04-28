@@ -119,6 +119,7 @@ this.toggleAuth();
       setTimeout(() => {
         this.showToast = false;
       }, 3000);
+      window.location.reload();// updated by abdelrahman 
   }
 
   openLogoutModal() {

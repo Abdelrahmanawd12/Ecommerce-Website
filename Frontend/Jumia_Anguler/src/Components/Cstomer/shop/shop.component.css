@@ -71,6 +71,19 @@ body {
   cursor: pointer;
 }
 
+input[type="checkbox"]{
+  accent-color: #ffc400;
+}
+.clearfilter{
+  background-color: #ffc400;
+  color: white ;
+  font-weight: 600;
+}
+.clearfilter:hover{
+
+  transform: scale(1.05);
+  transition: all 0.3s;
+}
 /* Product Section */
 .section-title {
   position: relative;
