@@ -5,35 +5,21 @@ import { CheckoutComponent } from '../Components/checkout/checkout.component';
 import { SuccessComponent } from '../Components/success/success.component';
 import { CancelComponent } from '../Components/cancel/cancel.component';
 import { OrderSuccessComponent } from '../Components/order-success/order-success.component';
+import { checkoutGuard } from '../Guards/checkout.guard';
 
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
 
-  //Abdelrahman
   {path:'home' , loadComponent: () => import('../Components/home/home.component').then((m) => m.HomeComponent)},
-
   {path:'shop' , loadComponent: () => import('../Components/Cstomer/shop/shop.component').then((m) => m.ShopComponent)},
-
-
   {path:'cart' , loadComponent: () => import('../Components/cart/cart.component').then((m) => m.CartComponent)},
-
   {path:'awadWishlist' , loadComponent: () => import('../Components/awad-wish-list/awad-wish-list.component').then((m) => m.AwadWishListComponent)},
-
-
-
   { path: 'shop/:id', component: ShopComponent },
   { path: 'details/:id', component: ProductDetailsComponent },
+  { path: 'checkout', loadComponent:()=> import('../Components/checkout/checkout.component').then((m)=>m.CheckoutComponent) },
 
 
-  //Ahmed
-  //{ path: 'order/:id', component: OrderComponent  },
-  // { path: 'order', component: OrderComponent },
-  // { path: 'wishlist', component: WishlistComponent },
-  { path: 'checkout', component: CheckoutComponent },
-  // { path: 'order/:id', component: OrderComponent },
-
-  //Alaa
   {
     path: 'admin',
     loadComponent: () => import('../Components/admin-layout/admin-layout.component').then((m) => m.AdminLayoutComponent),
@@ -52,7 +38,6 @@ export const routes: Routes = [
     ]
   },
 
-  //Rania & Yasmine
   { path: 'sellerRegisteration', loadComponent: () => import('../Components/seller-register/seller-register.component').then((m) => m.SellerRegisterComponent) },
   { path: 'sellOnJumia', loadComponent: () => import('../Components/SellOnJumia/sell-on-jumia/sell-on-jumia.component').then((m) => m.SellOnJumiaComponent) },
   { path: 'intro', loadComponent: () => import('../Components/intro-seller-register/intro-seller-register.component').then((m) => m.IntroSellerRegisterComponent) },
@@ -112,7 +97,6 @@ export const routes: Routes = [
     ]
   },
   { path: 'order-success', component: OrderSuccessComponent },
-
   { path: 'success', component: SuccessComponent },
   { path: 'cancel', component: CancelComponent },
   {

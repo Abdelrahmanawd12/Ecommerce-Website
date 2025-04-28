@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Jumia_Api.Controllers
+namespace Jumia_Api.Controllers.ShippingControllers
 {
     [Route("api/[controller]")]
     [ApiController]

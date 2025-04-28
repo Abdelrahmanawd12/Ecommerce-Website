@@ -75,6 +75,7 @@ export class SellOnJumiaComponent {
   shippingZoneError: boolean = false;
   storeAddressError: boolean = false;
   emailerr: boolean = false;
+  lastStep = 4;  // العدد الإجمالي للخطوات
 
   // UI states
   showPassword: boolean = false;
@@ -96,6 +97,11 @@ export class SellOnJumiaComponent {
       }
     }
   }
+  previousStep() {
+    if (this.currentStep > 0) {
+      this.currentStep--;
+    }
+  }  
 
   checkEmailAvailability(): void {
     if (this.email) {

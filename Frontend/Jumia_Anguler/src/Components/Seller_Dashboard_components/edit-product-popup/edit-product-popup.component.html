@@ -81,14 +81,27 @@
                         Current Images
                     </button>
                     <ul class="dropdown-menu">
-                        <li *ngFor="let imageUrl of updatedProduct.imageUrls">
-                            <a class="dropdown-item d-flex align-items-center"
-                                (click)="selectExistingImage(imgBase + imageUrl)">
-                                <img [src]="imgBase+imageUrl" alt="Image" width="50" height="50" class="me-2 rounded" />
-                                <span class="text-truncate">{{ imageUrl }}</span>
+                        <li *ngFor="let imageUrl of existingImages; let i = index">
+                            <a class="dropdown-item d-flex align-items-center">
+                                <img [src]="imgBase + imageUrl" alt="Image" width="50" height="50"
+                                    class="me-2 rounded" />
+                                <span class="text-truncate flex-grow-1">{{ imageUrl }}</span>
+                                <button type="button" class="btn btn-danger btn-sm ms-2"
+                                    (click)="confirmDeleteImage(i)">
+                                    <i class="bi bi-trash"></i> <!-- أيكونة السلة -->
+                                </button>
                             </a>
                         </li>
                     </ul>
+
+                    <!-- زرار Undo -->
+                    <div class="mt-2" *ngIf="lastDeletedImage">
+                        <button class="btn btn-warning btn-sm" (click)="undoDelete()">
+                            Undo Delete
+                        </button>
+                    </div>
+
+
                 </div>
             </div>
 
@@ -104,10 +117,10 @@
     </mat-dialog-content>
 
     <mat-dialog-actions align="end" class="dialog-actions">
-        <button mat-stroked-button class="cancel-btn" (click)="closeDialog()">
+        <button mat-stroked-button class=" btn cancel-btn" (click)="closeDialog()">
             Cancel
         </button>
-        <button mat-flat-button class="save-btn" (click)="saveChanges()">
+        <button mat-flat-button class=" btn save-btn" (click)="saveChanges()">
             Save Changes
         </button>
     </mat-dialog-actions>

@@ -12,11 +12,15 @@
 
             <div class="mb-3">
               <label class="form-label fw-medium" for="receiverName">Full Name</label>
-              <input type="text" id="receiverName" formControlName="receiverName" class="form-control form-control-lg"
+              <input type="text" id="receiverName" formControlName="receiverName" class="form-control form-control-lg hover-orange"
                 [class.is-invalid]="checkoutForm.get('shipping.receiverName')?.invalid && checkoutForm.get('shipping.receiverName')?.touched"
                 placeholder="John Doe">
-              <div class="invalid-feedback">
-                Please enter your full name
+              <div *ngIf="checkoutForm.get('shipping.receiverName')?.invalid && checkoutForm.get('shipping.receiverName')?.touched"
+                   class="alert alert-danger mt-2">
+                <small>
+                  <i class="bi bi-exclamation-circle me-1"></i>
+                  Please enter your full name
+                </small>
               </div>
             </div>
 
@@ -24,113 +28,78 @@
               <div class="col-md-6">
                 <label class="form-label fw-medium" for="recieverEmail">Email</label>
                 <input type="email" id="recieverEmail" formControlName="recieverEmail"
-                  class="form-control form-control-lg"
+                  class="form-control form-control-lg hover-orange"
                   [class.is-invalid]="checkoutForm.get('shipping.recieverEmail')?.invalid && checkoutForm.get('shipping.recieverEmail')?.touched"
                   placeholder="your@email.com">
-                <div class="invalid-feedback">
-                  Please enter a valid email
+                <div *ngIf="checkoutForm.get('shipping.recieverEmail')?.invalid && checkoutForm.get('shipping.recieverEmail')?.touched"
+                     class="alert alert-danger mt-2">
+                  <small>
+                    <i class="bi bi-exclamation-circle me-1"></i>
+                    Please enter a valid email
+                  </small>
                 </div>
               </div>
               <div class="col-md-6">
                 <label class="form-label fw-medium" for="recieverPhone">Phone</label>
                 <input type="tel" id="recieverPhone" formControlName="recieverPhone"
-                  class="form-control form-control-lg"
+                  class="form-control form-control-lg hover-orange"
                   [class.is-invalid]="checkoutForm.get('shipping.recieverPhone')?.invalid && checkoutForm.get('shipping.recieverPhone')?.touched"
                   placeholder="+20 123 456 7890">
-                <div class="invalid-feedback">
-                  Please enter your phone number
+                <div *ngIf="checkoutForm.get('shipping.recieverPhone')?.invalid && checkoutForm.get('shipping.recieverPhone')?.touched"
+                     class="alert alert-danger mt-2">
+                  <small>
+                    <i class="bi bi-exclamation-circle me-1"></i>
+                    Please enter your phone number
+                  </small>
                 </div>
               </div>
             </div>
 
             <div class="mt-3">
               <label class="form-label fw-medium" for="street">Street Address</label>
-              <input type="text" id="street" formControlName="street" class="form-control form-control-lg"
+              <input type="text" id="street" formControlName="street" class="form-control form-control-lg hover-orange"
                 [class.is-invalid]="checkoutForm.get('shipping.street')?.invalid && checkoutForm.get('shipping.street')?.touched"
                 placeholder="123 Main St">
-              <div class="invalid-feedback">
-                Please enter your street address
+              <div *ngIf="checkoutForm.get('shipping.street')?.invalid && checkoutForm.get('shipping.street')?.touched"
+                   class="alert alert-danger mt-2">
+                <small>
+                  <i class="bi bi-exclamation-circle me-1"></i>
+                  Please enter your street address
+                </small>
               </div>
             </div>
 
             <div class="row g-3 mt-1">
               <div class="col-md-6">
                 <label class="form-label fw-medium" for="city">City</label>
-                <input type="text" id="city" formControlName="city" class="form-control form-control-lg"
+                <input type="text" id="city" formControlName="city" class="form-control form-control-lg hover-orange"
                   [class.is-invalid]="checkoutForm.get('shipping.city')?.invalid && checkoutForm.get('shipping.city')?.touched"
                   placeholder="Cairo">
-                <div class="invalid-feedback">
-                  Please enter your city
+                <div *ngIf="checkoutForm.get('shipping.city')?.invalid && checkoutForm.get('shipping.city')?.touched"
+                     class="alert alert-danger mt-2">
+                  <small>
+                    <i class="bi bi-exclamation-circle me-1"></i>
+                    Please enter your city
+                  </small>
                 </div>
               </div>
 
               <div class="col-md-6">
                 <label class="form-label fw-medium" for="country">Country</label>
-                <select id="country" formControlName="country" class="form-select form-select-lg"
+                <select id="country" formControlName="country" class="form-select form-select-lg hover-orange"
                   [class.is-invalid]="checkoutForm.get('shipping.country')?.invalid && checkoutForm.get('shipping.country')?.touched">
                   <option value="" disabled selected>Select Country</option>
                   <option class="dropdown-item" value="Egypt">Egypt</option>
                 </select>
-                <div class="invalid-feedback">
-                  Please select your country
+                <div *ngIf="checkoutForm.get('shipping.country')?.invalid && checkoutForm.get('shipping.country')?.touched"
+                     class="alert alert-danger mt-2">
+                  <small>
+                    <i class="bi bi-exclamation-circle me-1"></i>
+                    Please select your country
+                  </small>
                 </div>
               </div>
             </div>
-            <!-- Payment Method
-
-<div class="payment-method">
-  <label>
-    <input type="radio" formControlName="paymentMethod" value="cod" (change)="paymentMethod = 'cod'">
-    Cash on Delivery
-  </label>
-  <label>
-    <input type="radio" formControlName="paymentMethod" value="stripe" (change)="paymentMethod = 'stripe'">
-    Credit Card (Stripe)
-  </label>
-  <label>
-    <input type="radio" formControlName="paymentMethod" value="paypal" (change)="paymentMethod = 'paypal'">
-    PayPal
-  </label>
-</div> -->
-
-            <!-- Show PayPal loading state -->
-            <!-- <div *ngIf="paypalLoading" class="loading-overlay">
-  <div class="loading-content">
-    <div class="spinner"></div>
-    <p>Redirecting to PayPal...</p>
-  </div>
-</div> -->
-
-
-            <!-- Payment -->
-            <!-- <div class="mb-4">
-            <h4>Payment Method</h4>
-
-            <div class="form-check mb-2">
-              <input class="form-check-input" type="radio" id="cod" value="cod" formControlName="paymentMethod">
-              <label class="form-check-label" for="cod">
-                Cash on Delivery - Pay when you receive your order
-              </label>
-            </div>
-
-            <div class="form-check mb-2">
-              <input class="form-check-input" type="radio" id="stripe" value="stripe" formControlName="paymentMethod">
-              <label class="form-check-label" for="stripe">
-                Credit/Debit Card - Stripe
-              </label>
-            </div>
-
-            <div *ngIf="paymentMethod === 'stripe'" class="mb-3">
-              <div id="card-element" class="form-control p-2 border"></div>
-              <div *ngIf="cardErrors" class="text-danger mt-2">{{ cardErrors }}</div>
-            </div>
-          </div>
-          <div class="form-check mb-2">
-            <input class="form-check-input" type="radio" id="stripe" value="paypal" formControlName="paymentMethod">
-            <label class="form-check-label" for="paypal">
-              Credit/Debit Card - PayPal
-            </label>
-          </div> -->
 
             <div class="text-end mt-4">
               <button type="button" class="btn btn-outline-save px-4 py-2 fw-medium" (click)="saveAddress()">
@@ -140,7 +109,7 @@
 
             <div *ngIf="addresses.length > 1" class="mt-4">
               <label for="address" class="form-label fw-medium">Saved Addresses</label>
-              <select class="form-select form-select-lg" [value]="selectedAddressId" (change)="onAddressSelect($event)">
+              <select class="form-select form-select-lg hover-orange" [value]="selectedAddressId" (change)="onAddressSelect($event)">
                 <option class="dropdown-item" *ngFor="let addr of addresses" [value]="addr.addressId">
                   {{ addr.street }}, {{ addr.city }}, {{ addr.country }}
                 </option>
@@ -159,7 +128,7 @@
 
             <div class="mt-4">
               <label class="form-label fw-medium" for="shippingMethod">Shipping Method</label>
-              <select class="form-select form-select-lg" id="shippingMethod" formControlName="shippingMethod">
+              <select class="form-select form-select-lg hover-orange" id="shippingMethod" formControlName="shippingMethod">
                 <option class="dropdown-item" value="standard">Standard (3-5 days) </option>
                 <option class="dropdown-item" value="express">Express (1-2 days) </option>
                 <option class="dropdown-item" value="overnight">Overnight </option>
@@ -171,62 +140,65 @@
           <div class="mb-5 p-4 bg-light rounded-3">
             <h4 class="mb-4 pb-2 border-bottom fw-semibold text-uppercase text-secondary">Payment Method</h4>
 
-            <div class="form-check mb-3 p-3 bg-white rounded-2 border">
-              <input class="form-check-input" type="radio" id="cod" formControlName="paymentMethod" value="cod"
-                name="paymentMethod">
-              <label class="form-check-label fw-medium d-flex align-items-center" for="cod">
-                <i class="bi bi-cash-coin fs-4 me-3 text-success"></i>
+            <div class="payment-method">
+              <label class="d-flex align-items-center payment-option">
+                <input type="radio" formControlName="paymentMethod" value="cod" (change)="paymentMethod = 'cod'">
                 <div>
-                  <span class="d-block">Cash on Delivery</span>
-                  <small class="text-muted">Pay when you receive your order</small>
+                  <i class="bi bi-cash-coin fs-4 me-3 text-success"></i>
+                  <span class="fw-medium">Cash on Delivery</span>
+                  <p class="small text-muted mb-0">Pay when you receive your order</p>
+                </div>
+              </label>
+
+              <label class="d-flex align-items-center payment-option">
+                <input type="radio" formControlName="paymentMethod" value="stripe" (change)="paymentMethod = 'stripe'">
+                <div>
+                  <i class="bi bi-stripe fs-4 me-3 text-primary"></i>
+                  <span class="fw-medium">Stripe</span>
+                  <p class="small text-muted mb-0">Secure payment with Stripe</p>
+                </div>
+              </label>
+
+              <label class="d-flex align-items-center payment-option">
+                <input type="radio" formControlName="paymentMethod" value="paypal" (change)="paymentMethod = 'paypal'">
+                <div>
+                  <i class="bi bi-paypal fs-4 me-3 text-info"></i>
+                  <span class="fw-medium">PayPal</span>
+                  <p class="small text-muted mb-0">Secure payment with PayPal</p>
                 </div>
               </label>
             </div>
 
-            <div class="form-check p-3 bg-white rounded-2 border">
-              <input class="form-check-input" type="radio" id="stripe" formControlName="paymentMethod" value="stripe"
-                name="paymentMethod">
-              <label class="form-check-label fw-medium d-flex align-items-center" for="stripe">
-                <i class="bi bi-credit-card fs-4 me-3 text-primary"></i>
-                <div>
-                  <span class="d-block">Credit/Debit Card</span>
-                  <small class="text-muted">Secure payment with Stripe</small>
-                </div>
-              </label>
-            </div>
-
-            <div *ngIf="paymentMethod === 'stripe'" class="mt-3">
-              <div id="card-element" class="form-control p-3 border rounded-2"></div>
+            <!-- Stripe Card Element -->
+            <div *ngIf="paymentMethod === 'stripe'" class="mt-4">
+              <div id="card-element" class="form-control p-3 border rounded-2 hover-orange"></div>
               <div *ngIf="cardErrors" class="alert alert-danger mt-3">{{ cardErrors }}</div>
-            </div>
-            <div class="form-check p-3 bg-white rounded-2 border">
-              <input class="form-check-input" type="radio" id="paypal" formControlName="paymentMethod" value="paypal"
-                name="paymentMethod">
-              <label class="form-check-label fw-medium d-flex align-items-center" for="stripe">
-                <i class="bi bi-credit-card fs-4 me-3 text-primary"></i>
-                <div>
-                  <span class="d-block">Credit/Debit Card</span>
-                  <small class="text-muted">Secure payment with PayPal</small>
-                </div>
-              </label>
-            </div>
-
-            <div *ngIf="paypalLoading" class="loading-overlay">
-              <div class="loading-content">
-                <div class="spinner"></div>
-                <p>Redirecting to PayPal...</p>
-              </div>
             </div>
           </div>
 
-          <button type="submit" [disabled]="checkoutForm.invalid || stripeLoading"
-            class="btn btn-order btn-lg w-100 py-3 fw-bold">
-            <span *ngIf="!stripeLoading">Place Order <i class="bi bi-arrow-right ms-2"></i></span>
-            <span *ngIf="stripeLoading" class="d-flex align-items-center justify-content-center">
-              <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-              Processing Payment...
-            </span>
-          </button>
+          <div class="d-flex justify-content-between m-3">
+            <a routerLink="/cart" class="btn btn-outline-secondary">
+              <i class="bi bi-arrow-left me-2"></i>Back to Cart
+            </a>
+            <button type="submit" [disabled]="checkoutForm.invalid || stripeLoading || paypalLoading"
+                    class="btn btn-order btn-lg py-3 fw-bold">
+              <span *ngIf="!stripeLoading && !paypalLoading">
+                Place Order <i class="bi bi-arrow-right ms-2"></i>
+              </span>
+              <span *ngIf="stripeLoading || paypalLoading" class="d-flex align-items-center justify-content-center">
+                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                {{ paymentMethod === 'paypal' ? 'Redirecting to PayPal...' : 'Processing Payment...' }}
+              </span>
+            </button>
+          </div>
+
+          <!-- Show PayPal loading state -->
+          <div *ngIf="paypalLoading" class="loading-overlay">
+            <div class="loading-content">
+              <div class="spinner"></div>
+              <p>Redirecting to PayPal...</p>
+            </div>
+          </div>
         </form>
       </div>
     </div>
@@ -243,11 +215,12 @@
         <div class="card-body p-0">
           <div class="order-items p-3" style="max-height: 300px; overflow-y: auto;">
             <div *ngFor="let item of order.items" class="order-item d-flex mb-3 pb-3 border-bottom">
-              <div class="position-relative me-3">
-                <img [src]="imgBase+item.imageUrl" alt="{{item.productName}}" class="img-thumbnail rounded-3"
-                  style="width: 80px; height: 80px; object-fit: cover;">
-                <span *ngIf="item.discount > 0"
-                  class="badge bg-danger position-absolute top-0 start-0 translate-middle">
+              <div class="position-relative me-3 flex-shrink-0">
+                <img [src]="imgBase+item.imageUrl" alt="{{item.productName}}" 
+                     class="img-thumbnail rounded-3"
+                     style="width: 80px; height: 80px; object-fit: cover;">
+                <span *ngIf="item.discount > 0" 
+                      class="badge bg-danger position-absolute top-0 start-0 translate-middle">
                   -{{item.discount}}%
                 </span>
               </div>
@@ -259,7 +232,7 @@
                 </div>
                 <div class="d-flex justify-content-between align-items-center mb-1">
                   <span class="text-muted small">Quantity</span>
-                  <span>{{item.quantity}}</span>
+                  <span class="badge bg-light text-dark">{{item.quantity}}</span>
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                   <span class="text-muted small">Subtotal</span>
@@ -297,8 +270,7 @@
               <i class="fas fa-truck me-2"></i>
               <div>
                 <small class="d-block">Estimated delivery</small>
-                <strong class="text-dark">{{ checkoutForm.get('shipping.deliveryDate')?.value | date:'fullDate'
-                  }}</strong>
+                <strong class="text-dark">{{ checkoutForm.get('shipping.deliveryDate')?.value | date:'fullDate' }}</strong>
               </div>
             </div>
           </div>

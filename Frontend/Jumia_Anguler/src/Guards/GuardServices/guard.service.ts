@@ -26,4 +26,9 @@ export class GuardService {
     const userData = localStorage.getItem('role');
     return userData ? JSON.parse(userData).role : '';
   }
+
+  getUserId(): string {
+    const userData = localStorage.getItem('userId');
+    return userData ? JSON.parse(userData).userId : '';
+  }
 }

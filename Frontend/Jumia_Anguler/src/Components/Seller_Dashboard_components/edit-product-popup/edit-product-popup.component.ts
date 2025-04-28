@@ -24,7 +24,8 @@ export class EditProductPopupComponent implements OnInit {
   readonly imgBase = environment.imageBaseUrl;
   existingImages: string[] = [];
   selectedExistingImage: string | null = null;
-
+  deletedImages: string[] = [];
+  lastDeletedImage: string | null = null; 
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: IProductSell,
@@ -55,68 +56,69 @@ export class EditProductPopupComponent implements OnInit {
   }
 
   onImageSelected(event: any) {
-    this.selectedImages = Array.from(event.target.files);
+    const newImage = event.target.files[0]; 
+  
+    if (this.existingImages.includes(newImage.name) || this.selectedImages.some(file => file.name === newImage.name)) {
+      this.showErrorToast('Image already exists');
+    } else {
+      this.selectedImages.push(newImage); 
+    }
   }
+
   saveChanges() {
-    const formData = new FormData();
+    const productData = {
+      name: this.updatedProduct.name,
+      description: this.updatedProduct.description,
+      price: this.updatedProduct.price,
+      quantity: this.updatedProduct.quantity,
+      brand: this.updatedProduct.brand,
+      discount: this.updatedProduct.discount,
+      weight: this.updatedProduct.weight,
+      subCategoryId: this.selectedSubcategoryId,
+      sellerId: this.sellerId,
+      tags: this.tagsInput.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0)
+    };
   
-    formData.append('Name', this.updatedProduct.name);
-    formData.append('Description', this.updatedProduct.description);
-    formData.append('Price', this.updatedProduct.price.toString());
-    formData.append('Quantity', this.updatedProduct.quantity.toString());
-    formData.append('Brand', this.updatedProduct.brand);
-    formData.append('Discount', this.updatedProduct.discount.toString());
-    formData.append('Weight', this.updatedProduct.weight.toString());
-    formData.append('SubCategoryId', this.selectedSubcategoryId?.toString() || '');
-    formData.append('SubCategoryName', this.selectedSubcategoryName?.toString() || '');
-    formData.append('SellerId', this.sellerId ? this.sellerId.toString() : '');
+    const imagesFormData = new FormData();
   
-    const tagsArray = this.tagsInput.split(',')
-      .map(tag => tag.trim())
-      .filter(tag => tag.length > 0);
-  
-    tagsArray.forEach((tag, index) => {
-      formData.append(`Tags[${index}]`, tag);
+    this.existingImages.forEach((url) => {
+      imagesFormData.append('ImageUrls', url);
     });
   
-    let imageUrls: (File | string)[] = [];
-  
-    // لو المستخدم اختار صور جديدة
-    if (this.selectedImages.length > 0) {
-      imageUrls = [...this.selectedImages];
-    }
-    // لو لأ، نستخدم الصور القديمة
-    else if (this.existingImages.length > 0) {
-      imageUrls = [...this.existingImages];
-    }
-  
-    // نحط الصور لو موجودة
-    imageUrls.forEach((img) => {
-      if (img instanceof File) {
-        formData.append('ImageUrls', img);
-      } else if (typeof img === 'string') {
-        formData.append('ImageUrls', img);
-      }
+    this.selectedImages.forEach((file) => {
+      imagesFormData.append('ImageUrls', file);
     });
   
-    // بعدين نعمل الريكوست
-    this.sellerService.updateProduct(this.updatedProduct.productId, formData).subscribe({
+  
+    this.sellerService.updateProduct(this.updatedProduct.productId, productData).subscribe({
       next: (response) => {
-        console.log('Product updated successfully', response);
-        this.showSuccessToast();
-        this.dialogRef.close(true);
+        console.log('Product details updated successfully', response);
+  
+        if (this.selectedImages.length > 0 || this.existingImages.length > 0 || this.deletedImages.length > 0) {
+          this.sellerService.updateProductWithImage(this.updatedProduct.productId, imagesFormData).subscribe({
+            next: (imgResponse) => {
+              console.log('Product images updated successfully', imgResponse);
+              this.showSuccessToast();
+              this.dialogRef.close(true);
+            },
+            error: (imgError) => {
+              console.error('Updating images failed', imgError);
+              this.showErrorToast('Updating images failed');
+            }
+          });
+        } else {
+          this.showSuccessToast();
+          this.dialogRef.close(true);
+        }
       },
       error: (error) => {
-        console.error('Update failed', error);
-        this.showErrorToast();
+        console.error('Updating product details failed', error);
+        this.showErrorToast('Updating product details failed');
       }
-    });
-  
-    formData.forEach((value, key) => {
-      console.log(`${key}:`, value);
     });
   }
   
+
 
 
   showSuccessToast() {
@@ -127,7 +129,7 @@ export class EditProductPopupComponent implements OnInit {
     }
   }
 
-  showErrorToast() {
+  showErrorToast(p0: string) {
     const toast = document.getElementById('errorToast');
     if (toast) {
       const bsToast = new (window as any).bootstrap.Toast(toast);
@@ -171,8 +173,43 @@ export class EditProductPopupComponent implements OnInit {
     this.selectedExistingImage = url;
     console.log('Selected image:', url);
   }
-  getImageUrl(image: string | File): string {
-    return image instanceof File ? URL.createObjectURL(image) : image;
-  }
 
+  
+deleteExistingImage(index: number, event: Event): void {
+  event.stopPropagation(); 
+
+  const deletedImage = this.existingImages[index]; 
+  this.existingImages.splice(index, 1);  // Remove the image from existing images
+  this.deletedImages.push(deletedImage);  // Add the deleted image to the deletedImages array
+
+  // Call the delete service to delete the image from the backend
+  this.sellerService.deleteImageFromProduct(this.updatedProduct.productId, [deletedImage])
+    .subscribe({
+      next: (response) => {
+        console.log('Image deleted successfully', response);
+        this.showSuccessToast();
+      },
+      error: (error) => {
+        console.error('Deleting image failed', error);
+        this.showErrorToast('Deleting image failed');
+      }
+    });
+}
+
+// Confirm before deleting the image
+confirmDeleteImage(index: number) {
+  const confirmed = window.confirm('Are you sure you want to delete this image?');
+  if (confirmed) {
+    this.lastDeletedImage = this.existingImages[index];
+    this.deleteExistingImage(index, new Event('click'));  // Call deleteExistingImage with the index
+  }
+}
+
+
+undoDelete() {
+  if (this.lastDeletedImage) {
+    this.existingImages.push(this.lastDeletedImage);
+    this.lastDeletedImage = null;
+  }
+}
 }

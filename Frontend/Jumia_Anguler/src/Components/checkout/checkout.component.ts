@@ -170,26 +170,28 @@ export class CheckoutComponent implements OnInit {
       const orderData = await this.prepareOrderData();
       const selectedPaymentMethod = this.checkoutForm.get('paymentMethod')?.value;
 
-      //   if (selectedPaymentMethod === 'cod') {
-      //     this.processCashOnDelivery(orderData);
-      //   } else if (selectedPaymentMethod === 'stripe') {
-      //     await this.processStripePayment(orderData);
-      //   }
-      // } catch (error) {
-      //   console.error('Checkout error:', error);
-      //   this.cardErrors = 'An error occurred during checkout';
-
-      switch (this.paymentMethod) {
-        case 'cod':
+        if (selectedPaymentMethod === 'cod') {
           this.processCashOnDelivery(orderData);
-          break;
-        case 'stripe':
+        } else if (selectedPaymentMethod === 'stripe') {
           await this.processStripePayment(orderData);
-          break;
-        case 'paypal':
+        }
+        else if (selectedPaymentMethod === 'paypal') {
           await this.processPayPalPayment(orderData);
-          break;
-      }
+        } else {
+          console.error('Unsupported payment method:', selectedPaymentMethod);
+        }
+
+      // switch (this.paymentMethod) {
+      //   case 'cod':
+      //     this.processCashOnDelivery(orderData);
+      //     break;
+      //   case 'stripe':
+      //     await this.processStripePayment(orderData);
+      //     break;
+      //   case 'paypal':
+      //     await this.processPayPalPayment(orderData);
+      //     break;
+      // }
       // if (this.paymentMethod === 'cod') {
       //   this.processCashOnDelivery(orderData);
       // } else if (this.paymentMethod === 'stripe') {
@@ -280,7 +282,7 @@ export class CheckoutComponent implements OnInit {
         this.router.navigate(['/order-success']),
           localStorage.removeItem('order');
         this.clearCartFromDatabase();
-        this.updateStock(orderData.items);
+        this.UpdateStock(orderData.items);
 
       },
       error: err => console.error('Checkout error:', err)
@@ -308,7 +310,7 @@ export class CheckoutComponent implements OnInit {
         next: () => {
           localStorage.removeItem('order');
           this.clearCartFromDatabase();
-          this.updateStock(orderData.items);
+          this.UpdateStock(orderData.items);
         },
         error: err => console.error('Error saving order:', err)
       });
@@ -480,7 +482,7 @@ export class CheckoutComponent implements OnInit {
           next: () => {
             localStorage.removeItem('order');
             this.clearCartFromDatabase();
-            this.updateStock(orderData.items);
+            this.UpdateStock(orderData.items);
           },
           error: err => console.error('Error saving order:', err)
         });
@@ -493,12 +495,14 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-  updateStock(items: any[]) {
-    items.forEach(item => {
-      this.cartService.updateItem(this.userId,item.productId, item.quantity).subscribe({
-        next: () => console.log(`Stock updated for product ${item.productId}`),
-        error: err => console.error(`Error updating stock for product ${item.productId}`, err)
-      });
+ UpdateStock(orderItems: any) {
+    this.checkoutService.updateStock(orderItems).subscribe({
+      next: () => {
+        console.log('Stock updated successfully');
+      },
+      error: (error) => {
+        console.error('Failed to update stock:', error);
+      }
     });
   }
   

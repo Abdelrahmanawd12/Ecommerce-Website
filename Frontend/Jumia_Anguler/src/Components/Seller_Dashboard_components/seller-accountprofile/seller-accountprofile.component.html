@@ -5,7 +5,7 @@
       {{ getInitials(userData.firstName + ' ' + userData.lastName) }}
     </div>
     <h2 class="fw-semibold mb-1">{{userData.firstName}} {{ userData.lastName }}</h2>
-    <p class="text-muted">{{ userData?.storeName }}</p>
+    <p class="text-muted">{{ userData.storeName }}</p>
     <button class="btn btn-success mt-3" (click)="toggleEditMode()">
       <i class="bi bi-pencil me-2"></i> {{ isEditMode ? 'Save Changes' : 'Edit Profile' }}
     </button>
@@ -26,28 +26,28 @@
             <div class="info-item">
               <small class="text-muted">First Name</small>
               <input *ngIf="isEditMode" type="text" class="form-control" [(ngModel)]="userData.firstName">
-              <p *ngIf="!isEditMode">{{userData?.firstName}}</p>
+              <p *ngIf="!isEditMode">{{userData.firstName}}</p>
             </div>
             <div class="info-item">
               <small class="text-muted">Last Name</small>
               <input *ngIf="isEditMode" type="text" class="form-control" [(ngModel)]="userData.lastName">
-              <p *ngIf="!isEditMode">{{userData?.lastName}}</p>
+              <p *ngIf="!isEditMode">{{userData.lastName}}</p>
             </div>
             <div class="info-item">
               <small class="text-muted">Username</small>
               <input *ngIf="isEditMode" type="text" class="form-control" [(ngModel)]="userData.email">
-              <p *ngIf="!isEditMode">{{userData?.email}}</p>
+              <p *ngIf="!isEditMode">{{userData.email}}</p>
             </div>
             <div class="info-item">
               <small class="text-muted">Country</small>
               <input *ngIf="isEditMode" type="text" class="form-control" [(ngModel)]="userData.storeAddress">
               <p *ngIf="!isEditMode" class="d-flex align-items-center">
-                {{userData?.storeAddress}} <span class="flag-icon flag-icon-eg ms-2"></span>
+                {{userData.storeAddress}} <span class="flag-icon flag-icon-eg ms-2"></span>
               </p>
             </div>
             <div class="info-item">
               <small class="text-muted">Member Since</small>
-              <p>{{ userData?.createdAt | date: 'yyyy-MM-dd' }}</p>
+              <p>{{ userData.createdAt | date: 'yyyy-MM-dd' }}</p>
             </div>
           </div>
         </div>
@@ -63,13 +63,13 @@
           <div class="info-item mb-3">
             <small class="text-muted">Shop Name</small>
             <input *ngIf="isEditMode" type="text" class="form-control" [(ngModel)]="userData.storeName">
-            <p *ngIf="!isEditMode">{{userData?.storeName}}</p>
+            <p *ngIf="!isEditMode">{{userData.storeName}}</p>
           </div>
           
           <div class="info-item mb-3">
             <small class="text-muted">Address</small>
             <input *ngIf="isEditMode" type="text" class="form-control" [(ngModel)]="userData.storeAddress">
-            <p *ngIf="!isEditMode">{{userData?.storeAddress}}</p>
+            <p *ngIf="!isEditMode">{{userData.storeAddress}}</p>
           </div>
       
           <div class="info-item mb-3">
@@ -81,7 +81,7 @@
               <option value="International">International</option>
             </select>
             <div *ngIf="!isEditMode" class="tags">
-              <span class="badge bg-light text-dark">{{userData?.shippingZone}}</span>
+              <span class="badge bg-light text-dark">{{userData.shippingZone}}</span>
             </div>
           </div>
         </div>
@@ -102,7 +102,7 @@
             <div>
               <small class="text-muted">Email</small>
               <input *ngIf="isEditMode" type="email" class="form-control" [(ngModel)]="userData.email">
-              <p *ngIf="!isEditMode">{{userData?.email}}</p>
+              <p *ngIf="!isEditMode">{{userData.email}}</p>
             </div>
           </div>
           
@@ -120,7 +120,7 @@
             <div>
               <small class="text-muted">Website</small>
               <input *ngIf="isEditMode" type="url" class="form-control" [(ngModel)]="userData.storeName" 
-                     [value]="'https://www.' + userData?.storeName + '.com'">
+                     [value]="'https://www.' + userData.storeName + '.com'">
               <p *ngIf="!isEditMode">https://www.{{userData?.storeName}}.com</p>
             </div>
           </div>
@@ -139,41 +139,11 @@
               <i class="bi bi-key"></i>
               <div>
                 <span>Password</span>
-                <small class="text-muted">Last changed {{ userData?.createdAt | date: 'yyyy-MM-dd' }}</small>
+                <small class="text-muted">Last changed {{ userData.createdAt | date: 'yyyy-MM-dd' }}</small>
               </div>
             </div>
             <button class="btn-text" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Change</button>
           </div>
-<!--           
-          <div class="form-group mt-3">
-            <label for="oldPassword">Old Password</label>
-            <input
-              type="password"
-              id="oldPassword"
-              class="form-control"
-              [(ngModel)]="oldPassword"
-              placeholder="Enter your old password"
-            />
-          </div>
-      
-          <div class="form-group mt-3">
-            <label for="newPassword">New Password</label>
-            <input
-              type="password"
-              id="newPassword"
-              class="form-control"
-              [(ngModel)]="newPassword"
-              placeholder="Enter your new password"
-            />
-          </div>
-      
-          <div class="mt-3">
-            <button class="btn btn-danger" (click)="onChangePassword()">Change Password</button>
-          </div>
-      
-          <div *ngIf="message" class="mt-2">
-            <p>{{ message }}</p>
-          </div> -->
       
           <div class="security-item">
             <div class="security-info">
@@ -188,7 +158,7 @@
               <span class="slider"></span>
             </label>
           </div>
-
+<!-- 
           <div class="security-item">
             <div class="security-info">
               <i class="bi bi-device-phone"></i>
@@ -198,7 +168,7 @@
               </div>
             </div>
             <button class="btn-text">Manage</button>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
