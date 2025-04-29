@@ -51,8 +51,10 @@ toastClass: string = 'bg-success';
   }
   //add to wishlist
   addToWishlist(productId: number): void {
-    const userId = localStorage.getItem('userId');
-    if (!userId || userId.trim() === '') {
+    const userId = localStorage.getItem('userId')?.trim();
+    const role = localStorage.getItem('role');
+  
+    if (role !== 'Customer' || !userId) {
       this.router.navigateByUrl("/login");
       return;
     }
@@ -73,8 +75,10 @@ toastClass: string = 'bg-success';
   }
   //remove from wishlist
   removeFromWishlist(productId: number): void {
-    const userId = localStorage.getItem('userId');
-    if (!userId || userId.trim() === '') {
+    const userId = localStorage.getItem('userId')?.trim();
+    const role = localStorage.getItem('role');
+  
+    if (role !== 'Customer' || !userId) {
       this.router.navigateByUrl("/login");
       return;
     }
@@ -176,9 +180,10 @@ showToast(message: string, type: 'success' | 'error' = 'success') {
 }
 //from item itself
   addToCart(product: IProduct): void {
-    const userId = localStorage.getItem('userId');
-
-    if (!userId || userId.trim() === '') {
+    const userId = localStorage.getItem('userId')?.trim();
+    const role = localStorage.getItem('role');
+  
+    if (role !== 'Customer' || !userId) {
       this.router.navigateByUrl("/login");
       return;
     }
@@ -203,9 +208,10 @@ showToast(message: string, type: 'success' | 'error' = 'success') {
   }
 //add to cart from related div
 addToCartFromRelated(product: IProduct): void {
-  const userId = localStorage.getItem('userId');
+  const userId = localStorage.getItem('userId')?.trim();
+  const role = localStorage.getItem('role');
 
-  if (!userId || userId.trim() === '') {
+  if (role !== 'Customer' || !userId) {
     this.router.navigateByUrl("/login");
     return;
   }

@@ -25,4 +25,8 @@ export class CheckoutService{
     }) as Observable<string>;
 
   }
+
+  updateStock(orderItems: any): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/updateStock`, orderItems);
+  }
 }

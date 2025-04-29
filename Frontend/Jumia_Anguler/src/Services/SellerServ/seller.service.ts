@@ -28,8 +28,8 @@ export class SellerService {
       catchError(this.handleError<IProduct[]>('getAllProducts', []))
     );
   }
-  
-  
+
+
 
   getProductById(id: string): Observable<IProduct> {
     return this.http.get<IProduct>(`${this.baseUrl}/products/${id}`);
@@ -39,57 +39,43 @@ export class SellerService {
 
   addProduct(product: FormData): Observable<any> {
     return this.http.post(`${this.baseUrl}/addProduct`, product, {
-      responseType: 'text' as 'json' 
+      responseType: 'text' as 'json'
     });
   }
 
-  // updateProduct(productId: number, formData: FormData): Observable<any> {
-  //   return this.http.put(`${this.baseUrl}/updateProduct/${productId}`, formData, {
-  //   });
-  // }
-  updateProduct(productId: number, formData: FormData): Observable<IProduct> {
-    return this.http.put<IProduct>(`${this.baseUrl}/updateProduct/${productId}`, formData).pipe(
-      catchError(this.handleError<IProduct>('updateProduct'))
+  //Update product without image
+  updateProduct(productId: number, data: any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/updateProduct/${productId}`, data).pipe(
+      catchError(this.handleError<any>('updateProduct'))
     );
   }
-  // updateProduct(productId: number, product: IProduct): Observable<any> {
-  //   const formData = new FormData();
-  //     formData.append('Name', product.name);
-  //   formData.append('Description', product.description);
-  //   formData.append('Price', product.price.toString());
-  //   formData.append('Quantity', product.quantity.toString());
-  //   formData.append('Brand', product.brand);
-  //   formData.append('Discount', product.discount.toString());
-  //   formData.append('Weight', product.weight.toString());
-  //   if (product.subCategoryName) {
-  //     formData.append('SubCategoryName', product.subCategoryName.toString());
-  //   }
-  //   formData.append('SellerId', this.sellerId ? this.sellerId.toString() : '');
-  
-  //   if (product.imageUrls && product.imageUrls.length > 0) {
-  //     for (let image of product.imageUrls) {
-  //       formData.append('ImageUrls', image);
-  //     }
-  //   }
-  
-  //   if (product.tags && product.tags.length > 0) {
-  //     for (let tag of product.tags) {
-  //       formData.append('Tags', tag);
-  //     }
-  //   }
-  
-  //   return this.http.put(`${this.baseUrl}/updateProduct/${product.productId}`, formData);
-  // }
-  
+
+  //Update product with image
+  updateProductWithImage(productId: number, formData: FormData): Observable<any> {
+    return this.http.patch<any>(`${this.baseUrl}/UpdateProductImages/${productId}`, formData).pipe(
+      catchError(this.handleError<any>('UpdateProductImages'))
+    );
+  }
+
+  //Delete image from product
+  deleteImageFromProduct(productId: number, imageUrls: string[]): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/DeleteProductImages/${productId}`, {
+      body: imageUrls
+    }).pipe(
+      catchError(this.handleError<any>('deleteImageFromProduct'))
+    );
+  }
+
+
   deleteProduct(productId: number, sellerId: string): Observable<any> {
     return this.http.delete(`${this.baseUrl}/delete/${productId}?SellerId=${sellerId}`).pipe(
       catchError(this.handleError<any>('deleteProduct'))
     );
   }
-  
 
-  
-  getAllSubcategories():Observable<Isubcategory>{
+
+
+  getAllSubcategories(): Observable<Isubcategory> {
     return this.http.get<Isubcategory>(`${this.baseUrl}/getAllSubcategories`)
   }
 
@@ -137,19 +123,19 @@ export class SellerService {
       params: { orderId: orderId.toString() }
     });
   }
-  
+
 
   UpdateOrderStatus(sellerId: string, orderId: number, status: string): Observable<IOrder> {
     return this.http.patch<IOrder>(`${this.baseUrl}/updateStatus`, { status, orderId, sellerId });
-  }  
+  }
 
   deleteOrder(orderId: number, sellerId: string): Observable<IOrder> {
     return this.http.delete<IOrder>(`${this.baseUrl}/deleteOrder`, {
-       params: {
-         orderId, 
-         sellerId
-         } 
-        });
+      params: {
+        orderId,
+        sellerId
+      }
+    });
   }
 
 
@@ -180,7 +166,7 @@ export class SellerService {
     };
   }
 
-  getProductSales():Observable<IProductSales[]>{
+  getProductSales(): Observable<IProductSales[]> {
     return this.http.get<IProductSales[]>(`${this.baseUrl}/productSales`);
   }
 

@@ -102,8 +102,10 @@ currentPage: number = 1;
 
  //add to wishlist
  addToWishlist(productId: number): void {
-  const userId = localStorage.getItem('userId');
-  if (!userId || userId.trim() === '') {
+  const userId = localStorage.getItem('userId')?.trim();
+  const role = localStorage.getItem('role');
+
+  if (role !== 'Customer' || !userId) {
     this.router.navigateByUrl("/login");
     return;
   }
@@ -124,8 +126,10 @@ currentPage: number = 1;
 }
 //remove from wishlist
 removeFromWishlist(productId: number): void {
-  const userId = localStorage.getItem('userId');
-  if (!userId || userId.trim() === '') {
+  const userId = localStorage.getItem('userId')?.trim();
+  const role = localStorage.getItem('role');
+
+  if (role !== 'Customer' || !userId) {
     this.router.navigateByUrl("/login");
     return;
   }
@@ -189,9 +193,10 @@ showToast(message: string, type: 'success' | 'error' = 'success') {
 //add to cart
 
   addToCart(product: IProduct): void {
-    const userId = localStorage.getItem('userId');
-
-    if (!userId || userId.trim() === '') {
+    const userId = localStorage.getItem('userId')?.trim();
+    const role = localStorage.getItem('role');
+  
+    if (role !== 'Customer' || !userId) {
       this.router.navigateByUrl("/login");
       return;
     }

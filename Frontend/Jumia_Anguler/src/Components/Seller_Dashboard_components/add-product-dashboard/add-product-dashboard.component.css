@@ -52,7 +52,7 @@
     
     &.active {
       .step-circle {
-        background: #ff6900;
+        background: #f68b1e;
         color: white;
       }
       
@@ -131,7 +131,7 @@
     
     &.active {
       .step-circle {
-        background: #ff6900;
+        background: #f68b1e;
         color: white;
       }
       
@@ -190,7 +190,7 @@
       
       &:focus {
         outline: none;
-        border-color: #ff6900;
+        border-color: #f68b1e;
       }
     }
     
@@ -209,12 +209,12 @@
       
       .upload-icon {
         font-size: 30px;
-        color: #ff6900;
+        color: #f68b1e;
         margin-bottom: 10px;
       }
       
       &:hover {
-        border-color: #ff6900;
+        border-color: #f68b1e;
       }
     }
   }
@@ -295,13 +295,13 @@
   overflow: hidden;
 
   &:hover {
-    border-color: #ff6900;
+    border-color: #f68b1e;
     background-color: #fff8f5;
   }
 
   .placeholder-icon {
     font-size: 24px;
-    color: #ff6900;
+    color: #f68b1e;
   }
 
   .preview-image {
@@ -391,7 +391,7 @@
     transition: all 0.2s;
   
     &:hover {
-      border-color: #ff6900;
+      border-color: #f68b1e;
       background-color: #fff8f5;
     }
   }
@@ -405,7 +405,7 @@
   
     .upload-icon {
       font-size: 24px;
-      color: #ff6900;
+      color: #f68b1e;
     }
   }
   
@@ -494,7 +494,7 @@
   }
   
   .next-btn {
-    background: #ff6900;
+    background: #f68b1e;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -544,7 +544,7 @@
     
     &:focus {
       outline: none;
-      border-color: #ff6900;
+      border-color: #f68b1e;
     }
   }
 
@@ -587,8 +587,8 @@
     align-items: center;
     
     &:focus-within {
-        border-color: #ff6900;
-        box-shadow: 0 0 0 1px #ff6900;
+        border-color: #f68b1e;
+        box-shadow: 0 0 0 1px #f68b1e;
     }
 }
 
@@ -643,8 +643,8 @@ textarea {
     
     &:focus {
         outline: none;
-        border-color: #ff6900;
-        box-shadow: 0 0 0 1px #ff6900;
+        border-color: #f68b1e;
+        box-shadow: 0 0 0 1px #f68b1e;
     }
 }
 .form-step {

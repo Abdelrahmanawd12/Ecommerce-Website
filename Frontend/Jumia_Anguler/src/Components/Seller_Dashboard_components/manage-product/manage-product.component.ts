@@ -4,13 +4,13 @@ import { SellerService } from '../../../Services/SellerServ/seller.service';
 import { debounceTime, distinctUntilChanged, Subject, tap, of } from 'rxjs';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SellerDashboardSidebarComponent } from '../seller-dashboard-sidebar/seller-dashboard-sidebar.component';
 import { IProduct } from '../../../Models/Category';
 import { environment } from '../../../Environment/Environment.prod';
 import { EditProductPopupComponent } from '../edit-product-popup/edit-product-popup.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  imports: [CurrencyPipe, CommonModule, FormsModule, SellerDashboardSidebarComponent, MatDialogModule],
+  imports: [CurrencyPipe, CommonModule, FormsModule, MatDialogModule,RouterLink],
   templateUrl: './manage-product.component.html',
   styleUrl: './manage-product.component.css'
 })
@@ -31,7 +31,7 @@ export class ManageProductComponent {
   statusOptions = [
     { name: 'All', active: true },
     { name: 'Pending', active: false },
-    { name: 'Approved', active: false },
+    { name: 'Accepted', active: false },
     { name: 'Rejected', active: false },
   ];
 

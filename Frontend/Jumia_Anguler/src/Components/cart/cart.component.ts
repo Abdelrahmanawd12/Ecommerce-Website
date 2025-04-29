@@ -99,10 +99,15 @@ removeItem(item: any) {
         this.loadCart();
         this.cartService.updateCartCount(this.cartData.items.length);// Update cart count in the service
 
+        if(this.cartData.items.length === 0) {
+          localStorage.removeItem('order')
+        }
       },
       error: err => console.error(err)
     });
   });
+
+
 }
 
 //  clearCart
@@ -144,16 +149,13 @@ clearCart() {
 
   checkout() {
     this.cartService.getCart(this.customerId).subscribe(order => {
-      console.log("Order Before Clean: ", order);
-
       const cleanOrder = JSON.parse(JSON.stringify(order));
       console.log("Clean Order: ", cleanOrder);
 
       localStorage.setItem('order', JSON.stringify(cleanOrder));
-      const total = this.grandTotal.toString();
-      localStorage.setItem('total', total);
       this.router.navigate(['/checkout']);
     });
+    
   }
 
 }

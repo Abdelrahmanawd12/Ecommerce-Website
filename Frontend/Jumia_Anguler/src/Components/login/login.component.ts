@@ -99,9 +99,9 @@ export class LoginComponent {
     const rolesArray = Array.isArray(roles) ? roles : [roles];
     console.log('role in redirectBasedOnRole: '+roles)
     if (rolesArray.includes('Admin')) {
-      this.router.navigate(['/admin-dashboard']);
+      this.router.navigate(['/admin/dashboard']);
     } else if (rolesArray.includes('Seller')) {
-      this.router.navigate(['/sellerDashboard']);
+      this.router.navigate(['/sellerDashboard/homeseller']);
     } else if (rolesArray.includes('Customer')) {
       window.location.href = '/home';      
     }

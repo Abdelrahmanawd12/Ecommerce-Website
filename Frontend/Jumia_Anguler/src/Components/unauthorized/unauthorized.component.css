@@ -1,0 +1,46 @@
+.unauthorized-container {
+    min-height: 70vh;
+    padding: 2rem;
+  
+    .error-icon {
+      animation: bounce 1.5s infinite;
+    }
+  
+    .error-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+  
+    .error-message {
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+  
+    @media (max-width: 768px) {
+      .error-title {
+        font-size: 2rem;
+      }
+      
+      .error-message {
+        font-size: 1rem;
+      }
+      
+      .action-buttons {
+        flex-direction: column;
+        width: 100%;
+        
+        button {
+          width: 100%;
+        }
+      }
+    }
+  }
+  
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-15px);
+    }
+  }

@@ -198,14 +198,16 @@ namespace Jumia_Api.Controllers.SellerControllers
         public IActionResult GetCustomerInsights(string sellerId)
         {
             var orders = unit.OrderRepository.GetAll()
-                .Where(o => o.SellerId == sellerId && o.OrderStatus == "Delivered");
+                .Where(o => o.SellerId == sellerId && o.OrderStatus == "Delivered")
+                .ToList(); 
 
             var totalCustomers = orders.Select(o => o.CustomerId).Distinct().Count();
 
             var topCustomers = orders
+                .Where(o => o.Customer != null) 
                 .GroupBy(o => o.CustomerId)
                 .Select(g => new {
-                    CustomerFirstName = g.First().Customer.FirstName, 
+                    CustomerFirstName = g.First().Customer.FirstName,
                     CustomerLastName = g.First().Customer.LastName,
                     OrdersCount = g.Count()
                 })
@@ -219,6 +221,7 @@ namespace Jumia_Api.Controllers.SellerControllers
                 TopCustomers = topCustomers
             });
         }
+
 
         //--------------------------------------------------------------------------------------
         [HttpGet("/returnReport")]

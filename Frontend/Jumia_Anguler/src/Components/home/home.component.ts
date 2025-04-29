@@ -194,9 +194,10 @@ toastClass: string = 'bg-success';
   //add to cart
 
   addToCart(product: IProduct): void {
-    const userId = localStorage.getItem('userId');
-
-    if (!userId || userId.trim() === '') {
+    const userId = localStorage.getItem('userId')?.trim();
+    const role = localStorage.getItem('role');
+  
+    if (role !== 'Customer' || !userId) {
       this.router.navigateByUrl("/login");
       return;
     }
@@ -219,8 +220,10 @@ toastClass: string = 'bg-success';
 
    //add to wishlist
  addToWishlist(productId: number): void {
-  const userId = localStorage.getItem('userId');
-  if (!userId || userId.trim() === '') {
+  const userId = localStorage.getItem('userId')?.trim();
+  const role = localStorage.getItem('role');
+
+  if (role !== 'Customer' || !userId) {
     this.router.navigateByUrl("/login");
     return;
   }

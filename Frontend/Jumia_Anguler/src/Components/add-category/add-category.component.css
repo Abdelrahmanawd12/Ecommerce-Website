@@ -1,10 +1,10 @@
 .bg-orange {
-    background-color: #FF7900;
+    background-color: #f68b1e;
   }
   
   .btn-orange {
-    background-color: #FF7900;
-    border-color: #FF7900;
+    background-color: #f68b1e;
+    border-color: #f68b1e;
     color: white;
   }
   
@@ -15,8 +15,8 @@
   }
   
   .btn-outline-orange {
-    border-color: #FF7900;
-    color: #FF7900;
+    border-color: #f68b1e;
+    color: #f68b1e;
   }
   
   .btn-outline-orange:hover {
@@ -79,7 +79,7 @@
 }
   
   .step.active .step-number {
-    background-color: #FF7900;
+    background-color: #f68b1e;
     color: white;
   }
   
@@ -89,7 +89,7 @@
   }
   
   .step.active .step-title {
-    color: #FF7900;
+    color: #f68b1e;
   }
   
   .step-desc {
@@ -111,7 +111,7 @@
   }
   
   .form-control:focus {
-    border-color: #FF7900;
+    border-color: #f68b1e;
     box-shadow: 0 0 0 0.25rem rgba(255, 121, 0, 0.25);
   }
   

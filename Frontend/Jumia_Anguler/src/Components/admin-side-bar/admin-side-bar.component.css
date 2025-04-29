@@ -23,14 +23,14 @@
 
 .nav-link:hover {
   background-color: #e9ecef;
-  color: #d6951b !important;
+  color: #f68b1e !important;
 }
 
 .nav-link.active {
   background-color: #e9ecef;
-  color: #d6951b !important;
+  color: #f68b1e !important;
   font-weight: 500;
-  border-left: 3px solid #d6951b;
+  border-left: 3px solid #f68b1e;
 }
 
 .nav-link.active::after {
@@ -40,7 +40,7 @@
   right: 15px;
   bottom: 8px;
   height: 2px;
-  background-color: #d6951b;
+  background-color: #f68b1e;
 }
 
 /* ==================== */
@@ -59,17 +59,17 @@
 
 .submenu-item:hover,
 .submenu-link:hover {
-  color: #d6951b !important;
+  color: #f68b1e !important;
   background-color: #f1f3f5;
-  border-left: 3px solid #d6951b;
+  border-left: 3px solid #f68b1e;
 }
 
 .submenu-item.active,
 .submenu-link.active {
-  color: #d6951b !important;
+  color: #f68b1e !important;
   font-weight: 500;
   background-color: #f1f3f5;
-  border-left: 3px solid #d6951b;
+  border-left: 3px solid #f68b1e;
 }
 
 /* ==================== */
@@ -86,7 +86,7 @@
 .submenu-item.active .bi,
 .submenu-link:hover .bi,
 .submenu-link.active .bi {
-  color: #d6951b;
+  color: #f68b1e;
 }
 
 /* ==================== */

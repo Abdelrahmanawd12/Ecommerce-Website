@@ -65,9 +65,9 @@
           <button *ngIf="!isLoggedIn" routerLink="/login" class="signin-btn">
             Login
           </button>
-          <a routerLink="/account"><i class="fa fa-user"></i> My Account</a>
-          <a routerLink="/account/order"><i class="fa fa-box"></i> Orders</a>
-          <a routerLink="/account/wishlist"><i class="fa fa-heart"></i> Wishlist</a>
+          <a (click)="navigateWithAuth('/account')"><i class="fa fa-user"></i> My Account</a>
+          <a (click)="navigateWithAuth('/account/order')"><i class="fa fa-box"></i> Orders</a>
+          <a (click)="navigateWithAuth('/account/wishlist')"><i class="fa fa-heart"></i> Wishlist</a>
         </div>
       </div>
 
@@ -75,17 +75,22 @@
       <div class="help-dropdown" (click)="toggleHelpDropdown()" [class.open]="helpDropdownOpen">
         <a><i class="fa fa-question-circle" routerLink="/help"></i> Help <i class="fa fa-caret-down"></i></a>
         <div class="help-menu" *ngIf="helpDropdownOpen">
-          <a routerLink="/help" (click)="navigateToHelp('help-center')"><i class="fa fa-question-circle"></i> Help Center</a>
-          <a routerLink="/help" (click)="navigateToHelp('place-order')"><i class="fa fa-cart-plus"></i> Place an Order</a>
-          <a routerLink="/help" (click)="navigateToHelp('pay-order')"><i class="fa fa-credit-card"></i> Pay for Your Order</a>
-          <a routerLink="/help" (click)="navigateToHelp('track-order')"><i class="fa fa-map-marker-alt"></i> Track Your Order</a>
-          <a routerLink="/help" (click)="navigateToHelp('cancel-order')"><i class="fa fa-times-circle"></i> Cancel an Order</a>
+          <a routerLink="/help" (click)="navigateToHelp('help-center')"><i class="fa fa-question-circle"></i> Help
+            Center</a>
+          <a routerLink="/help" (click)="navigateToHelp('place-order')"><i class="fa fa-cart-plus"></i> Place an
+            Order</a>
+          <a routerLink="/help" (click)="navigateToHelp('pay-order')"><i class="fa fa-credit-card"></i> Pay for Your
+            Order</a>
+          <a routerLink="/help" (click)="navigateToHelp('track-order')"><i class="fa fa-map-marker-alt"></i> Track Your
+            Order</a>
+          <a routerLink="/help" (click)="navigateToHelp('cancel-order')"><i class="fa fa-times-circle"></i> Cancel an
+            Order</a>
           <a routerLink="/help" (click)="navigateToHelp('create-return')"><i class="fa fa-undo"></i> Create a Return</a>
           <div class="divider"></div>
         </div>
       </div>
 
-      <button class="btn" routerLink="/cart">
+      <button class="btn" (click)="navigateWithAuth('/cart')">
         <i class="fa-solid fa-cart-shopping" style="font-size: 23px;"></i>
         <span class="badge" style="background-color: #f68b1e;">{{totalItem}}</span>
       </button>
@@ -113,21 +118,13 @@
   </div>
 </div>
 <!-- Toast -->
-<div
-  class="toast-container position-fixed bottom-0 end-0 p-3"
-  style="z-index: 1055"
-  *ngIf="showToast"
->
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1055" *ngIf="showToast">
   <div class="toast show text-white bg-success border-0">
     <div class="d-flex">
       <div class="toast-body">
         Logged out successfully ✅
       </div>
-      <button
-        type="button"
-        class="btn-close btn-close-white me-2 m-auto"
-        (click)="showToast = false"
-      ></button>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" (click)="showToast = false"></button>
     </div>
   </div>
 </div>
