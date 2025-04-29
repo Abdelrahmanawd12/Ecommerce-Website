@@ -10,7 +10,7 @@ declare var bootstrap: any;
 
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule, RouterLink, RouterLinkActive, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule],
   standalone: true,
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
