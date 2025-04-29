@@ -2,6 +2,9 @@
     <!-- step 1 -->
     <div class="container" *ngIf="currentView === 'email'">
         <div class="card">
+            <button class="jumia-back-btn" (click)="goBack()">
+                <i class="bi bi-arrow-left"></i>
+            </button>
             <div class="card-body">
                 <div class="text-center mb-4">
                     <div class="logo-container">
@@ -34,9 +37,10 @@
 
                 <button class="btn btn-warning w-100 mb-3"
                     [disabled]="registerForm.get('email')?.invalid || registerForm.get('email')?.pending"
-                    (click)="nextStep()">
+                    (click)="onContinueClick()">
                     Continue
                 </button>
+
 
                 <div class="text-center mb-4 small-text">
                     You already have an account? <a routerLink="/login">Login</a>
@@ -62,10 +66,86 @@
             </div>
         </div>
     </div>
-
     <!-- step 2 -->
+    <div class="container" *ngIf="currentView === 'verification'">
+        <div class="card">
+            <button class="jumia-back-btn" (click)="goBack()">
+                <i class="bi bi-arrow-left"></i>
+            </button>
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <div class="logo-container">
+                        <img src="assets/jumiaStar.svg" alt="Jumia Logo" class="logo-img">
+                    </div>
+                    <div *ngIf="message" [ngClass]="{'verify-success': !isError, 'verify-danger': isError}"
+                        class="verify-message text-center mt-2">
+                        {{ verifymessage }}
+                    </div>
+                    <h2>Verify your email address</h2>
+                    <p class="text-muted">We have sent a verification code to {{email}}</p>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label small-text">Verification Code*</label>
+
+                    <div class="verification-digits mb-4">
+                        <input #digitInput type="text" formControlName="digit1" maxlength="1"
+                            (input)="onDigitInput($event, 1)" (keydown)="onBackspace($event, 1)"
+                            class="form-control text-center">
+
+                        <input #digitInput type="text" formControlName="digit2" maxlength="1"
+                            (input)="onDigitInput($event, 2)" (keydown)="onBackspace($event, 2)"
+                            class="form-control text-center">
+
+                        <input #digitInput type="text" formControlName="digit3" maxlength="1"
+                            (input)="onDigitInput($event, 3)" (keydown)="onBackspace($event, 3)"
+                            class="form-control text-center">
+
+                        <input #digitInput type="text" formControlName="digit4" maxlength="1"
+                            (input)="onDigitInput($event, 4)" (keydown)="onBackspace($event, 4)"
+                            class="form-control text-center">
+
+                        <input #digitInput type="text" formControlName="digit5" maxlength="1"
+                            (input)="onDigitInput($event, 5)" (keydown)="onBackspace($event, 5)"
+                            class="form-control text-center">
+
+                        <input #digitInput type="text" formControlName="digit6" maxlength="1"
+                            (input)="onDigitInput($event, 6)" (keydown)="onBackspace($event, 6)"
+                            class="form-control text-center">
+                    </div>
+
+                    <button (click)="onVerifyClick()" class="btn verify w-100 mb-3">
+                        <span *ngIf="!isSubmitting">Verify</span>
+                        <span *ngIf="isSubmitting">
+                            <i class="fas fa-spinner fa-spin"></i> Processing...
+                        </span>
+                    </button>
+                    <div class="text-center mb-4 small-text">
+                        <p>Didn't receive the verification code? It could take a bit of time,
+                            <a href="#" (click)="resendCode($event)" [class.disabled]="countdown > 0">
+                                request a new code <span *ngIf="countdown > 0">in {{countdown}} seconds</span>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="text-center small-text">
+                    <p>For further support, you may visit the <a href="#">Help Center</a> or contact our customer
+                        service team.</p>
+                </div>
+
+                <div class="additional-logo text-center mt-4">
+                    <img src="assets/jumia-seeklogo.svg" alt="Additional Logo" class="second-logo">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- step 3 -->
     <div class="container" *ngIf="currentView === 'createPassword'">
         <div class="card">
+            <button class="jumia-back-btn" (click)="goBack()">
+                <i class="bi bi-arrow-left"></i>
+            </button>
             <div class="card-body">
                 <div class="text-center mb-4">
                     <div class="logo-container">
@@ -141,7 +221,8 @@
                 </button>
 
                 <div class="text-center small-text">
-                    <p>For further support, you may visit the <a routerLink="/help">Help Center</a> or contact our customer
+                    <p>For further support, you may visit the <a routerLink="/help">Help Center</a> or contact our
+                        customer
                         service team.</p>
                 </div>
 
@@ -152,9 +233,12 @@
         </div>
     </div>
 
-    <!-- step 3 -->
+    <!-- step 4 -->
     <div class="container" *ngIf="currentView === 'personalDetails'">
         <div class="card">
+            <button class="jumia-back-btn" (click)="goBack()">
+                <i class="bi bi-arrow-left"></i>
+            </button>
             <div class="card-body">
                 <div class="text-center mb-4">
                     <div class="logo-container">
@@ -190,7 +274,8 @@
                         <select class="form-select" style="max-width: 100px;" formControlName="prefix">
                             <option *ngFor="let prefix of prefixes" [value]="prefix">{{prefix}}</option>
                         </select>
-                        <input type="text" class="form-control" formControlName="phoneNumber" placeholder="Enter Your Phone Number">
+                        <input type="text" class="form-control" formControlName="phoneNumber"
+                            placeholder="Enter Your Phone Number">
                     </div>
                     <div *ngIf="registerForm.get('phoneNumber')?.invalid && registerForm.get('phoneNumber')?.touched"
                         class="text-danger mt-1">
@@ -220,9 +305,12 @@
         </div>
     </div>
 
-    <!-- step 4 -->
+    <!-- step 5 -->
     <div class="container" *ngIf="currentView === 'additionalDetails'">
         <div class="card">
+            <button class="jumia-back-btn" (click)="goBack()">
+                <i class="bi bi-arrow-left"></i>
+            </button>
             <div class="card-body">
                 <div class="text-center mb-4">
                     <div class="logo-container">
@@ -289,7 +377,7 @@
         </div>
     </div>
 
-    <!-- step 5 -->
+    <!-- step 6 -->
     <div *ngIf="currentView === 'accountCreated'" class="account-created-container">
         <div class="content-wrapper">
 
@@ -310,5 +398,4 @@
             </div>
         </div>
     </div>
-
 </form>

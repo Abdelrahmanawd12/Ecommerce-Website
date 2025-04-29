@@ -199,12 +199,12 @@ namespace Jumia_Api.Controllers.SellerControllers
         {
             var orders = unit.OrderRepository.GetAll()
                 .Where(o => o.SellerId == sellerId && o.OrderStatus == "Delivered")
-                .ToList(); 
+                .ToList();
 
             var totalCustomers = orders.Select(o => o.CustomerId).Distinct().Count();
 
             var topCustomers = orders
-                .Where(o => o.Customer != null) 
+                .Where(o => o.Customer != null)
                 .GroupBy(o => o.CustomerId)
                 .Select(g => new {
                     CustomerFirstName = g.First().Customer.FirstName,
@@ -229,7 +229,7 @@ namespace Jumia_Api.Controllers.SellerControllers
         {
             var returnedOrders = unit.OrderRepository.GetAll()
                 .Where(o => o.SellerId == sellerId && o.OrderStatus == "Returned")
-                .SelectMany(o => o.OrderItems) 
+                .SelectMany(o => o.OrderItems)
                 .GroupBy(i => i.ProductId)
                 .Select(g => new {
                     ProductId = g.Key,

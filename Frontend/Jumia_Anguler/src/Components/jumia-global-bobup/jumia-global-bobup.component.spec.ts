@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { JumiaGlobalBobupComponent } from './jumia-global-bobup.component';
+import { JumiaGlobalPopupComponent } from './jumia-global-bobup.component';
 
 describe('JumiaGlobalBobupComponent', () => {
-  let component: JumiaGlobalBobupComponent;
-  let fixture: ComponentFixture<JumiaGlobalBobupComponent>;
+  let component: JumiaGlobalPopupComponent;
+  let fixture: ComponentFixture<JumiaGlobalPopupComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [JumiaGlobalBobupComponent]
+      imports: [JumiaGlobalPopupComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(JumiaGlobalBobupComponent);
+    fixture = TestBed.createComponent(JumiaGlobalPopupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -4,9 +4,9 @@ using System.Text;
 using Jumia.Data;
 using Jumia.Models;
 using Jumia_Api.DTOs.AuthenticationDTOs;
+using Jumia_Api.DTOs.AuthenticationDTOs.ForgotPasswordDTOs;
 using Jumia_Api.DTOs.AuthenticationDTOs.RegisterDTOs;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+using Jumia_Api.Services.Forgot_Password_Service;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,14 +24,17 @@ namespace Jumia_Api.Controllers.AuthenticationControllers
         public JumiaDbContext db;
         private readonly ILogger<AuthController> _logger;
         private readonly IConfiguration config;
+        private readonly EmailService emailService;
 
-        public AuthController(UserManager<ApplicationUser> _userManager, SignInManager<ApplicationUser> _signInManager, JumiaDbContext _db, ILogger<AuthController> logger,IConfiguration _config)
+        public AuthController(UserManager<ApplicationUser> _userManager, SignInManager<ApplicationUser> _signInManager, JumiaDbContext _db, ILogger<AuthController> logger,IConfiguration _config, EmailService emailService)
+
         {
             this.userManager = _userManager;
             this.signInManager = _signInManager;
             this.db = _db;
             this._logger = logger;
             this.config = _config;
+            this.emailService = emailService;
         }
 
         //create new Account "Registeration" =>Customer
@@ -301,7 +304,7 @@ namespace Jumia_Api.Controllers.AuthenticationControllers
                             issuer: config["JWT:ValidIssuer"], //url wep api
                             audience: config["JWT:ValidAudience"], //url frontend
                             claims:claims,
-                            expires:DateTime.Now.AddHours(1),
+                            expires: login.RememberMe ? DateTime.Now.AddDays(7) : DateTime.Now.AddHours(1),
                             signingCredentials: signinCred
                             );
                         return Ok(new
@@ -347,6 +350,121 @@ namespace Jumia_Api.Controllers.AuthenticationControllers
             return Ok(userResponse);
         }
 
+        //------------------------------------------------------
+        //forgot-password
+
+
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDTO model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var user = await userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+                return NotFound(new { message = "User not found." });
+
+            var token = await userManager.GeneratePasswordResetTokenAsync(user);
+
+            var frontendUrl = "http://localhost:4200/resetpassword";
+            var resetLink = $"{frontendUrl}?token={Uri.EscapeDataString(token)}&email={Uri.EscapeDataString(user.Email)}";
+
+            var success = await emailService.SendEmailAsync(
+                user.Email,
+                "Password Reset Request",
+                resetLink
+            );
+
+            if (!success)
+                return StatusCode(500, new { message = "Failed to send email. Please try again later." });
+
+            return Ok(new { message = "Password reset link has been sent to your email." });
+        }
+
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDTO model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var user = await userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+                return NotFound(new { message = "User not found." });
+
+            var result = await userManager.ResetPasswordAsync(user, model.Token, model.NewPassword);
+
+            if (result.Succeeded)
+            {
+                return Ok(new { message = "Password has been reset successfully." });
+            }
+
+            if (result.Errors.Any(e => e.Code == "InvalidToken"))
+            {
+                return BadRequest(new
+                {
+                    message = "This reset link has already been used or expired."
+                });
+            }
+
+            return BadRequest(new
+            {
+                message = "Password reset failed.",
+                errors = result.Errors.Select(e => e.Description)
+            });
+        }
+
+        //------------------------------------------------------
+        // Endpoint to send OTP to email
+
+        [HttpPost("send-otp")]
+        public async Task<IActionResult> SendOtp([FromBody] SendOtpRequestDTO request)
+        {
+            if (string.IsNullOrEmpty(request.Email))
+            {
+                return BadRequest(new { message = "Email is required" });
+            }
+
+            var result = await emailService.SendOtpAsync(request.Email);
+            if (result)
+            {
+                return Ok(new { message = "OTP sent successfully" });
+            }
+            else
+            {
+                return BadRequest(new { message = "Error sending OTP" });
+            }
+        }
+
+        [HttpPost("verify-otp")]
+        public IActionResult VerifyOtp([FromBody] VerifyOtpRequestDTO request)
+        {
+            var otpEntry = emailService.GetOtpByEmail(request.Email);
+
+            if (otpEntry == null)
+            {
+                return BadRequest(new { message = "No OTP found for this email." });
+            }
+
+            if (otpEntry.IsUsed)
+            {
+                return BadRequest(new { message = "This OTP has already been used." });
+            }
+
+            if (otpEntry.Code != request.Otp)
+            {
+                return BadRequest(new { message = "Invalid OTP." });
+            }
+
+            if ((DateTime.UtcNow - otpEntry.CreatedAt).TotalMinutes > 15)
+            {
+                return BadRequest(new { message = "OTP has expired." });
+            }
+
+            emailService.MarkOtpAsUsed(request.Email);
+
+            return Ok(new { message = "OTP verified successfully." });
+        }
 
     }
 }

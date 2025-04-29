@@ -121,8 +121,8 @@ namespace Jumia_Api.Controllers.SellerControllers
         [EndpointDescription("Get Subcategories by category name")]
         public IActionResult GetSubcategories(string catName)
         {
-            if(string.IsNullOrWhiteSpace(catName))
-        return BadRequest("Category name is required.");
+            if (string.IsNullOrWhiteSpace(catName))
+                return BadRequest("Category name is required.");
 
             var subCats = unit.SubCategoryRepository.GetAll()
                                 .Where(c => c.Category.CatName == catName)
@@ -180,7 +180,7 @@ namespace Jumia_Api.Controllers.SellerControllers
             var catsDto = mapper.Map<List<SubCategoryDTO>>(subs);
 
             return Ok(catsDto);
-        }     
+        }
 
         //---------------------------------------------------------------------------------------
         //Get All categories
@@ -301,7 +301,7 @@ namespace Jumia_Api.Controllers.SellerControllers
                         await image.CopyToAsync(stream);
                     }
 
-                    imagePaths.Add("/images/" + fileName); 
+                    imagePaths.Add("/images/" + fileName);
                 }
             }
 
@@ -412,7 +412,7 @@ namespace Jumia_Api.Controllers.SellerControllers
             var result = await unit.ProductsRepository.DeleteImagesFromProductAsync(productId, imageUrls);
             if (result)
             {
-                 unit.Save();
+                unit.Save();
                 return Ok("Images deleted successfully");
             }
             else
@@ -432,7 +432,7 @@ namespace Jumia_Api.Controllers.SellerControllers
         [EndpointDescription("Get All Orders By Seller Id")]
         public IActionResult GetAllOrders(string sellerId)
         {
-            var orders =  unit.OrderRepository.GetAll().Where(s => s.SellerId == sellerId).ToList();
+            var orders = unit.OrderRepository.GetAll().Where(s => s.SellerId == sellerId).ToList();
 
             if (orders == null || !orders.Any())
             {
@@ -661,7 +661,7 @@ namespace Jumia_Api.Controllers.SellerControllers
 
             return Ok(new { message = $"Order status updated to {request.Status} for OrderId {request.OrderId}." });
         }
-       
+
         //-------------------------------------------------------------------------------------
         // Delete Order By Order Id And Seller Id
         [HttpDelete("/deleteOrder")]
