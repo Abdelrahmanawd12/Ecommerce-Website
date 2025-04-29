@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import e from 'express';
 
 @Component({
   selector: 'app-unauthorized',
@@ -20,6 +21,8 @@ export class UnauthorizedComponent {
       this.router.navigate(['/admin']);
     }else if(this.role === 'Seller'){
       this.router.navigate(['/sellerDashboard']);
+    }else if(this.role === 'Customer'){
+      this.router.navigate(['/home']);
     }
   }
 

@@ -1,4 +1,5 @@
 ﻿using Jumia.Data;
+using Jumia.Models;
 using Jumia_Api.DTOs.CustomerDTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -46,34 +47,28 @@ namespace Jumia_Api.Controllers.CustomerControllers
 
         // GET: api/account/address-book/{customerId}
         [HttpGet("address-book/{customerId}")]
-        public async Task<ActionResult<AddressBookDto>> GetAddressBook(string customerId)
+        public async Task<IActionResult> GetAddressBook(string customerId)
         {
-            // Get user by ID
+            customerId = customerId.Trim(); // تأكد من إزالة الفراغات
+
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == customerId);
             if (user == null)
                 return NotFound("User not found.");
 
-            // Manually fetch the address using the UserId FK
             var address = await _context.Addresses.FirstOrDefaultAsync(a => a.UserId == customerId);
-            if (address == null)
-                return NotFound("No address found.");
 
-            var dto = new AddressBookDto
+            var result = new AddressBookDto
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 PhoneNumber = user.PhoneNumber,
-                Street = address.Street,
-                City = address.City,
-                Country = address.Country
+                Street = address?.Street ?? "",
+                City = address?.City ?? "",
+                Country = address?.Country ?? ""
             };
 
-            return Ok(dto);
+            return Ok(result);
         }
-
-
-
-
 
 
 
@@ -92,23 +87,33 @@ namespace Jumia_Api.Controllers.CustomerControllers
             customer.LastName = dto.LastName;
             customer.PhoneNumber = dto.PhoneNumber;
 
-            // Manually fetch the address using UserId
             var address = await _context.Addresses.FirstOrDefaultAsync(a => a.UserId == customerId);
+
             if (address != null)
             {
+                // Update existing address
                 address.Street = dto.Street;
                 address.City = dto.City;
                 address.Country = dto.Country;
             }
-            else
+            else if (!string.IsNullOrWhiteSpace(dto.Street) || !string.IsNullOrWhiteSpace(dto.City) || !string.IsNullOrWhiteSpace(dto.Country))
             {
-                return NotFound("No address found to update.");
+                // Create address only if there’s data entered
+                var newAddress = new Address
+                {
+                    UserId = customerId,
+                    Street = dto.Street,
+                    City = dto.City,
+                    Country = dto.Country
+                };
+                _context.Addresses.Add(newAddress);
             }
 
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
+
+
 
     }
 }

@@ -33,7 +33,9 @@ namespace Jumia_Api.Repository
                 .Where(p =>
                     keywords.Any(k =>
                         p.Name.Contains(k, StringComparison.OrdinalIgnoreCase) ||
-                        p.ProductTags.Any(tag => tag.Tag.Contains(k, StringComparison.OrdinalIgnoreCase))&& p.Status == "Accepted"))
+                        p.ProductTags.Any(tag => tag.Tag.Contains(k, StringComparison.OrdinalIgnoreCase))
+                        && p.Status == "Accepted"&&p.IsDeleted== false
+                       ))
                 .ToList();
         }
 
