@@ -110,10 +110,6 @@ namespace Jumia_Api.Controllers.CustomerControllers
         }
 
 
-
-
-
-
         [HttpPost("add")]
         public async Task<ActionResult<WishlistItemDto>> AddWishlistItem([FromBody] WishlistItemCreateDto dto)
         {

@@ -1,7 +1,7 @@
 
 :root {
-  --jumia-orange: #FF7800;
-  --jumia-dark-orange: #E66A00;
+  --jumia-orange: #f68b1e;
+  --jumia-dark-orange: #f68b1e;
   --jumia-light-orange: #FF9200;
   --jumia-bg: #FFF5EB;
 }
@@ -19,17 +19,13 @@
 
 /* SweetAlert Custom Styles */
 .jumia-swal-popup {
-  border: 2px solid #FF7800;
+  border: 2px solid #f68b1e;
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(255, 120, 0, 0.2);
 }
 
 .jumia-swal-title {
   color: #FF7800;
-  font-weight: 700;
-}
-
-.jumia-swal-confirm-btn {
   font-weight: 600;
   letter-spacing: 0.5px;
   padding: 8px 20px;
@@ -90,7 +86,7 @@ thead th:last-child:after {
 }
 
 thead th:hover {
-  background: linear-gradient(to right, #FF6800, #FF8200) !important;
+  background: linear-gradient(to right, #f68b1e, #ee9c45) !important;
   cursor: pointer;
   transition: all 0.3s ease;
 }

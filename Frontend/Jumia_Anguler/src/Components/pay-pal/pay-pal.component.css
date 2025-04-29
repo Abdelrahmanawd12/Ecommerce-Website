@@ -1,0 +1,21 @@
+.paypal-button {
+    background-color: #003087;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .paypal-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+  
+  .fa-paypal {
+    font-size: 20px;
+  }

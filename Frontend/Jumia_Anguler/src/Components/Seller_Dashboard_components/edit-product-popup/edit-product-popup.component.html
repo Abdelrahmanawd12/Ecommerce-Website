@@ -20,7 +20,8 @@
 
                     <div class="form-group">
                         <label class="form-label">Description</label>
-                        <textarea class="form-control" rows="2" [(ngModel)]="updatedProduct.description" name="description"></textarea>
+                        <textarea class="form-control" rows="2" [(ngModel)]="updatedProduct.description"
+                            name="description"></textarea>
                     </div>
                 </div>
 
@@ -41,11 +42,21 @@
 
                     <div class="form-group">
                         <label class="form-label">Weight (kg)</label>
+<<<<<<< HEAD
                         <input type="number" step="0.01" class="form-control" [(ngModel)]="updatedProduct.weight" name="weight">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Discount %</label>
                         <input type="number" step="0.01" class="form-control" [(ngModel)]="updatedProduct.discount" name="discount">
+=======
+                        <input type="number" step="0.01" class="form-control" [(ngModel)]="updatedProduct.weight"
+                            name="weight">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Discount %</label>
+                        <input type="number" step="0.01" class="form-control" [(ngModel)]="updatedProduct.discount"
+                            name="discount">
+>>>>>>> 2bf86c872881a7a8af0af3ec825aa33b9ce1212b
                     </div>
                 </div>
             </div>
@@ -71,6 +82,37 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label class="form-label">Current Images</label>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        Current Images
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li *ngFor="let imageUrl of existingImages; let i = index">
+                            <a class="dropdown-item d-flex align-items-center">
+                                <img [src]="imgBase + imageUrl" alt="Image" width="50" height="50"
+                                    class="me-2 rounded" />
+                                <span class="text-truncate flex-grow-1">{{ imageUrl }}</span>
+                                <button type="button" class="btn btn-danger btn-sm ms-2"
+                                    (click)="confirmDeleteImage(i)">
+                                    <i class="bi bi-trash"></i> <!-- أيكونة السلة -->
+                                </button>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- زرار Undo -->
+                    <div class="mt-2" *ngIf="lastDeletedImage">
+                        <button class="btn btn-warning btn-sm" (click)="undoDelete()">
+                            Undo Delete
+                        </button>
+                    </div>
+
+
+                </div>
+            </div>
+
             <!-- Images section -->
             <div class="form-group full-width">
                 <label class="form-label">Images</label>
@@ -83,10 +125,10 @@
     </mat-dialog-content>
 
     <mat-dialog-actions align="end" class="dialog-actions">
-        <button mat-stroked-button class="cancel-btn" (click)="closeDialog()">
+        <button mat-stroked-button class=" btn cancel-btn" (click)="closeDialog()">
             Cancel
         </button>
-        <button mat-flat-button class="save-btn" (click)="saveChanges()">
+        <button mat-flat-button class=" btn save-btn" (click)="saveChanges()">
             Save Changes
         </button>
     </mat-dialog-actions>

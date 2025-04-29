@@ -13,6 +13,10 @@ using Jumia_Api.Services.StripeService;
 using Jumia_Api.Services;
 using Jumia_Api.Services.Forgot_Password_Service;
 
+using PayPalCheckoutSdk.Core;
+using Jumia_Api.Services.PayPalService;
+
+
 namespace Jumia_Api
 {
     public class Program
@@ -82,6 +86,17 @@ namespace Jumia_Api
             builder.Services.AddSingleton<EmailService>();
 
             builder.Services.AddScoped<IAdminService, AdminService>();
+
+            builder.Services.AddScoped<PayPalService>();
+            builder.Services.AddSingleton<PayPalHttpClient>(provider =>
+            {
+                var config = provider.GetRequiredService<IConfiguration>();
+                var environment = new SandboxEnvironment(
+                    config["PayPal:ClientId"],
+                    config["PayPal:SecretKey"]
+                );
+                return new PayPalHttpClient(environment);
+            });
 
             var app = builder.Build();
             app.UseStaticFiles();

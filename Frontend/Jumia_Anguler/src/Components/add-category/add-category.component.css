@@ -1,0 +1,125 @@
+.bg-orange {
+    background-color: #f68b1e;
+  }
+  
+  .btn-orange {
+    background-color: #f68b1e;
+    border-color: #f68b1e;
+    color: white;
+  }
+  
+  .btn-orange:hover {
+    background-color: #E56D00;
+    border-color: #E56D00;
+    color: white;
+  }
+  
+  .btn-outline-orange {
+    border-color: #f68b1e;
+    color: #f68b1e;
+  }
+  
+  .btn-outline-orange:hover {
+    background-color: #FFF5ED;
+  }
+  
+  /* Stepper Styles */
+  .jumia-stepper {
+    position: relative; 
+    padding-left: 60px
+  }
+  
+  .jumia-stepper::before {
+    content: '';
+    position: absolute;
+    left: 30px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: #e0e0e0;
+  }
+  
+  .step {
+    position: relative;
+    padding: 15px 0 15px 40px;
+    margin-bottom: 10px;
+    padding-left: 60px
+  }
+ 
+.step-number {
+    position: absolute;
+    left: 10px;
+    top: 15px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.step-text {
+    margin: 0;
+    padding: 10px;
+}
+
+
+.step-number:hover {
+    background-color: #d0d0d0;
+    transform: scale(1.05);
+}
+
+
+.step-number.active {
+    background-color: #4CAF50; 
+    color: white;
+}
+  
+  .step.active .step-number {
+    background-color: #f68b1e;
+    color: white;
+  }
+  
+  .step-title {
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .step.active .step-title {
+    color: #f68b1e;
+  }
+  
+  .step-desc {
+    font-size: 0.85rem;
+    color: #666;
+  }
+  
+  /* Form Styles */
+  .jumia-form {
+    background-color: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+  
+  .form-control {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+  }
+  
+  .form-control:focus {
+    border-color: #f68b1e;
+    box-shadow: 0 0 0 0.25rem rgba(255, 121, 0, 0.25);
+  }
+  
+  .subcategory-item {
+    transition: all 0.3s ease;
+  }
+  
+  .subcategory-item:hover {
+    background-color: #FFF5ED !important;
+  }
+  

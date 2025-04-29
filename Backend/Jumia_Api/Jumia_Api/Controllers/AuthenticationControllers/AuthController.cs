@@ -27,6 +27,7 @@ namespace Jumia_Api.Controllers.AuthenticationControllers
         private readonly EmailService emailService;
 
         public AuthController(UserManager<ApplicationUser> _userManager, SignInManager<ApplicationUser> _signInManager, JumiaDbContext _db, ILogger<AuthController> logger,IConfiguration _config, EmailService emailService)
+
         {
             this.userManager = _userManager;
             this.signInManager = _signInManager;
@@ -350,7 +351,6 @@ namespace Jumia_Api.Controllers.AuthenticationControllers
         }
 
         //------------------------------------------------------
-        //------------------------------------------------------
         //forgot-password
 
 
@@ -465,6 +465,7 @@ namespace Jumia_Api.Controllers.AuthenticationControllers
 
             return Ok(new { message = "OTP verified successfully." });
         }
+
     }
 }
 

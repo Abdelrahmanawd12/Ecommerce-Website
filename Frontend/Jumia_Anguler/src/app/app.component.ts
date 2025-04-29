@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterOutlet } from '@angular/router';
@@ -78,6 +79,8 @@ export class AppComponent implements OnInit {
           || currentRoute == '/admin/addcategory'|| currentRoute == '/admin/reports'|| currentRoute == '/checkout'
           ||currentRoute=='/order-success'||currentRoute=='/success'||currentRoute=='/cancel' || currentRoute == '/forgotpassword'
           || currentRoute.startsWith('/resetpassword')
+          || currentRoute == '/admin/addcategory'|| currentRoute == '/admin/reports'|| currentRoute == '/checkout'||currentRoute=='/order-success'
+          ||currentRoute=='/success'||currentRoute=='/cancel'||currentRoute=='/unauthorized'||currentRoute == '/shipping'||currentRoute == '/sellingExpenses'
         ) {
           this.showHeader = false;
           this.showMarginTop = false;
@@ -102,6 +105,8 @@ export class AppComponent implements OnInit {
           || currentRoute == '/admin/addcategory'|| currentRoute == '/admin/reports'|| currentRoute == '/checkout'
           ||currentRoute=='/order-success'||currentRoute=='/success'||currentRoute=='/cancel'|| currentRoute == '/forgotpassword'
           || currentRoute.startsWith('/resetpassword')
+          || currentRoute == '/admin/addcategory'|| currentRoute == '/admin/reports'|| currentRoute == '/checkout'||currentRoute=='/order-success'
+          ||currentRoute=='/success'||currentRoute=='/cancel'||currentRoute=='/unauthorized'||currentRoute == '/shipping'||currentRoute == '/sellingExpenses'
         ) {
           this.showFooter = false;
           this.showMarginTop = false;
@@ -113,5 +118,16 @@ export class AppComponent implements OnInit {
         }
       }
     });
+    
   }
+  getMarginClass(): string {
+    const width = window.innerWidth;
+  
+    if (!this.showMarginTop) return '';
+  
+    if (width > 960) return 'mt-lg';
+    if (width > 768) return 'mt-md';
+    return 'mt-sm';
+  }
+  
 }

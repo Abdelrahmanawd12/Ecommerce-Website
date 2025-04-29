@@ -78,6 +78,7 @@
 
         <!-- <p class="text-muted">Date: {{ order.orderDate | date }}</p> -->
 
+<<<<<<< HEAD
         <button (click)="showOrderDetails(order.orderId)" class="btn btn-outline-primary me-2">See Details</button>
 
         <button 
@@ -87,6 +88,18 @@
           Cancel Order
         </button>
 
+=======
+        <div class="button-container" class="text-end">
+          <button (click)="showOrderDetails(order.orderId)" class="btn btn-outline-primary me-2">See Details</button>
+
+          <button 
+            *ngIf="order.orderStatus.trim().toLowerCase() === 'pending'" 
+            class="btn btn-danger "
+            (click)="confirmCancel(order.orderId)">
+            Cancel Order
+          </button>
+        </div>
+>>>>>>> 2bf86c872881a7a8af0af3ec825aa33b9ce1212b
         <!-- Show selected order details directly under the order -->
         <div *ngIf="selectedOrder?.orderId === order.orderId" class="card p-4 mt-4 shadow-sm bg-light">
           <h4 class="mb-3">Order {{ selectedOrder?.orderId }}</h4>
@@ -137,7 +150,13 @@
           </div>
         </div>
         
+<<<<<<< HEAD
         <button (click)="showOrderDetails(order.orderId)" class="btn btn-outline-primary">See Details</button>
+=======
+        <div class="button-container" class="text-end">
+        <button (click)="showOrderDetails(order.orderId)" class="btn btn-outline-primary">See Details</button>
+        </div>
+>>>>>>> 2bf86c872881a7a8af0af3ec825aa33b9ce1212b
 
         <!-- Show selected order details directly under the order -->
         <div *ngIf="selectedOrder?.orderId === order.orderId" class="card p-4 mt-4 shadow-sm bg-light">

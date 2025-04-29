@@ -1,6 +1,6 @@
 /* Jumia Color Scheme */
 :root {
-  --jumia-orange: #FF7900;
+  --jumia-orange: #f68b1e;
   --jumia-dark: #2D2D2D;
   --jumia-light: #F7F7F7;
   --jumia-secondary: #6C757D;
@@ -379,8 +379,8 @@ body {
 
 .pending-status {
   background-color: #fff8e6;
-  color: #f59e0b;
-  border: 1px solid #f59e0b;
+  color: #f68b1e;
+  border: 1px solid #f68b1e;
 }
 
 .canceled-status {

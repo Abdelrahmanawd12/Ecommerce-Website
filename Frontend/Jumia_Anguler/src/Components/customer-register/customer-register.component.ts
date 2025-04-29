@@ -227,7 +227,6 @@ export class CustomerRegisterComponent {
   get passwordStrength() {
     const password = this.registerForm.get('password')?.value;
     if (!password) return '';
-
     const hasUpperCase = /[A-Z]/.test(password);
     const hasLowerCase = /[a-z]/.test(password);
     const hasNumber = /[0-9]/.test(password);
@@ -239,7 +238,6 @@ export class CustomerRegisterComponent {
       (hasLowerCase ? 1 : 0) +
       (hasNumber ? 1 : 0) +
       (hasSpecialChar ? 1 : 0);
-
     if (strength <= 2) return 'weak';
     if (strength <= 4) return 'medium';
     return 'strong';
@@ -252,13 +250,13 @@ export class CustomerRegisterComponent {
 
   onTermsChange() {
     this.registerForm.get('terms')?.updateValueAndValidity();
-  }
+  }  
 
   validateAge(control: AbstractControl): ValidationErrors | null {
     const birthDate = new Date(control.value);
     const today = new Date();
     const age = today.getFullYear() - birthDate.getFullYear();
-
+    
     if (age < 18) {
       return { underAge: true };
     }
@@ -281,7 +279,7 @@ export class CustomerRegisterComponent {
     if (!control.value) {
       return of(null);
     }
-
+  
     return this.emailService.checkEmailUniquebool(control.value).pipe(
       map(response => {
         if (response.exists) {

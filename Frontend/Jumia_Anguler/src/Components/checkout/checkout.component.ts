@@ -8,39 +8,44 @@ import { CheckoutService } from '../../Services/Checkout/checkout.service';
 import { environment } from '../../Environment/Environment.prod';
 import { ChangeDetectorRef } from '@angular/core';
 import { Icheckout } from '../../Models/icheckout';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CartService } from '../../Services/Customer/cart.service';
 import { AddressService } from '../../Services/AddressService/address.service';
+import { IAddress } from '../../Models/iaddress';
+import { PaypalService } from '../../Services/paypal.service';
 
 
 @Component({
   selector: 'app-checkout',
-  imports: [DatePipe, ReactiveFormsModule, CommonModule,FormsModule],
+  imports: [DatePipe, ReactiveFormsModule, CommonModule, FormsModule,RouterLink],
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent implements OnInit {
   checkoutForm: FormGroup;
-  paymentMethod: string = 'cod';
+  paymentMethod: string = '';
   stripe: any;
   card: any;
   elements: any;
   stripeLoading: boolean = false;
+  paypalLoading: boolean = false;
   cardErrors: string | null = null;
   shipping: number = 65;
   readonly imgBase = environment.imageBaseUrl;
 
-  selectedAddress: string | null = null;
-  saveAddress: boolean = false;
+  selectedAddress: any;
   userId = localStorage.getItem('userId') || '';
+  isBillingDifferent: boolean = false;
+
+  addresses: IAddress[] = [];
 
   constructor(
     private fb: FormBuilder,
     private paymentService: PaymentService,
+    private paypalService: PaypalService,
     private checkoutService: CheckoutService,
     private cartService: CartService,
     private addressService: AddressService,
-    private cdr: ChangeDetectorRef,
     private router: Router
   ) {
     this.checkoutForm = this.fb.group({
@@ -48,37 +53,16 @@ export class CheckoutComponent implements OnInit {
         receiverName: ['', Validators.required],
         recieverEmail: ['', [Validators.required, Validators.email]],
         receiverPhone: ['', Validators.required],
-        shippingAddress: ['', Validators.required],
-        shippingMethod: ['standard', Validators.required]
+        street: ['', Validators.required],
+        city: ['', Validators.required],
+        country: ['', Validators.required],
+        shippingMethod: ['standard', Validators.required],
+        deliveryDate: ['']
       }),
       paymentMethod: ['cod', Validators.required],
-      billingSameAsShipping: [true],
-      billingInfo: this.fb.group({
-        billingAddress: [''],
-        billingCity: [''],
-        billingZip: ['']
-      })
     });
-    this.updateBillingAddressValidators(true);
-  }
+    console.log(this.paymentMethod)
 
-  private updateBillingAddressValidators(isSame: boolean) {
-    const billingInfo = this.checkoutForm.get('billingInfo');
-    if (isSame) {
-      billingInfo?.get('billingAddress')?.clearValidators();
-      billingInfo?.get('billingCity')?.clearValidators();
-      billingInfo?.get('billingZip')?.clearValidators();
-      billingInfo?.get('billingAddress')?.setValue('');
-      billingInfo?.get('billingCity')?.setValue('');
-      billingInfo?.get('billingZip')?.setValue('');
-    } else {
-      billingInfo?.get('billingAddress')?.setValidators([Validators.required]);
-      billingInfo?.get('billingCity')?.setValidators([Validators.required]);
-      billingInfo?.get('billingZip')?.setValidators([Validators.required]);
-    }
-    billingInfo?.get('billingAddress')?.updateValueAndValidity();
-    billingInfo?.get('billingCity')?.updateValueAndValidity();
-    billingInfo?.get('billingZip')?.updateValueAndValidity();
   }
 
   getDeliveryDate(method: string): Date {
@@ -96,6 +80,7 @@ export class CheckoutComponent implements OnInit {
     }
     return now;
   }
+
   readonly orderString = localStorage.getItem('order') || '';
   readonly order = JSON.parse(this.orderString);
 
@@ -105,35 +90,51 @@ export class CheckoutComponent implements OnInit {
         receiverName: ['', Validators.required],
         recieverEmail: ['', [Validators.required, Validators.email]],
         recieverPhone: ['', Validators.required],
-        shippingAddress: ['', Validators.required],
+        street: ['', Validators.required],
+        city: ['', Validators.required],
+        country: ['', Validators.required],
         shippingMethod: ['standard'],
         deliveryDate: [this.getDeliveryDate('standard')],
-        billingSameAsShipping: [true],
-        billingInfo: this.fb.group({
-          billingAddress: [''],
-          billingCity: [''],
-          country: ['Egypt']
-        })
       }),
       paymentMethod: ['cod', Validators.required]
+    });
+
+    this.addressService.getAddresses(this.userId).subscribe({
+      next: (addresses) => {
+        this.addresses = addresses;
+
+        if (this.addresses.length > 0) {
+          const firstAddress = this.addresses[0];
+          this.selectedAddress = firstAddress.addressId ? firstAddress.addressId.toString() : null;
+
+          this.checkoutForm.get('shipping.street')?.setValue(firstAddress.street);
+          this.checkoutForm.get('shipping.city')?.setValue(firstAddress.city);
+          this.checkoutForm.get('shipping.country')?.setValue(firstAddress.country);
+        }
+      },
+      error: (err) => console.error('Error fetching address:', err),
+    });
+    this.checkoutForm.get('paymentMethod')?.valueChanges.subscribe(method => {
+      console.log('Payment method changed to:', method);
+      this.paymentMethod = method;
+      if (method === 'stripe') {
+        this.initializeStripe();
+      }
     });
 
     this.checkoutForm.get('shipping.shippingMethod')?.valueChanges.subscribe(method => {
       const newDate = this.getDeliveryDate(method);
       this.checkoutForm.get('shipping.deliveryDate')?.setValue(newDate);
+      this.shipping = this.getShippingCost(method);
     });
-    this.addressService.getAddresses(this.userId).subscribe({
-      next: address => {
-        if (address) {
-          this.selectedAddress = address.length > 0 ? address[0].street+','+ address[0].city+','+ address[0].country : null;
-          this.checkoutForm.get('shipping.shippingAddress')?.setValue(this.selectedAddress);
-        }
-      },
-      error: err => console.error('Error fetching address:', err)
-    });
+
   }
-  get isBillingDifferent() {
-    return !this.checkoutForm.get('billingSameAsShipping')?.value;
+
+  async initializeStripe() {
+    this.stripe = await loadStripe(environment.stripePublishableKey);
+    if (this.stripe) {
+      this.setupStripeElements();
+    }
   }
   setupStripeElements() {
     const elements = this.stripe.elements();
@@ -165,21 +166,42 @@ export class CheckoutComponent implements OnInit {
       return;
     }
 
-    const orderData = await this.prepareOrderData();
-    if (this.saveAddress) {
-      const address = this.checkoutForm.get('shipping.shippingAddress')?.value;
-      this.addressService.addAddress(this.userId, address).subscribe({
-        next: () => console.log('Address saved'),
-        error: err => console.error('Error saving address:', err)
-      });
-    }
+    try {
+      const orderData = await this.prepareOrderData();
+      const selectedPaymentMethod = this.checkoutForm.get('paymentMethod')?.value;
 
-    if (this.paymentMethod === 'cod') {
-      this.processCashOnDelivery(orderData);
-    } else if (this.paymentMethod === 'stripe') {
-      await this.processStripePayment(orderData);
+        if (selectedPaymentMethod === 'cod') {
+          this.processCashOnDelivery(orderData);
+        } else if (selectedPaymentMethod === 'stripe') {
+          await this.processStripePayment(orderData);
+        }
+        else if (selectedPaymentMethod === 'paypal') {
+          await this.processPayPalPayment(orderData);
+        } else {
+          console.error('Unsupported payment method:', selectedPaymentMethod);
+        }
+
+      // switch (this.paymentMethod) {
+      //   case 'cod':
+      //     this.processCashOnDelivery(orderData);
+      //     break;
+      //   case 'stripe':
+      //     await this.processStripePayment(orderData);
+      //     break;
+      //   case 'paypal':
+      //     await this.processPayPalPayment(orderData);
+      //     break;
+      // }
+      // if (this.paymentMethod === 'cod') {
+      //   this.processCashOnDelivery(orderData);
+      // } else if (this.paymentMethod === 'stripe') {
+      //   await this.processStripePayment(orderData);
+      // }
+    }catch(error: any) {
+      console.error('Checkout error:', error);
+      this.cardErrors = 'An error occurred during checkout';
     }
-  }
+  } 
   async prepareOrderData(): Promise<Icheckout> {
     const formValue = this.checkoutForm.value;
     const now = new Date();
@@ -194,11 +216,13 @@ export class CheckoutComponent implements OnInit {
     const sellerId = sellerIds[0];
     console.log('SellerId:', sellerId);
 
+    const shippingAddress = `${formValue.shipping.street}, ${formValue.shipping.city}, ${formValue.shipping.country}`;
+
     return {
       customerId,
       sellerId,
       paymentMethod: formValue.paymentMethod,
-      shippingAddress: formValue.shipping.shippingAddress,
+      shippingAddress,
       items: this.order.items.map((item: any) => ({
         productId: item.productId,
         productName: item.productName,
@@ -214,7 +238,7 @@ export class CheckoutComponent implements OnInit {
       })),
       shipping: {
         shippingMethod: formValue.shipping.shippingMethod,
-        shippingAddress: formValue.shipping.shippingAddress,
+        shippingAddress,
         deliveryDate: formValue.shipping.deliveryDate,
         shippingStatus: 'preparing',
         receiverName: formValue.shipping.receiverName,
@@ -241,7 +265,16 @@ export class CheckoutComponent implements OnInit {
     };
   }
 
-
+  getShippingCost(method: string): number {
+    switch (method) {
+      case 'express':
+        return 120;
+      case 'overnight':
+        return 200;
+      default:
+        return 65;
+    }
+  }
 
   processCashOnDelivery(orderData: Icheckout) {
     this.checkoutService.checkout(orderData).subscribe({
@@ -249,11 +282,13 @@ export class CheckoutComponent implements OnInit {
         this.router.navigate(['/order-success']),
           localStorage.removeItem('order');
         this.clearCartFromDatabase();
+        this.UpdateStock(orderData.items);
+
       },
       error: err => console.error('Checkout error:', err)
-
     });
   }
+
   async processStripePayment(orderData: Icheckout) {
     this.stripeLoading = true;
 
@@ -275,6 +310,7 @@ export class CheckoutComponent implements OnInit {
         next: () => {
           localStorage.removeItem('order');
           this.clearCartFromDatabase();
+          this.UpdateStock(orderData.items);
         },
         error: err => console.error('Error saving order:', err)
       });
@@ -305,6 +341,7 @@ export class CheckoutComponent implements OnInit {
       this.calculateTax() +
       this.shipping;
   }
+
   clearCartFromDatabase() {
     const userId = localStorage.getItem('userId');
     if (userId) {
@@ -314,4 +351,159 @@ export class CheckoutComponent implements OnInit {
       });
     }
   }
+
+
+  selectedAddressId: string | null = null;
+  onAddressSelect(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    const addressId = selectElement.value;
+
+    console.log("Address ID selected:", addressId);
+
+    if (addressId) {
+      const selectedAddress = this.addresses.find(addr => addr.addressId?.toString() === addressId);
+      console.log("Selected Address:", selectedAddress);
+
+      if (selectedAddress) {
+        const shippingGroup = this.checkoutForm.get('shipping');
+        if (shippingGroup) {
+          shippingGroup.patchValue({
+            street: selectedAddress.street,
+            city: selectedAddress.city,
+            country: selectedAddress.country
+          });
+          console.log("Updated shipping form:", shippingGroup.value);
+        }
+      }
+    }
+  }
+
+
+
+  saveAddress() {
+    const shipping = this.checkoutForm.get('shipping')?.value;
+    const address: IAddress = {
+      street: shipping.street,
+      city: shipping.city,
+      country: shipping.country,
+      userId: this.userId
+    };
+    this.addressService.getAddresses(this.userId).subscribe({
+      next: addresses => {
+        if (addresses && addresses.length > 0) {
+          const addressExists = addresses.some(existingAddress =>
+            existingAddress.street === address.street &&
+            existingAddress.city === address.city &&
+            existingAddress.country === address.country
+          );
+
+          if (addressExists) {
+            this.showToast('This address already exists.', 'danger');
+          } else {
+            this.addressService.addAddress(this.userId, address).subscribe({
+              next: () => {
+                console.log(address);
+                this.showToast('Address saved successfully!', 'success');
+              },
+              error: () => {
+                console.log(address);
+                this.showToast('Failed to save address.', 'danger');
+              }
+            });
+          }
+        } else {
+          this.addressService.addAddress(this.userId, address).subscribe({
+            next: () => {
+              console.log(address);
+              this.showToast('Address saved successfully!', 'success');
+            },
+            error: () => {
+              console.log(address);
+              this.showToast('Failed to save address.', 'danger');
+            }
+          });
+        }
+      },
+      error: err => {
+        console.error('Error fetching addresses:', err);
+        this.addressService.addAddress(this.userId, address).subscribe({
+          next: () => {
+            console.log(address);
+            this.showToast('Address saved successfully!', 'success');
+          },
+          error: () => {
+            console.log(address);
+            this.showToast('Failed to save address.', 'danger');
+          }
+        });
+      }
+    });
+  }
+
+
+
+  showToast(message: string, type: 'success' | 'danger') {
+    const toastContainer = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    toast.className = `toast align-items-center text-bg-${type} border-0 show`;
+    toast.setAttribute('role', 'alert');
+    toast.innerHTML = `
+      <div class="d-flex">
+        <div class="toast-body">${message}</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+      </div>
+    `;
+    toastContainer?.appendChild(toast);
+
+    setTimeout(() => {
+      toast.remove();
+    }, 3000);
+  }
+  async processPayPalPayment(orderData: Icheckout) {
+    this.paypalLoading = true;
+
+    try {
+      const successUrl = `${window.location.origin}/order-success`;
+      const cancelUrl = `${window.location.origin}/checkout`;
+
+      // Create PayPal order
+      const paypalOrder = await this.paypalService.createOrder(
+        this.calculateTotal(),
+        successUrl,
+        cancelUrl
+      ).toPromise();
+
+      // Redirect to PayPal
+      if (paypalOrder && (paypalOrder as any).orderId) {
+        window.location.href = `https://www.sandbox.paypal.com/checkoutnow?token=${(paypalOrder as any).orderId}`;
+
+        // Save the order in background
+        this.checkoutService.checkout(orderData).subscribe({
+          next: () => {
+            localStorage.removeItem('order');
+            this.clearCartFromDatabase();
+            this.UpdateStock(orderData.items);
+          },
+          error: err => console.error('Error saving order:', err)
+        });
+      }
+    } catch (err) {
+      console.error('PayPal error:', err);
+      // Handle error (show message to user)
+    } finally {
+      this.paypalLoading = false;
+    }
+  }
+
+ UpdateStock(orderItems: any) {
+    this.checkoutService.updateStock(orderItems).subscribe({
+      next: () => {
+        console.log('Stock updated successfully');
+      },
+      error: (error) => {
+        console.error('Failed to update stock:', error);
+      }
+    });
+  }
+  
 }

@@ -40,8 +40,8 @@
                                     </div>
                                     <div *ngIf="countryError" class="text-danger small">Please select a country.</div>
                                 </div>
-                                <button class="btn w-100 fw-bold mb-2 text-light" style="background-color: orange;"
-                                    (click)="nextStep()">NEXT</button>
+                                <button class="btn w-100 text-light fw-bold" style="background-color: #f68b1e; border-color: #f68b1e;"
+                                (click)="nextStep()">NEXT</button>
                                 <p class="text-center text-muted small">
                                     Only for sellers registered & selling in their own country
                                 </p>
@@ -53,10 +53,19 @@
                                     <label for="emailInput" class="form-label fw-bold">Enter your email *</label>
                                     <input id="emailInput" type="email" placeholder="Email address" class="form-control"
                                         [(ngModel)]="email" required (blur)="checkEmailAvailability()" />
-                                        <div *ngIf="emailError" class="text-danger small">{{ emailError }}</div>
-                                        <div *ngIf="emailerr && !emailError" class="text-danger small">Please Enter A valid Email!</div>                                    </div>
-                                <button class="btn  w-100 text-light fw-bold mb-2" style="background-color: orange;"
-                                    (click)="nextStep()">NEXT</button>
+                                    <div *ngIf="emailError" class="text-danger small">{{ emailError }}</div>
+                                    <div *ngIf="emailerr && !emailError" class="text-danger small">Please Enter A valid
+                                        Email!</div>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button
+                                    class="btn btn-outline-secondary rounded-circle p-2 d-flex align-items-center justify-content-center"
+                                    (click)="prevStep()" aria-label="Back" style="width: 40px; height: 40px;">
+                                    <i class="bi bi-arrow-left fs-5"></i>
+                                </button>
+                                    <button class="btn w-100 text-light fw-bold" style="background-color: #f68b1e; border-color: #f68b1e;"
+                                        (click)="nextStep()">NEXT</button>
+                                </div>
                             </div>
 
                             <!-- Step 3 -->
@@ -67,7 +76,6 @@
                                         [(ngModel)]="phone" required />
                                     <div *ngIf="phoneError" class="text-danger small">Please enter a valid phone number.
                                     </div>
-
                                 </div>
 
                                 <div class="form-group mb-3 position-relative">
@@ -83,7 +91,8 @@
                                                 style="width: 20px; cursor: pointer;" />
                                         </span>
                                     </div>
-                                    <div *ngIf="passwordError" class="text-danger small">Password must be at least 6 characters,Must have small and capital letters and special characters.</div>
+                                    <div *ngIf="passwordError" class="text-danger small">Password must be at least 6
+                                        characters,Must have small and capital letters and special characters.</div>
                                 </div>
 
                                 <div class="form-group mb-3 position-relative">
@@ -105,10 +114,16 @@
                                     </div>
                                 </div>
 
-                                <button class="btn  w-100 text-light fw-bold mb-2" style="background-color: orange;"
-                                    (click)="nextStep()">NEXT</button>
+                                <div class="d-flex gap-2">
+                                    <button
+                                    class="btn btn-outline-secondary rounded-circle p-2 d-flex align-items-center justify-content-center"
+                                    (click)="prevStep()" aria-label="Back" style="width: 40px; height: 40px;">
+                                    <i class="bi bi-arrow-left fs-5"></i>
+                                </button>
+                                    <button class="btn w-100 text-light fw-bold" style="background-color: #f68b1e; border-color: #f68b1e;"
+                                        (click)="nextStep()">NEXT</button>
+                                </div>
                             </div>
-
 
                             <!-- Step 4-->
                             <div *ngSwitchCase="3">
@@ -129,8 +144,8 @@
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="birthDateInput" class="form-label fw-bold">Birth Date *</label>
-                                    <input id="birthDateInput" type="date" placeholder="Birth Date" class="form-control" name="birthDate"
-                                        [(ngModel)]="dateOfBirth" required />
+                                    <input id="birthDateInput" type="date" placeholder="Birth Date" class="form-control"
+                                        name="birthDate" [(ngModel)]="dateOfBirth" required />
                                     <div *ngIf="dateOfBirthError" class="text-danger small">Please enter a valid birth
                                         date.</div>
 
@@ -154,8 +169,15 @@
                                         </div>
                                     </div>
 
-                                    <button class="btn w-100 fw-bold mb-2 text-light" style="background-color: orange;"
-                                        (click)="nextStep()">NEXT</button>
+                                    <div class="d-flex gap-2">
+                                        <button
+                                        class="btn btn-outline-secondary rounded-circle p-2 d-flex align-items-center justify-content-center"
+                                        (click)="prevStep()" aria-label="Back" style="width: 40px; height: 40px;">
+                                        <i class="bi bi-arrow-left fs-5"></i>
+                                    </button>
+                                        <button class="btn w-100 text-light fw-bold" style="background-color: #f68b1e; border-color: #f68b1e;"
+                                            (click)="nextStep()">NEXT</button>
+                                    </div>
                                 </div>
                             </div>
                             <!-- Step 5 -->
@@ -204,9 +226,18 @@
                                         </ul>
                                     </div>
                                 </div>
-
-                                <button class="btn text-light w-100 fw-bold text-light"
-                                    style="background-color: orange;" (click)="finishRegistration()">Submit</button>
+                                <div class="d-flex gap-3 mt-4">
+                                    <button
+                                        class="btn btn-outline-secondary rounded-circle p-2 d-flex align-items-center justify-content-center"
+                                        (click)="prevStep()" aria-label="Back" style="width: 40px; height: 40px;">
+                                        <i class="bi bi-arrow-left fs-5"></i>
+                                    </button>
+                                    <button class="btn w-100 fw-bold py-2 px-3 rounded-3 text-white"
+                                        style="background-color: #f68b1e; border-color: #f68b1e;"
+                                        (click)="finishRegistration()">
+                                        SUBMIT 
+                                    </button>
+                                </div>
                             </div>
                         </ng-container>
                     </div>
@@ -232,7 +263,8 @@
 
                     <p class="text-center mt-2">
                         Already have an account?
-                        <a href="#" style="color: orange;" class=" text-decoration-none fw-bold" routerLink="/login" >Sign in</a>
+                        <a href="#" style="color: #f68b1e;" class=" text-decoration-none fw-bold"
+                            routerLink="/login">Sign in</a>
                     </p>
                 </div>
             </div>

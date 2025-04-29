@@ -319,15 +319,24 @@ namespace Jumia_Api.Services.Admin_Service
 
         public async Task<AdminDashboardDTO> GetDashboardStatsAsync()
         {
+            var now = DateTime.Now;
+            var today = DateTime.Today;
+            var firstDayOfMonth = new DateTime(today.Year, today.Month, 1);
+            var nextMonth = firstDayOfMonth.AddMonths(1);
+
+
+
+
             var totalCategories = await _context.Categories.CountAsync();
             var totalSubCategories = await _context.SubCategories.CountAsync();
 
             var totalUsers = await _context.Users.CountAsync(u => !u.IsDeleted);
 
-            var newUsersThisMonth = await _context.Users
-                .CountAsync(u => !u.IsDeleted &&
-                                 u.CreatedAt.Month == DateTime.Now.Month &&
-                                 u.CreatedAt.Year == DateTime.Now.Year);
+
+            var newUsersThisMonth = await _context.Users.CountAsync(u => !u.IsDeleted);
+
+
+
 
             var totalProducts = await _context.Products.CountAsync();
             var outOfStockProducts = await _context.Products.CountAsync(p => p.Quantity == 0);
