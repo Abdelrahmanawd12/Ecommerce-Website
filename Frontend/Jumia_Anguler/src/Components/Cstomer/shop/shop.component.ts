@@ -163,10 +163,6 @@ toggleWishlist(productId: number): void {
 }
 
 
-
-
-
-
   //go to Product Details
   goToProductDetails(productId: number): void {
     console.log("hi")
@@ -274,5 +270,19 @@ onSubCatCheckboxChange(event: Event, subCatId: number): void {
   }
 }
 
+//clear filters
+clearAllFilters(): void {
+  this.selectedBrands = [];
+  this.selectedSubCatIds = [];
+  this.filteredProducts = this.productsList;
+  this.brands = [];
+  this.category.subcategory.forEach((subcat) => {
+    subcat.products.forEach((product) => {
+      if (!this.brands.includes(product.brand)) {
+        this.brands.push(product.brand);
+      }
+    });
+  });
+}
 
 }
