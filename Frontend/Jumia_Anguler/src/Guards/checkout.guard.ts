@@ -6,18 +6,25 @@ import { map } from 'rxjs';
 
 export const checkoutGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
-  const cartService = inject(CartService); 
+  const cartService = inject(CartService);
   const authService = inject(GuardService);
 
-  return cartService.getCart(authService.getUserId()).pipe(
+  const userId = authService.getUserId();
+
+  if (!userId) {
+    router.navigate(['/login']);
+    return false;
+  }
+
+  return cartService.getCart(userId).pipe(
     map(cart => {
-      console.log('Cart data received:', cart);
-      if (cart && cart.items && cart.items.length > 0) {
+      if (cart?.items?.length > 0) {
         return true;
       } else {
-        router.navigate(['/cart']); 
+        router.navigate(['/home']);
         return false;
       }
     })
   );
 };
+

@@ -8,7 +8,7 @@
     z-index: 100;
   }
   .register{
-    background: orange;
+    background: #f68b1e;
   
   }
   .nav-container {
@@ -27,7 +27,7 @@
   }
   
   .nav-link {
-    color: orange;
+    color: #f68b1e;
     text-decoration: none;
     font-weight: 500;
     font-size: 16px;

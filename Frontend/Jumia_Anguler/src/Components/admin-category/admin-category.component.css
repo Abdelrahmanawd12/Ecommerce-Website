@@ -527,20 +527,20 @@
 }
 
 .btn-outline-warning {
-  color: #ff6700;
-  border-color: #ff6700;
+  color: #f68b1e;
+  border-color: #f68b1e;
 }
 
 .btn-outline-warning:hover {
   color: white;
-  background-color: #ff6700;
-  border-color: #ff6700;
+  background-color: #f68b1e;
+  border-color: #f68b1e;
 }
 
 .btn-outline-warning.always-dark:hover {
   color: #212529; 
   background-color: #ffd699; 
-  border-color: #ff6700;
+  border-color: #f68b1e;
 }
 .btn-outline-secondary {
   border-color: #ced4da;

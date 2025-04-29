@@ -1574,7 +1574,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(to right, #FF7900, #FF9E45);
+  background: linear-gradient(to right, #f68b1e, #FF9E45);
   color: white;
   border-radius: 12px 12px 0 0;
 }
@@ -1626,7 +1626,7 @@
 }
 
 .price {
-  color: #FF7900;
+  color: #f68b1e;
   font-weight: bold;
   margin-top: 5px;
 }
@@ -1649,14 +1649,14 @@
 }
 
 .jumia-btn.primary {
-  background: #FF7900;
+  background: #f68b1e;
   color: white;
 }
 
 .jumia-btn.secondary {
   background: white;
-  color: #FF7900;
-  border: 1px solid #FF7900;
+  color: #f68b1e;
+  border: 1px solid #f68b1e;
 }
 
 .jumia-btn:hover {
@@ -1717,7 +1717,7 @@
 }
 
 .table th {
-  background: #FF7900;
+  background: #f68b1e;
   color: white;
   padding: 12px;
   text-align: left;
@@ -1805,7 +1805,7 @@
 }
 
 .section-title {
-  color: #FF7900;
+  color: #f68b1e;
   font-size: 1.1rem;
   margin: 0 0 15px 0;
   display: flex;
@@ -1918,7 +1918,7 @@
 }
 
 .section-title {
-  color: #FF7900;
+  color: #f68b1e;
   font-size: 1.1rem;
   margin-bottom: 15px;
   display: flex;
@@ -1934,7 +1934,7 @@
 }
 
 .icon {
-  color: #FF7900;
+  color: #f68b1e;
   font-size: 1.1rem;
   margin-top: 3px;
   flex-shrink: 0;
@@ -2005,15 +2005,15 @@
 }
 
 .modal-header {
-  background: linear-gradient(to right, #FF7900, #FF9E45);
+  background: linear-gradient(to right, #f68b1e, #FF9E45);
   color: white;
   border-radius: 12px 12px 0 0;
 }
 
 .jumia-btn.secondary {
   background: white;
-  color: #FF7900;
-  border: 1px solid #FF7900;
+  color: #f68b1e;
+  border: 1px solid #f68b1e;
 }
 
 .jumia-btn.secondary:hover {
@@ -2093,14 +2093,14 @@
 }
 
 .jumia-btn.primary {
-  background: #FF7900;
+  background: #f68b1e;
   color: white;
 }
 
 .jumia-btn.outline {
   background: white;
-  color: #FF7900;
-  border: 1px solid #FF7900;
+  color: #f68b1e;
+  border: 1px solid #f68b1e;
 }
 
 .jumia-btn:hover {
@@ -2322,9 +2322,9 @@
 }
 
 .status-filter.active {
-  background-color: #FF7900;
+  background-color: #f68b1e;
   color: white;
-  border-color: #FF7900;
+  border-color: #f68b1e;
 }
 
 /* Loading state */

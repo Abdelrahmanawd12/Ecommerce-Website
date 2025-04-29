@@ -5,12 +5,15 @@ import { OrderDetailsDto, OrderListDto } from '../../../Models/order.model';
 import { OrderService } from '../../../Services/Customer/order.service';
 import { environment } from '../../../Environment/Environment.prod';
 import { CreateShipmentService } from '../../../Services/Shipment/create-shipment.service';
+import Swal from 'sweetalert2';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-order',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './order.component.html'
+  templateUrl: './order.component.html',
+  styleUrls: ['./order.component.css'],
 })
 export class OrderComponent implements OnInit {
   order: OrderDetailsDto | null = null;
@@ -29,7 +32,9 @@ export class OrderComponent implements OnInit {
   customerId: string = localStorage.getItem('userId') ?? '';
 
 
-  constructor(private orderService: OrderService, private route: ActivatedRoute ,private createShipmentService: CreateShipmentService) {}
+  constructor(private orderService: OrderService, private route: ActivatedRoute ,
+    private createShipmentService: CreateShipmentService, private cdr: ChangeDetectorRef) {}
+    // ,private cdr: ChangeDetectorRef
 
   ngOnInit(): void {
     this.loadOrdersByCategory();
@@ -57,7 +62,7 @@ export class OrderComponent implements OnInit {
 
   loadOrderDetails(orderId: number): void {
     this.orderService.getOrderDetails(orderId).subscribe({
-      next: (data) => this.order = data,
+      next: (data) => this.order = data, 
       error: (err) => console.error('Failed to fetch order details:', err)
     });
   }
@@ -96,17 +101,17 @@ export class OrderComponent implements OnInit {
   //readonly customerId = localStorage.getItem('userId') ||'';
   loadOrdersByCategory(): void {
     // const customerId = 'user1';
-  
+    console.log('Loading orders for customer:', this.customerId);
   
     // Get current (ongoing/delivered) orders
     this.orderService.getOrdersByStatusCategory(this.customerId, 'current').subscribe({
       next: (data) => {
         this.ongoingOrders = data; // already filtered by API
       },
-      error: (err) => console.error('Failed to load ongoing orders:', err)
+      // error: (err) => console.error('Failed to load ongoing orders:', err)
     });
   
-    // Get past (cancelled/returned) orders
+    // Get past (cancelled/returned) orders 
     this.orderService.getOrdersByStatusCategory(this.customerId, 'past').subscribe({
       next: (data) => {
         this.canceledOrders = data; // already filtered by API
@@ -115,22 +120,83 @@ export class OrderComponent implements OnInit {
     });
   }
   
+  
+  // confirmCancel(orderId: number) {
+  //   const confirmed = confirm('Are you sure you want to cancel this order?');
+  //   if (confirmed) {
+  //     this.cancelOrder(orderId);
+      
+  //   }
+  //  }
   cancelOrder(id: number): void {
     this.orderService.cancelOrder(id).subscribe({
       next: () => {
-        this.loadOrdersByCategory(); // refresh the list
+      this.loadOrdersByCategory(); 
+      console.log('Order canceled successfully        DONE');
+      window.location.reload(); // إعادة تحميل الصفحة بعد إلغاء الطلب
+      //this.cdr.detectChanges(); // إجبار Angular على تحديث العرض
       },
       error: (error) => {
         console.error('Failed to cancel order', error);
       }
     });
   }
+  
+  // confirmCancel(orderId: number): void {
+  //   Swal.fire({
+  //     title: 'Are you sure?',
+  //     text: 'Do you really want to cancel this order?',
+  //     icon: 'warning',
+  //     showCancelButton: true,
+  //     confirmButtonColor: '#d33',
+  //     cancelButtonColor: '#3085d6',
+  //     confirmButtonText: 'Yes, cancel it!'
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       // لما المستخدم يؤكد الكانسيل
+  //       this.orderService.cancelOrder(orderId).subscribe({
+  //         next: () => {
+  //           Swal.fire(
+  //             'Canceled!',
+  //             'Your order has been canceled.',
+  //             'success'
+  //           );
+  //           this.loadOrdersByCategory(); // تحدث القوائم بعد نجاح الإلغاء
+  //         },
+  //         error: (error) => {
+  //           console.error('Failed to cancel order', error);
+          
+  //           // خد النص كما هو، بدون محاولة قراءة JSON
+  //           const errorMessage = typeof error.error === 'string' ? error.error : 'Something went wrong.';
+          
+  //           Swal.fire({
+  //             icon: 'error',
+  //             title: 'Cannot cancel order',
+  //             text: errorMessage,
+  //           });
+  //         }
+          
+  //       });
+  //     }
+  //   });
+  // }
+  
   confirmCancel(orderId: number) {
-    const confirmed = confirm('Are you sure you want to cancel this order?');
-    if (confirmed) {
-      this.cancelOrder(orderId);
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you really want to cancel this order?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.cancelOrder(orderId);
+      }
+    });
   }
+  
   
 
   setTab(tab: string): void {
@@ -149,7 +215,7 @@ export class OrderComponent implements OnInit {
       },
       error: (err) => {
         console.error('Failed to create shipment:', err);
-        alert('Failed to create shipment.');
+        //alert('Failed to create shipment.');
       }
     });
   }

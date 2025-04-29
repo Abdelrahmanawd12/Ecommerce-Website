@@ -44,7 +44,7 @@
   justify-content: center;
   margin: 0 auto;
   font-size: 3rem;
-  color: #FF6D00;
+  color: #f68b1e;
 }
 
 /* Header section with title and button */
@@ -54,7 +54,7 @@
 }
 
 .section-title {
-  color: #E65100;
+  color: #f68b1e;
   font-size: 1.25rem;
   margin: 0;
 }
@@ -62,8 +62,8 @@
 /* Edit button styles */
 .btn-edit {
   background-color: transparent;
-  color: #FF6D00;
-  border: 1px solid #FF6D00;
+  color: #f68b1e;
+  border: 1px solid #f68b1e;
   padding: 0.25rem 0.75rem;
   border-radius: 20px;
 }
@@ -101,24 +101,24 @@
 
 /* Orange button styles */
 .btn-orange {
-  background-color: #FF6D00;
+  background-color: #f68b1e;
   color: white;
-  border-color: #FF6D00;
+  border-color: #f68b1e;
 }
 
 .btn-orange:hover {
-  background-color: #E65100;
-  border-color: #E65100;
+  background-color: #f68b1e;
+  border-color: #f68b1e;
   color: white;
 }
 
 .btn-outline-orange {
-  color: #FF6D00;
-  border-color: #FF6D00;
+  color: #f68b1e;
+  border-color: #f68b1e;
 }
 
 .btn-outline-orange:hover {
-  background-color: #FF6D00;
+  background-color: #f68b1e;
   color: white;
 }
 
@@ -126,7 +126,7 @@
 .btn-security {
   background-color: #FFF3E0;
   border: 1px solid #FFE0B2;
-  color: #E65100;
+  color: #f68b1e;
   padding: 0.5rem 1rem;
   transition: all 0.2s;
   display: flex;
@@ -136,7 +136,7 @@
 
 .btn-security:hover {
   background-color: #FFE0B2;
-  border-color: #FF6D00;
+  border-color: #f68b1e;
 }
 
 /* Responsive adjustments */
@@ -195,8 +195,8 @@
   opacity: 0;
   transition: all 0.3s ease;
   background-color: #f8f9fa;
-  border-left: 4px solid #FF6D00;
-  color: #E65100;
+  border-left: 4px solid #f68b1e;
+  color: #f2861a;
 }
 
 .custom-alert.fade-in {
@@ -211,27 +211,27 @@
 
 .alert-icon {
   background-color: rgba(255, 109, 0, 0.2);
-  color: #FF6D00;
+  color: #f68b1e;
 }
 
 /* Badge styles */
 .badge.bg-orange {
-  background-color: #FF6D00 !important;
+  background-color: #f68b1e !important;
   color: white;
 }
 
 .badge.bg-orange-light {
   background-color: #FFF3E0 !important;
-  color: #E65100;
+  color: #f68b1e;
 }
 
 /* Text colors */
 .text-orange {
-  color: #FF6D00 !important;
+  color: #f68b1e !important;
 }
 
 .text-orange-dark {
-  color: #E65100 !important;
+  color: #f68b1e !important;
 }
 
 /* Background colors */

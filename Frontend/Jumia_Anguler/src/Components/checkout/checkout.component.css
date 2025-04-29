@@ -145,7 +145,7 @@
 }
 
 .payment-option input[type="radio"]:checked {
-  border-color: #fd7e14;
+  border-color: #f68b1e;
 }
 
 .payment-option input[type="radio"]:checked::before {
@@ -153,7 +153,7 @@
   position: absolute;
   width: 12px;
   height: 12px;
-  background-color: #fd7e14;
+  background-color: #f68b1e;
   border-radius: 50%;
   top: 50%;
   left: 50%;
@@ -166,12 +166,12 @@
 
 /* Orange hover effects for inputs */
 .hover-orange:hover {
-  border-color: #fd7e14;
+  border-color: #f68b1e;
   box-shadow: 0 0 0 0.25rem rgba(253, 126, 20, 0.1);
 }
 
 .hover-orange:focus {
-  border-color: #fd7e14;
+  border-color: #f68b1e;
   box-shadow: 0 0 0 0.25rem rgba(253, 126, 20, 0.25);
 }
 
@@ -188,14 +188,8 @@
 
 .payment-option:hover {
   background-color: #f8f9fa;
-  border-color: #fd7e14;
+  border-color: #f68b1e;
 }
 
-.payment-option input[type="radio"]:checked + div {
-  color: #fd7e14;
-}
 
-/* Make the checked payment option stand out */
-.payment-option input[type="radio"]:checked ~ div i {
-  color: #fd7e14 !important;
-}
+

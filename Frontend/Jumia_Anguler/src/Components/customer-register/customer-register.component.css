@@ -24,7 +24,7 @@
   }
   
   .btn-warning {
-    background-color: #FF9900;
+    background-color: #f68b1e;
     color: white;
     font-weight: 500;
     border-radius: 8px;
@@ -49,7 +49,7 @@
   }
   
   .form-control:focus {
-    border-color: #FF9900;
+    border-color: #f68b1e;
     box-shadow: 0 0 0 0.25rem rgba(255, 153, 0, 0.15);
   }
   
@@ -99,7 +99,7 @@
   }
   
   a {
-    color: #FF9900;
+    color: #f68b1e;
     text-decoration: none;
     transition: color 0.2s ease;
   }
@@ -186,14 +186,14 @@
   }
   
   .verification-digits input:focus {
-    border-color: #FF9900;
+    border-color: #f68b1e;
     outline: none;
     box-shadow: 0 0 0 2px rgba(255, 153, 0, 0.2);
     background-color: #fff;
   }
   
   .verification-digits input.filled {
-    border-color: #FF9900;
+    border-color: #f68b1e;
     background-color: #fff8f0;
   }
 
@@ -212,7 +212,7 @@
     opacity: 0.7;
   }
   .verification-digits input.filled {
-    border-color: #FF9900;
+    border-color: #f68b1e;
     background-color: #fff8f0;
   }
 

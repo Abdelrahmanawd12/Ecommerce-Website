@@ -1,197 +1,185 @@
 /* Wishlist Custom Styling */
-<<<<<<< HEAD
 /* .add-to-cart-btn {
-=======
 .add-to-cart-btn {
->>>>>>> bf3dd297e005f10a561a4237c04793a149eb5612
     background-color: #f68b1e;
     border: none;
     transition: background-color 0.3s ease;
   }
   
   .add-to-cart-btn:hover {
-<<<<<<< HEAD
     background-color: #e67b10; 
-=======
     background-color: #e67b10; /* أغمق شويه */
->>>>>>> bf3dd297e005f10a561a4237c04793a149eb5612
-  }
   
-  .remove-btn {
-    background-color: transparent;
-    border: 1px solid #f68b1e;
-    color: #f68b1e;
-    transition: all 0.3s ease;
-  }
   
-  .remove-btn:hover {
-    background-color: #fef1e6;
-    color: #d96c00;
-    border-color: #d96c00;
-  }
-  
-
-  .text-decoration-line-through {
-    text-decoration: line-through;
-  }
-  .discounted-price {
-    text-decoration: line-through;
-    color: #999;
-    font-weight: normal;
-  }
-<<<<<<< HEAD
-     */
-=======
+    .remove-btn {
+      background-color: transparent;
+      border: 1px solid #f68b1e;
+      color: #f68b1e;
+      transition: all 0.3s ease;
+    }
     
->>>>>>> bf3dd297e005f10a561a4237c04793a149eb5612
-/* 
-  .discounted-price {
-    text-decoration: line-through;
-    color: #888;
-  }
+    .remove-btn:hover {
+      background-color: #fef1e6;
+      color: #d96c00;
+      border-color: #d96c00;
+    }
+    
   
-  .btn-warning:hover {
+    .text-decoration-line-through {
+      text-decoration: line-through;
+    }
+    .discounted-price {
+      text-decoration: line-through;
+      color: #999;
+      font-weight: normal;
+    }
+     
+      
+  /* 
+    .discounted-price {
+      text-decoration: line-through;
+      color: #888;
+    }
+    
+    .btn-warning:hover {
+      filter: brightness(1.1);
+      transform: scale(1.02);
+    }
+    
+    .btn-warning:hover {
     filter: brightness(1.1);
     transform: scale(1.02);
+  } */
+  /* ----------------------------------------------------------------------------------------------------- */
+  /* header style */
+  .wishlist-header {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
   
-  .btn-warning:hover {
-  filter: brightness(1.1);
-  transform: scale(1.02);
-} */
-<<<<<<< HEAD
-/* ----------------------------------------------------------------------------------------------------- */
-/* header style */
-.wishlist-header {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.header-title {
-  font-size: 1.8rem;
-  letter-spacing: 1.5px;
-  color: #333;
-  padding-left: 2.5rem;
-}
-
-.header-icon {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #FF6B6B;
-  font-size: 1.5rem;
-  animation: pulse 2s infinite;
-}
-
-.item-count-badge {
-  background-color: #f8f9fa;
-  padding: 0.35rem 1rem;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #6c757d;
-  border: 1px solid #dee2e6;
-  transition: all 0.3s ease;
-}
-
-.item-count-badge:hover {
-  background-color: #FF6B6B;
-  color: white;
-  border-color: #FF6B6B;
-}
-
-@keyframes pulse {
-  0% { transform: translateY(-50%) scale(1); }
-  50% { transform: translateY(-50%) scale(1.1); }
-  100% { transform: translateY(-50%) scale(1); }
-}
-
-@media (max-width: 768px) {
   .header-title {
-    font-size: 1.5rem;
-    padding-left: 2rem;
+    font-size: 1.8rem;
+    letter-spacing: 1.5px;
+    color: #333;
+    padding-left: 2.5rem;
   }
   
   .header-icon {
-    font-size: 1.2rem;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #FF6B6B;
+    font-size: 1.5rem;
+    animation: pulse 2s infinite;
   }
-}
-/* Card Hover Effect */
-.hover-card {
-  transition: all 0.3s ease;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.hover-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
-  cursor: pointer;
-}
-
-/* Quick View Button */
-.quick-view-btn {
-  position: absolute;
-  bottom: -40px;
-  left: 0;
-  width: 100%;
-  background-color: #f68b1e;
-  opacity: 0.8;
-  color: white;
-  text-align: center;
-  padding: 8px 0;
-  font-size: 12px;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: bottom 0.3s ease;
-}
-
-.hover-card:hover .quick-view-btn {
-  bottom: 0;
-  cursor: pointer;
-}
-
-/* Wishlist Actions */
-.wishlist-actions {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.hover-card:hover .wishlist-actions {
-  opacity: 1;
-  cursor: pointer;
-}
-
-/* Jumia Orange Color */
-.btn-warning {
-  background-color: #f68b1e;
-  border-color: #f68b1e;
-  color: white;
-}
-
-.btn-warning:hover {
-  background-color: #f68b1e;
-  border-color: #f68b1e;
-  cursor: pointer;
-}
-
-/* Responsive Grid */
-@media (max-width: 767px) {
-  .col-md-4 {
-      flex: 0 0 50%;
-      max-width: 50%;
+  
+  .item-count-badge {
+    background-color: #f8f9fa;
+    padding: 0.35rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #6c757d;
+    border: 1px solid #dee2e6;
+    transition: all 0.3s ease;
   }
-}
-
-@media (max-width: 576px) {
-  .col-md-4 {
-      flex: 0 0 100%;
-      max-width: 100%;
+  
+  .item-count-badge:hover {
+    background-color: #FF6B6B;
+    color: white;
+    border-color: #FF6B6B;
   }
-}
-=======
->>>>>>> bf3dd297e005f10a561a4237c04793a149eb5612
+  
+  @keyframes pulse {
+    0% { transform: translateY(-50%) scale(1); }
+    50% { transform: translateY(-50%) scale(1.1); }
+    100% { transform: translateY(-50%) scale(1); }
+  }
+  
+  @media (max-width: 768px) {
+    .header-title {
+      font-size: 1.5rem;
+      padding-left: 2rem;
+    }
+    
+    .header-icon {
+      font-size: 1.2rem;
+    }
+  }
+  /* Card Hover Effect */
+  .hover-card {
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .hover-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+    cursor: pointer;
+  }
+  
+  /* Quick View Button */
+  .quick-view-btn {
+    position: absolute;
+    bottom: -40px;
+    left: 0;
+    width: 100%;
+    background-color: #f68b1e;
+    opacity: 0.8;
+    color: white;
+    text-align: center;
+    padding: 8px 0;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: bottom 0.3s ease;
+  }
+  
+  .hover-card:hover .quick-view-btn {
+    bottom: 0;
+    cursor: pointer;
+  }
+  
+  /* Wishlist Actions */
+  .wishlist-actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .hover-card:hover .wishlist-actions {
+    opacity: 1;
+    cursor: pointer;
+  }
+  
+  /* Jumia Orange Color */
+  .btn-warning {
+    background-color: #f68b1e;
+    border-color: #f68b1e;
+    color: white;
+  }
+  
+  .btn-warning:hover {
+    background-color: #f68b1e;
+    border-color: #f68b1e;
+    cursor: pointer;
+  }
+  
+  /* Responsive Grid */
+  @media (max-width: 767px) {
+    .col-md-4 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+  }
+  
+  @media (max-width: 575px) {
+    .col-md-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+  }

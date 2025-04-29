@@ -14,7 +14,7 @@
     transition: all 0.3s ease;
 
     &.active {
-        background-color: #ff9900;
+        background-color: #f68b1e;
         transform: scale(1.2);
     }
 }
@@ -89,7 +89,7 @@
     }
 
     .step-circle.active {
-        background-color: #ff9900;
+        background-color: #f68b1e;
         transform: scale(1.2);
     }
 
@@ -110,4 +110,15 @@
     background-color: lightgray;
     border: 2px solid transparent;
     color: darkblue;
+}
+/* إضافة إلى ملف الـ styles.css أو styles.scss */
+.btn-outline-secondary:hover {
+    background-color: #f8f9fa;
+    border-color: #6c757d;
+    color: #6c757d;
+}
+
+.btn[style*="background-color: #FF6B00"]:hover {
+    background-color: #f68b1e !important;
+    border-color: #f68b1e !important;
 }

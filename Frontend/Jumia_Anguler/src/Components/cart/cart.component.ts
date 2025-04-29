@@ -99,10 +99,15 @@ removeItem(item: any) {
         this.loadCart();
         this.cartService.updateCartCount(this.cartData.items.length);// Update cart count in the service
 
+        if(this.cartData.items.length === 0) {
+          localStorage.removeItem('order')
+        }
       },
       error: err => console.error(err)
     });
   });
+
+
 }
 
 //  clearCart

@@ -97,11 +97,11 @@ export class SellOnJumiaComponent {
       }
     }
   }
-  previousStep() {
+  prevStep() {
     if (this.currentStep > 0) {
-      this.currentStep--;
+        this.currentStep--;
     }
-  }  
+} 
 
   checkEmailAvailability(): void {
     if (this.email) {

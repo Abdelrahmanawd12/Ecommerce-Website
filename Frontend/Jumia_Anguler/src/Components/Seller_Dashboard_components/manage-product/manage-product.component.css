@@ -37,14 +37,14 @@
   transition: background 0.3s;
 }
 .bi{
-  color :orange;
+  color :#f68b1e;
 }
 .bi:hover{
   color: white;
 }
 
 .search-box .search-button:hover {
-  background: orange;
+  background: #f68b1e;
 }
 
 .search-box .search-button i {
@@ -180,10 +180,10 @@
 }
 
 .status-option.active {
-  background-color: orange;
+  background-color: #f68b1e;
   color: white;
   font-weight: 500;
-  border-color: orange;
+  border-color: #f68b1e;
 }
 
 /* تصميم متجاوب للشاشات الصغيرة */
@@ -262,17 +262,17 @@
 }
 .btn-addProd{
   color: white;
-  background-color: orange;
+  background-color: #f68b1e;
 }
 .btn-addProd .bi{
   color: white;
 }
 .btn-addProd :hover{
-  color: orange;
+  color: #f68b1e;
   background-color: white;
 }
 .btn-addProd .bi :hover{
-  color: orange;
+  color: #f68b1e;
 }
 
 .badge {
@@ -303,7 +303,7 @@
 }
 
 .stock-warning {
-  color: #fd7e14;
+  color: #f68b1e;
   font-weight: 600;
 }
 

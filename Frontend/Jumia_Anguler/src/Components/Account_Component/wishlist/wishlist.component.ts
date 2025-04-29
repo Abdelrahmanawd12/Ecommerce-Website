@@ -13,7 +13,7 @@ import { environment } from '../../../Environment/Environment.prod';
   selector: 'app-wishlist',
   templateUrl: './wishlist.component.html',
   styleUrls: ['./wishlist.component.css'],
-  standalone: true, // ✅ Add this if you're using `imports` array
+  standalone: true, // ✅ Add this if you're using imports array
   imports: [CommonModule,FormsModule],
   animations: [
     trigger('fadeInOut', [
@@ -134,6 +134,6 @@ export class WishlistComponent implements OnInit {
   
   goToHome(): void {
     this.router.navigate(['/home']);
-  }
-  
+  }
+  
 }
