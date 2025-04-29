@@ -1,0 +1,349 @@
+/* Add to your stylesheet */
+:root {
+  --orange: #FF7800;
+  --orange-light: #FFF6F0;
+  --orange-dark: #E06C00;
+  --gray-light: #f8f9fa;
+}
+
+/* Orange theme elements */
+.text-orange {
+  color: var(--orange) !important;
+}
+
+.bg-orange {
+  background-color: var(--orange) !important;
+}
+
+.bg-orange-light {
+  background-color: var(--orange-light) !important;
+}
+
+.border-orange {
+  border-color: var(--orange) !important;
+}
+
+/* Buttons */
+.btn-orange {
+  background-color: var(--orange);
+  border-color: var(--orange);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-orange:hover {
+  background-color: var(--orange-dark);
+  border-color: var(--orange-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(255, 120, 0, 0.2);
+}
+
+.btn-orange:disabled {
+  background-color: #cccccc;
+  border-color: #cccccc;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Form controls */
+.form-control-lg, .form-select-lg {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+}
+
+.border-2 {
+  border-width: 2px !important;
+}
+
+/* Payment options */
+.payment-options .form-check-label {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.payment-options .form-check-label:hover {
+  border-color: var(--orange) !important;
+  background-color: var(--orange-light);
+}
+
+/* Step numbers */
+.step-number {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+/* Order summary */
+.text-total {
+  color: #FF7800;
+}
+
+/* Product images */
+.img-thumbnail {
+  transition: transform 0.3s ease;
+}
+
+.img-thumbnail:hover {
+  transform: scale(1.05);
+}
+
+/* Sticky summary */
+.sticky-top {
+  position: sticky;
+  top: 20px;
+  z-index: 1020;
+}
+
+/* Badges */
+.badge {
+  font-weight: 500;
+  padding: 0.35em 0.65em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .sticky-top {
+    position: static;
+  }
+}
+/* Custom scrollbar for order items */
+.order-items::-webkit-scrollbar {
+  width: 6px;
+}
+.order-items::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+.order-items::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 10px;
+}
+.order-items::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Hover effects for order items */
+.order-items .bg-white:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
+  transition: all 0.2s ease;
+}
+/* Jumia-like button hover effect */
+.btn[style*="background-color: #ff7900"]:hover {
+  background-color: #e56b00 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(255, 121, 0, 0.3);
+  transition: all 0.2s ease;
+}
+
+/* Discount badge animation */
+.badge[style*="background-color: #f44336"] {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Custom scrollbar */
+.order-items::-webkit-scrollbar {
+  width: 6px;
+}
+.order-items::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.order-items::-webkit-scrollbar-thumb {
+  background: #ff7900;
+  border-radius: 3px;
+}
+.btn-placeOrder {
+  background-color: #ff7900;
+  color: white;
+}
+.btn-placeOrder :hover{
+  background-color: white;
+  color: #ff7900;
+}
+.btn.btn-outline-save{
+  color: #fff;
+  background-color: #ff7900;
+}
+.btn-placeOrder:hover{
+  background-color: #ff7900;
+  color: white;
+}
+/* Custom radio button hover effect */
+.form-check-input:hover {
+  border-color: #ff7900 !important;
+}
+
+.form-check-input:checked {
+  background-color: #ff7900 !important;
+  border-color: #ff7900 !important;
+}
+
+/* Custom select dropdown hover effect */
+.form-select:hover {
+  border-color: #ff7900 !important;
+}
+
+/* Focus styles */
+.form-check-input:focus {
+  box-shadow: 0 0 0 0.25rem rgba(255, 121, 0, 0.25) !important;
+}
+
+.form-select:focus {
+  border-color: #ff7900 !important;
+  box-shadow: 0 0 0 0.25rem rgba(255, 121, 0, 0.25) !important;
+}
+
+/* Payment method dropdown */
+.form-select-lg:hover {
+  border-color: #ff7900;
+}
+/* Custom dropdown hover effects */
+.custom-dropdown {
+  transition: all 0.2s ease;
+  border: 1px solid #dee2e6;
+}
+
+.custom-dropdown:hover {
+  border-color: rgba(255, 121, 0, 0.5);
+}
+
+.custom-dropdown:focus {
+  border-color: #ff7900;
+  box-shadow: 0 0 0 0.2rem rgba(255, 121, 0, 0.1);
+}
+
+/* Custom dropdown arrow color */
+.custom-dropdown {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='%23ff7900' d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 16px 12px;
+}
+/* .add-to-cart-btn {
+    background-color: #f68b1e;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-to-cart-btn:hover {
+    background-color: #e67b10;
+  }
+   */
+/* 
+   .confirm-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+  } */
+
+
+
+
+
+
+  
+  .add-address-btn {
+    background-color: #f68b1e;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-address-btn:hover {
+    background-color: #e67b10; 
+  }
+
+  input.form-control:focus {
+    border-color: #ffc003 !important;
+    box-shadow: 0 0 0 0.2rem rgba(255, 192, 3, 0.5) !important;
+  }
+
+
+
+
+  .confirm-btn {
+    background-color: #f68b1e;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .confirm-btn:hover {
+    background-color: #e67b10; 
+  }
+
+  select.form-select:focus {
+    border-color: #ffc003 !important;
+    box-shadow: 0 0 0 0.2rem rgba(255, 192, 3, 0.5) !important;
+  }
+  
+
+
+  /* 1. شكل الـ input لما يـ focus عليه */
+input.form-control:focus {
+  border-color: #ffc003 !important;
+  box-shadow: 0 0 0 0.2rem rgba(255, 192, 3, 0.5) !important;
+}
+
+
+
+.custom-btn {
+  background-color: #28a745;
+  color: #fff;
+  font-weight: 500;
+  border: none;
+  border-radius: 0.375rem;
+  padding: 0.45rem 1.5rem;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.custom-btn:hover {
+  background-color: #218838;
+  color: #fff;
+}
+
+.btn-secondary{
+  background-color: #dc3545;
+  color: #fff;
+  font-weight: 500;
+  border: none;
+  border-radius: 0.375rem;
+  padding: 0.45rem 1.5rem;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #c82333;
+  color: #fff;
+}
+
+/* Overlay */
+.popup-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Popup */
+.popup {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 600px;
+}
+

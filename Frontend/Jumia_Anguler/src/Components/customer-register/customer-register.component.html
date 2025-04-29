@@ -1,0 +1,402 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="customer-register-form">
+    <!-- step 1 -->
+    <div class="container" *ngIf="currentView === 'email'">
+        <div class="card">
+            <button class="jumia-back-btn" (click)="goBack()">
+                <i class="bi bi-arrow-left"></i>
+            </button>
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <div class="logo-container">
+                        <img src="assets/jumiaStar.svg" alt="Jumia Logo" class="logo-img">
+                    </div>
+                    <h2>Welcome to Jumia</h2>
+                    <p class="text-muted">Type your e-mail to create a Jumia account.</p>
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="form-label small-text">Email*</label>
+                    <input type="email" class="form-control" id="email" formControlName="email"
+                        placeholder="Enter your email" (input)="registerForm.get('email')?.markAsTouched()">
+
+                    <!-- Real-time validation messages -->
+                    <div *ngIf="registerForm.get('email')?.dirty" class="text-danger mt-2 small-text">
+                        <div *ngIf="registerForm.get('email')?.hasError('required')">
+                            Email is required
+                        </div>
+                        <div *ngIf="registerForm.get('email')?.hasError('pattern')">
+                            Please enter a valid email address
+                        </div>
+                        <div *ngIf="registerForm.get('email')?.hasError('emailExists')">
+                            This email is already registered
+                        </div>
+                        <div *ngIf="registerForm.get('email')?.hasError('apiError')">
+                            {{ registerForm.get('email')?.errors?.['apiError'] }}
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-warning w-100 mb-3"
+                    [disabled]="registerForm.get('email')?.invalid || registerForm.get('email')?.pending"
+                    (click)="onContinueClick()">
+                    Continue
+                </button>
+
+
+                <div class="text-center mb-4 small-text">
+                    You already have an account? <a routerLink="/login">Login</a>
+                </div>
+
+                <div class="divider">
+                    <span class="divider-text">or</span>
+                </div>
+
+                <button (click)="loginWithFacebook()" class="btn btn-primary w-100 mb-4">
+                    <i class="bi bi-facebook me-2"></i> Log in with Facebook
+                </button>
+
+                <div class="text-center small-text">
+                    <p>For further support, you may visit the <a href="#">Help Center</a> or contact our customer
+                        service
+                        team.</p>
+                </div>
+
+                <div class="additional-logo text-center mt-4">
+                    <img src="assets/jumia-seeklogo.svg" alt="Additional Logo" class="second-logo">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- step 2 -->
+    <div class="container" *ngIf="currentView === 'verification'">
+        <div class="card">
+            <button class="jumia-back-btn" (click)="goBack()">
+                <i class="bi bi-arrow-left"></i>
+            </button>
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <div class="logo-container">
+                        <img src="assets/jumiaStar.svg" alt="Jumia Logo" class="logo-img">
+                    </div>
+                    <div *ngIf="message" [ngClass]="{'verify-success': !isError, 'verify-danger': isError}"
+                        class="verify-message text-center mt-2">
+                        {{ verifymessage }}
+                    </div>
+                    <h2>Verify your email address</h2>
+                    <p class="text-muted">We have sent a verification code to {{email}}</p>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label small-text">Verification Code*</label>
+
+                    <div class="verification-digits mb-4">
+                        <input #digitInput type="text" formControlName="digit1" maxlength="1"
+                            (input)="onDigitInput($event, 1)" (keydown)="onBackspace($event, 1)"
+                            class="form-control text-center">
+
+                        <input #digitInput type="text" formControlName="digit2" maxlength="1"
+                            (input)="onDigitInput($event, 2)" (keydown)="onBackspace($event, 2)"
+                            class="form-control text-center">
+
+                        <input #digitInput type="text" formControlName="digit3" maxlength="1"
+                            (input)="onDigitInput($event, 3)" (keydown)="onBackspace($event, 3)"
+                            class="form-control text-center">
+
+                        <input #digitInput type="text" formControlName="digit4" maxlength="1"
+                            (input)="onDigitInput($event, 4)" (keydown)="onBackspace($event, 4)"
+                            class="form-control text-center">
+
+                        <input #digitInput type="text" formControlName="digit5" maxlength="1"
+                            (input)="onDigitInput($event, 5)" (keydown)="onBackspace($event, 5)"
+                            class="form-control text-center">
+
+                        <input #digitInput type="text" formControlName="digit6" maxlength="1"
+                            (input)="onDigitInput($event, 6)" (keydown)="onBackspace($event, 6)"
+                            class="form-control text-center">
+                    </div>
+
+                    <button (click)="onVerifyClick()" class="btn verify w-100 mb-3">
+                        <span *ngIf="!isSubmitting">Verify</span>
+                        <span *ngIf="isSubmitting">
+                            <i class="fas fa-spinner fa-spin"></i> Processing...
+                        </span>
+                    </button>
+                    <div class="text-center mb-4 small-text">
+                        <p>Didn't receive the verification code? It could take a bit of time,
+                            <a href="#" (click)="resendCode($event)" [class.disabled]="countdown > 0">
+                                request a new code <span *ngIf="countdown > 0">in {{countdown}} seconds</span>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="text-center small-text">
+                    <p>For further support, you may visit the <a href="#">Help Center</a> or contact our customer
+                        service team.</p>
+                </div>
+
+                <div class="additional-logo text-center mt-4">
+                    <img src="assets/jumia-seeklogo.svg" alt="Additional Logo" class="second-logo">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- step 3 -->
+    <div class="container" *ngIf="currentView === 'createPassword'">
+        <div class="card">
+            <button class="jumia-back-btn" (click)="goBack()">
+                <i class="bi bi-arrow-left"></i>
+            </button>
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <div class="logo-container">
+                        <img src="assets/jumiaStar.svg" alt="Jumia Logo" class="logo-img">
+                    </div>
+                    <h2>Create your account</h2>
+                    <p class="text-muted">Let's get started by creating your account.</p>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password*</label>
+                    <div class="input-group">
+                        <input [type]="showPassword ? 'text' : 'password'" class="form-control" id="password"
+                            formControlName="password" placeholder="Create a strong password">
+                        <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility()">
+                            <i class="bi" [class.bi-eye]="!showPassword" [class.bi-eye-slash]="showPassword"></i>
+                        </button>
+                    </div>
+
+                    <div class="password-strength" [class.weak]="passwordStrength === 'weak'"
+                        [class.medium]="passwordStrength === 'medium'" [class.strong]="passwordStrength === 'strong'">
+                        Password strength: {{passwordStrength}}
+                        <div *ngIf="passwordStrength === 'weak'" class="strength-hint">(Add uppercase, numbers or
+                            special characters)</div>
+                        <div *ngIf="passwordStrength === 'medium'" class="strength-hint">(Almost there! Add more
+                            complexity)</div>
+                        <div *ngIf="passwordStrength === 'strong'" class="strength-hint">(Great! Strong password)</div>
+                    </div>
+
+                    <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+                        class="text-danger mt-1">
+                        <div *ngIf="registerForm.get('password')?.hasError('required')">Password is required</div>
+                        <div *ngIf="registerForm.get('password')?.hasError('minlength')">
+                            Password must be at least 8 characters
+                        </div>
+                        <div *ngIf="registerForm.get('password')?.hasError('noUpperCase')">
+                            Password must contain at least one uppercase letter
+                        </div>
+                        <div *ngIf="registerForm.get('password')?.hasError('noLowerCase')">
+                            Password must contain at least one lowercase letter
+                        </div>
+                        <div *ngIf="registerForm.get('password')?.hasError('noNumber')">
+                            Password must contain at least one number
+                        </div>
+                        <div *ngIf="registerForm.get('password')?.hasError('noSpecialChar')">
+                            Password must contain at least one special character ({{specialChars}})
+                        </div>
+                    </div>
+
+                    <small class="text-muted">To keep your account safe, we need a strong password</small>
+                </div>
+
+                <div class="mb-4">
+                    <label for="confirmPassword" class="form-label">Confirm Password*</label>
+                    <div class="input-group">
+                        <input [type]="showConfirmPassword ? 'text' : 'password'" class="form-control"
+                            id="confirmPassword" formControlName="confirmPassword" placeholder="Confirm your password">
+                        <button class="btn btn-outline-secondary" type="button"
+                            (click)="toggleConfirmPasswordVisibility()">
+                            <i class="bi" [class.bi-eye]="!showConfirmPassword"
+                                [class.bi-eye-slash]="showConfirmPassword"></i>
+                        </button>
+                    </div>
+                    <div *ngIf="registerForm.hasError('mismatch')" class="text-danger mt-1">
+                        Passwords do not match
+                    </div>
+                </div>
+
+                <button class="btn btn-warning w-100 mb-3" [disabled]="!registerForm.get('password')?.valid || 
+                           !registerForm.get('confirmPassword')?.valid ||
+                           registerForm.hasError('mismatch')" (click)="nextStep()">
+                    Continue
+                </button>
+
+                <div class="text-center small-text">
+                    <p>For further support, you may visit the <a routerLink="/help">Help Center</a> or contact our
+                        customer
+                        service team.</p>
+                </div>
+
+                <div class="additional-logo text-center mt-4">
+                    <img src="assets/jumia-seeklogo.svg" alt="Additional Logo" class="second-logo">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- step 4 -->
+    <div class="container" *ngIf="currentView === 'personalDetails'">
+        <div class="card">
+            <button class="jumia-back-btn" (click)="goBack()">
+                <i class="bi bi-arrow-left"></i>
+            </button>
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <div class="logo-container">
+                        <img src="assets/jumiaStar.svg" alt="Jumia Logo" class="logo-img">
+                    </div>
+                    <h2>Personal details</h2>
+                    <p class="text-muted">We just need you to fill in some details.</p>
+                </div>
+
+                <div class="mb-3">
+                    <label for="firstName" class="form-label">First Name*</label>
+                    <input type="text" class="form-control" id="firstName" formControlName="firstName"
+                        placeholder="Enter Your First Name">
+                    <div *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched"
+                        class="text-danger mt-1">
+                        First name is required
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="lastName" class="form-label">Last Name*</label>
+                    <input type="text" class="form-control" id="lastName" formControlName="lastName"
+                        placeholder="Enter Your Last Name">
+                    <div *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched"
+                        class="text-danger mt-1">
+                        Last name is required
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Phone Number*</label>
+                    <div class="input-group">
+                        <select class="form-select" style="max-width: 100px;" formControlName="prefix">
+                            <option *ngFor="let prefix of prefixes" [value]="prefix">{{prefix}}</option>
+                        </select>
+                        <input type="text" class="form-control" formControlName="phoneNumber"
+                            placeholder="Enter Your Phone Number">
+                    </div>
+                    <div *ngIf="registerForm.get('phoneNumber')?.invalid && registerForm.get('phoneNumber')?.touched"
+                        class="text-danger mt-1">
+                        Please enter a valid phone number
+                    </div>
+                </div>
+
+                <button class="btn btn-warning w-100 mb-3" [disabled]="!registerForm.get('firstName')?.valid || 
+                           !registerForm.get('lastName')?.valid || 
+                           !registerForm.get('phoneNumber')?.valid || 
+                           !registerForm.get('prefix')?.valid" (click)="nextStep()">
+                    Continue
+                </button>
+
+
+
+
+                <div class="text-center small-text">
+                    <p>For further support, you may visit the <a href="#">Help Center</a> or contact our customer
+                        service team.</p>
+                </div>
+
+                <div class="additional-logo text-center mt-4">
+                    <img src="assets/jumia-seeklogo.svg" alt="Additional Logo" class="second-logo">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- step 5 -->
+    <div class="container" *ngIf="currentView === 'additionalDetails'">
+        <div class="card">
+            <button class="jumia-back-btn" (click)="goBack()">
+                <i class="bi bi-arrow-left"></i>
+            </button>
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <div class="logo-container">
+                        <img src="assets/jumiaStar.svg" alt="Jumia Logo" class="logo-img">
+                    </div>
+                    <h2>Personal details</h2>
+                    <p class="text-muted">Almost there... Just a few more details.</p>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label d-block">Gender*</label>
+                    <select class="form-select" formControlName="gender">
+                        <option value="" disabled selected>Select your gender</option>
+                        <option *ngFor="let gender of genders" [value]="gender">{{gender}}</option>
+                    </select>
+                    <div *ngIf="registerForm.get('gender')?.invalid && registerForm.get('gender')?.touched"
+                        class="text-danger mt-1">
+                        Please select your gender
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="BirthofDate" class="form-label d-block">Birth date*</label>
+                    <input type="date" class="form-control" id="BirthofDate" formControlName="BirthofDate"
+                        [max]="maxDate | date:'yyyy-MM-dd'">
+                    <div *ngIf="getBirthDateErrors().required && registerForm.get('BirthofDate')?.touched"
+                        class="text-danger mt-1">
+                        Birth date is required
+                    </div>
+                    <div *ngIf="getBirthDateErrors().underAge" class="text-danger mt-1">
+                        You must be at least 18 years old
+                    </div>
+                </div>
+
+                <div class="form-check mb-4">
+                    <input class="form-check-input" type="checkbox" id="terms" formControlName="terms"
+                        (change)="onTermsChange()">
+                    <label class="form-check-label" for="terms">
+                        I read and consented to the Terms and Conditions
+                    </label>
+                    <div *ngIf="registerForm.get('terms')?.invalid && registerForm.get('terms')?.touched"
+                        class="text-danger mt-1">
+                        You must accept the terms and conditions
+                    </div>
+                </div>
+
+                <button class="btn btn-warning w-100 mb-3"
+                    [disabled]="!registerForm.get('gender')?.valid || !registerForm.get('BirthofDate')?.valid || !registerForm.get('terms')?.valid"
+                    (click)="nextStep()">
+                    Continue
+                </button>
+
+
+
+                <div class="text-center small-text">
+                    <p>For further support, you may visit the <a href="#">Help Center</a> or contact our customer
+                        service team.</p>
+                </div>
+
+                <div class="additional-logo text-center mt-4">
+                    <img src="assets/jumia-seeklogo.svg" alt="Additional Logo" class="second-logo">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- step 6 -->
+    <div *ngIf="currentView === 'accountCreated'" class="account-created-container">
+        <div class="content-wrapper">
+
+            <div class="success-animation">
+                <div class="checkmark-animation"></div>
+            </div>
+
+            <p class="redirect-message">You'll be redirected in {{redirectSeconds}} seconds</p>
+
+            <button class="get-started-btn" (click)="redirectToHome()">
+                Get started
+            </button>
+        </div>
+
+        <div class="footer-logo">
+            <div class="additional-logo text-center mt-4">
+                <img src="assets/jumia-seeklogo.svg" alt="Additional Logo" class="second-logo">
+            </div>
+        </div>
+    </div>
+
+</form>

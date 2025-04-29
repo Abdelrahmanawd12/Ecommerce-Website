@@ -1,0 +1,136 @@
+
+:root {
+  --jumia-orange: #FF7800;
+  --jumia-dark-orange: #E66A00;
+  --jumia-light-orange: #FF9200;
+  --jumia-bg: #FFF5EB;
+}
+
+.jumia-edit-btn {
+  background-color: white;
+  color: var(--jumia-orange);
+  border: 1px solid var(--jumia-orange);
+}
+
+.jumia-edit-btn:hover {
+  background-color: var(--jumia-orange);
+  color: rgb(196, 134, 20);
+}
+
+/* SweetAlert Custom Styles */
+.jumia-swal-popup {
+  border: 2px solid #FF7800;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(255, 120, 0, 0.2);
+}
+
+.jumia-swal-title {
+  color: #FF7800;
+  font-weight: 700;
+}
+
+.jumia-swal-confirm-btn {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 8px 20px;
+}
+
+.swal2-styled.swal2-confirm:focus {
+  box-shadow: 0 0 0 3px rgba(255, 146, 0, 0.5) !important;
+}
+
+.jumia-delete-btn {
+  background-color: white;
+  color: #dc3545;
+  border: 1px solid #dc3545;
+}
+
+.jumia-delete-btn:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+
+.jumia-active {
+  background-color: #28a745;
+  color: white;
+}
+
+.jumia-inactive {
+  background-color: #6c757d;
+  color: white;
+}
+
+.jumia-add-btn:hover {
+  background-color: var(--jumia-dark-orange) !important;
+}
+
+/* Table Header Styles */
+thead th {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  border: none !important;
+  position: relative;
+}
+
+thead th:after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 15%;
+  height: 70%;
+  width: 1px;
+  background-color: rgba(255,255,255,0.3);
+}
+
+thead th:last-child:after {
+  display: none;
+}
+
+thead th:hover {
+  background: linear-gradient(to right, #FF6800, #FF8200) !important;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Sort Icons */
+.bi-arrow-up, .bi-arrow-down {
+  font-weight: bold;
+}
+.table th {
+  border-top: none;
+}
+
+.table td {
+  vertical-align: middle;
+}
+/* Tooltip styles for seller info */
+[tooltip] {
+  position: relative;
+}
+
+[tooltip]::after {
+  content: attr(tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  white-space: pre;
+  min-width: 200px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 10;
+}
+
+[tooltip]:hover::after {
+  visibility: visible;
+  opacity: 1;
+}
