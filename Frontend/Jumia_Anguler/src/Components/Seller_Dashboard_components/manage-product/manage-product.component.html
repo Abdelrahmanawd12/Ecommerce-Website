@@ -167,7 +167,7 @@
               <td>
                 <span *ngIf="product.discount > 0" 
                       class="badge bg-success bg-opacity-10 text-success fw-medium px-2 py-1">
-                  🎁 {{ product.discount }}% OFF
+                  🎁 {{(product.discount/product.price)*100}}% OFF
                   <span class="ms-1 small text-success">(Sale!)</span>
                 </span>
                 

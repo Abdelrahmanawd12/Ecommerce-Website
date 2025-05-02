@@ -32,8 +32,7 @@ export class SellOnJumiaComponent {
   abutJumia: string | null = null;
   countries: string[] = [
     'Egypt', 'Nigeria', 'Kenya', 'Morocco', 'Côte d\'Ivoire', 'Ghana',
-    'Tanzania', 'Uganda', 'Senegal', 'Cameroon', 'Algeria', 'South Africa',
-    'Rwanda', 'DR Congo'
+    'Tanzania', 'Uganda', 'Senegal', 'Cameroon'
   ];
   country: string | null = null;
 
@@ -75,7 +74,7 @@ export class SellOnJumiaComponent {
   shippingZoneError: boolean = false;
   storeAddressError: boolean = false;
   emailerr: boolean = false;
-  lastStep = 4;  // العدد الإجمالي للخطوات
+  lastStep = 4; 
 
   // UI states
   showPassword: boolean = false;
@@ -173,7 +172,7 @@ export class SellOnJumiaComponent {
   validateDateOfBirth(date: Date | string | null): boolean {
     if (!date) return false;
   
-    const birthDate = new Date(date); // هنا بنحوّلها Date
+    const birthDate = new Date(date); 
     const today = new Date();
   
     let age = today.getFullYear() - birthDate.getFullYear();
@@ -216,10 +215,7 @@ export class SellOnJumiaComponent {
             console.log('Registration successful:', response);
             this.isLoading = true;
 
-            setTimeout(() => {
-              this.isLoading = false;
-              this.router.navigate(['/login']);
-            }, 3000); 
+            this.router.navigate(['/registration-success']);
           },
           error: (error) => {
             console.error('Registration failed:', error);

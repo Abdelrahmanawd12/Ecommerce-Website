@@ -35,7 +35,7 @@
                     </div>
                 </div>
 
-                <button class="btn btn-warning w-100 mb-3"
+                <button class="btn btn-continue w-100 mb-3"
                     [disabled]="registerForm.get('email')?.invalid || registerForm.get('email')?.pending"
                     (click)="onContinueClick()">
                     Continue
@@ -214,7 +214,7 @@
                     </div>
                 </div>
 
-                <button class="btn btn-warning w-100 mb-3" [disabled]="!registerForm.get('password')?.valid || 
+                <button class="btn btn-continue w-100 mb-3" [disabled]="!registerForm.get('password')?.valid || 
                            !registerForm.get('confirmPassword')?.valid ||
                            registerForm.hasError('mismatch')" (click)="nextStep()">
                     Continue
@@ -283,7 +283,7 @@
                     </div>
                 </div>
 
-                <button class="btn btn-warning w-100 mb-3" [disabled]="!registerForm.get('firstName')?.valid || 
+                <button class="btn btn-continue w-100 mb-3" [disabled]="!registerForm.get('firstName')?.valid || 
                            !registerForm.get('lastName')?.valid || 
                            !registerForm.get('phoneNumber')?.valid || 
                            !registerForm.get('prefix')?.valid" (click)="nextStep()">
@@ -357,7 +357,7 @@
                     </div>
                 </div>
 
-                <button class="btn btn-warning w-100 mb-3"
+                <button class="btn btn-continue w-100 mb-3"
                     [disabled]="!registerForm.get('gender')?.valid || !registerForm.get('BirthofDate')?.valid || !registerForm.get('terms')?.valid"
                     (click)="nextStep()">
                     Continue

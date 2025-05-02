@@ -44,6 +44,7 @@ toastClass: string = 'bg-success';
   // toggle wishlist
   wishlistProductIds: number[] = [];
 
+
   constructor(
     private _catService: CategoryService,
     private _product: ProductsService,
@@ -51,35 +52,12 @@ toastClass: string = 'bg-success';
     private _CartServices: CartService,
     private _wishlistService: AwadWishlistService
   ) { }
-//add to wishlist
-  // addToWishlist(productId: number): void {
-  //   const userId = localStorage.getItem('userId');
-  //   if (!userId || userId.trim() === '') {
-  //     this.router.navigateByUrl("/login");
-  //     return;
-  //   }
-  //   this.wishlistService.addToWishlist(userId, productId).subscribe({
-  //     next: (res) => {
-  //       console.log("Product added to wishlist", res);
-  //       this.showToast("Product added to wishlist successfully!","success");
-  //     },
-  //     error: (err) => {
-  //       console.log("error", err);
-  //       const errorMsg = err?.error?.message || "Something went wrong!";
-  //       this.showToast(errorMsg,"error");
-  //     }
-  //   });
-  // }
-
   //get user
   get user(): string {
     return localStorage.getItem('userId') || '';
   }
- 
-
 // onInit method
   ngOnInit(): void {
-  
 // get All Category
     this._catService.getAllCategories().subscribe({
       next: (data) => {
@@ -138,9 +116,6 @@ toastClass: string = 'bg-success';
 
 
   }
-
-
-
 
   // go to details page for product
   goToProductDetails(productId: number): void {

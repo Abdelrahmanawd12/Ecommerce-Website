@@ -38,20 +38,20 @@
 
         <div *ngFor="let item of order.items" class="d-flex align-items-start mb-3">
           <!-- Product Image -->
-          <img 
-            [src]="imgbaseUrl + item.productImageUrl" 
-            class="img-fluid rounded border me-3" 
-            style="width: 30%; max-width: 180px;" 
+          <img
+            [src]="imgbaseUrl + item.productImageUrl"
+            class="img-fluid rounded border me-3"
+            style="width: 30%; max-width: 180px;"
           />
-        
+
           <!-- Product Info, Status, and Date -->
           <div>
             <!-- Product Name -->
             <span class="fs-5 d-block">{{ item.productName }}</span>
-        
+
             <!-- Status Badge -->
-            <span 
-              class="badge text-uppercase px-3 py-2 rounded mt-2 d-inline-block" 
+            <span
+              class="badge text-uppercase px-3 py-2 rounded mt-2 d-inline-block"
               [ngClass]="{
                 'bg-success': order.orderStatus.trim().toLowerCase() === 'pending',
                 'bg-danger': order.orderStatus.trim().toLowerCase() === 'cancel',
@@ -59,12 +59,12 @@
               }">
               {{ order.orderStatus }}
             </span>
-        
+
             <!-- Order Date -->
             <p class="text-muted mt-2 mb-0">Date: {{ order.orderDate | date }}</p>
           </div>
         </div>
-        
+
          <!-- Shipping Details -->
          <div *ngIf="order.shippingDetails" class="mt-4">
           <h5>Shipping Details</h5>
@@ -74,32 +74,20 @@
           <p><strong>Carrier:</strong> {{ order.shippingDetails.carrier }}</p>
         </div>
 
-        
+
 
         <!-- <p class="text-muted">Date: {{ order.orderDate | date }}</p> -->
 
-<<<<<<< HEAD
-        <button (click)="showOrderDetails(order.orderId)" class="btn btn-outline-primary me-2">See Details</button>
-
-        <button 
-          *ngIf="order.orderStatus.trim().toLowerCase() === 'pending'" 
-          class="btn btn-danger"
-          (click)="confirmCancel(order.orderId)">
-          Cancel Order
-        </button>
-
-=======
         <div class="button-container" class="text-end">
           <button (click)="showOrderDetails(order.orderId)" class="btn btn-outline-primary me-2">See Details</button>
 
-          <button 
-            *ngIf="order.orderStatus.trim().toLowerCase() === 'pending'" 
+          <button
+            *ngIf="order.orderStatus.trim().toLowerCase() === 'pending'"
             class="btn btn-danger "
             (click)="confirmCancel(order.orderId)">
             Cancel Order
           </button>
         </div>
->>>>>>> 2bf86c872881a7a8af0af3ec825aa33b9ce1212b
         <!-- Show selected order details directly under the order -->
         <div *ngIf="selectedOrder?.orderId === order.orderId" class="card p-4 mt-4 shadow-sm bg-light">
           <h4 class="mb-3">Order {{ selectedOrder?.orderId }}</h4>
@@ -129,34 +117,30 @@
 
         <div *ngFor="let item of order.items" class="d-flex align-items-start mb-3">
           <!-- Product Image -->
-          <img 
-          [src]="imgbaseUrl+item.productImageUrl" 
-          class="img-fluid rounded border me-3" 
-          style="width: 30%; max-width: 180px;" 
+          <img
+          [src]="imgbaseUrl+item.productImageUrl"
+          class="img-fluid rounded border me-3"
+          style="width: 30%; max-width: 180px;"
         />
 
           <!-- Text section: Product Name + Status + Date -->
           <div>
             <!-- Product Name -->
             <span class="fs-5 d-block">{{ item.productName }}</span>
-        
+
             <!-- Status Badge -->
             <span class="badge bg-danger text-uppercase px-3 py-2 rounded mt-2 d-inline-block">
               {{ order.orderStatus }}
             </span>
-        
+
             <!-- Order Date (optional) -->
             <p class="text-muted mt-2 mb-0">Date: {{ order.orderDate | date }}</p>
           </div>
         </div>
-        
-<<<<<<< HEAD
-        <button (click)="showOrderDetails(order.orderId)" class="btn btn-outline-primary">See Details</button>
-=======
+
         <div class="button-container" class="text-end">
         <button (click)="showOrderDetails(order.orderId)" class="btn btn-outline-primary">See Details</button>
         </div>
->>>>>>> 2bf86c872881a7a8af0af3ec825aa33b9ce1212b
 
         <!-- Show selected order details directly under the order -->
         <div *ngIf="selectedOrder?.orderId === order.orderId" class="card p-4 mt-4 shadow-sm bg-light">

@@ -500,7 +500,7 @@ h2 {
 }
 
 .get-started-btn {
-    background-color: #FFD814;
+    background-color: #fd7e20;
     border: none;
     padding: 12px 24px;
     border-radius: 4px;
@@ -514,7 +514,7 @@ h2 {
 }
 
 .get-started-btn:hover {
-    background-color: #F7CA00;
+    background-color: #fd7e20;
     transform: translateY(-1px);
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
@@ -629,4 +629,19 @@ h2 {
 
 .jumia-back-btn:hover i {
   transform: translateX(-2px); 
+}
+.btn-continue{
+    background-color: #fd7e14;
+    color: white;
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 1.05rem;
+    transition: all 0.3s ease;
+}
+.btn-continue:hover {
+    background-color: #fd7e20;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 153, 0, 0.3);
 }

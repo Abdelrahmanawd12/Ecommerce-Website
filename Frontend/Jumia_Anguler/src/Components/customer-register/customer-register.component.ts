@@ -273,6 +273,7 @@ export class CustomerRegisterComponent {
 
   redirectToHome() {
     console.log('Redirecting to home page...');
+    this.router.navigate(['/home']);
   }
 
   emailExistsValidator(control: AbstractControl): Observable<ValidationErrors | null> {
