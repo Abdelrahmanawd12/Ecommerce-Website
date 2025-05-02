@@ -1,19 +1,19 @@
 <div class="container-fluid px-4 py-3">
   <div class="card jumia-card">
 
-    <div class="card-header jumia-table-header d-flex justify-content-between align-items-center py-3" 
+    <div class="card-header jumia-table-header d-flex justify-content-between align-items-center py-3"
          style="background-color: #f68b1e; color: white;">
       <h5 class="mb-0 d-flex align-items-center">
         <i class="bi bi-people-fill me-2"></i>User Management
       </h5>
       <div class="header-actions d-flex align-items-center">
-       
+
         <div class="search-box position-relative">
           <i class="bi bi-search position-absolute" style="top: 10px; left: 5px; color: #f68b1e;"></i>
-          <input type="text" class="form-control jumia-search px-4 py-2" 
+          <input type="text" class="form-control jumia-search px-4 py-2"
                  style="border-color: #f68b1e;"
-                 placeholder="Search users..." 
-                 [(ngModel)]="searchQuery" 
+                 placeholder="Search users..."
+                 [(ngModel)]="searchQuery"
                  (input)="applyFilter()">
         </div>
       </div>
@@ -27,12 +27,12 @@
         <div class="accordion">
           <div class="accordion-item" style="border-color: #FF7800;">
             <h2 class="accordion-header">
-              <button class="accordion-button" 
-                      type="button" 
+              <button class="accordion-button"
+                      type="button"
                       style="background-color: #FFF5EB; color: #FF7800;"
-                      (click)="toggleRole(role)" 
+                      (click)="toggleRole(role)"
                       [attr.aria-expanded]="isRoleExpanded(role)">
-                <i class="bi me-2" 
+                <i class="bi me-2"
                    [ngClass]="{
                      'bi-person-gear': role === 'Admin',
                      'bi-shop': role === 'Seller',
@@ -46,11 +46,7 @@
                 <div class="table-responsive">
                   <table class="table mb-0">
                     <thead>
-<<<<<<< HEAD
-                      <tr style="background: linear-gradient(to right, #FF7800, #FF9200); color: white;">
-=======
                       <tr style="background: linear-gradient(to right, #f68b1e, #FF9200); color: white;">
->>>>>>> 2bf86c872881a7a8af0af3ec825aa33b9ce1212b
                         <th (click)="sort('firstName')" class="py-3" style="border-top-left-radius: 8px;">
                           <div class="d-flex align-items-center justify-content-center">
                             <span class="me-2">First Name</span>
@@ -85,8 +81,8 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let user of displayedGroupedUsers[role]" 
-                          class="align-middle" 
+                      <tr *ngFor="let user of displayedGroupedUsers[role]"
+                          class="align-middle"
                           style="border-bottom: 1px solid #FFE4CC;">
                         <td class="py-3">{{ user.firstName }}</td>
                         <td class="py-3">{{ user.lastName }}</td>
@@ -95,7 +91,7 @@
                         </td>
                         <td class="py-3">{{ formatDate(user.createdAt) }}</td>
                         <td class="py-3 text-center">
-                          <span class="badge" 
+                          <span class="badge"
                                 [ngClass]="{
                                   'jumia-active': !user.isDeleted,
                                   'jumia-inactive': user.isDeleted
@@ -126,17 +122,17 @@
       </div>
 
       <!-- Pagination -->
-        
+
       <!-- Pagination -->
       <div class="jumia-pagination d-flex flex-column flex-md-row justify-content-between align-items-center px-4 py-3 border-top">
         <div class="showing-entries mb-2 mb-md-0">
-          Showing <span class="fw-bold">{{ (currentPage-1)*itemsPerPage+1 }}</span> to 
-          <span class="fw-bold">{{ getToValue() }}</span> of 
+          Showing <span class="fw-bold">{{ (currentPage-1)*itemsPerPage+1 }}</span> to
+          <span class="fw-bold">{{ getToValue() }}</span> of
           <span class="fw-bold">{{ filteredUsers.length }}</span> entries
         </div>
         <div class="pagination-controls d-flex align-items-center">
-          <select class="form-select jumia-select me-3" 
-                  [(ngModel)]="itemsPerPage" 
+          <select class="form-select jumia-select me-3"
+                  [(ngModel)]="itemsPerPage"
                   (change)="onItemsPerPageChange()"
                   style="width: 120px;">
             <option value="5">5 per page</option>
@@ -144,25 +140,25 @@
             <option value="20">20 per page</option>
             <option value="50">50 per page</option>
           </select>
-          
+
           <div class="d-flex">
-            <button class="btn jumia-page-btn me-2" 
-                    [disabled]="currentPage === 1" 
+            <button class="btn jumia-page-btn me-2"
+                    [disabled]="currentPage === 1"
                     (click)="previousPage()">
               <i class="bi bi-chevron-left"></i> Previous
             </button>
-            
+
             <div class="page-numbers d-none d-md-flex">
-              <span *ngFor="let page of getPageNumbers()" 
-                    class="page-number mx-1" 
+              <span *ngFor="let page of getPageNumbers()"
+                    class="page-number mx-1"
                     [class.active]="page === currentPage"
                     (click)="goToPage(page)">
                 {{ page }}
               </span>
             </div>
-            
-            <button class="btn jumia-page-btn ms-2" 
-                    [disabled]="currentPage === totalPages" 
+
+            <button class="btn jumia-page-btn ms-2"
+                    [disabled]="currentPage === totalPages"
                     (click)="nextPage()">
               Next <i class="bi bi-chevron-right"></i>
             </button>

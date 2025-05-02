@@ -51,6 +51,7 @@ export class WishlistComponent implements OnInit {
   constructor(private wishlistService: WishlistService, private router: Router) {}
 
   ngOnInit(): void {
+    
     this.getWishlist();
   }
 
@@ -67,47 +68,47 @@ export class WishlistComponent implements OnInit {
 
   deleteItem(wishlistItemId: number): void {
     this.wishlistItemIdToDelete = wishlistItemId;
-  
+
     const modalElement = document.getElementById('confirmModal');
     if (modalElement) {
       const modal = new bootstrap.Modal(modalElement);
       modal.show();
     }
   }
-  
+
   confirmDelete(): void {
     console.log('Deleting item:', this.wishlistItemIdToDelete);
     this.wishlistService.deleteWishlistItem(this.wishlistItemIdToDelete).subscribe({
       next: () => {
         console.log('Item deleted successfully');
         this.wishlistItems = this.wishlistItems.filter(item => item.wishlistItemId !== this.wishlistItemIdToDelete);
-        
+
         this.toastMessage = 'Item removed from wishlist!';
-        
+
         const toast = new bootstrap.Toast(this.toastElement.nativeElement);
         toast.show();
-        
+
         setTimeout(() => this.showToast = false, 3000);
       },
       error: (err) => {
         console.error('Error deleting item:', err);
-        
+
         this.toastMessage = 'Failed to remove item from wishlist. Please try again.';
-        
+
         const toast = new bootstrap.Toast(this.toastElement.nativeElement);
         toast.show();
-        
+
         setTimeout(() => this.showToast = false, 3000);
       }
     });
-  
+
     const modalElement = document.getElementById('confirmModal');
     if (modalElement) {
       const modal = bootstrap.Modal.getInstance(modalElement);
       modal.hide();
     }
   }
-  
+
   addToCart(wishlistItemId: number): void {
     this.wishlistService.addToCart(wishlistItemId).subscribe({
       next: () => {
@@ -126,14 +127,14 @@ export class WishlistComponent implements OnInit {
       }
     });
   }
-  
-  
+
+
   navigateToDetails(productId: number): void {
     this.router.navigate(['/details', productId]);
   }
-  
+
   goToHome(): void {
     this.router.navigate(['/home']);
-  }
-  
+}
+
 }

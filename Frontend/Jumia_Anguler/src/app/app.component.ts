@@ -98,9 +98,9 @@ export class AppComponent implements OnInit {
           || currentRoute == '/sellerDashboard/orderMangement' || currentRoute == '/sellerDashboard/manageProduct'
           || currentRoute == '/sellerDashboard/prductSales' || currentRoute == '/sellerDashboard/accountprofile'
           || currentRoute == '/sellerDashboard/reports' || currentRoute == '/sellerDashboard/addproduct'
-          || currentRoute == '/sellerDashboard/sales' || currentRoute == '/admin' || currentRoute == '/admin/dashboard' 
+          || currentRoute == '/sellerDashboard/sales' || currentRoute == '/admin' || currentRoute == '/admin/dashboard'
           || currentRoute == '/admin/products'
-          || currentRoute == '/admin/users' || currentRoute == '/admin/adduser'|| currentRoute == '/admin/edit-user/:id' || currentRoute == '/admin/accountprofile' 
+          || currentRoute == '/admin/users' || currentRoute == '/admin/adduser'|| currentRoute == '/admin/edit-user/:id' || currentRoute == '/admin/accountprofile'
           || currentRoute == '/admin/categories'
           || currentRoute == '/admin/addcategory'|| currentRoute == '/admin/reports'|| currentRoute == '/checkout'
           ||currentRoute=='/order-success'||currentRoute=='/success'||currentRoute=='/cancel'|| currentRoute == '/forgotpassword'
@@ -118,16 +118,8 @@ export class AppComponent implements OnInit {
         }
       }
     });
-    
+
   }
-  getMarginClass(): string {
-    const width = window.innerWidth;
-  
-    if (!this.showMarginTop) return '';
-  
-    if (width > 960) return 'mt-lg';
-    if (width > 768) return 'mt-md';
-    return 'mt-sm';
-  }
-  
+ 
+
 }
