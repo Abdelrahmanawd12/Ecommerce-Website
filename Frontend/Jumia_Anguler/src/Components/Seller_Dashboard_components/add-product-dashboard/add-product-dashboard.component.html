@@ -192,7 +192,7 @@
                             <label>Discount</label>
                             <div class="input-with-symbol">
                                 <span class="symbol">%</span>
-                                <input type="number" placeholder="0" class="form-control" 
+                                <input type="number" placeholder="0" class="form-control"  min="0" max="{{price?.value*90/100}}" 
                                     formControlName="discount">
                             </div>
                             <div *ngIf="discount?.invalid && (discount?.dirty || discount?.touched)"
@@ -204,7 +204,7 @@
                                     Discount must be at least 0.01%
                                 </div>
                                 <div *ngIf="discount?.errors?.['max']">
-                                    Discount cannot exceed 100%
+                                    Discount cannot exceed 90% 
                                 </div>
                                 <div *ngIf="discount?.errors?.['pattern']">
                                     Please enter a valid discount
