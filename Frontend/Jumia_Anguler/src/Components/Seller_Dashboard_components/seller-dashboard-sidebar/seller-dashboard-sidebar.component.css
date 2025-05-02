@@ -17,7 +17,7 @@
 
 .nav-link:hover {
     background-color: white;
-    color: orange !important;
+    color: #f68b1e !important;
 }
 
 
@@ -35,7 +35,7 @@
 }
 
 .dropdown-menu .dropdown-item:hover {
-    background-color: orange;
+    background-color: #f68b1e;
     color: white;
     cursor: pointer;
 }
@@ -126,7 +126,7 @@
 
 #manageProductsMenu .nav-link:hover {
     background-color: white;
-    color: orange;
+    color: #f68b1e;
     cursor: pointer;
 }
 

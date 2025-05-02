@@ -25,10 +25,10 @@ export class LoginService {
    * @param password - The user's password.
    * @returns An observable of the login response containing the token and user info.
    */
-  login(email: string, password: string): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(this.baseUrl + '/auth/login', { email, password }).pipe(
+  login(email: string, password: string, rememberMe: boolean): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(this.baseUrl + '/auth/login', { email, password, rememberMe }).pipe(
       tap(response => {
-        this.setToken(response.token);
+        this.setToken(response.token, rememberMe); 
         this.isLoggedInSubject.next(true);
         this.isLogged = true;
       }),
@@ -38,13 +38,14 @@ export class LoginService {
       })
     );
   }
+  
 
-  GetuserbyEmail(email: string): Observable<LoginResponse> {
+  GetuserbyEmail(email: string, rememberMe: boolean): Observable<LoginResponse> {
     return this.http.get<LoginResponse>(`${this.baseUrl}/auth/userByEmail?email=${email}`).pipe(
       tap(response => {
         if (response && response.role) {
           if (response.token) {
-            this.setToken(response.token);
+            this.setToken(response.token, rememberMe); 
           }
           this.isLoggedInSubject.next(true);
         } else {
@@ -57,7 +58,7 @@ export class LoginService {
       })
     );
   }
-
+  
   /**
    * Logs out the user by clearing the token and user info from local storage and updating the logged-in state.
    */
@@ -68,13 +69,20 @@ export class LoginService {
 
   }
 
-  private setToken(token: string): void {
-    localStorage.setItem('token', token);
-    sessionStorage.setItem('token', token); // Optional: Store in sessionStorage as well
+  private setToken(token: string, rememberMe: boolean): void {
+    if (rememberMe) {
+      localStorage.setItem('token', token); 
+    } else {
+      localStorage.setItem('token', token); 
+    }
   }
 
-  public setUserInfo(userId: string, role: string): void {
-  if (userId && role) {
+  public setUserInfo(userId: string, role: string, rememberMe: boolean): void {
+  if (userId && role && rememberMe) {
+    localStorage.setItem('userId', userId);
+    localStorage.setItem('role', role);
+  }
+  else{
     localStorage.setItem('userId', userId);
     localStorage.setItem('role', role);
   }

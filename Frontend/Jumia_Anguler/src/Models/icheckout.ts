@@ -39,6 +39,7 @@ export interface Icheckout {
       orderId?: number;
     };
     orderItems: Array<{
+      productId: number;
       productName: string;
       brand: string;
       quantity: number;

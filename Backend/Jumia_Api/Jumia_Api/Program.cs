@@ -11,6 +11,7 @@ using Jumia_Api.Repository;
 using Jumia_Api.UnitOFWorks;
 using Jumia_Api.Services.StripeService;
 using Jumia_Api.Services;
+using Jumia_Api.Services.Forgot_Password_Service;
 
 using PayPalCheckoutSdk.Core;
 using Jumia_Api.Services.PayPalService;
@@ -74,10 +75,17 @@ namespace Jumia_Api
                     ValidAudience = builder.Configuration["JWT:ValidAudience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:SecretKey"]))
                 };
+
             });
 
-            builder.Services.AddScoped<IAdminService, AdminService>();
+            builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
+            {
+                options.TokenLifespan = TimeSpan.FromMinutes(30);
+            });
 
+            builder.Services.AddSingleton<EmailService>();
+
+            builder.Services.AddScoped<IAdminService, AdminService>();
 
             builder.Services.AddScoped<PayPalService>();
             builder.Services.AddSingleton<PayPalHttpClient>(provider =>
@@ -90,9 +98,6 @@ namespace Jumia_Api
                 return new PayPalHttpClient(environment);
             });
 
-
-
-
             var app = builder.Build();
             app.UseStaticFiles();
 
@@ -101,6 +106,7 @@ namespace Jumia_Api
             {
                 app.MapOpenApi();
                 app.UseSwaggerUI(op => op.SwaggerEndpoint("/openapi/v1.json", "v1"));
+                app.UseDeveloperExceptionPage();
             }
 
             app.UseHttpsRedirection();

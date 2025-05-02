@@ -28,14 +28,43 @@ namespace Jumia_Api.Repository
                 .Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
             return db.Products
-                .Include(p => p.ProductTags) 
-                .AsEnumerable() 
+                .Include(p => p.ProductTags)
+                .AsEnumerable()
                 .Where(p =>
                     keywords.Any(k =>
                         p.Name.Contains(k, StringComparison.OrdinalIgnoreCase) ||
-                        p.ProductTags.Any(tag => tag.Tag.Contains(k, StringComparison.OrdinalIgnoreCase))))
+                        p.ProductTags.Any(tag => tag.Tag.Contains(k, StringComparison.OrdinalIgnoreCase))
+                        && p.Status == "Accepted"&&p.IsDeleted== false
+                       ))
                 .ToList();
         }
+
+        //----------------------------------------------------------------
+        //Delete Image From Product 
+        public async Task<bool> DeleteImagesFromProductAsync(int productId, List<string> imageUrls)
+        {
+            var product = await db.Products
+                .Include(p => p.ProductImages)
+                .FirstOrDefaultAsync(p => p.ProductId == productId);
+
+            if (product == null)
+            {
+                return false;
+            }
+
+            foreach (var imageUrl in imageUrls)
+            {
+                var image = product.ProductImages.FirstOrDefault(img => img.Url == imageUrl);
+                if (image != null)
+                {
+                    product.ProductImages.Remove(image);
+                }
+            }
+
+            db.Products.Update(product);
+            return true;
+        }
+
     }
 
 }

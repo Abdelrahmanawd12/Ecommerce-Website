@@ -28,6 +28,7 @@ export class LoginComponent {
 
   get email() { return this.loginForm.get('email'); }
   get password() { return this.loginForm.get('password'); }
+  get rememberMe() { return this.loginForm.get('rememberMe')}
 
   togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
@@ -35,38 +36,37 @@ export class LoginComponent {
 
   onSubmit(): void {
     this.errorMessage = '';
-    
+
     if (this.loginForm.invalid) {
       this.markFormGroupTouched(this.loginForm);
       this.errorMessage = 'Please fill all required fields correctly';
       return;
     }
-  
+
     this.isLoading = true;
-    const { email, password } = this.loginForm.value;
-  
-    this.loginService.GetuserbyEmail(email).subscribe({
+    const { email, password, rememberMe } = this.loginForm.value;
+
+    this.loginService.GetuserbyEmail(email, rememberMe).subscribe({
       next: (response) => {
-        console.log('User response from API:', response); 
+        console.log('Remmember Me: ', rememberMe)
+        console.log('User response from API:', response);
         if (!response || !response.id || !response.role) {
           this.isLoading = false;
           this.errorMessage = 'User not found';
           return;
         }
-        
-        // Store user data here from the API response
+
         const userRole = response.role;
         const userId = response.id;
-  
-        // Save user info in localStorage (only userId and role)
-        this.loginService.setUserInfo(userId, userRole); 
-  
-        // Now proceed to login after user info is fetched
-        this.loginService.login(email, password).subscribe({
+
+        this.loginService.setUserInfo(userId, userRole, rememberMe);
+
+        this.loginService.login(email, password, rememberMe).subscribe({
           next: (loginResponse) => {
             this.isLoading = false;
-            console.log('Login Response:', loginResponse); 
+            console.log('Login Response:', loginResponse);
             console.log('Passing userRole to redirect:', userRole);
+
             this.redirectBasedOnRole(userRole);
           },
           error: (error) => {
@@ -81,9 +81,7 @@ export class LoginComponent {
       }
     });
   }
-  
-  
-   
+
 
   private markFormGroupTouched(formGroup: FormGroup) {
     Object.values(formGroup.controls).forEach(control => {
@@ -99,15 +97,15 @@ export class LoginComponent {
     const rolesArray = Array.isArray(roles) ? roles : [roles];
     console.log('role in redirectBasedOnRole: '+roles)
     if (rolesArray.includes('Admin')) {
-      this.router.navigate(['/admin-dashboard']);
+      this.router.navigate(['/admin/dashboard']);
     } else if (rolesArray.includes('Seller')) {
       this.router.navigate(['/sellerDashboard']);
     } else if (rolesArray.includes('Customer')) {
-      window.location.href = '/home';      
+      window.location.href = '/home';
     }
   }
-  
-  
+
+
   navigateToForgotPassword(): void {
     this.router.navigate(['/forgot-password']);
   }
@@ -117,7 +115,7 @@ export class LoginComponent {
   }
 
   forgotPassword(): void {
-    console.log('Forgot password clicked');
+    this.router.navigate(['/forgotpassword']);
   }
 
 }

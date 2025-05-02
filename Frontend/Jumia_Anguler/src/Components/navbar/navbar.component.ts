@@ -10,7 +10,7 @@ declare var bootstrap: any;
 
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule, RouterLink, RouterLinkActive, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule],
   standalone: true,
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
@@ -120,6 +120,13 @@ this.toggleAuth();
   isLoggedIn: boolean = false;
 
 
+  navigateWithAuth(path: string) {
+    if (this.isLoggedIn) {
+      this.router.navigate([path]);
+    } else {
+      this.router.navigate(['/login']);
+    }
+  }
 
   toggleAuth() {
     const token = localStorage.getItem('token');

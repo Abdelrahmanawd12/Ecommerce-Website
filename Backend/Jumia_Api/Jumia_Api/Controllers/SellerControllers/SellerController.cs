@@ -121,8 +121,8 @@ namespace Jumia_Api.Controllers.SellerControllers
         [EndpointDescription("Get Subcategories by category name")]
         public IActionResult GetSubcategories(string catName)
         {
-            if(string.IsNullOrWhiteSpace(catName))
-        return BadRequest("Category name is required.");
+            if (string.IsNullOrWhiteSpace(catName))
+                return BadRequest("Category name is required.");
 
             var subCats = unit.SubCategoryRepository.GetAll()
                                 .Where(c => c.Category.CatName == catName)
@@ -180,7 +180,7 @@ namespace Jumia_Api.Controllers.SellerControllers
             var catsDto = mapper.Map<List<SubCategoryDTO>>(subs);
 
             return Ok(catsDto);
-        }     
+        }
 
         //---------------------------------------------------------------------------------------
         //Get All categories
@@ -301,7 +301,7 @@ namespace Jumia_Api.Controllers.SellerControllers
                         await image.CopyToAsync(stream);
                     }
 
-                    imagePaths.Add("/images/" + fileName); 
+                    imagePaths.Add("/images/" + fileName);
                 }
             }
 
@@ -329,47 +329,26 @@ namespace Jumia_Api.Controllers.SellerControllers
         //-------------------------------------------------------------------------------------
         //Edit Product
         [HttpPut("/updateProduct/{id}")]
-        [Consumes("multipart/form-data")]
         [ProducesResponseType(200, Type = typeof(ProductsSellerDTO))]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
         [ProducesErrorResponseType(typeof(void))]
         [EndpointSummary("Update Product")]
         [EndpointDescription("Update Product by productId")]
-        public async Task<IActionResult> UpdateProduct(int id, [FromForm] AddProduct dto)
+        public IActionResult UpdateProduct(int id, [FromBody] UpdateProductInfoDTO dto)
         {
             var product = unit.ProductsRepository.GetById(id);
 
             if (product == null)
                 return NotFound("Product not found");
 
-            var imagePaths = new List<string>();
-            if (dto.ImageUrls != null && dto.ImageUrls.Count > 0)
-            {
-                foreach (var image in dto.ImageUrls)
-                {
-                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
-                    var filePath = Path.Combine("wwwroot/images", fileName);
-
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await image.CopyToAsync(stream);
-                    }
-
-                    imagePaths.Add("/images/" + fileName);
-                }
-
-                product.ProductImages.Clear();
-                product.ProductImages = imagePaths.Select(p => new ProductImage { Url = p }).ToList();
-            }
-
             product.Name = dto.Name;
             product.Description = dto.Description;
             product.Price = dto.Price;
             product.Quantity = dto.Quantity;
             product.Brand = dto.Brand;
-            product.Discount = dto.Discount;
-            product.Weight = dto.Weight;
+            product.Discount = (decimal)dto.Discount;
+            product.Weight = (decimal)dto.Weight;
             product.SubCategoryId = dto.SubCategoryId;
             product.SellerId = dto.SellerId;
 
@@ -379,7 +358,67 @@ namespace Jumia_Api.Controllers.SellerControllers
             unit.ProductsRepository.Update(product);
             unit.Save();
 
-            return Ok(new { message = "Product updated successfully" });
+            return Ok(new { message = "Product info updated successfully" });
+        }
+        //-----------------------------------------------------------------------------------------
+        [Consumes("multipart/form-data")]
+        [HttpPatch("/UpdateProductImages/{id}")]
+        public async Task<IActionResult> UpdateProductImages(int id, [FromForm] UpdateProductImagesDto dto)
+        {
+            var product = unit.ProductsRepository.GetById(id);
+
+            if (product == null)
+                return NotFound("Product not found");
+
+            if (dto.ImageUrls == null || dto.ImageUrls.Count == 0)
+                return BadRequest("No images provided.");
+
+            var imagePaths = new List<string>();
+
+            foreach (var image in dto.ImageUrls)
+            {
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
+                var filePath = Path.Combine("wwwroot/images", fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await image.CopyToAsync(stream);
+                }
+
+                imagePaths.Add("/images/" + fileName);
+            }
+
+
+            foreach (var path in imagePaths)
+            {
+                product.ProductImages.Add(new ProductImage { Url = path });
+            }
+
+            unit.ProductsRepository.Update(product);
+            unit.Save();
+
+            return Ok(new { message = "Product images updated successfully" });
+        }
+
+        //------------------------------------------------------------------------
+        [HttpDelete("/DeleteProductImages/{productId}")]
+        public async Task<IActionResult> DeleteProductImages(int productId, [FromBody] List<string> imageUrls)
+        {
+            if (imageUrls == null || !imageUrls.Any())
+            {
+                return BadRequest("No images provided to delete");
+            }
+
+            var result = await unit.ProductsRepository.DeleteImagesFromProductAsync(productId, imageUrls);
+            if (result)
+            {
+                unit.Save();
+                return Ok("Images deleted successfully");
+            }
+            else
+            {
+                return BadRequest("Failed to delete images");
+            }
         }
 
         //-------------------------------------------------------------------------------------
@@ -393,7 +432,7 @@ namespace Jumia_Api.Controllers.SellerControllers
         [EndpointDescription("Get All Orders By Seller Id")]
         public IActionResult GetAllOrders(string sellerId)
         {
-            var orders =  unit.OrderRepository.GetAll().Where(s => s.SellerId == sellerId).ToList();
+            var orders = unit.OrderRepository.GetAll().Where(s => s.SellerId == sellerId).ToList();
 
             if (orders == null || !orders.Any())
             {
@@ -622,7 +661,7 @@ namespace Jumia_Api.Controllers.SellerControllers
 
             return Ok(new { message = $"Order status updated to {request.Status} for OrderId {request.OrderId}." });
         }
-       
+
         //-------------------------------------------------------------------------------------
         // Delete Order By Order Id And Seller Id
         [HttpDelete("/deleteOrder")]

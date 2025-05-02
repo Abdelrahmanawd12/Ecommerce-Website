@@ -1,0 +1,52 @@
+.selling-expenses-container {
+    background-color: white;
+    min-height: 100vh;
+    
+    .hero-section {
+      padding: 2rem 0;
+      background: linear-gradient(rgba(246, 139, 30, 0.05), white);
+      border-radius: 12px;
+    }
+    
+    .icon-wrapper {
+      width: 60px;
+      height: 60px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+    
+    .calculator-form {
+      border: 1px solid rgba(246, 139, 30, 0.2);
+    }
+    
+    table {
+      th {
+        background-color: rgba(246, 139, 30, 0.05);
+      }
+      
+      tr:hover {
+        background-color: rgba(246, 139, 30, 0.03);
+      }
+    }
+    
+    .accordion-button {
+      &:not(.collapsed) {
+        background-color: #f68b1e;
+        color: white;
+      }
+      
+      &:focus {
+        box-shadow: 0 0 0 0.25rem rgba(246, 139, 30, 0.25);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .calculator-section {
+        .row {
+          flex-direction: column-reverse;
+        }
+      }
+    }
+  }

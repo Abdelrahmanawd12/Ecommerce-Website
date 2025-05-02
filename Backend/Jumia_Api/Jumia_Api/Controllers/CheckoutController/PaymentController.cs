@@ -6,6 +6,7 @@ using Jumia_Api.Services.StripeService;
 using Jumia_Api.UnitOFWorks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Stripe.Checkout;
 
 namespace Jumia_Api.Controllers.CheckoutController
@@ -40,12 +41,12 @@ namespace Jumia_Api.Controllers.CheckoutController
             {
                 PriceData = new SessionLineItemPriceDataOptions
                 {
-                    Currency = "egp", 
+                    Currency = "egp",
                     ProductData = new SessionLineItemPriceDataProductDataOptions
                     {
                         Name = "Order total",
                     },
-                    UnitAmount = (long?)(request.Amount * 100), 
+                    UnitAmount = (long?)(request.Amount * 100),
                 },
                 Quantity = 1,
             },
@@ -111,11 +112,11 @@ namespace Jumia_Api.Controllers.CheckoutController
                 };
 
                 unit.OrderRepository.Add(order);
-                unit.Save();  
+                unit.Save();
 
                 var shipping = new Shipping
                 {
-                    OrderId = order.OrderId, 
+                    OrderId = order.OrderId,
                     ShippingMethod = checkoutRequest.Shipping.ShippingMethod,
                     ShippingAddress = checkoutRequest.Shipping.ShippingAddress,
                     ReceiverName = checkoutRequest.Shipping.ReceiverName,
@@ -130,7 +131,7 @@ namespace Jumia_Api.Controllers.CheckoutController
 
                 var payment = new Payment
                 {
-                    OrderId = order.OrderId, 
+                    OrderId = order.OrderId,
                     PaymentMethod = checkoutRequest.PaymentMethod,
                     Status = checkoutRequest.Payment.Status,
                     Amount = checkoutRequest.Payment.Amount,
@@ -139,11 +140,11 @@ namespace Jumia_Api.Controllers.CheckoutController
                 };
                 unit.PaymentRepository.Add(payment);
 
-                unit.Save();  
+                unit.Save();
 
                 var orderDTO = new OrderDTO
                 {
-                    OrderId = order.OrderId, 
+                    OrderId = order.OrderId,
                     OrderDate = order.OrderDate,
                     OrderStatus = order.OrderStatus,
                     PaymentMethod = order.PaymentMethod,
@@ -222,7 +223,7 @@ namespace Jumia_Api.Controllers.CheckoutController
             return Ok(addressDtos);
         }
         //----------------------------------------------------------
-        [HttpPost("address")]
+        [HttpPost("/address")]
         public IActionResult AddAddress(AddressDTO dto)
         {
             if (!ModelState.IsValid)
@@ -239,5 +240,40 @@ namespace Jumia_Api.Controllers.CheckoutController
                 address = dto
             });
         }
+        //------------------------------------------------------
+        [HttpPatch("/updateStock")]
+        public IActionResult UpdateStock([FromBody] List<OrderItemsDto> orderItems)
+        {
+            foreach (var item in orderItems)
+            {
+                var product = unit.ProductsRepository.GetById(item.ProductId);
+                if (product != null)
+                {
+                    if (item.Quantity > 0)
+                    {
+                        if (product.Quantity >= item.Quantity)
+                        {
+                            product.Quantity -= item.Quantity;
+                        }
+                        else
+                        {
+                            return BadRequest(new { message = $"Product with {item.ProductId} 5 not found." });
+                        }
+                    }
+                    else
+                    {
+                        return BadRequest(new { message = $"Product with {item.ProductId} 5 not found." });
+                    }
+                }
+                else
+                {
+                    return NotFound(new { message = $"Product with ID {item.ProductId} not found." });
+                }
+            }
+
+            unit.Save();
+            return Ok(new { message = "Stock updated successfully." });
+        }
+
     }
 }

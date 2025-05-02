@@ -1,4 +1,5 @@
-<!-- status-filter.component.html -->
+<div class="container lg-8 sm-3">
+  <!-- status-filter.component.html -->
 <div class="status-filter-container m-2 p-2">
   <div class="status-header">STATUS:</div>
   <div class="status-options">
@@ -14,12 +15,12 @@
     <input type="text" [(ngModel)]="searchTerm" (input)="onSearchChange()" (keyup.enter)="onSearch()"
       (focus)="showSuggestions = true" (blur)="onBlur()" placeholder="Search products..." aria-label="Search products">
 
-    <!-- ❌ Clear button -->
+    <!-- Clear button -->
     <button *ngIf="searchTerm" class="clear-button" (click)="clearSearch()" type="button">
       <i class="bi bi-x"></i>
     </button>
 
-    <!-- 🔍 Search button -->
+    <!-- Search button -->
     <button class="search-button" (click)="onSearch()" type="button">
       <i class="bi bi-search"></i>
     </button>
@@ -85,8 +86,8 @@
                   <i class="bi bi-box-seam text-muted mb-3" style="font-size: 3rem;"></i>
                   <h5 class="text-muted mb-2 fw-semibold">No products found</h5>
                   <p class="text-muted mb-0">Add your first product to get started</p>
-                  <button class="btn btn-addProd mt-3 px-4">
-                    <i class="bi bi-plus-circle me-2"></i>Add Product
+                  <button class="btn btn-addProd mt-3 px-4" routerLink="/sellerDashboard/addproduct">
+                    <i class="bi bi-plus-circle me-2" ></i>Add Product
                   </button>
                 </div>
               </td>
@@ -239,4 +240,6 @@
 </div>
 <div id="toast-container" class="position-fixed top-0 end-0 p-3" style="z-index: 1050;">
   <!-- Toasts will be inserted here dynamically -->
+</div>
+
 </div>

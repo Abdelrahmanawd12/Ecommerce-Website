@@ -324,7 +324,7 @@ namespace Jumia_Api.Services.Admin_Service
             var firstDayOfMonth = new DateTime(today.Year, today.Month, 1);
             var nextMonth = firstDayOfMonth.AddMonths(1);
 
-         
+
 
 
             var totalCategories = await _context.Categories.CountAsync();
@@ -335,7 +335,7 @@ namespace Jumia_Api.Services.Admin_Service
 
             var newUsersThisMonth = await _context.Users.CountAsync(u => !u.IsDeleted);
 
-      
+
 
 
             var totalProducts = await _context.Products.CountAsync();

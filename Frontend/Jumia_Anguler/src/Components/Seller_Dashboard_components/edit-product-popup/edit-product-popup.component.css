@@ -1,163 +1,177 @@
 .product-edit-dialog {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    
-    .dialog-header {
-      background-color: #FFA500;
-      color: white;
-      padding: 1rem;
-      margin: 0;
-      border-radius: 8px 8px 0 0;
-      display: flex;
-      align-items: center;
-      border: 1px solid #e67e22;
-      border-bottom: none;
-      
-      .icon {
-        margin-right: 0.5rem;
-      }
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  .dialog-header {
+    background-color: #f68b1e;
+    color: white;
+    padding: 1rem;
+    margin: 0;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    align-items: center;
+    border: 1px solid #e67e22;
+    border-bottom: none;
+
+    .icon {
+      margin-right: 0.5rem;
     }
-    
-    .dialog-content {
+  }
+
+  .dialog-content {
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+    border-left: 1px solid #dee2e6;
+    border-right: 1px solid #dee2e6;
+
+    .edit-form {
+      background: white;
       padding: 1.5rem;
-      background-color: #f8f9fa;
-      border-left: 1px solid #dee2e6;
-      border-right: 1px solid #dee2e6;
-      
-      .edit-form {
-        background: white;
-        padding: 1.5rem;
-        border-radius: 8px;
-        border: 1px solid #dee2e6;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-      }
-    }
-    
-    .form-columns {
-      display: flex;
-      gap: 1.5rem;
-      
-      .form-column {
-        flex: 1;
-      }
-    }
-    
-    .form-group {
-      margin-bottom: 1.25rem;
-      
-      &.full-width {
-        width: 100%;
-      }
-      
-      .form-label {
-        display: block;
-        margin-bottom: 0.5rem;
-        color: #495057;
-        font-weight: 500;
-      }
-      
-      .form-control {
-        width: 100%;
-        padding: 0.5rem 0.75rem;
-        border: 1px solid #ced4da;
-        border-radius: 4px;
-        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-        
-        &:focus {
-          border-color: #FFA500;
-          box-shadow: 0 0 0 0.2rem rgba(255, 165, 0, 0.25);
-          outline: none;
-        }
-      }
-      
-      textarea.form-control {
-        min-height: 80px;
-      }
-    }
-    
-    .input-group {
-      display: flex;
-      
-      .input-group-text {
-        background-color: #f8f9fa;
-        border: 1px solid #ced4da;
-        padding: 0.5rem 0.75rem;
-        color: #495057;
-      }
-      
-      .form-control {
-        flex: 1;
-        border-left: none;
-      }
-      
-      &:first-child .form-control {
-        border-left: 1px solid #ced4da;
-        border-top-left-radius: 4px;
-        border-bottom-left-radius: 4px;
-      }
-    }
-    
-    .rating-container {
-      display: flex;
-      align-items: center;
-      
-      .rating-input {
-        width: 60px;
-        margin-right: 1rem;
-      }
-      
-      .stars {
-        display: flex;
-        
-        .star {
-          color: #FFA500;
-          margin-left: 0.25rem;
-          opacity: 0.25;
-          
-          &.active {
-            opacity: 1;
-          }
-        }
-      }
-    }
-    
-    .image-upload-container {
-      border: 1px dashed #ced4da;
-      border-radius: 4px;
-      padding: 1rem;
-      background-color: #f8f9fa;
-      
-      .upload-hint {
-        color: #6c757d;
-        font-size: 0.875rem;
-        display: block;
-        margin-top: 0.5rem;
-      }
-    }
-    
-    .dialog-actions {
-      padding: 1rem 1.5rem;
-      background-color: #f8f9fa;
-      border-radius: 0 0 8px 8px;
+      border-radius: 8px;
       border: 1px solid #dee2e6;
-      border-top: none;
-      
-      .cancel-btn {
-        color: #6c757d;
-        border-color: #6c757d;
-        margin-right: 0.75rem;
-        
-        &:hover {
-          background-color: #f8f9fa;
-        }
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  .form-columns {
+    display: flex;
+    gap: 1.5rem;
+
+    .form-column {
+      flex: 1;
+    }
+  }
+
+  .form-group {
+    margin-bottom: 1.25rem;
+
+    &.full-width {
+      width: 100%;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #495057;
+      font-weight: 500;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+      &:focus {
+        border-color: #f68b1e;
+        box-shadow: 0 0 0 0.2rem rgba(255, 165, 0, 0.25);
+        outline: none;
       }
-      
-      .save-btn {
-        background-color: #FFA500;
-        color: white;
-        
-        &:hover {
-          background-color: #e69500;
+    }
+
+    textarea.form-control {
+      min-height: 80px;
+    }
+  }
+
+  .input-group {
+    display: flex;
+
+    .input-group-text {
+      background-color: #f8f9fa;
+      border: 1px solid #ced4da;
+      padding: 0.5rem 0.75rem;
+      color: #495057;
+    }
+
+    .form-control {
+      flex: 1;
+      border-left: none;
+    }
+
+    &:first-child .form-control {
+      border-left: 1px solid #ced4da;
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+    }
+  }
+
+  .rating-container {
+    display: flex;
+    align-items: center;
+
+    .rating-input {
+      width: 60px;
+      margin-right: 1rem;
+    }
+
+    .stars {
+      display: flex;
+
+      .star {
+        color: #f68b1e;
+        margin-left: 0.25rem;
+        opacity: 0.25;
+
+        &.active {
+          opacity: 1;
         }
       }
     }
   }
+
+  .image-upload-container {
+    border: 1px dashed #ced4da;
+    border-radius: 4px;
+    padding: 1rem;
+    background-color: #f8f9fa;
+
+    .upload-hint {
+      color: #6c757d;
+      font-size: 0.875rem;
+      display: block;
+      margin-top: 0.5rem;
+    }
+  }
+
+  .dialog-actions {
+    padding: 1rem 1.5rem;
+    background-color: #f8f9fa;
+    border-radius: 0 0 8px 8px;
+    border: 1px solid #dee2e6;
+    border-top: none;
+
+    .cancel-btn {
+      color: #6c757d;
+      border-color: #6c757d;
+      margin-right: 0.75rem;
+
+      &:hover {
+        background-color: #f8f9fa;
+      }
+    }
+
+    .save-btn {
+      background-color: #f68b1e;
+      color: white;
+
+      &:hover {
+        background-color: #f68b1e;
+      }
+    }
+  }
+  .image-preview {
+    display: inline-block;
+    margin: 5px;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+  }
+  
+  .image-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+

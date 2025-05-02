@@ -132,7 +132,7 @@ input[type="number"] {
   position: absolute;
   top: 3px;
   right: 3px;
-  background-color:#ffc400;
+  background-color:#FF7800;
   color: white;
   font-size: 0.75rem;
   font-weight: 600;
@@ -210,10 +210,10 @@ input[type="number"] {
   color: white;
 }
 .fa-shopping-cart{
-  color: #ffc400;
+  color: #FF7800;
 }
 .btn-outline-warning:hover {
-  background-color: #ffc400;
+  background-color: #FF7800;
 }
 .fa-heart {
   color: red;
@@ -223,4 +223,16 @@ input[type="number"] {
 .fa-heart:hover {
   transform: scale(1.1);
   text-shadow: 0 0 8px rgba(253, 3, 19, 0.4);
+}
+.text-orange{
+  color: #FF7800;
+}
+.btn-orange{
+  background-color: #FF7800;
+  color: white;
+}
+.btn-orange:hover{
+  background-color: transparent;
+  color: #FF7800;
+  border: 2px solid #FF7800;
 }

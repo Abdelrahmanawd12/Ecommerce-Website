@@ -1,8 +1,8 @@
 /* تحسينات للنسخة العربية */
 :root {
-  --jumia-orange: #FF6900;
+  --jumia-orange: #f68b1e;
   --jumia-orange-dark: #E55D00;
-  --jumia-orange-light: #FF8C00;
+  --jumia-orange-light: #f68b1e;
   --gray-light: #f4f4f4;
   --gray-border: #ddd;
   --dark-text: #222;
@@ -130,4 +130,18 @@ input:focus, select:focus {
     margin-left: 0;
     margin-right: 1rem;
   }
+}
+.btn-create{
+  background-color: #f68b1e;
+  color: white;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 1.05rem;
+}
+.btn-create:hover{
+  background-color: #e68a00;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 153, 0, 0.3);
 }
