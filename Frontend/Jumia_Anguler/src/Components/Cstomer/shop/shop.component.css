@@ -72,10 +72,10 @@ body {
 }
 
 input[type="checkbox"]{
-  accent-color: #ffc400;
+  accent-color: #FF7800;
 }
 .clearfilter{
-  background-color: #ffc400;
+  background-color: #FF7800;
   color: white ;
   font-weight: 600;
 }

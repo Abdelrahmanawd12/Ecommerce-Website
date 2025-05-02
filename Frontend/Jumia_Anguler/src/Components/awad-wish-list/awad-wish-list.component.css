@@ -26,7 +26,7 @@
 }
 
 .category:hover {
-  background-color: #ffc107;
+  background-color: #f68b1e;
   transform: translateX(5px);
   color: #000;
 }
@@ -127,8 +127,9 @@
 
 .discount-badge {
   font-size: 0.7rem;
-  background-color: #f8cb4e;
-  color: white;
+  background-color: white;
+  color: #f68b1e;
+  border: 1px solid #f68b1e;
 }
 
 /* Empty State */
@@ -174,6 +175,27 @@
 }
 
 .toast.warning {
-  background-color: #ffc107;
+  background-color: #f68b1e;
   color: #212529;
+}
+.btn-orange{
+  background-color: #f68b1e;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+.btn-orange:hover{
+  background-color: #e67e22;
+  color: white;
+}
+.bg-orange{
+  background-color: #f68b1e;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
 }

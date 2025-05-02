@@ -68,6 +68,13 @@ export class AppComponent implements OnInit {
         // Hide header for Seller Dashboard, Admin Dashboard, and Login pages
         const currentRoute = this.router.url;
 
+        if (currentRoute === '/error' || !this.router.config.some(r => r.path === currentRoute.replace('/', ''))) {
+          this.showHeader = false;
+          this.showFooter = false;
+          this.showChatbotAI = false;
+          this.showMarginTop = false;
+          return;
+        }
         if (currentRoute === '/login' || currentRoute === '/error' || currentRoute === '/register'
           || currentRoute === '/sellerRegisteration' || currentRoute === '/sellerDashboard' || currentRoute === '/intro'
           || currentRoute === '/sellOnJumia' || currentRoute === '/dashboard' || currentRoute == '/sellerDashboard/homeseller'
@@ -80,7 +87,7 @@ export class AppComponent implements OnInit {
           ||currentRoute=='/order-success'||currentRoute=='/success'||currentRoute=='/cancel' || currentRoute == '/forgotpassword'
           || currentRoute.startsWith('/resetpassword')
           || currentRoute == '/admin/addcategory'|| currentRoute == '/admin/reports'|| currentRoute == '/checkout'||currentRoute=='/order-success'
-          ||currentRoute=='/success'||currentRoute=='/cancel'||currentRoute=='/unauthorized'||currentRoute == '/shipping'||currentRoute == '/sellingExpenses'
+          ||currentRoute=='/success'||currentRoute=='/cancel'||currentRoute=='/unauthorized'||currentRoute == '/shipping'||currentRoute == '/sellingExpenses'||currentRoute == 'registration-success'
         ) {
           this.showHeader = false;
           this.showMarginTop = false;
@@ -106,7 +113,7 @@ export class AppComponent implements OnInit {
           ||currentRoute=='/order-success'||currentRoute=='/success'||currentRoute=='/cancel'|| currentRoute == '/forgotpassword'
           || currentRoute.startsWith('/resetpassword')
           || currentRoute == '/admin/addcategory'|| currentRoute == '/admin/reports'|| currentRoute == '/checkout'||currentRoute=='/order-success'
-          ||currentRoute=='/success'||currentRoute=='/cancel'||currentRoute=='/unauthorized'||currentRoute == '/shipping'||currentRoute == '/sellingExpenses'
+          ||currentRoute=='/success'||currentRoute=='/cancel'||currentRoute=='/unauthorized'||currentRoute == '/shipping'||currentRoute == '/sellingExpenses'||currentRoute == 'registration-success'
         ) {
           this.showFooter = false;
           this.showMarginTop = false;
