@@ -24,7 +24,7 @@
   }
   
   .btn-warning {
-    background-color: #f68b1e;
+    background-color: #FF9900;
     color: white;
     font-weight: 500;
     border-radius: 8px;
@@ -49,7 +49,7 @@
   }
   
   .form-control:focus {
-    border-color: #f68b1e;
+    border-color: #FF9900;
     box-shadow: 0 0 0 0.25rem rgba(255, 153, 0, 0.15);
   }
   
@@ -99,7 +99,7 @@
   }
   
   a {
-    color: #f68b1e;
+    color: #FF9900;
     text-decoration: none;
     transition: color 0.2s ease;
   }
@@ -186,14 +186,14 @@
   }
   
   .verification-digits input:focus {
-    border-color: #f68b1e;
+    border-color: #FF9900;
     outline: none;
     box-shadow: 0 0 0 2px rgba(255, 153, 0, 0.2);
     background-color: #fff;
   }
   
   .verification-digits input.filled {
-    border-color: #f68b1e;
+    border-color: #FF9900;
     background-color: #fff8f0;
   }
 
@@ -212,7 +212,7 @@
     opacity: 0.7;
   }
   .verification-digits input.filled {
-    border-color: #f68b1e;
+    border-color: #FF9900;
     background-color: #fff8f0;
   }
 
@@ -556,4 +556,77 @@ h2 {
         width: 25px;
         opacity: 1;
     }
+}
+
+.verify-message {
+  text-align: center;
+  margin-top: 0.5rem;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+/* .verify-success {
+  color: #28a745;
+  background-color: #e8f5e9;
+} */
+
+.verify-danger {
+  color: #dc3545;
+  background-color: #ffebee;
+  animation: verify-shake 0.5s;
+}
+
+@keyframes verify-shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-5px); }
+  40%, 80% { transform: translateX(5px); }
+}
+
+.verify {
+  background-color: #FF7900;
+  color: white;
+  transition: background-color 0.3s ease; 
+}
+
+.verify:hover {
+  background-color: #E56B00;
+  box-shadow: 0 4px 8px rgba(255, 121, 0, 0.3);
+  color: white;
+}
+
+.jumia-back-btn {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 32px;        
+  height: 32px;
+  background-color: rgba(255, 121, 0, 0.1); 
+  color: #FF7900;     
+  border: 1px solid rgba(255, 121, 0, 0.3); 
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 1000;
+  font-size: 0.9rem;   
+}
+
+.jumia-back-btn:hover {
+  background-color: rgba(255, 121, 0, 0.2);  
+  color: #E56B00;     
+  border-color: rgba(255, 121, 0, 0.5);
+  transform: scale(1.05); 
+}
+
+.jumia-back-btn i {
+  font-size: 0.9rem;  
+  transition: transform 0.2s ease;
+}
+
+.jumia-back-btn:hover i {
+  transform: translateX(-2px); 
 }

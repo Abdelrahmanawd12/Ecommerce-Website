@@ -93,7 +93,8 @@ export const routes: Routes = [
   { path: 'help', loadComponent: () => import('../Components/help-center/help-center.component').then((m) => m.HelpCenterComponent) },
   { path: 'login', loadComponent: () => import('../Components/login/login.component').then((m) => m.LoginComponent), canActivate: [loginGuard] },
   { path: 'register', loadComponent: () => import('../Components/customer-register/customer-register.component').then(m => m.CustomerRegisterComponent), canActivate: [loginGuard] },
-
+  { path: 'forgotpassword', loadComponent: () => import('../Components/Password/forgot-password/forgot-password.component').then((m) => m.ForgotPasswordComponent)},
+  { path: 'resetpassword', loadComponent: () => import('../Components/Password/reset-password/reset-password.component').then((m) => m.ResetPasswordComponent)},
   // error page
   { path: '**', loadComponent: () => import('../Components/error/error.component').then(m => m.ErrorComponent) },
 ];

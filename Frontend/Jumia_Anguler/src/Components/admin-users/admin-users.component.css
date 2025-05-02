@@ -25,11 +25,7 @@
 }
 
 .jumia-swal-title {
-  color: #f68b1e;
-  font-weight: 700;
-}
-
-.jumia-swal-confirm-btn {
+  color: #FF7800;
   font-weight: 600;
   letter-spacing: 0.5px;
   padding: 8px 20px;

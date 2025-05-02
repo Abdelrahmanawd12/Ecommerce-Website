@@ -28,16 +28,17 @@ namespace Jumia_Api.Repository
                 .Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
             return db.Products
-                .Include(p => p.ProductTags) 
-                .AsEnumerable() 
-                .Where(p =>
+                .Include(p => p.ProductTags)
+                .AsEnumerable()
+               .Where(p =>
+                    p.Status == "Accepted" &&
+                    !p.IsDeleted &&
                     keywords.Any(k =>
                         p.Name.Contains(k, StringComparison.OrdinalIgnoreCase) ||
                         p.ProductTags.Any(tag => tag.Tag.Contains(k, StringComparison.OrdinalIgnoreCase))
-                        && p.Status == "Accepted"&&p.IsDeleted== false
-                       ))
-                .ToList();
-        }
+                    )
+                ).ToList();
+                        }
 
         //----------------------------------------------------------------
         //Delete Image From Product 
@@ -49,7 +50,7 @@ namespace Jumia_Api.Repository
 
             if (product == null)
             {
-                return false; 
+                return false;
             }
 
             foreach (var imageUrl in imageUrls)
@@ -61,7 +62,7 @@ namespace Jumia_Api.Repository
                 }
             }
 
-            db.Products.Update(product); 
+            db.Products.Update(product);
             return true;
         }
 

@@ -267,7 +267,7 @@ namespace Jumia_Api.Controllers.CheckoutController
                 }
                 else
                 {
-                    return NotFound(new {message= $"Product with ID {item.ProductId} not found." });
+                    return NotFound(new { message = $"Product with ID {item.ProductId} not found." });
                 }
             }
 

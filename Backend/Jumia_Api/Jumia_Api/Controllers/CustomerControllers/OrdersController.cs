@@ -89,7 +89,7 @@ namespace Jumia_Api.Controllers.CustomerControllers
                 TotalAmount = order.TotalAmount,
                 OrderTrackingNumber = order.OrderTrackingNumber,
                 Items = order.OrderItems.Select(oi => new OrderItemDto
-                {   
+                {
                     ProductName = oi.Product.Name,
                     ProductImageUrl = oi.Product.ProductImages.FirstOrDefault().Url,
                     Quantity = oi.Quantity,
