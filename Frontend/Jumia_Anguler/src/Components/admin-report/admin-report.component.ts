@@ -37,23 +37,17 @@ export class AdminReportComponent implements OnInit {
   }
 
   fetchDashboardData(): void {
-    // In a real app, use the service to get data
-    // this.adminService.getDashboardData().subscribe(data => {
-    //   this.dashboardData = data;
-    //   this.initCharts();
-    // });
-
-    // Simulated data for demo
-    this.dashboardData = {
-      totalUsers: 1250,
-      totalCategories: 12,
-      totalSubCategories: 45,
-      totalProducts: 876,
-      outOfStockProducts: 67,
-      newUsersThisMonth: 84,
-      totalSales: 125000,
-      totalCommission: 18750
-    };
+    this.adminService.getDashboardStats().subscribe({
+      next: (data) => {
+        this.dashboardData = data;
+        this.initCharts();
+      },
+      error: (err) => {
+        console.error('Error fetching dashboard data:', err);
+      
+      }
+    });
+  
     this.initCharts();
   }
 
@@ -324,5 +318,5 @@ export class AdminReportComponent implements OnInit {
     const sales = this.generateSalesTrendData();
     const commission = this.generateCommissionTrendData();
     return sales.map((val, i) => val - commission[i]);
-  }
+  }
 }
