@@ -221,7 +221,7 @@
                      style="width: 80px; height: 80px; object-fit: cover;">
                 <span *ngIf="item.discount > 0" 
                       class="badge bg-danger position-absolute top-0 start-0 translate-middle">
-                  -{{item.discount}}%
+                  -{{(item.discount/item.price)*100|number:'1.2-2'}}%
                 </span>
               </div>
               <div class="flex-grow-1">

@@ -36,37 +36,37 @@ export class LoginComponent {
 
   onSubmit(): void {
     this.errorMessage = '';
-    
+
     if (this.loginForm.invalid) {
       this.markFormGroupTouched(this.loginForm);
       this.errorMessage = 'Please fill all required fields correctly';
       return;
     }
-  
+
     this.isLoading = true;
     const { email, password, rememberMe } = this.loginForm.value;
-  
+
     this.loginService.GetuserbyEmail(email, rememberMe).subscribe({
       next: (response) => {
         console.log('Remmember Me: ', rememberMe)
-        console.log('User response from API:', response); 
+        console.log('User response from API:', response);
         if (!response || !response.id || !response.role) {
           this.isLoading = false;
           this.errorMessage = 'User not found';
           return;
         }
-  
+
         const userRole = response.role;
         const userId = response.id;
-  
+
         this.loginService.setUserInfo(userId, userRole, rememberMe);
-  
+
         this.loginService.login(email, password, rememberMe).subscribe({
           next: (loginResponse) => {
             this.isLoading = false;
-            console.log('Login Response:', loginResponse); 
+            console.log('Login Response:', loginResponse);
             console.log('Passing userRole to redirect:', userRole);
-  
+
             this.redirectBasedOnRole(userRole);
           },
           error: (error) => {
@@ -80,8 +80,8 @@ export class LoginComponent {
         this.errorMessage = 'User not found';
       }
     });
-  }  
-   
+  }
+
 
   private markFormGroupTouched(formGroup: FormGroup) {
     Object.values(formGroup.controls).forEach(control => {
@@ -97,15 +97,15 @@ export class LoginComponent {
     const rolesArray = Array.isArray(roles) ? roles : [roles];
     console.log('role in redirectBasedOnRole: '+roles)
     if (rolesArray.includes('Admin')) {
-      this.router.navigate(['/admin-dashboard']);
+      this.router.navigate(['/admin/dashboard']);
     } else if (rolesArray.includes('Seller')) {
       this.router.navigate(['/sellerDashboard']);
     } else if (rolesArray.includes('Customer')) {
-      window.location.href = '/home';      
+      window.location.href = '/home';
     }
   }
-  
-  
+
+
   navigateToForgotPassword(): void {
     this.router.navigate(['/forgot-password']);
   }

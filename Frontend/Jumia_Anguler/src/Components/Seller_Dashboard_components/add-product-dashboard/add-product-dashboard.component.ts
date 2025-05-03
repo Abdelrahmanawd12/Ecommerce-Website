@@ -33,7 +33,7 @@ export class AddProductDashboardComponent {
       subcat: ['', [Validators.required]],
       price: ['', [Validators.required, Validators.pattern(/^(?!0+(\.0{1,2})?$)\d+(\.\d{1,2})?$/)]],
       quantity: ['', [Validators.required, Validators.pattern(/^[1-9]\d*$/)]],
-      discount: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/), Validators.min(0), Validators.max(100)]],
+      discount: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
       weight: ['', [Validators.required, Validators.pattern(/^(?!0$)\d+(\.\d{1,2})?$/)]],
       description: ['', [Validators.required, Validators.minLength(10),Validators.pattern(/^[\s\S]{10,1000}$/)]],
       tags: ['', [Validators.required, Validators.minLength(2), Validators.pattern(/^(?=.*[a-zA-Z])[a-zA-Z0-9\s,]+$/)]]

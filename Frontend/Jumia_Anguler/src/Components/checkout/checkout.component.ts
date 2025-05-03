@@ -328,7 +328,7 @@ export class CheckoutComponent implements OnInit {
 
   calculateDiscount(): number {
     return this.order.items.reduce((sum: number, item: { price: number; quantity: number; discount: number; }) => {
-      return sum + (item.price * item.quantity * (item.discount / 100));
+      return sum + (item.discount * item.quantity);
     }, 0);
   }
 

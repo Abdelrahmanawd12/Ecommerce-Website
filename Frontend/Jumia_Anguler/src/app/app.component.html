@@ -5,7 +5,7 @@
 
 <app-navbar *ngIf="showHeader"></app-navbar>
 
-<div class="main-content" [ngClass]="getMarginClass()">
+<div class="main-content" [ngStyle]="{ 'margin-top': showMarginTop ? '150px' : '0' }">
   <main>
     <router-outlet></router-outlet>
   </main>

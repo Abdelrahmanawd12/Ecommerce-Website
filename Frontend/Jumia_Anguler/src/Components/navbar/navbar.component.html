@@ -9,13 +9,13 @@
   </div>
 </div>
 
-<div class="navbar">
+<div class="navbar ">
   <div class="logo">
     <img src="assets/Jumia-Logo.png" alt="Jumia" routerLink="/home" />
   </div>
   <div class="search-box position-relative">
     <!-- input field -->
-    <input type="text" placeholder="Search products, brands and categories" [(ngModel)]="searchQuery"
+    <input type="text" placeholder="Search products" [(ngModel)]="searchQuery"
       (input)="onSearchChange()" class="form-control search-input" />
 
     <button  class="btn btn-search">
@@ -67,7 +67,7 @@
           </button>
           <a (click)="navigateWithAuth('/account')"><i class="fa fa-user"></i> My Account</a>
           <a (click)="navigateWithAuth('/account/order')"><i class="fa fa-box"></i> Orders</a>
-          <a (click)="navigateWithAuth('/account/wishlist')"><i class="fa fa-heart"></i> Wishlist</a>
+          <a (click)="navigateWithAuth('/account/awadWishlist')"><i class="fa fa-heart"></i> Wishlist</a>
         </div>
       </div>
 

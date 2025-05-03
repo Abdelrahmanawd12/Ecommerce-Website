@@ -17,7 +17,7 @@
               </button>
             </div>
           </div>
-          
+
           <!-- View Mode -->
           <div *ngIf="!isEditing && accountDetails" class="view-mode">
             <div class="row mb-4">
@@ -60,7 +60,8 @@
                       Not available
                     </ng-template>
                   </p>
-                </div>                
+                </div>
+
               </div>
             </div>
           </div>
@@ -70,13 +71,13 @@
             <div class="row mb-4">
               <div class="col-md-6 mb-3">
                 <label for="firstName" class="form-label fw-semibold">First Name</label>
-                <input type="text" class="form-control form-control-lg" id="firstName" 
-                       [(ngModel)]="updatedAddressBook.firstName" name="firstName" required>
+                <input type="text" class="form-control form-control-lg" id="firstName"
+                  [(ngModel)]="updatedAddressBook.firstName" name="firstName" required>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="lastName" class="form-label fw-semibold">Last Name</label>
-                <input type="text" class="form-control form-control-lg" id="lastName" 
-                       [(ngModel)]="updatedAddressBook.lastName" name="lastName" required>
+                <input type="text" class="form-control form-control-lg" id="lastName"
+                  [(ngModel)]="updatedAddressBook.lastName" name="lastName" required>
               </div>
             </div>
 
@@ -92,29 +93,29 @@
               </div>
               <div class="col-md-6 mb-3">
                 <label for="phone" class="form-label fw-semibold">Phone Number</label>
-                <input type="tel" class="form-control form-control-lg" id="phone" 
-                       [(ngModel)]="updatedAddressBook.phoneNumber" name="phoneNumber" required>
+                <input type="tel" class="form-control form-control-lg" id="phone"
+                  [(ngModel)]="updatedAddressBook.phoneNumber" name="phoneNumber" required>
               </div>
             </div>
 
             <div class="row mb-4">
               <div class="col-md-12 mb-3">
                 <label for="street" class="form-label fw-semibold">Street Address</label>
-                <input type="text" class="form-control form-control-lg" id="street" 
-                       [(ngModel)]="updatedAddressBook.street" name="street" required>
+                <input type="text" class="form-control form-control-lg" id="street"
+                  [(ngModel)]="updatedAddressBook.street" name="street" required>
               </div>
             </div>
 
             <div class="row mb-4">
               <div class="col-md-6 mb-3">
                 <label for="city" class="form-label fw-semibold">City</label>
-                <input type="text" class="form-control form-control-lg" id="city" 
-                       [(ngModel)]="updatedAddressBook.city" name="city" required>
+                <input type="text" class="form-control form-control-lg" id="city" [(ngModel)]="updatedAddressBook.city"
+                  name="city" required>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="country" class="form-label fw-semibold">Country</label>
-                <select class="form-select form-select-lg" id="country" 
-                        [(ngModel)]="updatedAddressBook.country" name="country" required>
+                <select class="form-select form-select-lg" id="country" [(ngModel)]="updatedAddressBook.country"
+                  name="country" required>
                   <option value="">Select Country</option>
                   <option value="Egypt">Egypt</option>
                   <option value="Nigeria">Nigeria</option>

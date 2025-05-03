@@ -24,7 +24,7 @@
       <tbody>
         <tr *ngFor="let product of pendingProducts">
           <td>
-            <img [src]="imgBase+product.imageUrls || 'assets/default_product.png'" 
+            <img [src]="imgBase+product.imageUrls[0] || 'assets/default_product.png'" 
                  alt="{{product.name}}"
                  class="product-image">
           </td>

@@ -17,7 +17,7 @@
 
 <div class="container">
 <!-- product details -->
-<div class="container py-5">
+<div class="container py-3 parent">
   <div class="row align-items-start gy-4">
     <!-- Product Images -->
     <div class="col-12 col-lg-6">
@@ -80,17 +80,10 @@
           <!-- Rating -->
           <div class="mb-2 d-flex align-items-center gap-1">
             <span *ngFor="let star of [].constructor(fullStars)">
-<<<<<<< HEAD
-              <i class="bi bi-star-fill text-warning"></i>
-            </span>
-            <span *ngIf="halfStars">
-              <i class="bi bi-star-half text-warning"></i>
-=======
               <i class="bi bi-star-fill text-orange"></i>
             </span>
             <span *ngIf="halfStars">
               <i class="bi bi-star-half text-orange"></i>
->>>>>>> 2bf86c872881a7a8af0af3ec825aa33b9ce1212b
             </span>
             <span *ngFor="let star of [].constructor(emptyStars)">
               <i class="bi bi-star text-muted"></i>

@@ -15,12 +15,12 @@ export class ErrorComponent {
   }
 
   // ngOnInit() {
-  //   document.querySelector('app-header')?.classList.add('d-none');
+  //   document.querySelector('app-navbar')?.classList.add('d-none');
   //   document.querySelector('app-footer')?.classList.add('d-none');
   // }
 
   // ngOnDestroy() {
-  //   document.querySelector('app-header')?.classList.remove('d-none');
+  //   document.querySelector('app-navbar')?.classList.remove('d-none');
   //   document.querySelector('app-footer')?.classList.remove('d-none');
   // }
 }

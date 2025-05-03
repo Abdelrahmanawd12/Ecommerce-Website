@@ -10,6 +10,7 @@ import { roleGuard } from '../Guards/role.guard';
 import { checkoutGuard } from '../Guards/checkout.guard';
 import { noSellerOrAdminGuard } from '../Guards/no-seller-oradmin.guard';
 import { UnauthorizedComponent } from '../Components/unauthorized/unauthorized.component';
+import { ErrorComponent } from '../Components/error/error.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -21,7 +22,6 @@ export const routes: Routes = [
   { path: 'cart', loadComponent: () => import('../Components/cart/cart.component').then((m) => m.CartComponent) ,
      canActivate: [authGuard,loginGuard,roleGuard],
      data: { roles: ['Customer'] } },
-  { path: 'awadWishlist', loadComponent: () => import('../Components/awad-wish-list/awad-wish-list.component').then((m) => m.AwadWishListComponent) },
   { path: 'shop/:id', component: ShopComponent },
   { path: 'details/:id', component: ProductDetailsComponent },
 
@@ -86,15 +86,17 @@ export const routes: Routes = [
       { path: 'personalInformation', loadComponent: () => import('../Components/Account_Component/account-personal-information/account-personal-information.component').then((m) => m.AccountPersonalInformationComponent) },
       { path: 'order', loadComponent: () => import('../Components/Account_Component/order/order.component').then((m) => m.OrderComponent) },
       { path: 'order/:id', loadComponent: () => import('../Components/Account_Component/order/order.component').then((m) => m.OrderComponent) },
-      { path: 'wishlist', loadComponent: () => import('../Components/Account_Component/wishlist/wishlist.component').then((m) => m.WishlistComponent) }
+      { path: 'wishlist', loadComponent: () => import('../Components/Account_Component/wishlist/wishlist.component').then((m) => m.WishlistComponent) },
+      { path: 'awadWishlist', loadComponent: () => import('../Components/awad-wish-list/awad-wish-list.component').then((m) => m.AwadWishListComponent) },
     ]
   },
 
+  {path:'registration-success',loadComponent:()=>import('../Components/Seller_Dashboard_components/registeration-success/registeration-success.component').then((m)=>m.RegisterationSuccessComponent)},
   { path: 'help', loadComponent: () => import('../Components/help-center/help-center.component').then((m) => m.HelpCenterComponent) },
   { path: 'login', loadComponent: () => import('../Components/login/login.component').then((m) => m.LoginComponent), canActivate: [loginGuard] },
   { path: 'register', loadComponent: () => import('../Components/customer-register/customer-register.component').then(m => m.CustomerRegisterComponent), canActivate: [loginGuard] },
   { path: 'forgotpassword', loadComponent: () => import('../Components/Password/forgot-password/forgot-password.component').then((m) => m.ForgotPasswordComponent)},
   { path: 'resetpassword', loadComponent: () => import('../Components/Password/reset-password/reset-password.component').then((m) => m.ResetPasswordComponent)},
   // error page
-  { path: '**', loadComponent: () => import('../Components/error/error.component').then(m => m.ErrorComponent) },
+  { path: '**',component:ErrorComponent},
 ];

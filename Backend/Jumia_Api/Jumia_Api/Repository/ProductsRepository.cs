@@ -12,11 +12,11 @@ namespace Jumia_Api.Repository
 
         public Product getByName(string name)
         {
-            return db.Products.Where(p => p.Status == "accepted" && p.IsDeleted == false).FirstOrDefault(p => p.Name == name);
+            return db.Products.Where(p => p.Status == "Accepted" && p.IsDeleted == false).FirstOrDefault(p => p.Name == name);
         }
         public Product getById(int id)
         {
-            return db.Products.Where(p => p.Status == "accepted" && p.IsDeleted == false).FirstOrDefault(p => p.ProductId == id);
+            return db.Products.Where(p => p.Status == "Accepted" && p.IsDeleted == false).FirstOrDefault(p => p.ProductId == id);
         }
 
 
@@ -30,14 +30,15 @@ namespace Jumia_Api.Repository
             return db.Products
                 .Include(p => p.ProductTags)
                 .AsEnumerable()
-                .Where(p =>
+               .Where(p =>
+                    p.Status == "Accepted" &&
+                    !p.IsDeleted &&
                     keywords.Any(k =>
                         p.Name.Contains(k, StringComparison.OrdinalIgnoreCase) ||
                         p.ProductTags.Any(tag => tag.Tag.Contains(k, StringComparison.OrdinalIgnoreCase))
-                        && p.Status == "Accepted"&&p.IsDeleted== false
-                       ))
-                .ToList();
-        }
+                    )
+                ).ToList();
+                        }
 
         //----------------------------------------------------------------
         //Delete Image From Product 
