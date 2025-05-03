@@ -292,7 +292,7 @@
                     <div class="step-actions">
                         <button class="prev-btn" (click)="prevStep()">Back</button>
                         <button class="submit-btn" [disabled]="!AddProductForm.get('description')?.valid || 
-                                          !AddProductForm.get('tags')?.valid">
+                                          !AddProductForm.get('tags')?.valid || !AddProductForm.valid">
                             Submit Product
                         </button>
                     </div>
