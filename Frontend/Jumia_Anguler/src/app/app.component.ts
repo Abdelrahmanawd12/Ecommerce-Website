@@ -45,36 +45,46 @@ export class AppComponent implements OnInit {
   showMarginTop: boolean = true; // Flag to control margin
   showChatbotAI: boolean = true; //Flag to control ChatbotAI
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
     this.router.events
-    .pipe(filter(event => event instanceof NavigationEnd))
-    .subscribe((event: NavigationEnd) => {
-      const url = event.urlAfterRedirects;
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        const url = event.urlAfterRedirects;
 
-      const pagesWithChatBot = [
-        '/home',
-        '/cart',
-        '/wishlist','/intro','/order','/account','/shop/:id',
-        '/details/:id','/shop','/order/:id'
-      ];
+        const pagesWithChatBot = [
+          '/home',
+          '/cart',
+          '/wishlist', '/intro', '/order', '/account', '/shop/:id',
+          '/details/:id', '/shop', '/order/:id'
+        ];
 
-      this.showChatBot = pagesWithChatBot.some(path => url.startsWith(path));
-    });
+        this.showChatBot = pagesWithChatBot.some(path => url.startsWith(path));
+      });
 
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         // Hide header for Seller Dashboard, Admin Dashboard, and Login pages
         const currentRoute = this.router.url;
 
-        if (currentRoute === '/error' || !this.router.config.some(r => r.path === currentRoute.replace('/', ''))) {
-          this.showHeader = false;
-          this.showFooter = false;
-          this.showChatbotAI = false;
-          this.showMarginTop = false;
-          return;
-        }
+        // const isUnknownRoute = !this.router.config.some(r => {
+        //   if (!r.path) return false;
+        
+        //   const routePath = '/' + r.path; // Add leading slash manually
+        //   const routeRegex = new RegExp('^' + routePath.replace(/:\w+/g, '[^/]+') + '$');
+        
+        //   return routeRegex.test(currentRoute);
+        // });
+        
+        // if (currentRoute === '/error' || isUnknownRoute) {
+        //   this.showHeader = false;
+        //   this.showFooter = false;
+        //   this.showChatbotAI = false;
+        //   this.showMarginTop = false;
+        //   return;
+        // }
+        
         if (currentRoute === '/login' || currentRoute === '/error' || currentRoute === '/register'
           || currentRoute === '/sellerRegisteration' || currentRoute === '/sellerDashboard' || currentRoute === '/intro'
           || currentRoute === '/sellOnJumia' || currentRoute === '/dashboard' || currentRoute == '/sellerDashboard/homeseller'
@@ -82,12 +92,12 @@ export class AppComponent implements OnInit {
           || currentRoute == '/sellerDashboard/prductSales' || currentRoute == '/sellerDashboard/accountprofile'
           || currentRoute == '/sellerDashboard/reports' || currentRoute == '/sellerDashboard/addproduct'
           || currentRoute == '/sellerDashboard/sales' || currentRoute == '/admin' || currentRoute == '/admin/dashboard' || currentRoute == '/admin/products'
-          || currentRoute == '/admin/users' ||currentRoute == '/admin/adduser'|| currentRoute == '/admin/edit-user/:id' || currentRoute == '/admin/accountprofile' || currentRoute == '/admin/categories'
-          || currentRoute == '/admin/addcategory'|| currentRoute == '/admin/reports'|| currentRoute == '/checkout'
-          ||currentRoute=='/order-success'||currentRoute=='/success'||currentRoute=='/cancel' || currentRoute == '/forgotpassword'
+          || currentRoute == '/admin/users' || currentRoute == '/admin/adduser' || currentRoute == '/admin/edit-user/:id' || currentRoute == '/admin/accountprofile' || currentRoute == '/admin/categories'
+          || currentRoute == '/admin/addcategory' || currentRoute == '/admin/reports' || currentRoute == '/checkout'
+          || currentRoute == '/order-success' || currentRoute == '/success' || currentRoute == '/cancel' || currentRoute == '/forgotpassword'
           || currentRoute.startsWith('/resetpassword')
-          || currentRoute == '/admin/addcategory'|| currentRoute == '/admin/reports'|| currentRoute == '/checkout'||currentRoute=='/order-success'
-          ||currentRoute=='/success'||currentRoute=='/cancel'||currentRoute=='/unauthorized'||currentRoute == '/shipping'||currentRoute == '/sellingExpenses'||currentRoute == 'registration-success'
+          || currentRoute == '/admin/addcategory' || currentRoute == '/admin/reports' || currentRoute == '/checkout' || currentRoute == '/order-success'
+          || currentRoute == '/success' || currentRoute == '/cancel' || currentRoute == '/unauthorized' || currentRoute == '/shipping' || currentRoute == '/sellingExpenses' || currentRoute == 'registration-success'
         ) {
           this.showHeader = false;
           this.showMarginTop = false;
@@ -107,13 +117,13 @@ export class AppComponent implements OnInit {
           || currentRoute == '/sellerDashboard/reports' || currentRoute == '/sellerDashboard/addproduct'
           || currentRoute == '/sellerDashboard/sales' || currentRoute == '/admin' || currentRoute == '/admin/dashboard'
           || currentRoute == '/admin/products'
-          || currentRoute == '/admin/users' || currentRoute == '/admin/adduser'|| currentRoute == '/admin/edit-user/:id' || currentRoute == '/admin/accountprofile'
+          || currentRoute == '/admin/users' || currentRoute == '/admin/adduser' || currentRoute == '/admin/edit-user/:id' || currentRoute == '/admin/accountprofile'
           || currentRoute == '/admin/categories'
-          || currentRoute == '/admin/addcategory'|| currentRoute == '/admin/reports'|| currentRoute == '/checkout'
-          ||currentRoute=='/order-success'||currentRoute=='/success'||currentRoute=='/cancel'|| currentRoute == '/forgotpassword'
+          || currentRoute == '/admin/addcategory' || currentRoute == '/admin/reports' || currentRoute == '/checkout'
+          || currentRoute == '/order-success' || currentRoute == '/success' || currentRoute == '/cancel' || currentRoute == '/forgotpassword'
           || currentRoute.startsWith('/resetpassword')
-          || currentRoute == '/admin/addcategory'|| currentRoute == '/admin/reports'|| currentRoute == '/checkout'||currentRoute=='/order-success'
-          ||currentRoute=='/success'||currentRoute=='/cancel'||currentRoute=='/unauthorized'||currentRoute == '/shipping'||currentRoute == '/sellingExpenses'||currentRoute == 'registration-success'
+          || currentRoute == '/admin/addcategory' || currentRoute == '/admin/reports' || currentRoute == '/checkout' || currentRoute == '/order-success'
+          || currentRoute == '/success' || currentRoute == '/cancel' || currentRoute == '/unauthorized' || currentRoute == '/shipping' || currentRoute == '/sellingExpenses' || currentRoute == 'registration-success'
         ) {
           this.showFooter = false;
           this.showMarginTop = false;
@@ -127,6 +137,6 @@ export class AppComponent implements OnInit {
     });
 
   }
- 
+
 
 }

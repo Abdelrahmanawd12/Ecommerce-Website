@@ -27,7 +27,7 @@ export class AddProductDashboardComponent {
   constructor(private fb: FormBuilder, private router: Router, private addProductService: SellerService) {
     this.AddProductForm = this.fb.group({
       images: [[], [Validators.required, Validators.minLength(1)]],
-      productname: ['', [Validators.required, Validators.pattern(/^(?=.*[a-zA-Z])[a-zA-Z0-9\s]+$/)]],
+      productname: ['', [Validators.required, Validators.pattern(/^(?=.*[a-zA-Z])[a-zA-Z0-9\s'\-.,&]+$/)]],
       brand: ['', [Validators.required, Validators.pattern(/^(?=.*[a-zA-Z])[a-zA-Z0-9\s]+$/)]],
       cat: ['', [Validators.required]],
       subcat: ['', [Validators.required]],
@@ -35,7 +35,7 @@ export class AddProductDashboardComponent {
       quantity: ['', [Validators.required, Validators.pattern(/^[1-9]\d*$/)]],
       discount: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
       weight: ['', [Validators.required, Validators.pattern(/^(?!0$)\d+(\.\d{1,2})?$/)]],
-      description: ['', [Validators.required, Validators.minLength(10), Validators.pattern(/^(?=.*[a-zA-Z])[a-zA-Z0-9\s.,!?'"()\-\n\r]+$/)]],
+      description: ['', [Validators.required, Validators.minLength(10),Validators.pattern(/^[\s\S]{10,1000}$/)]],
       tags: ['', [Validators.required, Validators.minLength(2), Validators.pattern(/^(?=.*[a-zA-Z])[a-zA-Z0-9\s,]+$/)]]
 
     })

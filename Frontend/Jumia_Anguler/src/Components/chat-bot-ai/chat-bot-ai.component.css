@@ -237,6 +237,7 @@
     padding: 15px;
     display: flex;
     gap: 10px;
+    color: #eee;
     background: white;
     border-top: 1px solid #eee;
   }
@@ -245,6 +246,7 @@
     flex: 1;
     padding: 12px 15px;
     border: 1px solid #ddd;
+    color: #eee;
     border-radius: 30px;
     outline: none;
     font-size: 14px;
@@ -259,6 +261,8 @@
     width: 45px;
     height: 45px;
     background: #FF7900;
+    color: #eee;
+    border: #eee;
     border-radius: 50%;
     display: flex;
     align-items: center;
